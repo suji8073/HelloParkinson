@@ -17,13 +17,24 @@ const TabNavigation = () => {
         labelPosition: 'beside-icon',
         showLabel: false,
         style: {
-          backgroundColor: '#54b7f9',
+          backgroundColor: '#59b7f0',
           borderTopColor: '#ffffff',
           borderTopWidth: 2,
         },
         activeTintColor: '#ffffff',
         inactiveTintColor: '#cfcfcf',
       }}
+
+      screenOptions={({ route }) => ({
+        tabBarIcon: props => {
+          let name = '';
+          if (route.name === 'Mail') name = 'email';
+          else if (route.name === 'Meet') name = 'video';
+          else name = 'settings';
+          return TabIcon({ ...props, name });
+        },
+      })}
+
     >
       <Tab.Screen
         name="list"
@@ -75,27 +86,8 @@ const TabNavigation = () => {
   );
 };
 
-/*
-const TabNavigation = () => {
-  return (
-    <Tab.Navigator
-      initialRouteName="Settings"
-      screenOptions={({ route }) => ({
-        tabBarIcon: props => {
-          let name = '';
-          if (route.name === 'Mail') name = 'email';
-          else if (route.name === 'Meet') name = 'video';
-          else name = 'settings';
-          return TabIcon({ ...props, name });
-        },
-      })}
-    >
-      <Tab.Screen name="Mail" component={Mail} />
-      <Tab.Screen name="Meet" component={Meet} />
-      <Tab.Screen name="Settings" component={Settings} />
-    </Tab.Navigator>
-  );
-};
-*/
+
+
+
 
 export default TabNavigation;

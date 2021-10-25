@@ -3,7 +3,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Home from '../screens/Home';
 import List from '../screens/List';
 import Item from '../screens/Item';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Platform } from 'react-native';
 
 const Stack = createStackNavigator();

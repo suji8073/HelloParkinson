@@ -4,7 +4,7 @@ import styled from "styled-components/native";
 
 const Container = styled.SafeAreaView`
   background-color: #ffffff;
-  align-items: center;
+  align-items: ccenter;
 `;
 const StyledText = styled.Text`
   font-size: 30px;
