@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+/*import React, { useLayoutEffect } from 'react';
 import styled from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -49,4 +49,4 @@ const Item = ({ navigation, route }) => {
   );
 };
 
-export default Item;
+export default Item;*/

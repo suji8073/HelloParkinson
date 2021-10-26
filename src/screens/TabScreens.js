@@ -5,7 +5,7 @@ const Container = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
-  background-color: #54b7f9;
+  background-color: #BBBBBB; //바탕색
 `;
 const StyledText = styled.Text`
   font-size: 30px;

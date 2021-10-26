@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from '../screens/Home';
 import List from '../screens/List';
@@ -61,4 +61,4 @@ const StackNavigation = () => {
   );
 };
 
-export default StackNavigation;
+export default StackNavigation;*/

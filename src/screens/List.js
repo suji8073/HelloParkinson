@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import { Button } from 'react-native';
 import styled from 'styled-components/native';
 
@@ -37,4 +37,4 @@ const List = ({ navigation }) => {
   );
 };
 
-export default List;
+export default List;*/

@@ -2,9 +2,14 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { list, statistics, progress, profile } from '../screens/TabScreens';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 const TabIcon = ({ name, size, color }) => {
   return <MaterialCommunityIcons name={name} size={size} color={color} />;
+};
+
+const menuIcon = ({ name, size, color }) => {
+  return <Ionicons name={name} size={size} color={color} />;
 };
 
 const Tab = createBottomTabNavigator();
@@ -12,82 +17,54 @@ const Tab = createBottomTabNavigator();
 const TabNavigation = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Settings"
+      initialRouteName="list"
       tabBarOptions={{
-        labelPosition: 'beside-icon',
-        showLabel: false,
         style: {
-          backgroundColor: '#59b7f0',
-          borderTopColor: '#ffffff',
+          backgroundColor: '#ffffff',
+          borderTopColor: '#BBBBBB',
           borderTopWidth: 2,
         },
-        activeTintColor: '#ffffff',
-        inactiveTintColor: '#cfcfcf',
+        activeTintColor: '#5CB405',
+        inactiveTintColor:'#BBBBBB',
       }}
-
-      screenOptions={({ route }) => ({
-        tabBarIcon: props => {
-          let name = '';
-          if (route.name === 'Mail') name = 'email';
-          else if (route.name === 'Meet') name = 'video';
-          else name = 'settings';
-          return TabIcon({ ...props, name });
-        },
-      })}
-
-    >
+      >
       <Tab.Screen
-        name="list"
+        name="환자 목록"
+        justifyContent: "center",
         component={list}
         options={{
-          tabBarLabel: 'Inbox',
-          tabBarIcon: props =>
-            TabIcon({
-              ...props,
-              name: props.focused ? 'email' : 'email-outline',
-            }),
+          tabBarLabel: '목 록',
+          tabBarIcon: props => menuIcon({...props, name:'reader'}),
         }}
+
       />
       <Tab.Screen
-        name="statistics"
+        name="환자 통계 관리"
         component={statistics}
         options={{
-          tabBarLabel: 'Inbox',
-          tabBarIcon: props =>
-            TabIcon({
-              ...props,
-              name: props.focused ? 'email' : 'email-outline',
-            }),
+          tabBarLabel: '통 계',
+          tabBarIcon: props => menuIcon({...props, name:'md-pie-chart-outline'}),
         }}
       />
       <Tab.Screen
-        name="progress"
+        name="환자 진도율 관리"
         component={progress}
         options={{
-          tabBarIcon: props =>
-            TabIcon({
-              ...props,
-              name: props.focused ? 'settings' : 'settings-outline',
-            }),
+          tabBarLabel: '진도율',
+          tabBarIcon: props => menuIcon({...props, name:'podium'}),
         }}
       />
       <Tab.Screen
-        name="profile"
+        name="프로필"
         component={profile}
         options={{
-          tabBarIcon: props =>
-            TabIcon({
-              ...props,
-              name: props.focused ? 'video' : 'video-outline',
-            }),
+          tabBarLabel: '프로필',
+          tabBarIcon: props => TabIcon({...props, name:'account-circle'}),
         }}
       />
     </Tab.Navigator>
   );
 };
-
-
-
 
 
 export default TabNavigation;
