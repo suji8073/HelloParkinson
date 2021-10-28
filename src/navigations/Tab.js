@@ -1,6 +1,11 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { list, statistics, progress, profile } from '../screens/TabScreens';
+
+import list from "../screens/list";
+import profile from "../screens/profile";
+import statistics from "../screens/statistics";
+import progress from "../screens/progress";
+
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -18,14 +23,15 @@ const TabNavigation = () => {
   return (
     <Tab.Navigator
       initialRouteName="list"
-      tabBarOptions={{
-        style: {
+      screenOptions={{
+
+      tabBarActiveTintColor: '#5CB405',
+        tabBarInactiveTintColor: '#BBBBBB',
+        tabBarStyle: {
           backgroundColor: '#ffffff',
           borderTopColor: '#BBBBBB',
           borderTopWidth: 2,
-        },
-        activeTintColor: '#5CB405',
-        inactiveTintColor:'#BBBBBB',
+        }
       }}
       >
       <Tab.Screen
@@ -33,6 +39,7 @@ const TabNavigation = () => {
         component={list}
         options={{
           tabBarLabel: '목 록',
+          headerTitleAlign: 'center',
           tabBarIcon: props => menuIcon({...props, name:'reader'}),
         }}
 
@@ -42,6 +49,7 @@ const TabNavigation = () => {
         component={statistics}
         options={{
           tabBarLabel: '통 계',
+          headerTitleAlign: 'center',
           tabBarIcon: props => menuIcon({...props, name:'md-pie-chart-outline'}),
         }}
       />
@@ -50,6 +58,7 @@ const TabNavigation = () => {
         component={progress}
         options={{
           tabBarLabel: '진도율',
+          headerTitleAlign: 'center',
           tabBarIcon: props => menuIcon({...props, name:'podium'}),
         }}
       />
@@ -58,6 +67,7 @@ const TabNavigation = () => {
         component={profile}
         options={{
           tabBarLabel: '프로필',
+          headerTitleAlign: 'center',
           tabBarIcon: props => TabIcon({...props, name:'account-circle'}),
         }}
       />
