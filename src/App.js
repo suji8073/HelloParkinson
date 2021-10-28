@@ -11,5 +11,5 @@ const App = () => {
     </NavigationContainer>
   );
 };
-
+//변경된 350
 export default App;
