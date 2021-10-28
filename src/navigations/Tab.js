@@ -30,7 +30,6 @@ const TabNavigation = () => {
       >
       <Tab.Screen
         name="환자 목록"
-        justifyContent: "center",
         component={list}
         options={{
           tabBarLabel: '목 록',
