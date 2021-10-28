@@ -58,6 +58,7 @@ const TabNavigation = () => {
         component={progress}
         options={{
           tabBarLabel: '진도율',
+          headerStatusBarHeight: 55,
           headerTitleAlign: 'center',
           tabBarIcon: props => menuIcon({...props, name:'podium'}),
         }}
