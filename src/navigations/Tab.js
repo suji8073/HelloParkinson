@@ -18,14 +18,15 @@ const TabNavigation = () => {
   return (
     <Tab.Navigator
       initialRouteName="list"
-      tabBarOptions={{
-        style: {
+      screenOptions={{
+
+      tabBarActiveTintColor: '#5CB405',
+        tabBarInactiveTintColor: '#BBBBBB',
+        tabBarStyle: {
           backgroundColor: '#ffffff',
           borderTopColor: '#BBBBBB',
           borderTopWidth: 2,
-        },
-        activeTintColor: '#5CB405',
-        inactiveTintColor:'#BBBBBB',
+        }
       }}
       >
       <Tab.Screen
