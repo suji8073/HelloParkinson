@@ -1,10 +1,9 @@
-/*import React from 'react';
-import { Button } from 'react-native';
-import styled from 'styled-components/native';
+import React from "react";
+import { Button } from "react-native";
+import styled from "styled-components/native";
 
-const Container = styled.View`
-  flex: 1;
-  justify-content: center;
+const Container = styled.SafeAreaView`
+  background-color: #ffffff;
   align-items: center;
 `;
 const StyledText = styled.Text`
@@ -12,29 +11,16 @@ const StyledText = styled.Text`
   margin-bottom: 10px;
 `;
 
-const items = [
-  { _id: 1, name: 'React Native' },
-  { _id: 2, name: 'React Navigation' },
-  { _id: 3, name: 'Hanbit' },
-];
-
-const List = ({ navigation }) => {
-  const _onPress = item => {
-    navigation.navigate('Detail', { id: item._id, name: item.name });
-  };
-
+const Home = ({ navigation }) => {
   return (
     <Container>
-      <StyledText>List</StyledText>
-      {items.map(item => (
-        <Button
-          key={item._id}
-          title={item.name}
-          onPress={() => _onPress(item)}
-        />
-      ))}
+      <StyledText>Home</StyledText>
+      <Button
+        title="go to the list screen"
+        onPress={() => navigation.navigate("List")}
+      />
     </Container>
   );
 };
 
-export default List;*/
+export default Home;
