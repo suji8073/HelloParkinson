@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "react-native";
+import { Button, StatusBar } from "react-native";
 import styled from "styled-components/native";
 
 const Container = styled.SafeAreaView`
@@ -11,9 +11,10 @@ const StyledText = styled.Text`
   margin-bottom: 10px;
 `;
 
-const Home = ({ navigation }) => {
+const profile = ({ navigation }) => {
   return (
     <Container>
+      <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
       <StyledText>Home</StyledText>
       <Button
         title="go to the list screen"
@@ -23,4 +24,4 @@ const Home = ({ navigation }) => {
   );
 };
 
-export default Home;
+export default profile;

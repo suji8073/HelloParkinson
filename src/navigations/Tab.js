@@ -10,11 +10,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
 const TabIcon = ({ name, size, color }) => {
-  return <MaterialCommunityIcons name={name} size={size} color={color} />;
+  return <MaterialCommunityIcons name={name} size={32} color={color} />;
 };
 
 const menuIcon = ({ name, size, color }) => {
-  return <Ionicons name={name} size={size} color={color} />;
+  return <Ionicons name={name} size={32} color={color} />;
 };
 
 const Tab = createBottomTabNavigator();
@@ -31,6 +31,7 @@ const TabNavigation = () => {
           backgroundColor: '#ffffff',
           borderTopColor: '#BBBBBB',
           borderTopWidth: 2,
+          height : 84,
         }
       }}
       >
