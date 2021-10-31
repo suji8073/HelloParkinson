@@ -29,7 +29,7 @@ const list = ({ navigation }) => {
   return (
     <Container>
       <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
-      {/*<FlatList
+      {/*<FlatListㅇㄹㅇ
         keyExtractor={item => item['id']}
         data={channels}
         renderItem={({ item }) => (
