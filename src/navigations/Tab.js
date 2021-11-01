@@ -29,8 +29,10 @@ const TabNavigation = () => {
         tabBarInactiveTintColor: '#BBBBBB',
         tabBarStyle: {
           backgroundColor: '#ffffff',
+          position: 'absolute',
           borderTopColor: '#BBBBBB',
-          borderTopWidth: 2,
+          borderTopWidth: 1,
+          paddingBottom : 10,
           height : 84,
         }
       }}
@@ -38,9 +40,11 @@ const TabNavigation = () => {
       <Tab.Screen
         name="환자 목록"
         component={list}
+        createBottomTabNavigator 
         options={{
           tabBarLabel: '목 록',
           headerTitleAlign: 'center',
+          tabBarLabelStyle: 'bold',
           tabBarIcon: props => menuIcon({...props, name:'reader'}),
         }}
 
@@ -48,6 +52,7 @@ const TabNavigation = () => {
       <Tab.Screen
         name="환자 통계 관리"
         component={statistics}
+    
         options={{
           tabBarLabel: '통 계',
           headerTitleAlign: 'center',
@@ -56,10 +61,10 @@ const TabNavigation = () => {
       />
       <Tab.Screen
         name="환자 진도율 관리"
+        borderTopWidth = {s}
         component={progress}
         options={{
           tabBarLabel: '진도율',
-          headerStatusBarHeight: 55,
           headerTitleAlign: 'center',
           tabBarIcon: props => menuIcon({...props, name:'podium'}),
         }}

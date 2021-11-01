@@ -16,10 +16,7 @@ const profile = ({ navigation }) => {
     <Container>
       <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
       <StyledText>Home</StyledText>
-      <Button
-        title="go to the list screen"
-        onPress={() => navigation.navigate("List")}
-      />
+
     </Container>
   );
 };
