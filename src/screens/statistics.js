@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'react-native';
+import { Button, StatusBar } from 'react-native';
 import styled from 'styled-components/native';
 
 const Container = styled.View`
@@ -25,6 +25,7 @@ const statistics = ({ navigation }) => {
 
   return (
     <Container>
+      <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
       <StyledText>List</StyledText>
       {items.map(item => (
         <Button
