@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import list from "../screens/list";
+import list from "../screens/List";
 import profile from "../screens/profile";
 import statistics from "../screens/statistics";
 import progress from "../screens/progress";

@@ -1,12 +1,11 @@
 //App.js
 import { StyleSheet,Text, View, Button, TouchableOpacity, TextInput } from 'react-native';
 import React, { Component } from 'react'
-
+import { useNavigation } from '@react-navigation/native';
 import 'react-native-gesture-handler';
 
-
 function login({navigation}) {
-  return (
+ return (
 
   <View style={styles.finalView}>
     <View style={styles.NoneView}>
@@ -38,23 +37,22 @@ function login({navigation}) {
           placeholder="  비밀번호"
         />
       
+
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.buttongreen}
+     <TouchableOpacity 
+        style={styles.buttongreen}
         activeOpacity={0.8}
-        onPress={() => {
-          navigation.navigate("signup1");
-        }}
+        onPress={() => {navigation.navigate("TabNavigation")}} 
       >
         <Text style={{color:"#FFFFFF"}}> 로그인하기 </Text>
-        
       </TouchableOpacity>
       
     <View style={styles.thirdView}>
         <Text style={styles.secondText1}> 계정이 없으신가요?</Text>
-          <TouchableOpacity>
-            <Text style={styles.secondText2}>  회원가입하기
-            </Text>
+          <TouchableOpacity onPress={() => {navigation.navigate("signup1")}} 
+          >
+            <Text style={styles.secondText2}>회원가입하기</Text>
           </TouchableOpacity>
         
     </View>
