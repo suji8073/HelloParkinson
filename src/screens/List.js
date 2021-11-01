@@ -1,6 +1,8 @@
 import React from "react";
-import { Button, StatusBar, View } from "react-native";
+import { TouchableOpacity, StatusBar, Text } from "react-native";
 import styled from "styled-components/native";
+import SearchBar from './SearchBar';
+
 const Container = styled.SafeAreaView`
   background-color: #ffffff;
   align-items: center;
@@ -21,22 +23,15 @@ const ItemTitle = styled.Text`
 `;
 
 const list = ({ navigation }) => {
-  const _handleItemPress = params => {
-    navigation.navigate('Channel', params);
-  };
-
-
   return (
     <Container>
       <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
-      {/*<FlatListㅇㄹㅇ
-        keyExtractor={item => item['id']}
-        data={channels}
-        renderItem={({ item }) => (
-          <Item item={item} onPress={_handleItemPress} />
-        )}
-        windowSize={3}
-        />*/}
+      <SearchBar />
+      <TouchableOpacity onPress={() => {navigation.navigate("user_setting")}} >
+        <StyledText>Home</StyledText>
+      </TouchableOpacity>
+          
+
     </Container>
   );
 };

@@ -15,7 +15,6 @@ const profile = ({ navigation }) => {
   return (
     <Container>
       <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
-      <StyledText>Home</StyledText>
 
     </Container>
   );

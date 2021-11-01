@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import list from "../screens/List";
+import list from "../screens/list";
 import profile from "../screens/profile";
 import statistics from "../screens/statistics";
 import progress from "../screens/progress";
@@ -52,7 +52,6 @@ const TabNavigation = () => {
       <Tab.Screen
         name="환자 통계 관리"
         component={statistics}
-    
         options={{
           tabBarLabel: '통 계',
           headerTitleAlign: 'center',
@@ -61,7 +60,6 @@ const TabNavigation = () => {
       />
       <Tab.Screen
         name="환자 진도율 관리"
-        borderTopWidth = {s}
         component={progress}
         options={{
           tabBarLabel: '진도율',
@@ -78,6 +76,7 @@ const TabNavigation = () => {
           tabBarIcon: props => TabIcon({...props, name:'account-circle'}),
         }}
       />
+
     </Tab.Navigator>
   );
 };
