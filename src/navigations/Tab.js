@@ -32,16 +32,17 @@ const TabNavigation = () => {
           position: 'absolute',
           borderTopColor: '#BBBBBB',
           borderTopWidth: 1,
-          paddingBottom : 10,
-          height : 84,
+          paddingBottom : 20,
+          height : 90,
         }
       }}
       >
       <Tab.Screen
         name="환자 목록"
         component={list}
-        createBottomTabNavigator 
+
         options={{
+          headerShown:false,
           tabBarLabel: '목 록',
           headerTitleAlign: 'center',
           tabBarLabelStyle: 'bold',
@@ -53,6 +54,7 @@ const TabNavigation = () => {
         name="환자 통계 관리"
         component={statistics}
         options={{
+          headerShown:false,
           tabBarLabel: '통 계',
           headerTitleAlign: 'center',
           tabBarIcon: props => menuIcon({...props, name:'md-pie-chart-outline'}),
@@ -62,6 +64,7 @@ const TabNavigation = () => {
         name="환자 진도율 관리"
         component={progress}
         options={{
+          headerShown:false,
           tabBarLabel: '진도율',
           headerTitleAlign: 'center',
           tabBarIcon: props => menuIcon({...props, name:'podium'}),
@@ -71,6 +74,7 @@ const TabNavigation = () => {
         name="프로필"
         component={profile}
         options={{
+          headerShown:false,
           tabBarLabel: '프로필',
           headerTitleAlign: 'center',
           tabBarIcon: props => TabIcon({...props, name:'account-circle'}),

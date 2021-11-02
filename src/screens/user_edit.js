@@ -22,7 +22,7 @@ function user_edit({navigation}) {
         text: "취소",
         style: "cancel",
         onPress: () => {
-          navigation.navigate("user_setting")
+          //navigation.navigate("user_setting")
         }
       },
       {  
@@ -87,11 +87,12 @@ function user_edit({navigation}) {
           </View>
           <View style={styles.ageview}>
             <MaterialIcons name="radio-button-on" size={24} color="black" />
-              <Text style={styles.text2}> 남</Text>
+            <Text style={styles.text2}> 남</Text>
             
             <View style={styles.margin}></View>
-              <MaterialIcons name="radio-button-on" size={24} color="black" />
-              <Text style={styles.text2}> 여</Text>
+            <MaterialIcons name="radio-button-on" size={24} color="black" />
+            <Text style={styles.text2}> 여</Text>
+            <View style={styles.margin}></View>
 
           </View>
         </View>
@@ -126,16 +127,20 @@ export default user_edit;
 const styles = StyleSheet.create({
   finalView: {
     flex: 1,
-    padding:20,
     backgroundColor: '#FFFFFF',
+    
   },
 
   menuView: {
     backgroundColor: '#FFFFFF',
-    height : 55,
+    height : 58,
     flexDirection: 'row',
     alignItems:'center',
+    paddingRight:20,
+    paddingLeft:20,
     justifyContent: 'flex-start',
+    borderBottomWidth:1.8,
+    borderColor:'#E5E5E5',
   },
 
   titleText:{
@@ -144,6 +149,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     color: '#000000',
     justifyContent: 'center',
+    fontWeight:"bold",
   },
 
   firstView: {
