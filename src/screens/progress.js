@@ -1,6 +1,6 @@
-import React from 'react';
-import { Button, StatusBar } from 'react-native';
-import styled from 'styled-components/native';
+import React from "react";
+import { Button, StatusBar, TouchableOpacity, Text } from "react-native";
+import styled from "styled-components/native";
 
 const Container = styled.View`
   flex: 1;
@@ -12,28 +12,20 @@ const StyledText = styled.Text`
   margin-bottom: 10px;
 `;
 
-const items = [
-  { _id: 1, name: 'React Native' },
-  { _id: 2, name: 'React Navigation' },
-  { _id: 3, name: 'Hanbit' },
-];
-
 const progress = ({ navigation }) => {
-  const _onPress = item => {
-    navigation.navigate('Detail', { id: item._id, name: item.name });
-  };
-
   return (
     <Container>
       <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
       <StyledText>List</StyledText>
-      {items.map(item => (
-        <Button
-          key={item._id}
-          title={item.name}
-          onPress={() => _onPress(item)}
-        />
-      ))}
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("user_progress");
+        }}
+      >
+        <Text style={{ color: "#59A60B", fontSize: 17 }}>
+          환자A 운동 진도율 확인하기
+        </Text>
+      </TouchableOpacity>
     </Container>
   );
 };

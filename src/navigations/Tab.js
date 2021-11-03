@@ -1,13 +1,14 @@
-import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import list from "../screens/list";
+import list from "../screens/List";
 import profile from "../screens/profile";
 import statistics from "../screens/statistics";
 import progress from "../screens/progress";
+import passwchange from "../screens/passwchange";
 
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 const TabIcon = ({ name, size, color }) => {
   return <MaterialCommunityIcons name={name} size={32} color={color} />;
@@ -24,62 +25,59 @@ const TabNavigation = () => {
     <Tab.Navigator
       initialRouteName="list"
       screenOptions={{
-
-      tabBarActiveTintColor: '#5CB405',
-        tabBarInactiveTintColor: '#BBBBBB',
+        tabBarActiveTintColor: "#5CB405",
+        tabBarInactiveTintColor: "#BBBBBB",
         tabBarStyle: {
-          backgroundColor: '#ffffff',
-          position: 'absolute',
-          borderTopColor: '#BBBBBB',
+          backgroundColor: "#ffffff",
+          position: "absolute",
+          borderTopColor: "#BBBBBB",
           borderTopWidth: 1,
-          paddingBottom : 10,
-          height : 84,
-        }
+          paddingBottom: 10,
+          height: 84,
+        },
       }}
-      >
+    >
       <Tab.Screen
         name="환자 목록"
         component={list}
-        createBottomTabNavigator 
+        createBottomTabNavigator
         options={{
-          tabBarLabel: '목 록',
-          headerTitleAlign: 'center',
-          tabBarLabelStyle: 'bold',
-          tabBarIcon: props => menuIcon({...props, name:'reader'}),
+          tabBarLabel: "목 록",
+          headerTitleAlign: "center",
+          tabBarLabelStyle: "bold",
+          tabBarIcon: (props) => menuIcon({ ...props, name: "reader" }),
         }}
-
       />
       <Tab.Screen
         name="환자 통계 관리"
         component={statistics}
         options={{
-          tabBarLabel: '통 계',
-          headerTitleAlign: 'center',
-          tabBarIcon: props => menuIcon({...props, name:'md-pie-chart-outline'}),
+          tabBarLabel: "통 계",
+          headerTitleAlign: "center",
+          tabBarIcon: (props) =>
+            menuIcon({ ...props, name: "md-pie-chart-outline" }),
         }}
       />
       <Tab.Screen
         name="환자 진도율 관리"
         component={progress}
         options={{
-          tabBarLabel: '진도율',
-          headerTitleAlign: 'center',
-          tabBarIcon: props => menuIcon({...props, name:'podium'}),
+          tabBarLabel: "진도율",
+          headerTitleAlign: "center",
+          tabBarIcon: (props) => menuIcon({ ...props, name: "podium" }),
         }}
       />
       <Tab.Screen
         name="프로필"
         component={profile}
         options={{
-          tabBarLabel: '프로필',
-          headerTitleAlign: 'center',
-          tabBarIcon: props => TabIcon({...props, name:'account-circle'}),
+          tabBarLabel: "프로필",
+          headerTitleAlign: "center",
+          tabBarIcon: (props) => TabIcon({ ...props, name: "account-circle" }),
         }}
       />
-
     </Tab.Navigator>
   );
 };
-
 
 export default TabNavigation;

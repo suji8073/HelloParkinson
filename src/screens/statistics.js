@@ -1,6 +1,6 @@
-import React from 'react';
-import { Button, StatusBar } from 'react-native';
-import styled from 'styled-components/native';
+import React from "react";
+import { Button, StatusBar } from "react-native";
+import styled from "styled-components/native";
 
 const Container = styled.View`
   flex: 1;
@@ -13,21 +13,21 @@ const StyledText = styled.Text`
 `;
 
 const items = [
-  { _id: 1, name: 'React Native' },
-  { _id: 2, name: 'React Navigation' },
-  { _id: 3, name: 'Hanbit' },
+  { _id: 1, name: "statistics" },
+  { _id: 2, name: "React Navigation" },
+  { _id: 3, name: "Hanbit" },
 ];
 
 const statistics = ({ navigation }) => {
-  const _onPress = item => {
-    navigation.navigate('Detail', { id: item._id, name: item.name });
+  const _onPress = (item) => {
+    navigation.navigate("Detail", { id: item._id, name: item.name });
   };
 
   return (
     <Container>
       <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
       <StyledText>List</StyledText>
-      {items.map(item => (
+      {items.map((item) => (
         <Button
           key={item._id}
           title={item.name}
