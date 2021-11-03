@@ -8,6 +8,7 @@ const SearchBarWrapper = styled.View`
   border-radius: 10px;
   padding: 10px 10px 10px 10px;
   display: flex;
+  width: 92%;
 `;
 
 const SearchInput = styled.TextInput`
@@ -30,7 +31,7 @@ export default function SearchBar() {
         autoCapitalize="none"
         autoCorrect={false}
         onChangeText={setValue}
-        placeholder="                                                                                   "
+        placeholder="                                                                                          "
         returnKeyType="search"
         returnKeyLabel="search"
         value={value}

@@ -7,7 +7,7 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
+import Task from "./task1";
 
 function user_setting({ navigation }) {
   return (
@@ -164,11 +164,13 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,
+    marginTop:5,
     flexDirection: "row",
     backgroundColor: "#FFFFFF",
     borderBottomWidth: 0.3,
     borderTopWidth: 0.3,
     borderColor: "#E5E5E5",
+    padding:10,
   },
 
   marginView: {
@@ -193,6 +195,7 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginTop: 10,
     flex: 1,
+    
   },
 
   textView: {

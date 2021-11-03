@@ -62,7 +62,7 @@ function login({ navigation }) {
               navigation.navigate("signup1");
             }}
           >
-            <Text style={styles.secondText2}>회원가입하기</Text>
+            <Text style={styles.secondText2}>  회원가입하기</Text>
           </TouchableOpacity>
         </View>
       </View>

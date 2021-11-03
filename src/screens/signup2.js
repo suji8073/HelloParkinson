@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
-
+import { AntDesign } from "@expo/vector-icons";
 
 
 function signup2({navigation}) {
@@ -16,10 +16,7 @@ function signup2({navigation}) {
             }}
             >
               <View>
-            <Image
-              style={{width: 10, height: 20}}
-              source={require('../icon/arrow.png')}>
-            </Image>
+              <AntDesign name="left" size={24} color="#808080" />
             </View>
             
           </TouchableOpacity>
@@ -235,7 +232,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     marginBottom: 10,
-    
+    marginTop:10,
   },
 
   MainView: {

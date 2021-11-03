@@ -11,7 +11,7 @@ import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { Directions } from "react-native-gesture-handler";
 
-const profile = ({ navigation }) => {
+function profile({ navigation }) {
   return (
     <View style={styles.finalView}>
       <StatusBar
@@ -88,7 +88,7 @@ const profile = ({ navigation }) => {
           </Text>
         </View>
       </TouchableOpacity>
-      {/* </View> */}
+      </View>
 
   );
 };

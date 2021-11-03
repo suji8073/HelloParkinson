@@ -108,10 +108,6 @@ function user_edit({ navigation }) {
             <Text style={styles.text2}> 여</Text>
             <View style={styles.margin}></View>
 
-
-            <View style={styles.margin}></View>
-            <MaterialIcons name="radio-button-on" size={24} color="black" />
-            <Text style={styles.text2}> 여</Text>
           </View>
         </View>
 
