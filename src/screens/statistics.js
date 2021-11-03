@@ -1,9 +1,11 @@
+
 import React from 'react';
 import { Button, StatusBar, Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 import SearchBar from './SearchBar';
 
 import { Entypo } from '@expo/vector-icons'; 
+
 
 function statistics({navigation}) {
   return (
@@ -33,6 +35,7 @@ function statistics({navigation}) {
       </View>
       
     </View>
+
 
 
   );

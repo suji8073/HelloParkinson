@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { StyleSheet, StatusBar, View, Text, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
@@ -17,6 +18,16 @@ function progress({navigation}) {
         <Text style={styles.titleText}>환자 진도율 관리</Text>
         <View style={styles.margin}></View>
         <Entypo name="dots-three-vertical" size={24} color="#595959" />
+          
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("user_progress");
+          }}
+        >
+        <Text style={{ color: "#59A60B", fontSize: 17 }}>
+          환자A 운동 진도율 확인하기
+        </Text>
+        </TouchableOpacity>
         
 
       </View>
@@ -73,3 +84,4 @@ const styles = StyleSheet.create({
   },
 
 });
+

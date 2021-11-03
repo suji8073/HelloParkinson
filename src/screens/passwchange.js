@@ -2,6 +2,7 @@ import React from "react";
 import {
   View,
   Text,
+  TextInput,
   Button,
   StatusBar,
   StyleSheet,
@@ -9,26 +10,23 @@ import {
 } from "react-native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { Directions } from "react-native-gesture-handler";
+const Container = styled.SafeAreaView`
+  background-color: #ffffff;
+  flex: 1;
+`;
+const StyledText = styled.Text`
+  font-size: 30px;
+  margin-bottom: 10px;
+`;
 
 const profile = ({ navigation }) => {
   return (
-    <View style={styles.finalView}>
-      <StatusBar
-        backgroundColor="#D6D6D6"
-        barStyle="dark-content"/>
-
-      <View style={styles.menu1View}>
-
-        <View style={styles.margin}></View>
-        <Text style={styles.titleText}>프로필</Text>
-        <View style={styles.margin}></View>
-      </View>
-    
+    <Container>
+      <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
       {/* 아이콘과 관리자 이름 뷰 */}
-      <View
-        style={{ flexDirection: "column", alignItems: "center", marginTop: 10 }}
-      >
+      <View style={{ flexDirection: "column", alignItems: "center" }}>
         <Ionicons name="person-circle-sharp" size={120} color="lightblue" />
         <Text style={styles.titleText}>관리자</Text>
       </View>
@@ -69,34 +67,29 @@ const profile = ({ navigation }) => {
         {/* 세번째줄 뷰 */}
         <View style={styles.menuanswerView}>
           <View style={styles.menuView}>
-            <Text style={styles.menuText}>비밀번호</Text>
+            <Text style={styles.menuText}>새로운 비밀번호</Text>
           </View>
-          <View style={styles.answerView}>
-            <Text style={styles.answerText}>*********</Text>
-          </View>
+          <TouchableOpacity>
+            <View style={styles.answerView}>
+              <TextInput
+                style={styles.textInput}
+                onChangeText={(text) => {
+                  this.setState({ inputText: text });
+                }}
+                placeholder="(미 입력시 기존 비밀번호 유지)"
+              />
+            </View>
+          </TouchableOpacity>
         </View>
         {/* 세번째줄 끝 */}
       </View>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("passwchange");
-        }}
-      >
-        <View style={{ marginTop: 10, marginLeft: 30 }}>
-          <Text style={{ color: "#59A60B", fontSize: 17 }}>
-            비밀번호 변경하기
-          </Text>
-        </View>
-      </TouchableOpacity>
-      {/* </View> */}
-
+    </Container>
   );
 };
 
 export default profile;
 
 const styles = StyleSheet.create({
-
   menuText: { justifyContent: "flex-start", fontSize: 17 },
   answerText: {
     alignItems: "flex-start",
@@ -109,14 +102,14 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginTop: 10,
     marginBottom: 10,
-    flex: 1,
+    flex: 0.8,
   },
   answerView: {
     alignItems: "flex-start",
     justifyContent: "center",
     marginTop: 10,
     marginBottom: 10,
-    flex: 1,
+    flex: 1.2,
   },
   //한줄씩 뷰
   menuanswerView: {
@@ -134,50 +127,8 @@ const styles = StyleSheet.create({
     color: "#000000",
     justifyContent: "center",
   },
-
-  finalView: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
+  textInput: {
+    fontSize: 15,
+    color: "#AFAFAF",
   },
-  menu1View: {
-    backgroundColor: '#FFFFFF',
-    height : 58,
-    flexDirection: 'row',
-    alignItems:'center',
-    paddingRight:20,
-    paddingLeft:20,
-    justifyContent: 'flex-start',
-    borderBottomWidth:1.8,
-    borderColor:'#E5E5E5',
-  },
-
-  titleText:{
-    alignItems:'flex-start',
-    fontSize: 20,
-    alignItems: 'center',
-    color: '#000000',
-    justifyContent: 'center',
-    fontWeight:"bold",
-  },
-
-  firstView: {
-    // padding:30,
-    alignItems:'center',
-    justifyContent: 'flex-start',
-    marginLeft:20,
-    marginRight:20,
-    flexDirection: 'row',
-    flex: 1,
-    marginTop:15,
-    marginBottom:15,
-    backgroundColor: '#FFFFFF',
-  },
-  margin: {
-    // padding:30,
-    alignItems:'flex-start',
-    justifyContent: 'center',
-    flex: 1,
-  },
-
-
 });
