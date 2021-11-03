@@ -13,24 +13,24 @@ import { AntDesign } from "@expo/vector-icons";
 function signup4({ navigation }) {
   return (
     <View style={styles.finalView}>
-      <View style={styles.settingView}>
-        <View style={styles.margin}></View>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            navigation.navigate("signup1");
-          }}
-        >
-          <AntDesign name="left" size={24} color="#808080" />
-        </TouchableOpacity>
-      </View>
-
       <View style={styles.container}>
-        <ScrollView style={styles.scroll}>
+        <View style={styles.settingView}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => {
+              navigation.navigate("signup1");
+            }}
+          >
+            <View>
+              <AntDesign name="left" size={24} color="#808080" />
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.firstView}>
           <View style={styles.secondView}>
-            <Text style={styles.titleText}>아이디/비밀번호 설정</Text>
+            <Text style={styles.titleText}>아이디 / 비밀번호 설정</Text>
             <View style={styles.numberbutton}>
-              <TouchableOpacity style={styles.number3}>
+              <View style={styles.number3}>
                 <TextInput
                   style={styles.MText}
                   onChangeText={(text) => {
@@ -38,9 +38,9 @@ function signup4({ navigation }) {
                   }}
                   placeholder="아이디 입력"
                 />
-              </TouchableOpacity>
+              </View>
             </View>
-            <TouchableOpacity style={styles.button1}>
+            <View style={styles.button1}>
               <TextInput
                 style={styles.textInput}
                 onChangeText={(text) => {
@@ -48,15 +48,15 @@ function signup4({ navigation }) {
                 }}
                 placeholder="비밀번호 입력"
               />
-            </TouchableOpacity>
+            </View>
           </View>
 
           <View style={styles.secondView}>
             <View style={styles.checkView}>
-              <Text style={styles.titleText}>성명/전화번호</Text>
+              <Text style={styles.titleText}>성명 / 전화번호</Text>
               <Text style={styles.check}>*</Text>
             </View>
-            <TouchableOpacity style={styles.buttonwhite}>
+            <View style={styles.buttonwhite}>
               <TextInput
                 style={styles.textInput}
                 onChangeText={(text) => {
@@ -64,13 +64,13 @@ function signup4({ navigation }) {
                 }}
                 placeholder="이름"
               />
-            </TouchableOpacity>
+            </View>
 
             <View style={styles.numberbutton}>
-              <TouchableOpacity style={styles.number1}>
+              <View style={styles.number1}>
                 <Text style={styles.MMText}>010</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.number2}>
+              </View>
+              <View style={styles.number2}>
                 <TextInput
                   style={styles.textInput}
                   onChangeText={(text) => {
@@ -78,7 +78,7 @@ function signup4({ navigation }) {
                   }}
                   placeholder="휴대전화번호"
                 />
-              </TouchableOpacity>
+              </View>
             </View>
           </View>
 
@@ -87,7 +87,7 @@ function signup4({ navigation }) {
               <Text style={styles.titleText}>생년월일</Text>
               <Text style={styles.check}>*</Text>
             </View>
-            <TouchableOpacity style={styles.buttonwhite}>
+            <View style={styles.buttonwhite}>
               <TextInput
                 style={styles.textInput}
                 onChangeText={(text) => {
@@ -95,7 +95,7 @@ function signup4({ navigation }) {
                 }}
                 placeholder="'-' 제외 8자리를 입력해주세요"
               />
-            </TouchableOpacity>
+            </View>
           </View>
 
           <View style={styles.secondView}>
@@ -123,6 +123,8 @@ function signup4({ navigation }) {
             </View>
           </View>
 
+          <View style={styles.margin}></View>
+
           <View style={styles.chatControl}>
             <TouchableOpacity
               style={styles.sendButton}
@@ -135,8 +137,7 @@ function signup4({ navigation }) {
               <Text style={styles.white}> 회 원 가 입 </Text>
             </TouchableOpacity>
           </View>
-
-        </ScrollView>
+        </View>
       </View>
     </View>
   );
@@ -151,25 +152,25 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
+    flex: 1,
   },
 
   settingView: {
+    flex: 2,
+    justifyContent: "center",
     alignItems: "flex-start",
-  },
-  margin: {
-    height: 40,
+    marginBottom: 10,
+    marginTop: 10,
   },
 
-  scroll: {
-    marginTop: 30,
+  firstView:{
+    flex:20,
   },
 
   secondView: {
     alignItems: "flex-start",
-    marginBottom: 20,
-    marginTop: 10,
+    marginBottom: 30,
+
   },
 
   checkView: {
@@ -180,6 +181,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#AFAFAF",
     marginLeft: 10,
+  },
+  margin:{
+    flex:4,
   },
 
   MText: {
@@ -206,11 +210,13 @@ const styles = StyleSheet.create({
   },
 
   button1: {
-    justifyContent: "center",
     marginLeft: 3,
     marginRight: 3,
     width: "98%",
     height: 45,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
     borderLeftWidth: 2,
     borderBottomWidth: 2,
     borderRightWidth: 2,
@@ -226,7 +232,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    
   },
 
   number1: {
@@ -280,6 +285,7 @@ const styles = StyleSheet.create({
     padding: 3,
     fontWeight: "bold",
     color: "#000000",
+    marginBottom:5,
   },
 
   check: {
@@ -343,13 +349,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     height: 50,
-    marginTop:5,
-    marginBottom:7,
+    marginTop: 5,
+    marginBottom: 7,
   },
 
   chatControl: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 25,
   },
 });

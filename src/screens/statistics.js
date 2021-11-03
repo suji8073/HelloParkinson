@@ -16,7 +16,7 @@ import Task from "./task2";
 function statistics({ navigation }) {
   return (
     <View style={styles.finalView}>
-      <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
+      <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
 
       <View style={styles.menuView}>
         <Entypo name="dots-three-vertical" size={24} color="#ffffff" />
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingRight: 20,
     paddingLeft: 20,
+    marginTop:30,
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",

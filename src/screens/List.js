@@ -14,8 +14,6 @@ import Task from "./task1";
 function list({ navigation }) {
   return (
     <View style={styles.finalView}>
-      <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
-
       <View style={styles.menuView}>
         <Entypo name="dots-three-vertical" size={24} color="#ffffff" />
         <View style={styles.margin}></View>
@@ -43,7 +41,7 @@ function list({ navigation }) {
               navigation.navigate("user_setting");
             }}
           >
-            <Task text1="김인자" text2="69" text3= "여" />
+            <Task text1="김인자" text2="69" text3="여" />
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -51,7 +49,7 @@ function list({ navigation }) {
               navigation.navigate("user_setting");
             }}
           >
-            <Task text1="김옥분" text2="77" text3= "여" />
+            <Task text1="김옥분" text2="77" text3="여" />
           </TouchableOpacity>
         </ScrollView>
       </View>
@@ -73,6 +71,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingRight: 20,
     paddingLeft: 20,
+    marginTop:30,
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
@@ -116,7 +115,7 @@ const styles = StyleSheet.create({
   },
   threeView: {
     // padding:30,
-    marginTop:10,
+    marginTop: 10,
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",

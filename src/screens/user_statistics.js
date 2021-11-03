@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
   },
 
   menuView: {
+    marginTop:30,
     backgroundColor: '#FFFFFF',
     height : 58,
     flexDirection: 'row',

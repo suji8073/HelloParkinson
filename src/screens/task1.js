@@ -7,11 +7,13 @@ import { EvilIcons } from "@expo/vector-icons";
 function Task({ text1, text2, text3 }) {
   return (
     <View style={styles.Container}>
-      <AntDesign name="smile-circle" size={50} color="black" />
+      <AntDesign name="smile-circle" size={45} color="black" />
       <View style={styles.textgroup}>
         <Text style={styles.titleText}> {text1}</Text>
-        <Text style={styles.subtext}> {text2}</Text>
-        <Text style={styles.subtext}> {text3}</Text>
+        <View style={styles.textgroup1}>
+          <Text style={styles.subtext}> {text2}세 /</Text>
+          <Text style={styles.subtext}> {text3}성</Text>
+        </View>
       </View>
       <View style={styles.margin}></View>
       <EvilIcons
@@ -53,6 +55,14 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     justifyContent: "flex-start",
     flexDirection: "column",
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+  },
+
+  textgroup1:{
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    flexDirection: "row",
     flex: 1,
     backgroundColor: "#FFFFFF",
   },

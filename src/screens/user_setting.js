@@ -30,7 +30,7 @@ function user_setting({ navigation }) {
       <View style={styles.firstView}>
         <Ionicons name="md-checkmark-circle" size={110} color="green" />
         <Text style={styles.user_name}>김옥분</Text>
-        <Text style={styles.user_age}>77/여</Text>
+        <Text style={styles.user_age}>77 / 여</Text>
       </View>
       <View style={styles.secondView}>
         <View style={styles.numberbutton}>
@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
   },
 
   menuView: {
+    marginTop:30,
     backgroundColor: '#FFFFFF',
     height : 58,
     flexDirection: 'row',

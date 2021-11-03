@@ -11,6 +11,13 @@ import user_progress from "../screens/user_progress";
 import user_edit from "../screens/user_edit";
 import user_statistics from "../screens/user_statistics";
 import TabNavigation from "./Tab";
+import TabNavigation1 from "./Tab1";
+import patient_record from "../screens1/patient_record";
+import patient_alarm from "../screens1/patient_alarm";
+import patient_move from "../screens1/patient_move";
+import patient_Home from "../screens1/patient_Home";
+import patient_profile from "../screens1/patient_profile";
+import patient_profile_edit from "../screens1/patient_profile_edit";
 
 const Stack = createStackNavigator();
 
@@ -32,6 +39,17 @@ const StackNavigation = () => {
       <Stack.Screen name="user_statistics" component={user_statistics} />
 
       <Stack.Screen name="TabNavigation" component={TabNavigation} />
+      <Stack.Screen name="TabNavigation1" component={TabNavigation1} />
+
+      <Stack.Screen name="patient_Home" component={patient_Home} />
+      <Stack.Screen name="patient_move" component={patient_move} />
+      <Stack.Screen name="patient_record" component={patient_record} />
+      <Stack.Screen name="patient_alarm" component={patient_alarm} />
+      <Stack.Screen name="patient_profile" component={patient_profile} />
+     < Stack.Screen name="patient_profile_edit" component={patient_profile_edit} />
+      
+
+
     </Stack.Navigator>
   );
 };
