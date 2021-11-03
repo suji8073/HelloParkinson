@@ -1,13 +1,7 @@
 import React from "react";
-import {
-  Image,
-  StatusBar,
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-} from "react-native";
-import styled from "styled-components/native";
+import { StyleSheet, View, Text, TouchableOpacity, Left, Body,Title } from "react-native";
+
+
 
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -66,7 +60,7 @@ function user_setting({ navigation }) {
             style={styles.group}
             activeOpacity={0.8}
             onPress={() => {
-              //navigation.navigate("");
+              navigation.navigate("user_statistics");
             }}
           >
             <Ionicons name="md-podium" size={35} color="green" />
@@ -94,24 +88,31 @@ export default user_setting;
 const styles = StyleSheet.create({
   finalView: {
     flex: 1,
-    padding: 20,
-    backgroundColor: "#FFFFFF",
+
+    backgroundColor: '#FFFFFF',
+    
   },
 
   menuView: {
-    backgroundColor: "#FFFFFF",
-    height: 55,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
+    backgroundColor: '#FFFFFF',
+    height : 58,
+    flexDirection: 'row',
+    alignItems:'center',
+    paddingRight:20,
+    paddingLeft:20,
+    justifyContent: 'flex-start',
+    borderBottomWidth:1.8,
+    borderColor:'#E5E5E5',
   },
 
-  titleText: {
-    alignItems: "flex-start",
-    fontSize: 21,
-    alignItems: "center",
-    color: "#000000",
-    justifyContent: "center",
+  titleText:{
+    alignItems:'flex-start',
+    fontSize: 20,
+    alignItems: 'center',
+    color: '#000000',
+    justifyContent: 'center',
+    fontWeight:"bold",
+
   },
 
   firstView: {

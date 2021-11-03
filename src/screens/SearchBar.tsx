@@ -5,9 +5,8 @@ const SearchBarWrapper = styled.View`
   flex-direction: row;
   align-items: center;
   background-color: #F2F2F2;
-  border-radius: 4px;
-  padding: 10px 14px 10px 12px;
-  margin: 0px 20px;
+  border-radius: 10px;
+  padding: 10px 10px 10px 10px;
   display: flex;
 `;
 
@@ -31,7 +30,7 @@ export default function SearchBar() {
         autoCapitalize="none"
         autoCorrect={false}
         onChangeText={setValue}
-        placeholder="검색어를 입력해 주세요."
+        placeholder="                                                                                   "
         returnKeyType="search"
         returnKeyLabel="search"
         value={value}

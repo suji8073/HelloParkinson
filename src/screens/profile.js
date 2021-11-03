@@ -10,14 +10,21 @@ import {
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { Directions } from "react-native-gesture-handler";
-const Container = styled.SafeAreaView`
-  background-color: #ffffff;
-  flex: 1;
-`;
+
 const profile = ({ navigation }) => {
   return (
-    <Container>
-      <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
+    <View style={styles.finalView}>
+      <StatusBar
+        backgroundColor="#D6D6D6"
+        barStyle="dark-content"/>
+
+      <View style={styles.menu1View}>
+
+        <View style={styles.margin}></View>
+        <Text style={styles.titleText}>프로필</Text>
+        <View style={styles.margin}></View>
+      </View>
+    
       {/* 아이콘과 관리자 이름 뷰 */}
       <View
         style={{ flexDirection: "column", alignItems: "center", marginTop: 10 }}
@@ -82,13 +89,14 @@ const profile = ({ navigation }) => {
         </View>
       </TouchableOpacity>
       {/* </View> */}
-    </Container>
+
   );
 };
 
 export default profile;
 
 const styles = StyleSheet.create({
+
   menuText: { justifyContent: "flex-start", fontSize: 17 },
   answerText: {
     alignItems: "flex-start",
@@ -126,4 +134,50 @@ const styles = StyleSheet.create({
     color: "#000000",
     justifyContent: "center",
   },
+
+  finalView: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
+  menu1View: {
+    backgroundColor: '#FFFFFF',
+    height : 58,
+    flexDirection: 'row',
+    alignItems:'center',
+    paddingRight:20,
+    paddingLeft:20,
+    justifyContent: 'flex-start',
+    borderBottomWidth:1.8,
+    borderColor:'#E5E5E5',
+  },
+
+  titleText:{
+    alignItems:'flex-start',
+    fontSize: 20,
+    alignItems: 'center',
+    color: '#000000',
+    justifyContent: 'center',
+    fontWeight:"bold",
+  },
+
+  firstView: {
+    // padding:30,
+    alignItems:'center',
+    justifyContent: 'flex-start',
+    marginLeft:20,
+    marginRight:20,
+    flexDirection: 'row',
+    flex: 1,
+    marginTop:15,
+    marginBottom:15,
+    backgroundColor: '#FFFFFF',
+  },
+  margin: {
+    // padding:30,
+    alignItems:'flex-start',
+    justifyContent: 'center',
+    flex: 1,
+  },
+
+
 });

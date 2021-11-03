@@ -23,8 +23,10 @@ function user_edit({ navigation }) {
         text: "취소",
         style: "cancel",
         onPress: () => {
-          navigation.navigate("user_setting");
-        },
+
+          //navigation.navigate("user_setting")
+        }
+
       },
       {
         cancelable: true,
@@ -100,6 +102,13 @@ function user_edit({ navigation }) {
             <MaterialIcons name="radio-button-on" size={24} color="black" />
             <Text style={styles.text2}> 남</Text>
 
+          
+            <View style={styles.margin}></View>
+            <MaterialIcons name="radio-button-on" size={24} color="black" />
+            <Text style={styles.text2}> 여</Text>
+            <View style={styles.margin}></View>
+
+
             <View style={styles.margin}></View>
             <MaterialIcons name="radio-button-on" size={24} color="black" />
             <Text style={styles.text2}> 여</Text>
@@ -136,24 +145,31 @@ export default user_edit;
 const styles = StyleSheet.create({
   finalView: {
     flex: 1,
-    padding: 20,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: '#FFFFFF',
+    
   },
 
   menuView: {
-    backgroundColor: "#FFFFFF",
-    height: 55,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
+    backgroundColor: '#FFFFFF',
+    height : 58,
+    flexDirection: 'row',
+    alignItems:'center',
+    paddingRight:20,
+    paddingLeft:20,
+    justifyContent: 'flex-start',
+    borderBottomWidth:1.8,
+    borderColor:'#E5E5E5',
+
   },
 
   titleText: {
     alignItems: "flex-start",
     fontSize: 21,
-    alignItems: "center",
-    color: "#000000",
-    justifyContent: "center",
+    alignItems: 'center',
+    color: '#000000',
+    justifyContent: 'center',
+    fontWeight:"bold",
+
   },
 
   firstView: {

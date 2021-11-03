@@ -32,48 +32,55 @@ const TabNavigation = () => {
           position: "absolute",
           borderTopColor: "#BBBBBB",
           borderTopWidth: 1,
-          paddingBottom: 10,
-          height: 84,
-        },
+          paddingBottom : 20,
+          height : 90,
+        }
+
       }}
     >
       <Tab.Screen
         name="환자 목록"
         component={list}
-        createBottomTabNavigator
         options={{
-          tabBarLabel: "목 록",
-          headerTitleAlign: "center",
-          tabBarLabelStyle: "bold",
-          tabBarIcon: (props) => menuIcon({ ...props, name: "reader" }),
+          headerShown:false,
+          tabBarLabel: '목 록',
+          headerTitleAlign: 'center',
+          tabBarLabelStyle: 'bold',
+          tabBarIcon: props => menuIcon({...props, name:'reader'}),
+
         }}
       />
       <Tab.Screen
         name="환자 통계 관리"
         component={statistics}
         options={{
-          tabBarLabel: "통 계",
-          headerTitleAlign: "center",
-          tabBarIcon: (props) =>
-            menuIcon({ ...props, name: "md-pie-chart-outline" }),
+          headerShown:false,
+          tabBarLabel: '통 계',
+          headerTitleAlign: 'center',
+          tabBarIcon: props => menuIcon({...props, name:'md-pie-chart-outline'}),
+
         }}
       />
       <Tab.Screen
         name="환자 진도율 관리"
         component={progress}
         options={{
-          tabBarLabel: "진도율",
-          headerTitleAlign: "center",
-          tabBarIcon: (props) => menuIcon({ ...props, name: "podium" }),
+          headerShown:false,
+          tabBarLabel: '진도율',
+          headerTitleAlign: 'center',
+          tabBarIcon: props => menuIcon({...props, name:'podium'}),
+
         }}
       />
       <Tab.Screen
         name="프로필"
         component={profile}
         options={{
-          tabBarLabel: "프로필",
-          headerTitleAlign: "center",
-          tabBarIcon: (props) => TabIcon({ ...props, name: "account-circle" }),
+          headerShown:false,
+          tabBarLabel: '프로필',
+          headerTitleAlign: 'center',
+          tabBarIcon: props => TabIcon({...props, name:'account-circle'}),
+
         }}
       />
     </Tab.Navigator>
