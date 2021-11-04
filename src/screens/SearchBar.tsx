@@ -8,17 +8,21 @@ const SearchBarWrapper = styled.View`
   border-radius: 10px;
   padding: 10px 10px 10px 10px;
   display: flex;
+  width: 92%;
 `;
 
 const SearchInput = styled.TextInput`
   margin-left: 10px;
   include-font-padding: false;
   padding: 0px;
+  flex:3;
 `;
 
 const SearchIcon = styled.Image`
   width: 18px;
   height: 18px;
+  align-items: flex-end;
+  marginRight:10px;
 `;
 
 export default function SearchBar() {
@@ -30,7 +34,7 @@ export default function SearchBar() {
         autoCapitalize="none"
         autoCorrect={false}
         onChangeText={setValue}
-        placeholder="                                                                                   "
+        placeholder=""
         returnKeyType="search"
         returnKeyLabel="search"
         value={value}

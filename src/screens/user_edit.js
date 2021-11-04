@@ -6,6 +6,7 @@ import {
   View,
   Text,
   ScrollView,
+  TextInput,
 } from "react-native";
 import styled from "styled-components/native";
 
@@ -23,10 +24,8 @@ function user_edit({ navigation }) {
         text: "취소",
         style: "cancel",
         onPress: () => {
-
           //navigation.navigate("user_setting")
-        }
-
+        },
       },
       {
         cancelable: true,
@@ -53,8 +52,8 @@ function user_edit({ navigation }) {
         <View style={styles.margin}></View>
         <Feather
           name="check"
-          size={30}
-          color="green"
+          size={24}
+          color="#5CB405"
           onPress={() => {
             Alert.alert("저장되었습니다.");
             navigation.navigate("user_setting");
@@ -72,7 +71,13 @@ function user_edit({ navigation }) {
             <Text style={styles.text1}>환자 이름</Text>
           </View>
           <View style={styles.textView}>
-            <Text style={styles.text2}>김옥분</Text>
+          <TextInput
+            style={styles.text2}
+            onChangeText={(text) => {
+              this.setState({ inputText: text });
+            }}
+            placeholder="김옥분"
+          />
           </View>
         </View>
 
@@ -81,16 +86,30 @@ function user_edit({ navigation }) {
             <Text style={styles.text1}>아이디</Text>
           </View>
           <View style={styles.textView}>
-            <Text style={styles.text2}>seoul1234</Text>
+          <TextInput
+            style={styles.text2}
+            onChangeText={(text) => {
+              this.setState({ inputText: text });
+            }}
+            placeholder="seoul1243"
+          />
           </View>
         </View>
+
 
         <View style={styles.secondView}>
           <View style={styles.memoView}>
             <Text style={styles.text1}>나이</Text>
           </View>
           <View style={styles.textView}>
-            <Text style={styles.text2}>77</Text>
+
+          <TextInput
+            style={styles.text2}
+            onChangeText={(text) => {
+              this.setState({ inputText: text });
+            }}
+            placeholder="77"
+          />
           </View>
         </View>
 
@@ -102,16 +121,10 @@ function user_edit({ navigation }) {
             <MaterialIcons name="radio-button-on" size={24} color="black" />
             <Text style={styles.text2}> 남</Text>
 
-          
             <View style={styles.margin}></View>
             <MaterialIcons name="radio-button-on" size={24} color="black" />
             <Text style={styles.text2}> 여</Text>
             <View style={styles.margin}></View>
-
-
-            <View style={styles.margin}></View>
-            <MaterialIcons name="radio-button-on" size={24} color="black" />
-            <Text style={styles.text2}> 여</Text>
           </View>
         </View>
 
@@ -120,9 +133,13 @@ function user_edit({ navigation }) {
             <Text style={styles.text1}>메모</Text>
           </View>
           <View style={styles.textView}>
-            <Text style={styles.text2}>
-              신장 운동 중점{"\n"}약 복용 알림도 필요
-            </Text>
+            <TextInput
+              style={styles.text2}
+              onChangeText={(text) => {
+                this.setState({ inputText: text });
+              }}
+              placeholder={"신장 운동 중점\n약 복용 알림도 필요"}
+            />
           </View>
         </View>
         <View style={styles.marginView}>
@@ -145,31 +162,29 @@ export default user_edit;
 const styles = StyleSheet.create({
   finalView: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-    
+    backgroundColor: "#FFFFFF",
   },
 
   menuView: {
-    backgroundColor: '#FFFFFF',
-    height : 58,
-    flexDirection: 'row',
-    alignItems:'center',
-    paddingRight:20,
-    paddingLeft:20,
-    justifyContent: 'flex-start',
-    borderBottomWidth:1.8,
-    borderColor:'#E5E5E5',
-
+    marginTop: 30,
+    backgroundColor: "#FFFFFF",
+    height: 58,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingRight: 20,
+    paddingLeft: 20,
+    justifyContent: "flex-start",
+    borderBottomWidth: 1.8,
+    borderColor: "#E5E5E5",
   },
 
   titleText: {
     alignItems: "flex-start",
     fontSize: 21,
-    alignItems: 'center',
-    color: '#000000',
-    justifyContent: 'center',
-    fontWeight:"bold",
-
+    alignItems: "center",
+    color: "#000000",
+    justifyContent: "center",
+    fontWeight: "bold",
   },
 
   firstView: {

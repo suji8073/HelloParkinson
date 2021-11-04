@@ -1,22 +1,24 @@
 import React from "react";
 import {
   Button,
+  ScrollView,
   StatusBar,
   Text,
   View,
   TouchableOpacity,
   StyleSheet,
-  ScrollView,
 } from "react-native";
 import styled from "styled-components/native";
 import SearchBar from "./SearchBar";
 
 import { Entypo } from "@expo/vector-icons";
+import Task from "./task2";
+
 
 function statistics({ navigation }) {
   return (
     <View style={styles.finalView}>
-      <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
+      <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
 
       <View style={styles.menuView}>
         <Entypo name="dots-three-vertical" size={24} color="#ffffff" />
@@ -30,11 +32,33 @@ function statistics({ navigation }) {
         <SearchBar />
       </View>
 
-      <View style={styles.threeview}>
-        <ScrollView></ScrollView>
-        {/* <TouchableOpacity onPress={() => {navigation.navigate("user_statistics")}} >
-        <Text>김옥분님 통계 화면으로 이동하기 클릭!</Text>
-      </TouchableOpacity> */}
+      <View style={styles.threeView}>
+        <ScrollView>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("user_statistics");
+            }}
+          >
+            <Task text1="정산철" text2="64" text3="남" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("user_statistics");
+            }}
+          >
+            <Task text1="김옥분" text2="77" text3="여" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("user_statistics");
+            }}
+          >
+            <Task text1="최영순" text2="73" text3="여" />
+          </TouchableOpacity>
+
+        </ScrollView>
       </View>
     </View>
   );
@@ -54,6 +78,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingRight: 20,
     paddingLeft: 20,
+    marginTop:30,
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
@@ -97,12 +122,9 @@ const styles = StyleSheet.create({
   },
   threeView: {
     // padding:30,
+    marginTop:10,
     alignItems: "flex-start",
     justifyContent: "center",
-    height: 500,
     flexDirection: "row",
-    backgroundColor: "#FFFFFF",
-    borderWidth: 1,
-    borderColor: "#E5E5E5",
   },
 });

@@ -85,7 +85,10 @@ function profile({ navigation }) {
           </Text>
         </View>
       </TouchableOpacity>
-    </View>
+
+      </View>
+
+
   );
 }
 

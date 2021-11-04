@@ -26,24 +26,24 @@ function login({ navigation }) {
       </View>
 
       <View style={styles.secondView}>
-        <TouchableOpacity style={styles.buttonwhite}>
+        <View style={styles.buttonwhite}>
           <TextInput
             style={styles.textInput}
             onChangeText={(text) => {
               this.setState({ inputText: text });
             }}
-            placeholder="  아이디"
+            placeholder="아이디"
           />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonwhite}>
+        </View>
+        <View style={styles.buttonwhite}>
           <TextInput
             style={styles.textInput}
             onChangeText={(text) => {
               this.setState({ inputText: text });
             }}
-            placeholder="  비밀번호"
+            placeholder="비밀번호"
           />
-        </TouchableOpacity>
+        </View>
 
         <TouchableOpacity
           style={styles.buttongreen}
@@ -56,13 +56,20 @@ function login({ navigation }) {
         </TouchableOpacity>
 
         <View style={styles.thirdView}>
-          <Text style={styles.secondText1}> 계정이 없으신가요?</Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("TabNavigation1");
+            }}
+          >
+            <Text style={styles.secondText1}> 계정이 없으신가요?</Text>
+          </TouchableOpacity>
+
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("signup1");
             }}
           >
-            <Text style={styles.secondText2}>회원가입하기</Text>
+            <Text style={styles.secondText2}> 회원가입하기</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -101,6 +108,7 @@ const styles = StyleSheet.create({
   textInput: {
     fontSize: 15,
     color: "#AFAFAF",
+    marginLeft: 10,
   },
 
   titleText: {

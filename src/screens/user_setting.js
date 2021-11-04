@@ -7,7 +7,7 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
+import Task from "./task1";
 
 function user_setting({ navigation }) {
   return (
@@ -30,7 +30,7 @@ function user_setting({ navigation }) {
       <View style={styles.firstView}>
         <Ionicons name="md-checkmark-circle" size={110} color="green" />
         <Text style={styles.user_name}>김옥분</Text>
-        <Text style={styles.user_age}>77/여</Text>
+        <Text style={styles.user_age}>77 / 여</Text>
       </View>
       <View style={styles.secondView}>
         <View style={styles.numberbutton}>
@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
   },
 
   menuView: {
+    marginTop:30,
     backgroundColor: '#FFFFFF',
     height : 58,
     flexDirection: 'row',
@@ -164,11 +165,13 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,
+    marginTop:5,
     flexDirection: "row",
     backgroundColor: "#FFFFFF",
     borderBottomWidth: 0.3,
     borderTopWidth: 0.3,
     borderColor: "#E5E5E5",
+    padding:10,
   },
 
   marginView: {
@@ -193,6 +196,7 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginTop: 10,
     flex: 1,
+    
   },
 
   textView: {
