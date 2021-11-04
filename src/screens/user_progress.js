@@ -6,10 +6,11 @@ import {
   Text,
   ScrollView,
   View,
+  StyleSheet,
+  Touchable,
 } from "react-native";
 import { Directions } from "react-native-gesture-handler";
 import styled from "styled-components/native";
-
 import { Ionicons } from "@expo/vector-icons";
 const Container = styled.View`
   flex: 1;
@@ -28,8 +29,15 @@ const progress = ({ navigation }) => {
       <View style={{ flexDirection: "row" }}>
         {/* 사진 뷰 */}
         <View style={{ margin: 20, flex: 0.3 }}>
-          <Ionicons name="md-checkmark-circle" size={110} color="green" />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("moveedit");
+            }}
+          >
+            <Text>회원가입하기</Text>
+          </TouchableOpacity>
         </View>
+        <Ionicons name="md-checkmark-circle" size={110} color="green" />
         {/* 전체 진도율 뷰 */}
         <View
           style={{

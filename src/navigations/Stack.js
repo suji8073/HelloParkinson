@@ -9,7 +9,10 @@ import passwchange from "../screens/passwchange";
 import user_setting from "../screens/user_setting";
 import user_progress from "../screens/user_progress";
 import user_edit from "../screens/user_edit";
+import moveedit from "../screens/moveedit";
+import moveedit from "../screens/addmove";
 import user_statistics from "../screens/user_statistics";
+
 import TabNavigation from "./Tab";
 
 const Stack = createStackNavigator();
@@ -30,8 +33,9 @@ const StackNavigation = () => {
       <Stack.Screen name="user_progress" component={user_progress} />
       <Stack.Screen name="user_edit" component={user_edit} />
       <Stack.Screen name="user_statistics" component={user_statistics} />
-
       <Stack.Screen name="TabNavigation" component={TabNavigation} />
+      <Stack.Screen name="moveedit" component={moveedit} />
+      <Stack.Screen name="addmove" component={addmove} />
     </Stack.Navigator>
   );
 };
