@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Button,
   ScrollView,
   StatusBar,
   Text,
@@ -12,6 +13,7 @@ import SearchBar from "./SearchBar";
 
 import { Entypo } from "@expo/vector-icons";
 import Task from "./task2";
+
 
 function statistics({ navigation }) {
   return (
