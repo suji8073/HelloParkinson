@@ -88,13 +88,11 @@ export default user_setting;
 const styles = StyleSheet.create({
   finalView: {
     flex: 1,
-
     backgroundColor: '#FFFFFF',
-    
   },
 
   menuView: {
-    marginTop:30,
+    marginTop: "10%",
     backgroundColor: '#FFFFFF',
     height : 58,
     flexDirection: 'row',

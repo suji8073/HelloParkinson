@@ -22,6 +22,7 @@ import patient_Home from "../screens1/patient_Home";
 import patient_profile from "../screens1/patient_profile";
 import patient_profile_edit from "../screens1/patient_profile_edit";
 
+
 const Stack = createStackNavigator();
 
 const StackNavigation = () => {

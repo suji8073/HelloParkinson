@@ -1,12 +1,19 @@
 import React from "react";
 import {
   TouchableOpacity,
-  StatusBar,
+  ScrollView,
   StyleSheet,
   View,
   Text,
 } from "react-native";
-import { Entypo } from "@expo/vector-icons";
+import TestSvg1 from "../icon/Frame1.svg";
+import TestSvg2 from "../icon/Frame2.svg";
+import TestSvg3 from "../icon/Frame3.svg";
+import TestSvg4 from "../icon/Frame4.svg";
+import TestSvg5 from "../icon/Frame5.svg";
+import Task from "./task_patient";
+
+import { WithLocalSvg } from "react-native-svg";
 
 function patient_move({ navigation }) {
   return (
@@ -16,6 +23,104 @@ function patient_move({ navigation }) {
         <Text style={styles.titleText}>나의 운동 목록</Text>
         <View style={styles.margin}></View>
       </View>
+
+      <ScrollView style={ styles.secondView}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("user_progress");
+          }}
+        >
+          <View style={styles.moveView}>
+            <View style={styles.image}>
+              <WithLocalSvg width={60} height={60} asset={TestSvg1} />
+            </View>
+
+            <View style={styles.listview}>
+              <Text style={styles.text2}>신장(스트레칭)운동</Text>
+              <View style={styles.progressView}>
+                <Task allcount="12" done="7" progress="58%" />
+              </View>
+            </View>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("user_progress");
+          }}
+        >
+          <View style={styles.moveView}>
+            <View style={styles.image}>
+              <WithLocalSvg width={60} height={60} asset={TestSvg2} />
+            </View>
+
+            <View style={styles.listview}>
+              <Text style={styles.text2}>근력운동</Text>
+              <View style={styles.progressView}>
+                <Task allcount="12" done="12" progress="100%" />
+              </View>
+            </View>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("user_progress");
+          }}
+        >
+          <View style={styles.moveView}>
+            <View style={styles.image}>
+              <WithLocalSvg width={60} height={60} asset={TestSvg3} />
+            </View>
+
+            <View style={styles.listview}>
+              <Text style={styles.text2}>균형 및 협응 운동</Text>
+              <View style={styles.progressView}>
+                <Task allcount="12" done="3" progress="25%" />
+              </View>
+            </View>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("user_progress");
+          }}
+        >
+          <View style={styles.moveView}>
+            <View style={styles.image}>
+              <WithLocalSvg width={60} height={60} asset={TestSvg4} />
+            </View>
+
+            <View style={styles.listview}>
+              <Text style={styles.text2}>구강 및 발성 운동</Text>
+              <View style={styles.progressView}>
+                <Task allcount="12" done="7" progress="58%" />
+              </View>
+            </View>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("user_progress");
+          }}
+        >
+          <View style={styles.moveView}>
+            <View style={styles.image}>
+              <WithLocalSvg width={60} height={60} asset={TestSvg5} />
+            </View>
+
+            <View style={styles.listview}>
+              <Text style={styles.text2}>유산소 운동</Text>
+              <View style={styles.progressView}>
+                <Task allcount="12" done="4" progress="33%" />
+              </View>
+            </View>
+          </View>
+        </TouchableOpacity>
+      
+    </ScrollView>
     </View>
   );
 }
@@ -34,7 +139,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingRight: 20,
     paddingLeft: 20,
-    marginTop: 30,
+    marginTop: "10%",
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
@@ -66,5 +171,54 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 15,
     backgroundColor: "#FFFFFF",
+  },
+
+  secondView: {
+    marginTop: 10,
+    flexDirection: "column",
+    width: "100%",
+    backgroundColor: "#FFFFFF",
+  },
+  moveView: {
+    height: 80,
+    width: "92%",
+    margin: "4%",
+    flexDirection: "row",
+    borderWidth: 1,
+    borderColor: "#E0E0E0",
+    borderRadius: 5,
+  },
+  image: {
+    width: "20%",
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 10,
+    marginRight: 5,
+  },
+  listview: {
+    width: "75%",
+    flexDirection: "column",
+  },
+  line: {
+    width: "1%",
+    marginTop: 5,
+    marginBottom: 5,
+    borderWidth: 1,
+    borderColor: "#EAEAEA",
+  },
+  text2: {
+    alignItems: "flex-start",
+    fontSize: 18,
+    alignItems: "center",
+    color: "#000000",
+    justifyContent: "center",
+    fontWeight: "bold",
+    marginTop: 13,
+  },
+  progressView: {
+    width: "100%",
+    justifyContent: "flex-start",
+    borderColor: "#E0E0E0",
+    flexDirection: "row",
   },
 });

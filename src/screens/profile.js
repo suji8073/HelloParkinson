@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   menu1View: {
-    marginTop: 30,
+    marginTop: "10%",
     backgroundColor: "#FFFFFF",
     height: 58,
     flexDirection: "row",

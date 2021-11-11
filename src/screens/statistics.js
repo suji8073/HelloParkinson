@@ -23,7 +23,7 @@ function statistics({ navigation }) {
       <View style={styles.menuView}>
         <Entypo name="dots-three-vertical" size={24} color="#ffffff" />
         <View style={styles.margin}></View>
-        <Text style={styles.titleText}>환자 목록</Text>
+        <Text style={styles.titleText}>환자 통계 관리</Text>
         <View style={styles.margin}></View>
         <Entypo name="dots-three-vertical" size={24} color="#595959" />
       </View>
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingRight: 20,
     paddingLeft: 20,
-    marginTop:30,
+    marginTop:"10%",
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
