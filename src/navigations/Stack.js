@@ -12,7 +12,7 @@ import user_edit from "../screens/user_edit";
 import moveedit from "../screens/moveedit";
 import addmove from "../screens/addmove";
 import user_statistics from "../screens/user_statistics";
-
+import profile from "../screens/profile";
 import TabNavigation from "./Tab";
 import TabNavigation1 from "./Tab1";
 import patient_record from "../screens1/patient_record";
@@ -41,7 +41,7 @@ const StackNavigation = () => {
       <Stack.Screen name="user_edit" component={user_edit} />
       <Stack.Screen name="user_statistics" component={user_statistics} />
       <Stack.Screen name="TabNavigation" component={TabNavigation} />
-
+      <Stack.Screen name="profile" component={profile} />
       <Stack.Screen name="moveedit" component={moveedit} />
       <Stack.Screen name="addmove" component={addmove} />
 

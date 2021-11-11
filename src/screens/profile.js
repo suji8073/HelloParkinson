@@ -10,21 +10,24 @@ import {
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { Directions } from "react-native-gesture-handler";
+import { AntDesign } from "@expo/vector-icons";
 
 function profile({ navigation }) {
   return (
     <View style={styles.finalView}>
       <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
-
       <View style={styles.menu1View}>
         <View style={styles.margin}></View>
         <Text style={styles.titleText}>프로필</Text>
         <View style={styles.margin}></View>
       </View>
-
       {/* 아이콘과 관리자 이름 뷰 */}
       <View
-        style={{ flexDirection: "column", alignItems: "center", marginTop: 10 }}
+        style={{
+          flexDirection: "column",
+          alignItems: "center",
+          marginTop: 10,
+        }}
       >
         <Ionicons name="person-circle-sharp" size={120} color="lightblue" />
         <Text style={styles.titleText}>관리자</Text>
@@ -85,25 +88,24 @@ function profile({ navigation }) {
           </Text>
         </View>
       </TouchableOpacity>
-
-      </View>
-
-
+    </View>
   );
 }
 
 export default profile;
 
 const styles = StyleSheet.create({
-  menuText: { justifyContent: "flex-start", fontSize: 17 },
+  menuText: { color: "#484848", justifyContent: "flex-start", fontSize: 17 },
   answerText: {
+    color: "#000000",
     alignItems: "flex-start",
     justifyContent: "flex-start",
     fontSize: 17,
   },
   menuView: {
-    alignItems: "flex-start",
-    justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
     marginLeft: 30,
     marginTop: 10,
     marginBottom: 10,
@@ -138,6 +140,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   menu1View: {
+    marginTop: 30,
     backgroundColor: "#FFFFFF",
     height: 58,
     flexDirection: "row",

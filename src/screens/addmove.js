@@ -37,3 +37,32 @@ function addmove({ navigation }) {
 }
 
 export default addmove;
+const styles = StyleSheet.create({
+  menuView: {
+    backgroundColor: "#FFFFFF",
+    height: 58,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingRight: 20,
+    paddingLeft: 20,
+    justifyContent: "flex-start",
+    borderBottomWidth: 1.8,
+    borderColor: "#E5E5E5",
+  },
+
+  titleText: {
+    alignItems: "flex-start",
+    fontSize: 20,
+    alignItems: "center",
+    color: "#000000",
+    justifyContent: "center",
+    fontWeight: "bold",
+  },
+  margin: {
+    // padding:30,
+    alignItems: "flex-start",
+    justifyContent: "center",
+    flex: 1,
+  },
+});
+

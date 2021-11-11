@@ -11,7 +11,7 @@ import {
 } from "react-native";
 
 import PercentageBar from "./progressbar";
-const task3_1 = ({ name, age, sex, progress, minute }) => {
+const task3 = ({ name, age, sex, progress, minute }) => {
   return (
     //  전체 뷰
     <View
@@ -36,7 +36,7 @@ const task3_1 = ({ name, age, sex, progress, minute }) => {
             height={20}
             backgroundColor={"#E5E5E5"}
             completedColor={"#7AC819"}
-            percentage={"90%"}
+            percentage={90}
           />
           <Text style={{ fontSize: 20, flex: 0.2 }}>{progress}%</Text>
         </View>
@@ -60,4 +60,4 @@ const task3_1 = ({ name, age, sex, progress, minute }) => {
 //   minute: PropTypes.string.isRequired,
 // };
 
-export default task3_1;
+export default task3;
