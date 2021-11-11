@@ -163,14 +163,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 
-  firstView:{
-    flex:20,
+  firstView: {
+    flex: 20,
   },
 
   secondView: {
     alignItems: "flex-start",
     marginBottom: 30,
-
   },
 
   checkView: {
@@ -182,8 +181,8 @@ const styles = StyleSheet.create({
     color: "#AFAFAF",
     marginLeft: 10,
   },
-  margin:{
-    flex:4,
+  margin: {
+    flex: 4,
   },
 
   MText: {
@@ -285,7 +284,7 @@ const styles = StyleSheet.create({
     padding: 3,
     fontWeight: "bold",
     color: "#000000",
-    marginBottom:5,
+    marginBottom: 5,
   },
 
   check: {

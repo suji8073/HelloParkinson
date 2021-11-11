@@ -3,6 +3,7 @@ import {
   View,
   Text,
   TextInput,
+  Alert,
   Button,
   StatusBar,
   StyleSheet,
@@ -25,6 +26,31 @@ const profile = ({ navigation }) => {
   return (
     <Container>
       <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
+      <View style={styles.menu1View}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("TabNavigation");
+          }}
+        >
+          <AntDesign name="left" size={24} color="#CACACA" />
+        </TouchableOpacity>
+        <View style={styles.margin}></View>
+        <Text style={styles.titleText}>프로필 편집</Text>
+        <View style={styles.margin}></View>
+        <TouchableOpacity
+          onPress={() => {
+            Alert.alert("비밀번호가 정상적으로 변경되었습니다.");
+            navigation.navigate("TabNavigation");
+          }}
+        >
+          <AntDesign name="check" size={24} color="#5CB405" />
+        </TouchableOpacity>
+      </View>
+
+      {/* 아이콘과 관리자 이름 뷰 */}
+      <View
+        style={{ flexDirection: "column", alignItems: "center", marginTop: 10 }}
+      ></View>
       {/* 아이콘과 관리자 이름 뷰 */}
       <View style={{ flexDirection: "column", alignItems: "center" }}>
         <Ionicons name="person-circle-sharp" size={120} color="lightblue" />
@@ -130,5 +156,24 @@ const styles = StyleSheet.create({
   textInput: {
     fontSize: 15,
     color: "#AFAFAF",
+  },
+  menu1View: {
+    marginTop: 30,
+    backgroundColor: "#FFFFFF",
+    height: 58,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingRight: 20,
+    paddingLeft: 20,
+    justifyContent: "flex-start",
+    borderBottomWidth: 1.8,
+    borderColor: "#E5E5E5",
+  },
+
+  margin: {
+    // padding:30,
+    alignItems: "flex-start",
+    justifyContent: "center",
+    flex: 1,
   },
 });

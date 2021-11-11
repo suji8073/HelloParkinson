@@ -26,9 +26,9 @@ const progress = ({ navigation }) => {
   return (
     <Container>
       {/* 사진, 전체진도율 뷰 */}
-      <View style={{ flexDirection: "row" }}>
+      <View style={{ flexDirection: "column" }}>
         {/* 사진 뷰 */}
-        <View style={{ margin: 20, flex: 0.3 }}>
+        <View style={{ flexDirection: "row", margin: 20, flex: 0.3 }}>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("moveedit");

@@ -11,7 +11,7 @@ import PercentageBar from "./progressbar";
 import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
-import Task from "./task3_1";
+import Task from "./task3";
 import { Entypo } from "@expo/vector-icons";
 
 function progress({ navigation }) {
