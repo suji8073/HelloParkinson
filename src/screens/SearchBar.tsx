@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import styled from 'styled-components/native';
+import { Ionicons } from '@expo/vector-icons';
+
 
 const SearchBarWrapper = styled.View`
   flex-direction: row;
@@ -18,12 +20,7 @@ const SearchInput = styled.TextInput`
   flex:3;
 `;
 
-const SearchIcon = styled.Image`
-  width: 18px;
-  height: 18px;
-  align-items: flex-end;
-  marginRight:10px;
-`;
+
 
 export default function SearchBar() {
   const [value, setValue] = useState('');
@@ -39,7 +36,7 @@ export default function SearchBar() {
         returnKeyLabel="search"
         value={value}
       />
-      <SearchIcon source={require('../icon/search.png')} />
+      <Ionicons name="search" size={20} color="#595959" />
     </SearchBarWrapper>
   );
 }

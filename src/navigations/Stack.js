@@ -10,7 +10,7 @@ import user_setting from "../screens/user_setting";
 import user_progress from "../screens/user_progress";
 import user_edit from "../screens/user_edit";
 import moveedit from "../screens/moveedit";
-import moveedit from "../screens/addmove";
+import addmove from "../screens/addmove";
 import user_statistics from "../screens/user_statistics";
 
 import TabNavigation from "./Tab";
@@ -52,11 +52,10 @@ const StackNavigation = () => {
       <Stack.Screen name="patient_record" component={patient_record} />
       <Stack.Screen name="patient_alarm" component={patient_alarm} />
       <Stack.Screen name="patient_profile" component={patient_profile} />
-     < Stack.Screen name="patient_profile_edit" component={patient_profile_edit} />
-      
-
-
-
+      <Stack.Screen
+        name="patient_profile_edit"
+        component={patient_profile_edit}
+      />
     </Stack.Navigator>
   );
 };
