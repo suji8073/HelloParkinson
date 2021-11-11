@@ -58,6 +58,38 @@ function statistics({ navigation }) {
             <Task text1="최영순" text2="73" text3="여" />
           </TouchableOpacity>
 
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("user_statistics");
+            }}
+          >
+            <Task text1="채수지" text2="13" text3="여" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("user_statistics");
+            }}
+          >
+            <Task text1="김채현" text2="16" text3="여" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("user_statistics");
+            }}
+          >
+            <Task text1="신수빈" text2="10" text3="여" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("user_statistics");
+            }}
+          >
+            <Task text1="이영현" text2="10" text3="여" />
+          </TouchableOpacity>
+
         </ScrollView>
       </View>
     </View>
@@ -123,6 +155,7 @@ const styles = StyleSheet.create({
   threeView: {
     // padding:30,
     marginTop:10,
+    marginBottom:230,
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",

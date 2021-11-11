@@ -27,7 +27,7 @@ function list({ navigation }) {
       </View>
 
       <View style={styles.threeView}>
-        <ScrollView>
+        <ScrollView contentContainerStyle={{ flexGrow: 1, flexDirection: 'column', justifyContent: 'space-between'}}>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("user_setting");
@@ -50,6 +50,46 @@ function list({ navigation }) {
             }}
           >
             <Task text1="김옥분" text2="77" text3="여" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("user_setting");
+            }}
+          >
+            <Task text1="채수지" text2="13" text3="여" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("user_setting");
+            }}
+          >
+            <Task text1="김채현" text2="15" text3="여" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("user_setting");
+            }}
+          >
+            <Task text1="신수빈" text2="22" text3="여" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("user_setting");
+            }}
+          >
+            <Task text1="이영현" text2="20" text3="여" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("user_setting");
+            }}
+          >
+            <Task text1="배수지" text2="23" text3="여" />
           </TouchableOpacity>
         </ScrollView>
       </View>
@@ -116,6 +156,7 @@ const styles = StyleSheet.create({
   threeView: {
     // padding:30,
     marginTop: 10,
+    marginBottom:230,
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
