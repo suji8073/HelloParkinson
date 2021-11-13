@@ -44,7 +44,10 @@ const TabNavigation = () => {
           headerShown: false,
           tabBarLabel: "목 록",
           headerTitleAlign: "center",
-          tabBarLabelStyle: "bold",
+          tabBarLabelStyle: {
+            fontSize: 17,
+            fontWeight:"bold"
+          },
           tabBarIcon: (props) => menuIcon({ ...props, name: "reader" }),
         }}
       />
@@ -55,6 +58,10 @@ const TabNavigation = () => {
           headerShown: false,
           tabBarLabel: "통 계",
           headerTitleAlign: "center",
+          tabBarLabelStyle: {
+            fontSize: 17,
+            fontWeight:"bold"
+          },
           tabBarIcon: (props) =>
             menuIcon({ ...props, name: "md-pie-chart-outline" }),
         }}
@@ -66,6 +73,10 @@ const TabNavigation = () => {
           headerShown: false,
           tabBarLabel: "진도율",
           headerTitleAlign: "center",
+          tabBarLabelStyle: {
+            fontSize: 17,
+            fontWeight:"bold"
+          },
           tabBarIcon: (props) => menuIcon({ ...props, name: "podium" }),
         }}
       />
@@ -76,6 +87,10 @@ const TabNavigation = () => {
           headerShown: false,
           tabBarLabel: "프로필",
           headerTitleAlign: "center",
+          tabBarLabelStyle: {
+            fontSize: 17,
+            fontWeight:"bold"
+          },
           tabBarIcon: (props) => TabIcon({ ...props, name: "account-circle" }),
         }}
       />

@@ -22,7 +22,7 @@ const task_patient = ({ allcount, done, progress }) => {
         flexDirection: "row",
         marginTop:10,
         height: 20,
-        width: "92%",
+        width: "88%",
         justifyContent: "space-between",
       }}
     >
@@ -39,7 +39,7 @@ const task_patient = ({ allcount, done, progress }) => {
         style={{
           color: "#484848",
           fontSize: 16,
-          justifyContent: "center",
+          justifyContent: "flex-start",
           alignItems: "center",
         }}
       >

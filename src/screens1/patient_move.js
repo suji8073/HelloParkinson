@@ -24,10 +24,10 @@ function patient_move({ navigation }) {
         <View style={styles.margin}></View>
       </View>
 
-      <ScrollView style={ styles.secondView}>
+      <ScrollView style={styles.secondView}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("user_progress");
+            navigation.navigate("move_1");
           }}
         >
           <View style={styles.moveView}>
@@ -46,7 +46,7 @@ function patient_move({ navigation }) {
 
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("user_progress");
+            navigation.navigate("move_2");
           }}
         >
           <View style={styles.moveView}>
@@ -65,7 +65,7 @@ function patient_move({ navigation }) {
 
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("user_progress");
+            navigation.navigate("move_3");
           }}
         >
           <View style={styles.moveView}>
@@ -84,7 +84,7 @@ function patient_move({ navigation }) {
 
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("user_progress");
+            navigation.navigate("move_4");
           }}
         >
           <View style={styles.moveView}>
@@ -103,7 +103,7 @@ function patient_move({ navigation }) {
 
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("user_progress");
+            //navigation.navigate("");
           }}
         >
           <View style={styles.moveView}>
@@ -119,8 +119,7 @@ function patient_move({ navigation }) {
             </View>
           </View>
         </TouchableOpacity>
-      
-    </ScrollView>
+      </ScrollView>
     </View>
   );
 }
@@ -153,7 +152,7 @@ const styles = StyleSheet.create({
 
   titleText: {
     alignItems: "flex-start",
-    fontSize: 20,
+    fontSize: 21,
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
@@ -174,15 +173,19 @@ const styles = StyleSheet.create({
   },
 
   secondView: {
-    marginTop: 10,
+    paddingTop: 10,
     flexDirection: "column",
     width: "100%",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#F8F8F8",
   },
   moveView: {
-    height: 80,
+    backgroundColor: "#FFFFFF",
+    height: 90,
     width: "92%",
-    margin: "4%",
+    marginLeft: "4%",
+    marginRight: "4%",
+    marginTop: "3%",
+    marginBottom: "3%",
     flexDirection: "row",
     borderWidth: 1,
     borderColor: "#E0E0E0",
@@ -190,14 +193,16 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "20%",
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 15,
+    marginBottom: 15,
     marginLeft: 10,
     marginRight: 5,
   },
   listview: {
+    marginLeft: 10,
     width: "75%",
     flexDirection: "column",
+    marginTop: 15,
   },
   line: {
     width: "1%",
@@ -213,10 +218,10 @@ const styles = StyleSheet.create({
     color: "#000000",
     justifyContent: "center",
     fontWeight: "bold",
-    marginTop: 13,
   },
   progressView: {
     width: "100%",
+    marginTop: 5,
     justifyContent: "flex-start",
     borderColor: "#E0E0E0",
     flexDirection: "row",

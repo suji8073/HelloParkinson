@@ -5,8 +5,10 @@ import {
   StyleSheet,
   View,
   Text,
+  ScrollView,
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
+import Task from "./task_record_day";
 
 function patient_record({ navigation }) {
   return (
@@ -15,6 +17,31 @@ function patient_record({ navigation }) {
         <View style={styles.margin}></View>
         <Text style={styles.titleText}>나의 운동 기록</Text>
         <View style={styles.margin}></View>
+      </View>
+
+      <View style={styles.mainView}>
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}
+        >
+          <View style={styles.secondView}>
+            <View style={styles.textview}>
+              <Text style={styles.text1}>2021년 1월 31일 ~ 2월 6일</Text>
+              <Text style={styles.text2}>주 평균 66.4%</Text>
+            </View>
+
+            <View style={styles.graphview}></View>
+          </View>
+          
+          <View style={styles.threeView}>
+          <Task></Task>
+          <Task></Task>
+          <Task></Task>
+          </View>
+        </ScrollView>
       </View>
     </View>
   );
@@ -47,7 +74,7 @@ const styles = StyleSheet.create({
 
   titleText: {
     alignItems: "flex-start",
-    fontSize: 20,
+    fontSize: 21,
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
@@ -65,5 +92,73 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 15,
     backgroundColor: "#FFFFFF",
+  },
+  mainView: {
+    backgroundColor: "#F8F8F8",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    marginBottom: 180,
+  },
+  secondView: {
+    margin: "5%",
+    padding: "5%",
+    width: "90%",
+    height: 200,
+    backgroundColor: "#FFFFFF",
+    borderWidth: 1,
+    borderColor: "#E0E0E0",
+  },
+  threeView:{
+    marginLeft: "5%",
+    marginRight: "5%",
+    marginBottom: "5%",
+    padding: "5%",
+    width: "90%",
+    backgroundColor: "#FFFFFF",
+    borderWidth: 1,
+    borderColor: "#E0E0E0",
+  },
+  moveView: {
+    backgroundColor: "#FFFFFF",
+    height: 90,
+    width: "92%",
+    marginLeft: "4%",
+    marginRight: "4%",
+    marginTop: "3%",
+    marginBottom: "3%",
+    flexDirection: "row",
+    borderWidth: 1,
+    borderColor: "#E0E0E0",
+    borderRadius: 5,
+  },
+  textview: {
+    flex: 2,
+    marginBottom: 10,
+    justifyContent: "center",
+  },
+  graphview: {
+    flex: 3,
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  text1: {
+    alignItems: "flex-start",
+    fontSize: 17,
+    alignItems: "center",
+    color: "#000000",
+    justifyContent: "center",
+    fontWeight: "bold",
+  },
+  text2: {
+    alignItems: "flex-start",
+    marginTop: 8,
+    fontSize: 21,
+    alignItems: "center",
+    color: "#000000",
+    justifyContent: "center",
+    fontWeight: "bold",
   },
 });

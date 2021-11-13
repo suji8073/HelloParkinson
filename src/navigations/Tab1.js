@@ -42,8 +42,12 @@ const TabNavigation1 = () => {
         options={{
           headerShown: false,
           tabBarLabel: "홈",
+          size: "10%",
           headerTitleAlign: "center",
-          tabBarLabelStyle: "bold",
+          tabBarLabelStyle: {
+            fontSize: 17,
+            fontWeight:"bold"
+          },
           tabBarIcon: (props) => menuIcon1({ ...props, name: "home" }),
         }}
       />
@@ -55,7 +59,12 @@ const TabNavigation1 = () => {
           headerShown: false,
           tabBarLabel: "운동",
           headerTitleAlign: "center",
-          tabBarIcon: (props) => menuIcon1({ ...props, name: "controller-play" }),
+          tabBarLabelStyle: {
+            fontSize: 17,
+            fontWeight:"bold"
+          },
+          tabBarIcon: (props) =>
+            menuIcon1({ ...props, name: "controller-play" }),
         }}
       />
       <Tab.Screen
@@ -65,6 +74,10 @@ const TabNavigation1 = () => {
           headerShown: false,
           tabBarLabel: "기록",
           headerTitleAlign: "center",
+          tabBarLabelStyle: {
+            fontSize: 17,
+            fontWeight:"bold"
+          },
           tabBarIcon: (props) =>
             menuIcon({ ...props, name: "md-pie-chart-outline" }),
         }}
@@ -76,6 +89,10 @@ const TabNavigation1 = () => {
           headerShown: false,
           tabBarLabel: "알림",
           headerTitleAlign: "center",
+          tabBarLabelStyle: {
+            fontSize: 17,
+            fontWeight:"bold"
+          },
           tabBarIcon: (props) => menuIcon({ ...props, name: "podium" }),
         }}
       />

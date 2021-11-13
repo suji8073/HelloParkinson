@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import PropTypes from "prop-types";
-import { AntDesign } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 
 function Task({ text1, text2, text3 }) {
   return (
     <View style={styles.Container}>
-      <AntDesign name="smile-circle" size={45} color="black" />
+      <Ionicons name="person-circle-sharp" size={50} color="lightblue" justifyContent="center" alignItems="center"/>
       <View style={styles.textgroup}>
         <Text style={styles.titleText}> {text1}</Text>
         <View style={styles.textgroup1}>
@@ -53,16 +53,17 @@ const styles = StyleSheet.create({
   textgroup: {
     alignItems: "flex-start",
     marginLeft: 15,
-    justifyContent: "flex-start",
+    justifyContent: "center",
     flexDirection: "column",
     flex: 1,
     backgroundColor: "#FFFFFF",
   },
 
-  textgroup1:{
-    alignItems: "flex-start",
+  textgroup1: {
+    alignItems: "center",
     justifyContent: "flex-start",
     flexDirection: "row",
+    marginTop: 5,
     flex: 1,
     backgroundColor: "#FFFFFF",
   },
