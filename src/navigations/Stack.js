@@ -26,8 +26,6 @@ import move_2 from "../screens1/move_2";
 import move_3 from "../screens1/move_3";
 import move_4 from "../screens1/move_4";
 
-
-
 const Stack = createStackNavigator();
 
 const StackNavigation = () => {

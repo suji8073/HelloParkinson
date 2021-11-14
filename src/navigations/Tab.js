@@ -5,7 +5,6 @@ import list from "../screens/list";
 import profile from "../screens/profile";
 import statistics from "../screens/statistics";
 import progress from "../screens/progress";
-import passwchange from "../screens/passwchange";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";

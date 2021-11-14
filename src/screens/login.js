@@ -8,7 +8,6 @@ import {
   TextInput,
 } from "react-native";
 import React, { Component } from "react";
-import { useNavigation } from "@react-navigation/native";
 import "react-native-gesture-handler";
 
 function login({ navigation }) {
@@ -18,10 +17,10 @@ function login({ navigation }) {
 
       <View style={styles.firstView}>
         <Text style={styles.titleText}>
-          {"안녕하세요.\n굿나잇 파킨슨 입니다.\n"}
+          {"안녕하세요.\n굿나잇 파킨슨 입니다."}
         </Text>
-        <Text style={styles.secondText}>
-          {"회원 서비스 이용을 위해 로그인 해주세요"}
+        <Text style={styles.twoText}>
+          {"\n회원 서비스 이용을 위해 로그인 해주세요"}
         </Text>
       </View>
 
@@ -52,7 +51,7 @@ function login({ navigation }) {
             navigation.navigate("TabNavigation");
           }}
         >
-          <Text style={{ color: "#FFFFFF" }}> 로그인하기 </Text>
+          <Text style={styles.green}> 로그인하기 </Text>
         </TouchableOpacity>
 
         <View style={styles.thirdView}>
@@ -69,7 +68,7 @@ function login({ navigation }) {
               navigation.navigate("signup1");
             }}
           >
-            <Text style={styles.secondText2}> 회원가입하기</Text>
+            <Text style={styles.secondText2}> 회원가입 하기.</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -89,6 +88,7 @@ const styles = StyleSheet.create({
   firstView: {
     // padding:30,
     alignItems: "flex-start",
+    justifyContent: "center",
     flex: 3,
     backgroundColor: "#FFFFFF",
   },
@@ -106,36 +106,45 @@ const styles = StyleSheet.create({
     color: "#2E2E2E",
   },
   textInput: {
-    fontSize: 15,
+    fontSize: 17,
     color: "#AFAFAF",
-    marginLeft: 10,
+    marginLeft: "5%",
+  },
+  green: {
+    fontSize: 17,
+    color: "#FFFFFF",
+    fontWeight: "bold",
   },
 
   titleText: {
     alignItems: "flex-start",
-    fontSize: 25,
+    fontSize: 27,
     color: "#000000",
-    // marginLeft:'9%',
     fontWeight: "bold",
+    lineHeight: 40,
+  },
+  twoText: {
+    alignItems: "flex-start",
+    fontSize: 17,
+    color: "#2E2E2E",
   },
   secondText1: {
     alignItems: "flex-start",
-    fontSize: 17,
+    fontSize: 15,
     justifyContent: "center",
-    // marginLeft:'9%',
-    color: "#2E2E2E",
+    fontWeight: "bold",
+    color: "#838383",
   },
   secondText2: {
     alignItems: "flex-start",
-    fontSize: 17,
+    fontSize: 15,
     justifyContent: "center",
-    // marginLeft:'9%',
     fontWeight: "bold",
     color: "#2E2E2E",
   },
   buttonwhite: {
     justifyContent: "center",
-    margin: 5,
+    margin: "3%",
     backgroundColor: "#FFFFFF",
     width: "100%",
     height: 50,
@@ -143,12 +152,12 @@ const styles = StyleSheet.create({
     borderColor: "#E5E5E5",
   },
   buttongreen: {
-    margin: 20,
+    margin: "10%",
     backgroundColor: "#7AC819",
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    height: 50,
+    height: "15%",
   },
   logintext: {
     fontSize: 17,

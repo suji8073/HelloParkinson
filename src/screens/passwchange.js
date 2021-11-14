@@ -2,29 +2,18 @@ import React from "react";
 import {
   View,
   Text,
-  TextInput,
   Alert,
-  Button,
   StatusBar,
   StyleSheet,
   TouchableOpacity,
+  TextInput,
 } from "react-native";
-import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { Directions } from "react-native-gesture-handler";
-const Container = styled.SafeAreaView`
-  background-color: #ffffff;
-  flex: 1;
-`;
-const StyledText = styled.Text`
-  font-size: 30px;
-  margin-bottom: 10px;
-`;
 
-const profile = ({ navigation }) => {
+function passwchange({ navigation }) {
   return (
-    <Container>
+    <View style={styles.finalView}>
       <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
       <View style={styles.menu1View}>
         <TouchableOpacity
@@ -46,23 +35,23 @@ const profile = ({ navigation }) => {
           <AntDesign name="check" size={24} color="#5CB405" />
         </TouchableOpacity>
       </View>
-
       {/* 아이콘과 관리자 이름 뷰 */}
       <View
-        style={{ flexDirection: "column", alignItems: "center", marginTop: 10 }}
-      ></View>
-      {/* 아이콘과 관리자 이름 뷰 */}
-      <View style={{ flexDirection: "column", alignItems: "center" }}>
+        style={{
+          flexDirection: "column",
+          alignItems: "center",
+          marginTop: "8%",
+        }}
+      >
         <Ionicons name="person-circle-sharp" size={120} color="lightblue" />
         <Text style={styles.titleText}>관리자</Text>
       </View>
-      {/* 프로필정보 뷰 */}
-      {/* <View style={{ justifyContent: "flex-start" }}> */}
+
       <View
         style={{
-          borderTopWidth: 1,
-          borderTopColor: "#E5E5E5",
-          marginTop: 10,
+          borderTopWidth: 0.3,
+          borderTopColor: "#DCDCDC",
+          marginTop: "15%",
           flexDirection: "column",
           alignItems: "flex-start",
           justifyContent: "center",
@@ -72,7 +61,7 @@ const profile = ({ navigation }) => {
         <View style={styles.menuanswerView}>
           {/* 메뉴 뷰 */}
           <View style={styles.menuView}>
-            <Text style={styles.menuText}>계정이름</Text>
+            <Text style={styles.menuText}>계정 이름</Text>
           </View>
           {/* 답 뷰 */}
           <View style={styles.answerView}>
@@ -93,54 +82,81 @@ const profile = ({ navigation }) => {
         {/* 세번째줄 뷰 */}
         <View style={styles.menuanswerView}>
           <View style={styles.menuView}>
-            <Text style={styles.menuText}>새로운 비밀번호</Text>
+            <Text style={styles.menuText}>기존 비밀번호</Text>
           </View>
-          <TouchableOpacity>
-            <View style={styles.answerView}>
-              <TextInput
-                style={styles.textInput}
-                onChangeText={(text) => {
-                  this.setState({ inputText: text });
-                }}
-                placeholder="(미 입력시 기존 비밀번호 유지)"
-              />
-            </View>
-          </TouchableOpacity>
+          <View style={styles.answerView}>
+            <Text style={styles.answerText1}>*********</Text>
+          </View>
         </View>
         {/* 세번째줄 끝 */}
+        {/* 네번째줄 뷰 */}
+        <View style={styles.menuanswerView}>
+          <View style={styles.menuView}>
+            <Text style={styles.menuText}>새로운 비밀번호</Text>
+          </View>
+          <View style={styles.answerView}>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={(text) => {
+                this.setState({ inputText: text });
+              }}
+              placeholder="(미 입력시 기존 비밀번호 유지)"
+            />
+          </View>
+        </View>
       </View>
-    </Container>
+    </View>
   );
-};
+}
 
-export default profile;
+export default passwchange;
 
 const styles = StyleSheet.create({
-  menuText: { justifyContent: "flex-start", fontSize: 17 },
+  finalView: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+  },
+
+  menuText: {
+    color: "#484848",
+    justifyContent: "flex-start",
+    fontSize: 17,
+  },
   answerText: {
+    color: "#000000",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    fontSize: 17,
+  },
+  answerText1: {
+    color: "#858585",
     alignItems: "flex-start",
     justifyContent: "flex-start",
     fontSize: 17,
   },
   menuView: {
-    alignItems: "flex-start",
-    justifyContent: "center",
-    marginLeft: 30,
-    marginTop: 10,
-    marginBottom: 10,
-    flex: 0.8,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    marginLeft: "6%",
+    marginTop: "4%",
+    marginBottom: "4%",
+    flex: 2,
   },
   answerView: {
     alignItems: "flex-start",
     justifyContent: "center",
     marginTop: 10,
     marginBottom: 10,
-    flex: 1.2,
+    flex: 3,
   },
-  //한줄씩 뷰
+  textInput: {
+    fontSize: 17,
+    color: "#858585",
+  },
   menuanswerView: {
-    borderBottomWidth: 1,
-    borderBottomColor: "#E5E5E5",
+    borderBottomWidth: 0.3,
+    borderBottomColor: "#DCDCDC",
     flexDirection: "row",
     justifyContent: "space-around",
   },
@@ -148,17 +164,15 @@ const styles = StyleSheet.create({
   titleText: {
     alignItems: "flex-start",
     fontSize: 21,
-    paddingBottom: 20,
+    fontWeight: "bold",
+    marginBottom: "5%",
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
   },
-  textInput: {
-    fontSize: 15,
-    color: "#AFAFAF",
-  },
+
   menu1View: {
-    marginTop: 30,
+    marginTop: "10%",
     backgroundColor: "#FFFFFF",
     height: 58,
     flexDirection: "row",
@@ -170,6 +184,27 @@ const styles = StyleSheet.create({
     borderColor: "#E5E5E5",
   },
 
+  titleText: {
+    alignItems: "flex-start",
+    fontSize: 20,
+    alignItems: "center",
+    color: "#000000",
+    justifyContent: "center",
+    fontWeight: "bold",
+  },
+
+  firstView: {
+    // padding:30,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    marginLeft: 20,
+    marginRight: 20,
+    flexDirection: "row",
+    flex: 1,
+    marginTop: 15,
+    marginBottom: 15,
+    backgroundColor: "#FFFFFF",
+  },
   margin: {
     // padding:30,
     alignItems: "flex-start",

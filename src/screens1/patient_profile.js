@@ -33,7 +33,12 @@ function patient_profile({ navigation }) {
       </View>
 
       <View style={styles.firstView}>
-        <Ionicons name="md-checkmark-circle" size={110} color="green" />
+        <Ionicons
+          name="person-circle-sharp"
+          size={120}
+          color="lightblue"
+          alignItems="center"
+        />
         <Text style={styles.user_name}>프로필 사진 변경</Text>
       </View>
 
@@ -107,17 +112,8 @@ const styles = StyleSheet.create({
   text1: {
     alignItems: "flex-start",
     fontSize: 17,
-    color: "#000000",
+    color: "#484848",
     justifyContent: "center",
-  },
-  ageview: {
-    // padding:30,
-    alignItems: "flex-start",
-    justifyContent: "center",
-    flexDirection: "row",
-    marginTop: 10,
-    flex: 1,
-    marginRight: 15,
   },
 
   menuView: {
@@ -147,17 +143,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flex: 2,
-    margin: 15,
+    margin: "10%",
     backgroundColor: "#FFFFFF",
   },
 
   secondView: {
     // padding:30,
-    alignItems: "flex-start",
+    alignItems: "center",
     justifyContent: "center",
-    marginTop: 10,
     flexDirection: "row",
-    height: 40,
+    height: 50,
     backgroundColor: "#FFFFFF",
     borderTopWidth: 0.5,
     borderColor: "#E5E5E5",
@@ -165,12 +160,15 @@ const styles = StyleSheet.create({
 
   threeView: {
     // padding:30,
-    alignItems: "flex-start",
+    alignItems: "center",
     justifyContent: "flex-start",
-    flex: 1,
-    marginTop: 20,
-    marginLeft: 20,
+    flexDirection: "row",
+    height: 50,
     backgroundColor: "#FFFFFF",
+    borderTopWidth: 0.5,
+    borderBottomWidth: 0.5,
+    borderColor: "#E5E5E5",
+    paddingLeft: 20,
   },
 
   marginView: {
@@ -192,8 +190,7 @@ const styles = StyleSheet.create({
     // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
-    marginLeft: 30,
-    marginTop: 10,
+    marginLeft: "8%",
     flex: 1,
   },
 
@@ -201,14 +198,12 @@ const styles = StyleSheet.create({
     // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
-    marginTop: 10,
     flex: 2,
   },
 
   text2: {
     alignItems: "flex-start",
     fontSize: 17,
-
     color: "#484848",
     justifyContent: "center",
   },
@@ -217,6 +212,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     fontSize: 17,
     color: "#59A60B",
+    fontWeight: "bold",
     justifyContent: "center",
   },
 
