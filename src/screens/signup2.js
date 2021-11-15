@@ -7,7 +7,6 @@ import { AntDesign } from "@expo/vector-icons";
 function signup2({navigation}) {
   return (
     <View style={styles.finalView}>
-      <View style={styles.container}>
         <View style={styles.settingView}>
           <TouchableOpacity
             activeOpacity={0.8}
@@ -16,7 +15,7 @@ function signup2({navigation}) {
             }}
             >
               <View>
-              <AntDesign name="left" size={24} color="#808080" />
+              <AntDesign name="left" size={24} color="#CACACA" />
             </View>
             
           </TouchableOpacity>
@@ -209,7 +208,7 @@ function signup2({navigation}) {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+
     
   );
 }
@@ -223,22 +222,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
 
-  container: {
-    flex: 1,
-  },
-
   settingView: {
     flex: 2,
     justifyContent: 'center',
     alignItems: 'flex-start',
-    marginBottom: 10,
-    marginTop:10,
+    marginBottom: "5%",
+    marginTop: "10%",
   },
 
   MainView: {
     width:'100%',
-    flex : 20,
-    justifyContent: 'space-between',
+    flex : 25,
+    justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
     backgroundColor : '#ECECEC'
@@ -248,13 +243,14 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     fontSize: 21,
     fontWeight: 'bold',
-    color: '#000000',
-    marginBottom: 20,
+    color: '#1E1E1E',
+    marginBottom: "3%"
   },
   MText:{
     fontSize: 13,
     color: '#000000',
     padding:20,
+    lineHeight:20,
   },
 
   white:{
@@ -268,15 +264,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width : '100%',
-    height : 50,
-    marginTop: 20,
+    height: "35%",
   },
 
   chatControl: {
     flexDirection: 'row',
+    flex:7,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom:30,
   },
 
 });

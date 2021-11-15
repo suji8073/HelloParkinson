@@ -8,9 +8,7 @@ import {
   ScrollView,
   TextInput,
 } from "react-native";
-import styled from "styled-components/native";
 
-import { SimpleLineIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
@@ -62,7 +60,12 @@ function user_edit({ navigation }) {
       </View>
       <ScrollView>
         <View style={styles.firstView}>
-          <Ionicons name="md-checkmark-circle" size={110} color="green" />
+          <Ionicons
+            name="person-circle-sharp"
+            size={120}
+            color="lightblue"
+            alignItems="center"
+          />
           <Text style={styles.profile_edit}>프로필 사진 바꾸기</Text>
         </View>
 
@@ -71,13 +74,13 @@ function user_edit({ navigation }) {
             <Text style={styles.text1}>환자 이름</Text>
           </View>
           <View style={styles.textView}>
-          <TextInput
-            style={styles.text2}
-            onChangeText={(text) => {
-              this.setState({ inputText: text });
-            }}
-            placeholder="김옥분"
-          />
+            <TextInput
+              style={styles.text2}
+              onChangeText={(text) => {
+                this.setState({ inputText: text });
+              }}
+              placeholder="김옥분"
+            />
           </View>
         </View>
 
@@ -86,30 +89,28 @@ function user_edit({ navigation }) {
             <Text style={styles.text1}>아이디</Text>
           </View>
           <View style={styles.textView}>
-          <TextInput
-            style={styles.text2}
-            onChangeText={(text) => {
-              this.setState({ inputText: text });
-            }}
-            placeholder="seoul1243"
-          />
+            <TextInput
+              style={styles.text2}
+              onChangeText={(text) => {
+                this.setState({ inputText: text });
+              }}
+              placeholder="seoul1243"
+            />
           </View>
         </View>
-
 
         <View style={styles.secondView}>
           <View style={styles.memoView}>
             <Text style={styles.text1}>나이</Text>
           </View>
           <View style={styles.textView}>
-
-          <TextInput
-            style={styles.text2}
-            onChangeText={(text) => {
-              this.setState({ inputText: text });
-            }}
-            placeholder="77"
-          />
+            <TextInput
+              style={styles.text2}
+              onChangeText={(text) => {
+                this.setState({ inputText: text });
+              }}
+              placeholder="77"
+            />
           </View>
         </View>
 
@@ -125,6 +126,15 @@ function user_edit({ navigation }) {
             <MaterialIcons name="radio-button-on" size={24} color="black" />
             <Text style={styles.text2}> 여</Text>
             <View style={styles.margin}></View>
+          </View>
+        </View>
+
+        <View style={styles.secondView}>
+          <View style={styles.memoView}>
+            <Text style={styles.text1}>조</Text>
+          </View>
+          <View style={styles.textView}>
+            <Text style={styles.textg}> 3</Text>
           </View>
         </View>
 
@@ -149,7 +159,7 @@ function user_edit({ navigation }) {
               createTwoButtonAlert();
             }}
           >
-            <EvilIcons name="trash" size={50} color="#808080" />
+            <EvilIcons name="trash" size={35} color="#808080" />
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -166,7 +176,7 @@ const styles = StyleSheet.create({
   },
 
   menuView: {
-    marginTop: 30,
+    marginTop: "10%",
     backgroundColor: "#FFFFFF",
     height: 58,
     flexDirection: "row",
@@ -192,19 +202,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flex: 2,
-    margin: 25,
+    margin: "10%",
     backgroundColor: "#FFFFFF",
   },
 
   secondView: {
     // padding:30,
-    alignItems: "flex-start",
+    alignItems: "center",
     justifyContent: "center",
-    marginTop: 10,
     flexDirection: "row",
     height: 40,
+    paddingLeft: 20,
+    paddingRight: 10,
     backgroundColor: "#FFFFFF",
-    borderTopWidth: 0.5,
+    borderWidth: 0.5,
     borderColor: "#E5E5E5",
   },
 
@@ -212,7 +223,9 @@ const styles = StyleSheet.create({
     // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
-    marginTop: 10,
+    paddingLeft: 20,
+    paddingRight: 10,
+    paddingTop: 10,
     height: 80,
     flexDirection: "row",
     backgroundColor: "#FFFFFF",
@@ -241,17 +254,14 @@ const styles = StyleSheet.create({
     // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
-    marginLeft: 30,
-    marginTop: 10,
-    flex: 1,
+    flex: 2,
   },
 
   textView: {
     // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
-    marginTop: 10,
-    flex: 1,
+    flex: 3,
   },
 
   margin: {
@@ -263,11 +273,10 @@ const styles = StyleSheet.create({
 
   ageview: {
     // padding:30,
-    alignItems: "flex-start",
+    alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    marginTop: 10,
-    flex: 1,
+    flex: 3,
     marginRight: 15,
   },
   profile_edit: {
@@ -287,8 +296,13 @@ const styles = StyleSheet.create({
   text2: {
     alignItems: "flex-start",
     fontSize: 17,
-
     color: "#484848",
+    justifyContent: "center",
+  },
+  textg: {
+    alignItems: "flex-start",
+    fontSize: 17,
+    color: "#316200",
     justifyContent: "center",
   },
 });

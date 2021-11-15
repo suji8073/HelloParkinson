@@ -1,17 +1,15 @@
 import React from "react";
-import {
-  TouchableOpacity,
-  StatusBar,
-  StyleSheet,
-  View,
-  Text,
-} from "react-native";
+import { TouchableOpacity, Alert, StyleSheet, View, Text } from "react-native";
 import SearchBar from "./SearchBar";
 import { Entypo } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import Task from "./task1";
 
 function list({ navigation }) {
+  fetch("http://152.70.233.113/ping")
+    .then((response) => response.json())
+    .then((data) => console.log(data));
+
   return (
     <View style={styles.finalView}>
       <View style={styles.menuView}>
@@ -27,7 +25,13 @@ function list({ navigation }) {
       </View>
 
       <View style={styles.threeView}>
-        <ScrollView contentContainerStyle={{ flexGrow: 1, flexDirection: 'column', justifyContent: 'space-between'}}>
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}
+        >
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("user_setting");
@@ -111,7 +115,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingRight: 20,
     paddingLeft: 20,
-    marginTop:30,
+    marginTop: "10%",
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
@@ -156,7 +160,7 @@ const styles = StyleSheet.create({
   threeView: {
     // padding:30,
     marginTop: 10,
-    marginBottom:230,
+    marginBottom: 230,
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",

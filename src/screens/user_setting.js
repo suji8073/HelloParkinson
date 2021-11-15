@@ -1,13 +1,23 @@
 import React from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Left, Body,Title } from "react-native";
-
-
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Left,
+  Body,
+  Title,
+} from "react-native";
 
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
-import Task from "./task1";
+import Svg1 from "../icon/pencil.svg";
+import Svg2 from "../icon/piechart.svg";
+import Svg3 from "../icon/graph.svg";
+
+import { WithLocalSvg } from "react-native-svg";
 
 function user_setting({ navigation }) {
   return (
@@ -28,10 +38,19 @@ function user_setting({ navigation }) {
       </View>
 
       <View style={styles.firstView}>
-        <Ionicons name="md-checkmark-circle" size={110} color="green" />
+        <View style={styles.icon}>
+          <Ionicons
+            name="person-circle-sharp"
+            size={120}
+            color="lightblue"
+            alignItems="center"
+          />
+        </View>
+        <Text style={styles.group_num}>3조</Text>
         <Text style={styles.user_name}>김옥분</Text>
         <Text style={styles.user_age}>77 / 여</Text>
       </View>
+
       <View style={styles.secondView}>
         <View style={styles.numberbutton}>
           <TouchableOpacity
@@ -41,19 +60,8 @@ function user_setting({ navigation }) {
               navigation.navigate("user_edit");
             }}
           >
-            <EvilIcons name="pencil" size={50} color="green" />
-            <Text style={styles.twotext}> 환자 정보 편집 </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.group}
-            activeOpacity={0.8}
-            onPress={() => {
-              //navigation.navigate("");
-            }}
-          >
-            <SimpleLineIcons name="pie-chart" size={35} color="green" />
-            <Text style={styles.twotext}> 운동 통계 확인 </Text>
+            <WithLocalSvg width={30} height={40} asset={Svg1} />
+            <Text style={styles.twotext}>환자 정보 편집</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -61,10 +69,22 @@ function user_setting({ navigation }) {
             activeOpacity={0.8}
             onPress={() => {
               navigation.navigate("user_statistics");
+              
             }}
           >
-            <Ionicons name="md-podium" size={35} color="green" />
-            <Text style={styles.twotext}> 진도율 확인 </Text>
+            <WithLocalSvg width={30} height={40} asset={Svg2} />
+            <Text style={styles.twotext}>운동 통계 확인</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.group}
+            activeOpacity={0.8}
+            onPress={() => {
+              navigation.navigate("user_progress");
+            }}
+          >
+            <WithLocalSvg width={30} height={40} asset={Svg3} />
+            <Text style={styles.twotext}>진도율 확인</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -88,40 +108,36 @@ export default user_setting;
 const styles = StyleSheet.create({
   finalView: {
     flex: 1,
-
-    backgroundColor: '#FFFFFF',
-    
+    backgroundColor: "#FFFFFF",
   },
 
   menuView: {
-    marginTop:30,
-    backgroundColor: '#FFFFFF',
-    height : 58,
-    flexDirection: 'row',
-    alignItems:'center',
-    paddingRight:20,
-    paddingLeft:20,
-    justifyContent: 'flex-start',
-    borderBottomWidth:1.8,
-    borderColor:'#E5E5E5',
+    marginTop: "10%",
+    backgroundColor: "#FFFFFF",
+    height: 58,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingRight: 20,
+    paddingLeft: 20,
+    justifyContent: "flex-start",
+    borderBottomWidth: 1.8,
+    borderColor: "#E5E5E5",
   },
 
-  titleText:{
-    alignItems:'flex-start',
+  titleText: {
+    alignItems: "flex-start",
     fontSize: 20,
-    alignItems: 'center',
-    color: '#000000',
-    justifyContent: 'center',
-    fontWeight:"bold",
-
+    alignItems: "center",
+    color: "#000000",
+    justifyContent: "center",
+    fontWeight: "bold",
   },
 
   firstView: {
-    // padding:30,
     alignItems: "center",
     justifyContent: "center",
     flex: 2,
-    margin: 15,
+    margin: "8%",
     backgroundColor: "#FFFFFF",
   },
 
@@ -165,13 +181,13 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,
-    marginTop:5,
+    marginTop: 5,
     flexDirection: "row",
     backgroundColor: "#FFFFFF",
     borderBottomWidth: 0.3,
     borderTopWidth: 0.3,
     borderColor: "#E5E5E5",
-    padding:10,
+    padding: 10,
   },
 
   marginView: {
@@ -196,7 +212,6 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginTop: 10,
     flex: 1,
-    
   },
 
   textView: {
@@ -210,20 +225,34 @@ const styles = StyleSheet.create({
   text2: {
     alignItems: "flex-start",
     fontSize: 17,
-
     color: "#484848",
     justifyContent: "center",
   },
+  icon: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 
-  user_name: {
-    alignItems: "flex-start",
+  group_num: {
+    alignItems: "center",
     fontSize: 17,
+    fontWeight: "bold",
+    color: "#316200",
+    marginBottom: "1%",
+    justifyContent: "center",
+  },
+  user_name: {
+    alignItems: "center",
+    fontSize: 21,
     color: "#000000",
+    fontWeight: "bold",
+    marginBottom: "1%",
     justifyContent: "center",
   },
 
   user_age: {
-    alignItems: "flex-start",
+    alignItems: "center",
     fontSize: 17,
     color: "#747474",
     justifyContent: "center",

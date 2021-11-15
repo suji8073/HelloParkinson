@@ -35,7 +35,12 @@ function patient_profile_edit({ navigation }) {
       </View>
 
       <View style={styles.firstView}>
-        <Ionicons name="md-checkmark-circle" size={110} color="green" />
+        <Ionicons
+          name="person-circle-sharp"
+          size={120}
+          color="lightblue"
+          alignItems="center"
+        />
         <Text style={styles.user_name}>프로필 사진 변경</Text>
       </View>
       <View style={styles.secondView}>
@@ -112,7 +117,7 @@ function patient_profile_edit({ navigation }) {
         </View>
       </View>
 
-      <View style={styles.secondView}>
+      <View style={styles.secondView1}>
         <View style={styles.memoView}>
           <Text style={styles.text1}>성별</Text>
         </View>
@@ -146,16 +151,15 @@ const styles = StyleSheet.create({
   },
   ageview: {
     // padding:30,
-    alignItems: "flex-start",
+    alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    marginTop: 10,
     flex: 2,
     marginRight: 15,
   },
 
   menuView: {
-    marginTop: 30,
+    marginTop: "10%",
     backgroundColor: "#FFFFFF",
     height: 58,
     flexDirection: "row",
@@ -169,7 +173,7 @@ const styles = StyleSheet.create({
 
   titleText: {
     alignItems: "flex-start",
-    fontSize: 20,
+    fontSize: 21,
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
@@ -181,34 +185,30 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flex: 2,
-    margin: 15,
+    margin: "10%",
     backgroundColor: "#FFFFFF",
   },
 
   secondView: {
     // padding:30,
-    alignItems: "flex-start",
+    alignItems: "center",
     justifyContent: "center",
-    marginTop: 10,
     flexDirection: "row",
-    height: 40,
+    height: 50,
     backgroundColor: "#FFFFFF",
     borderTopWidth: 0.5,
     borderColor: "#E5E5E5",
   },
-
-  threeView: {
+  secondView1:{
     // padding:30,
-    alignItems: "flex-start",
+    alignItems: "center",
     justifyContent: "center",
-    flex: 1,
-    marginTop: 5,
     flexDirection: "row",
+    height: 50,
     backgroundColor: "#FFFFFF",
-    borderBottomWidth: 0.3,
-    borderTopWidth: 0.3,
+    borderTopWidth: 0.5,
+    borderBottomWidth: 0.5,
     borderColor: "#E5E5E5",
-    padding: 10,
   },
 
   marginView: {
@@ -230,8 +230,7 @@ const styles = StyleSheet.create({
     // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
-    marginLeft: 30,
-    marginTop: 10,
+    marginLeft: "8%",
     flex: 1,
   },
 
@@ -239,14 +238,12 @@ const styles = StyleSheet.create({
     // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
-    marginTop: 10,
     flex: 2,
   },
 
   text2: {
     alignItems: "flex-start",
     fontSize: 17,
-
     color: "#484848",
     justifyContent: "center",
   },
@@ -254,6 +251,7 @@ const styles = StyleSheet.create({
   user_name: {
     alignItems: "flex-start",
     fontSize: 17,
+    fontWeight: "bold",
     color: "#59A60B",
     justifyContent: "center",
   },

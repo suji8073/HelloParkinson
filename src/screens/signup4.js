@@ -13,20 +13,27 @@ import { AntDesign } from "@expo/vector-icons";
 function signup4({ navigation }) {
   return (
     <View style={styles.finalView}>
-      <View style={styles.container}>
-        <View style={styles.settingView}>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => {
-              navigation.navigate("signup1");
-            }}
-          >
-            <View>
-              <AntDesign name="left" size={24} color="#808080" />
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.firstView}>
+      <View style={styles.settingView}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => {
+            navigation.navigate("signup1");
+          }}
+        >
+          <View>
+            <AntDesign name="left" size={24} color="#CACACA" />
+          </View>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.firstView}>
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}
+        >
           <View style={styles.secondView}>
             <Text style={styles.titleText}>아이디 / 비밀번호 설정</Text>
             <View style={styles.numberbutton}>
@@ -115,29 +122,27 @@ function signup4({ navigation }) {
                 style={styles.genderB2}
                 activeOpacity={0.8}
                 onPress={() => {
-                  navigation.navigate("signup4");
+                  
                 }}
               >
                 <Text style={styles.gendertext}> 여자 </Text>
               </TouchableOpacity>
             </View>
           </View>
+        </ScrollView>
+      </View>
 
-          <View style={styles.margin}></View>
-
-          <View style={styles.chatControl}>
-            <TouchableOpacity
-              style={styles.sendButton}
-              activeOpacity={0.8}
-              onPress={() => {
-                Alert.alert("회원가입이 정상적으로 완료되었습니다.");
-                navigation.navigate("login");
-              }}
-            >
-              <Text style={styles.white}> 회 원 가 입 </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+      <View style={styles.chatControl}>
+        <TouchableOpacity
+          style={styles.sendButton}
+          activeOpacity={0.8}
+          onPress={() => {
+            Alert.alert("회원가입이 정상적으로 완료되었습니다.");
+            navigation.navigate("login");
+          }}
+        >
+          <Text style={styles.white}> 회 원 가 입 </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -151,25 +156,25 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
 
-  container: {
-    flex: 1,
-  },
-
   settingView: {
-    flex: 2,
+    flex: 3,
     justifyContent: "center",
     alignItems: "flex-start",
-    marginBottom: 10,
-    marginTop: 10,
+    marginBottom: "5%",
+    marginTop: "10%",
   },
 
   firstView: {
-    flex: 20,
+    width: "100%",
+    flex: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
   },
 
   secondView: {
     alignItems: "flex-start",
-    marginBottom: 30,
+    marginBottom: "10%",
   },
 
   checkView: {
@@ -177,22 +182,22 @@ const styles = StyleSheet.create({
   },
 
   textInput: {
-    fontSize: 14,
+    fontSize: 17,
     color: "#AFAFAF",
-    marginLeft: 10,
+    marginLeft: "5%",
   },
   margin: {
-    flex: 4,
+    flex: 1,
   },
 
   MText: {
-    fontSize: 14,
+    fontSize: 17,
     color: "#000000",
-    marginLeft: 10,
+    marginLeft: "5%",
   },
 
   MMText: {
-    fontSize: 14,
+    fontSize: 17,
     color: "#000000",
     alignItems: "center",
     justifyContent: "center",
@@ -200,8 +205,8 @@ const styles = StyleSheet.create({
 
   buttonwhite: {
     justifyContent: "center",
-    marginLeft: 3,
-    marginRight: 3,
+    marginLeft: "1%",
+    marginRight: "1%",
     width: "98%",
     height: 45,
     borderWidth: 2,
@@ -209,8 +214,8 @@ const styles = StyleSheet.create({
   },
 
   button1: {
-    marginLeft: 3,
-    marginRight: 3,
+    marginLeft: "1%",
+    marginRight: "1%",
     width: "98%",
     height: 45,
     flexDirection: "row",
@@ -223,8 +228,8 @@ const styles = StyleSheet.create({
   },
 
   numberbutton: {
-    marginLeft: 3,
-    marginRight: 3,
+    marginLeft: "1%",
+    marginRight: "1%",
     width: "98%",
     height: 45,
     borderColor: "#E5E5E5",
@@ -257,7 +262,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 45,
     borderWidth: 2,
-    marginRight: 5,
+    marginRight: "1%",
     borderColor: "#E5E5E5",
     flexDirection: "row",
   },
@@ -271,32 +276,27 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
 
-  settingView: {
-    flex: 3,
-    alignItems: "flex-start",
-    justifyContent: "center",
-    marginBottom: 10,
-  },
-
   titleText: {
     alignItems: "flex-start",
-    fontSize: 17,
-    padding: 3,
+    fontSize: 18,
+    marginTop: "1%",
+    marginRight: "1%",
+    marginLeft: "1%",
+    marginBottom: "2%",
     fontWeight: "bold",
     color: "#000000",
-    marginBottom: 5,
   },
 
   check: {
     alignItems: "flex-start",
-    fontSize: 17,
-    padding: 3,
+    fontSize: 18,
+    margin: "1%",
     fontWeight: "bold",
     color: "#C20000",
   },
 
   gendertext: {
-    fontSize: 14,
+    fontSize: 17,
     color: "#AFAFAF",
     alignItems: "center",
     justifyContent: "center",
@@ -306,21 +306,12 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "bold",
     color: "#FFFFFF",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  white1: {
-    fontSize: 15,
-    color: "#AFAFAF",
-    alignItems: "center",
-    justifyContent: "center",
   },
 
   genderB1: {
     backgroundColor: "#F5F5F5",
     width: "50%",
-    height: 45,
+    height: 50,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -333,7 +324,7 @@ const styles = StyleSheet.create({
   genderB2: {
     backgroundColor: "#F5F5F5",
     width: "50%",
-    height: 45,
+    height: 50,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -342,20 +333,16 @@ const styles = StyleSheet.create({
   },
 
   sendButton: {
-    flex: 2,
     backgroundColor: "#7AC819",
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    height: 50,
-    marginTop: 5,
-    marginBottom: 7,
+    height: "35%",
   },
 
   chatControl: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 25,
   },
 });

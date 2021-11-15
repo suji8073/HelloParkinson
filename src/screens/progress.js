@@ -35,21 +35,21 @@ function progress({ navigation }) {
             navigation.navigate("user_progress");
           }}
         >
-          <Task name="김옥분" age="5" sex="여" progress="50" minute="5" />
+          <Task name="김옥분" age="5" sex="여" progress="50%" minute="5" />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("user_progress");
           }}
         >
-          <Task name="김채현" age="6" sex="남" progress="51" minute="5" />
+          <Task name="김채현" age="6" sex="남" progress="80%" minute="5" />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("user_progress");
           }}
         >
-          <Task name="채수지" age="15" sex="여" progress="58" minute="5" />
+          <Task name="채수지" age="15" sex="여" progress="58%" minute="5" />
         </TouchableOpacity>
       </ScrollView>
     </View>
@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingRight: 20,
     paddingLeft: 20,
+    marginTop:"10%",
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",

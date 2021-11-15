@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
 
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
 const PercentageBar = ({
   navigation,
@@ -15,19 +15,15 @@ const PercentageBar = ({
   const [getCompletedColor, setCompletedColor] = useState(completedColor);
   return (
     <View>
-      <View
-        style={{
-          justifyContent: "flex-start",
-          flexDirection: "column",
-        }}
-      >
+      <View style={{justifyContent: 'center'}}>
         <View
           style={{
-            width: "100%",
+            width: '100%',
             height: getheight,
-            marginVertical: 10,
-            borderRadius: 5,
+            marginVertical: 5,
+            borderRadius: 7,
             borderColor: getBackgroundColor,
+            backgroundColor: getBackgroundColor,
             borderWidth: 1,
           }}
         />
@@ -35,25 +31,15 @@ const PercentageBar = ({
           style={{
             width: getPercentage ? getPercentage : 0,
             height: getheight,
-            marginVertical: 10,
-            borderRadius: 5,
+            marginVertical: 5,
+            borderRadius: 7,
             backgroundColor: getCompletedColor,
-            position: "absolute",
-            bottom: 20,
+            position: 'absolute',
           }}
         />
-        <View
-          style={{
-            width: getPercentage ? getPercentage : 0,
-            height: getheight,
-            bottom: 10,
-          }}
-        >
-          <Text style={{ textAlign: "right" }}>{getPercentage}</Text>
-        </View>
+      
       </View>
     </View>
   );
 };
-
 export default PercentageBar;
