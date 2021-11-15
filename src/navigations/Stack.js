@@ -10,7 +10,7 @@ import user_setting from "../screens/user_setting";
 import user_progress from "../screens/user_progress";
 import user_edit from "../screens/user_edit";
 import moveedit from "../screens/moveedit";
-import addmove from "../screens/addmove";
+import addmove from "../screens/moveadd";
 import user_statistics from "../screens/user_statistics";
 import profile from "../screens/profile";
 import TabNavigation from "./Tab";
@@ -21,10 +21,16 @@ import patient_move from "../screens1/patient_move";
 import patient_Home from "../screens1/patient_Home";
 import patient_profile from "../screens1/patient_profile";
 import patient_profile_edit from "../screens1/patient_profile_edit";
+
+import alarm_task from "../screens1/alarm_task";
+import alarm_edit from "../screens1/alarm_edit";
+import alarm_add from "../screens1/alarm_add";
+
 import move_1 from "../screens1/move_1";
 import move_2 from "../screens1/move_2";
 import move_3 from "../screens1/move_3";
 import move_4 from "../screens1/move_4";
+
 
 const Stack = createStackNavigator();
 
@@ -56,10 +62,17 @@ const StackNavigation = () => {
       <Stack.Screen name="patient_record" component={patient_record} />
       <Stack.Screen name="patient_alarm" component={patient_alarm} />
       <Stack.Screen name="patient_profile" component={patient_profile} />
+
+      <Stack.Screen name="alarm_task" component={alarm_task} />
+      <Stack.Screen name="alarm_edit" component={alarm_edit} />
+      <Stack.Screen name="alarm_add" component={alarm_add} />
+
+
       <Stack.Screen name="move_1" component={move_1} />
       <Stack.Screen name="move_2" component={move_2} />
       <Stack.Screen name="move_3" component={move_3} />
       <Stack.Screen name="move_4" component={move_4} />
+
       <Stack.Screen
         name="patient_profile_edit"
         component={patient_profile_edit}

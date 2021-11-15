@@ -1,5 +1,6 @@
 // 운동 편집 화면
 // 운동카테고리 스크롤뷰와 운동 리스트뷰
+// d=아마도 없어질 화면!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11111
 import React from "react";
 import {
   View,
@@ -21,7 +22,7 @@ function addmove({ navigation }) {
         <View style={styles.menuView}>
           <AntDesign name="left" size={24} color="#808080" />
           <View style={styles.margin}></View>
-          <Text style={styles.titleText}>운동 목록</Text>
+          <Text style={styles.titleText}>'김옥분'님 운동 편집</Text>
           <View style={styles.margin}></View>
           <TouchableOpacity
             onPress={() => {
@@ -65,4 +66,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
