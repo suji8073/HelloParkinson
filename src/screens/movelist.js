@@ -2,6 +2,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Movelist = ({ movename, moveminute, movesec }) => {
   return (
@@ -16,9 +17,11 @@ const Movelist = ({ movename, moveminute, movesec }) => {
       </View>
 
       {/* 아이콘 뷰 */}
-      <View>
-        <FontAwesome name="dot-circle-o" size={40} color="#E5E5E5" />
-      </View>
+      <TouchableOpacity onPress={() => {}}>
+        <View>
+          <FontAwesome name="dot-circle-o" size={40} color="#E5E5E5" />
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };

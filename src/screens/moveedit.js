@@ -19,7 +19,13 @@ function progress({ navigation }) {
       <View>
         <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
         <View style={styles.menuView}>
-          <AntDesign name="left" size={24} color="#808080" />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("user_progress");
+            }}
+          >
+            <AntDesign name="left" size={24} color="#808080" />
+          </TouchableOpacity>
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>운동 목록</Text>
           <View style={styles.margin}></View>
@@ -35,24 +41,17 @@ function progress({ navigation }) {
       </View>
       {/* 운동카테고리 목록 뷰 */}
       <View></View>
-      <TouchableOpacity
-      //   onPress={() => {;}}
-      >
-        {/* 리스트 뷰 전체 뷰 */}
-        <ScrollView>
-          <Movelist
-            movename="목 앞 근육 스트레칭"
-            moveminute="5"
-            movesec="30"
-          />
-          <Movelist movename="목 날개뼈 모으기" moveminute="1" movesec="30" />
-          <Movelist
-            movename="손목 및 팔꿈치 근육 스트레칭"
-            moveminute="4"
-            movesec="50"
-          />
-        </ScrollView>
-      </TouchableOpacity>
+
+      {/* 리스트 뷰 전체 뷰 */}
+      <ScrollView>
+        <Movelist movename="목 앞 근육 스트레칭" moveminute="5" movesec="30" />
+        <Movelist movename="목 날개뼈 모으기" moveminute="1" movesec="30" />
+        <Movelist
+          movename="손목 및 팔꿈치 근육 스트레칭"
+          moveminute="4"
+          movesec="50"
+        />
+      </ScrollView>
     </View>
   );
 }
