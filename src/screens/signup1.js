@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import { ThemeProvider } from "styled-components/native";
 
 function signup1({ navigation }) {
   return (
@@ -45,10 +46,10 @@ function signup1({ navigation }) {
             <TouchableOpacity
               //onPress={()=>this.moveToAddNewCustomer()}
               onPress={() => {
-                Image.source = "../icon/checkon.png";
+                document.getElementById("change").name = ""
               }}
             >
-              <FontAwesome name="circle-thin" size={30} color="#E1E1E1" />
+              <FontAwesome id = "change" name="circle-thin" size={30} color="#E1E1E1" />
             </TouchableOpacity>
 
             <Text style={styles.SText}> 이용약관 동의 (필수) </Text>
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   groupa: {
-    margin: "2%"
+    margin: "2%",
   },
   settingView: {
     flex: 2,
@@ -140,7 +141,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
-    marginBottom: "4%"
+    marginBottom: "4%",
   },
   titleText: {
     alignSelf: "flex-start",

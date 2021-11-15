@@ -27,19 +27,15 @@ function login({ navigation }) {
       <View style={styles.secondView}>
         <View style={styles.buttonwhite}>
           <TextInput
-            style={styles.textInput}
-            onChangeText={(text) => {
-              this.setState({ inputText: text });
-            }}
             placeholder="아이디"
+            secureTextEntry={false}
+            style={styles.textInput}
           />
         </View>
         <View style={styles.buttonwhite}>
           <TextInput
+            secureTextEntry={true}
             style={styles.textInput}
-            onChangeText={(text) => {
-              this.setState({ inputText: text });
-            }}
             placeholder="비밀번호"
           />
         </View>
