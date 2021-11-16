@@ -39,10 +39,8 @@ function signup4({ navigation }) {
             <View style={styles.numberbutton}>
               <View style={styles.number3}>
                 <TextInput
-                  style={styles.MText}
-                  onChangeText={(text) => {
-                    this.setState({ inputText: text });
-                  }}
+                  style={styles.textInput}
+                  secureTextEntry={false}
                   placeholder="아이디 입력"
                 />
               </View>
@@ -50,9 +48,7 @@ function signup4({ navigation }) {
             <View style={styles.button1}>
               <TextInput
                 style={styles.textInput}
-                onChangeText={(text) => {
-                  this.setState({ inputText: text });
-                }}
+                secureTextEntry={true}
                 placeholder="비밀번호 입력"
               />
             </View>
@@ -66,9 +62,7 @@ function signup4({ navigation }) {
             <View style={styles.buttonwhite}>
               <TextInput
                 style={styles.textInput}
-                onChangeText={(text) => {
-                  this.setState({ inputText: text });
-                }}
+                secureTextEntry={false}
                 placeholder="이름"
               />
             </View>
@@ -80,9 +74,7 @@ function signup4({ navigation }) {
               <View style={styles.number2}>
                 <TextInput
                   style={styles.textInput}
-                  onChangeText={(text) => {
-                    this.setState({ inputText: text });
-                  }}
+                  secureTextEntry={false}
                   placeholder="휴대전화번호"
                 />
               </View>
@@ -97,9 +89,7 @@ function signup4({ navigation }) {
             <View style={styles.buttonwhite}>
               <TextInput
                 style={styles.textInput}
-                onChangeText={(text) => {
-                  this.setState({ inputText: text });
-                }}
+                secureTextEntry={false}
                 placeholder="'-' 제외 8자리를 입력해주세요"
               />
             </View>
@@ -121,9 +111,7 @@ function signup4({ navigation }) {
               <TouchableOpacity
                 style={styles.genderB2}
                 activeOpacity={0.8}
-                onPress={() => {
-                  
-                }}
+                onPress={() => {}}
               >
                 <Text style={styles.gendertext}> 여자 </Text>
               </TouchableOpacity>
@@ -183,8 +171,10 @@ const styles = StyleSheet.create({
 
   textInput: {
     fontSize: 17,
-    color: "#AFAFAF",
+    color: "#000000",
     marginLeft: "5%",
+    width:"95%",
+    height:"100%",
   },
   margin: {
     flex: 1,

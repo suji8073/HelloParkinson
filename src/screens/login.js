@@ -103,8 +103,9 @@ const styles = StyleSheet.create({
   },
   textInput: {
     fontSize: 17,
-    color: "#AFAFAF",
+    color: "#000000",
     marginLeft: "5%",
+    height:"100%",
   },
   green: {
     fontSize: 17,
