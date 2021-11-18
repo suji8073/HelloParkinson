@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import list from "../screens/list";
+import list from "../screens/List";
 import profile from "../screens/profile";
 import statistics from "../screens/statistics";
 import progress from "../screens/progress";
@@ -45,7 +45,7 @@ const TabNavigation = () => {
           headerTitleAlign: "center",
           tabBarLabelStyle: {
             fontSize: 17,
-            fontWeight:"bold"
+            fontWeight: "bold",
           },
           tabBarIcon: (props) => menuIcon({ ...props, name: "reader" }),
         }}
@@ -59,7 +59,7 @@ const TabNavigation = () => {
           headerTitleAlign: "center",
           tabBarLabelStyle: {
             fontSize: 17,
-            fontWeight:"bold"
+            fontWeight: "bold",
           },
           tabBarIcon: (props) =>
             menuIcon({ ...props, name: "md-pie-chart-outline" }),
@@ -74,7 +74,7 @@ const TabNavigation = () => {
           headerTitleAlign: "center",
           tabBarLabelStyle: {
             fontSize: 17,
-            fontWeight:"bold"
+            fontWeight: "bold",
           },
           tabBarIcon: (props) => menuIcon({ ...props, name: "podium" }),
         }}
@@ -88,7 +88,7 @@ const TabNavigation = () => {
           headerTitleAlign: "center",
           tabBarLabelStyle: {
             fontSize: 17,
-            fontWeight:"bold"
+            fontWeight: "bold",
           },
           tabBarIcon: (props) => TabIcon({ ...props, name: "account-circle" }),
         }}

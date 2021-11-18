@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { ThemeProvider } from "styled-components/native";
-
+import checkgreensvg from "../icon/checkgreen.svg";
+import checksilversvg from "../icon/checkgreen.svg";
 function signup1({ navigation }) {
   return (
     <View style={styles.finalView}>
@@ -46,10 +47,15 @@ function signup1({ navigation }) {
             <TouchableOpacity
               //onPress={()=>this.moveToAddNewCustomer()}
               onPress={() => {
-                document.getElementById("change").name = ""
+                document.getElementById("change").name = "";
               }}
             >
-              <FontAwesome id = "change" name="circle-thin" size={30} color="#E1E1E1" />
+              <FontAwesome
+                id="change"
+                name="circle-thin"
+                size={30}
+                color="#E1E1E1"
+              />
             </TouchableOpacity>
 
             <Text style={styles.SText}> 이용약관 동의 (필수) </Text>

@@ -7,13 +7,15 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
+import { WithLocalSvg } from "react-native-svg";
 import PercentageBar from "./progressbar";
 import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
 import Task from "./task3";
 import { Entypo } from "@expo/vector-icons";
-
+import ddaysvg from "../icon/dday.svg";
+import { AntDesign } from "@expo/vector-icons";
 function progress({ navigation }) {
   return (
     <View style={styles.finalView}>
@@ -28,30 +30,99 @@ function progress({ navigation }) {
         <View style={styles.margin}></View>
         <Entypo name="dots-three-vertical" size={24} color="#595959" />
       </View>
+      <View
+        style={{
+          backgroundColor: "#F8F8F8",
+          height: "100%",
+          flexDirection: "column",
+          alignContent: "stretch",
+        }}
+      >
+        <View
+          style={{
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "3%",
+          }}
+        >
+          <Text style={{ fontSize: 21 }}>2월</Text>
+        </View>
 
-      <ScrollView style={{ marginTop: 5 }}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("user_progress");
+        <View
+          style={{
+            borderRadius: 19,
+            backgroundColor: "#ffffff",
+            height: "100%",
           }}
         >
-          <Task name="김옥분" age="5" sex="여" progress="50%" minute="5" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("user_progress");
-          }}
-        >
-          <Task name="김채현" age="6" sex="남" progress="80%" minute="5" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("user_progress");
-          }}
-        >
-          <Task name="채수지" age="15" sex="여" progress="58%" minute="5" />
-        </TouchableOpacity>
-      </ScrollView>
+          <View
+            style={{
+              flexDirection: "row",
+              marginTop: "5%",
+              alignItems: "center",
+              justifyContent: "space-evenly",
+              padding: "2%",
+            }}
+          >
+            <WithLocalSvg width={30} height={30} asset={ddaysvg} />
+            <AntDesign name="left" size={30} color="#808080" />
+            <View style={styles.dayview}>
+              <Text style={styles.lasttext}>일</Text>
+              <Text style={styles.lasttext}>31</Text>
+            </View>
+            <View style={styles.dayview}>
+              <Text style={styles.lasttext}>월</Text>
+              <Text style={styles.lasttext}>1</Text>
+            </View>
+            <View style={styles.dayview}>
+              <Text style={styles.lasttext}>화</Text>
+              <Text style={styles.lasttext}>2</Text>
+            </View>
+            <View style={styles.dayview}>
+              <Text style={styles.lasttext}>수</Text>
+              <Text style={styles.ddaytext}>3</Text>
+            </View>
+            <View style={styles.dayview}>
+              <Text style={styles.nexttext}>목</Text>
+              <Text style={styles.nexttext}>4</Text>
+            </View>
+            <View style={styles.dayview}>
+              <Text style={styles.nexttext}>금</Text>
+              <Text style={styles.nexttext}>5</Text>
+            </View>
+            <View style={styles.dayview}>
+              <Text style={styles.nexttext}>토</Text>
+              <Text style={styles.nexttext}>6</Text>
+            </View>
+
+            <AntDesign name="right" size={30} color="#808080" />
+          </View>
+          <ScrollView style={{ marginTop: 5 }}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("user_progress");
+              }}
+            >
+              <Task name="김옥분" age="5" sex="여" progress="50%" minute="5" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("user_progress");
+              }}
+            >
+              <Task name="김채현" age="6" sex="남" progress="80%" minute="5" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("user_progress");
+              }}
+            >
+              <Task name="채수지" age="15" sex="여" progress="58%" minute="5" />
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
+      </View>
     </View>
   );
 }
@@ -70,7 +141,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingRight: 20,
     paddingLeft: 20,
-    marginTop:"10%",
+    marginTop: "10%",
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
@@ -102,5 +173,21 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,
+  },
+  lasttext: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "#484848",
+  },
+  dayview: { alignItems: "center", marginHorizontal: "3%" },
+  nexttext: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "#B5B5B5",
+  },
+  ddaytext: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "#ffffff",
   },
 });
