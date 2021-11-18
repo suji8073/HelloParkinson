@@ -29,27 +29,23 @@ const alarm_task = ({ navigation, apm, hour, minute, cycle }) => {
         </Text>
         <Text style={{ fontSize: 17 }}>{cycle}</Text>
       </View>
-      <TouchableOpacity
-      // 왜안되는데
-      // onPress={() => {
-      // navigation.navigate("alarm_edit");
-      // }}
+      {/* <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("alarm_edit");
+        }}
+      > */}
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          onPress={() => {
-            navigation.navigate("alarm_edit");
-          }}
-        >
-          <Entypo name="chevron-thin-right" size={24} color="#808080" />
-        </View>
-      </TouchableOpacity>
+        <Entypo name="chevron-thin-right" size={24} color="#808080" />
+      </View>
+      {/* </TouchableOpacity> */}
     </View>
   );
 };

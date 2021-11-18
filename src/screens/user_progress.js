@@ -4,11 +4,11 @@ import {
   StatusBar,
   TouchableOpacity,
   Text,
-  ScrollView,
   View,
   StyleSheet,
   Touchable,
 } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import ActionButton from "react-native-action-button";
 import { Directions } from "react-native-gesture-handler";
 import styled from "styled-components/native";
@@ -110,17 +110,34 @@ const progress = ({ navigation }) => {
         {/* 여기까지 view2/3 */}
         {/* 여기부터 view3/3 */}
 
-        {/* <ScrollView style={{ flexDirection: "row", margin: "1%" }}>
-          <View style={{ marginBottom: "1%" }}>
-            <Text style={{ fontSize: 17 }}>진행중</Text>
-            <Text style={styles.movetext}>날개뼈모으기</Text>
-            <Text style={styles.movetext}>여기에 프로그레스 바</Text>
-          </View>
-          <View>
-            <Text style={{ fontSize: 17 }}>미실시 운동</Text>
-            <Text style={styles.movetext}>몸쪽 앞쪽 근육</Text>
-          </View>
-        </ScrollView> */}
+        {/* <ScrollView style={{ flexDirection: "row", margin: "1%" }}> */}
+        <View styel={styles.threeView}>
+          <ScrollView
+            contentContainerStyle={{
+              flexGrow: 1,
+              flexDirection: "column",
+              justifyContent: "space-between",
+              paddingBottom: "5%",
+            }}
+          >
+            <View style={{ marginBottom: "3%" }}>
+              <Text style={styles.movetitletext}>진행중</Text>
+              <Text style={styles.movetext}>날개뼈모으기</Text>
+              <Text style={styles.movetext}>여기에 프로그레스 바</Text>
+            </View>
+            <View>
+              <Text style={styles.movetitletext}>미실시 운동</Text>
+              <Text style={styles.movetext}>몸쪽 앞쪽 근육</Text>
+              <Text style={styles.movetext}>운동회전 근육 스트레칭</Text>
+              <Text style={styles.movetext}>몸통 스트레칭 1단계</Text>
+              <Text style={styles.movetext}>몸통 스트레칭 2단계</Text>
+              <Text style={styles.movetext}>몸쪽 앞쪽 근육</Text>
+              <Text style={styles.movetext}>운동회전 근육 스트레칭</Text>
+              <Text style={styles.movetext}>몸통 스트레칭 1단계</Text>
+              <Text style={styles.movetext}>몸통 스트레칭 2단계</Text>
+            </View>
+          </ScrollView>
+        </View>
       </View>
       <ActionButton
         bgColor="rgba(0,0,0,1)"
@@ -174,6 +191,14 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     backgroundColor: "#FFFFFF",
   },
+  threeView: {
+    // padding:30,
+    marginTop: 10,
+    marginBottom: 230,
+    alignItems: "flex-start",
+    justifyContent: "center",
+    flexDirection: "row",
+  },
 
   margin: {
     // padding:30,
@@ -189,5 +214,7 @@ const styles = StyleSheet.create({
   },
   movetext: {
     fontSize: 17,
+    marginBottom: "1.5%",
   },
+  movetitletext: { fontSize: 17, fontWeight: "bold", marginBottom: "1.5%" },
 });
