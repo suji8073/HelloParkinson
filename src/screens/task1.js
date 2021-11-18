@@ -3,7 +3,10 @@ import { StyleSheet, View, Text } from "react-native";
 import PropTypes from "prop-types";
 import { Ionicons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
+import { WithLocalSvg } from "react-native-svg";
 
+import nocheck from "../icon/radio_btn_nocheck.svg";
+import check from "../icon/radio_button_check.svg";
 function Task({ text1, text2, text3 }) {
   return (
     <View style={styles.Container}>
