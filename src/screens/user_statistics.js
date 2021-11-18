@@ -15,6 +15,7 @@ import { Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import Task from "../screens1/task_record_day";
+import Task1 from "../screens1/task_graph";
 
 function user_statistics({ navigation }) {
   return (
@@ -62,7 +63,9 @@ function user_statistics({ navigation }) {
               <Text style={styles.text3}>2021년 1월 31일 ~ 2월 6일</Text>
             </View>
 
-            <View style={styles.graphview}></View>
+            <View style={styles.graphview}>
+              <Task1></Task1>
+            </View>
           </View>
 
           <View style={styles.threeView}>
@@ -154,7 +157,8 @@ const styles = StyleSheet.create({
     marginRight: "5%",
     marginTop: "3%",
     marginBottom: "5%",
-    padding: "5%",
+    paddingLeft: "5%",
+    paddingRight: "5%",
     width: "90%",
     height: 200,
     backgroundColor: "#FFFFFF",
@@ -185,14 +189,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   textview: {
-    marginBottom: "5%",
     justifyContent: "flex-start",
-    alignItems:"center",
+    alignItems: "center",
     flexDirection: "row",
+    marginTop: "5%",
+    marginBottom: "3%",
   },
   graphview: {
     flex: 3,
-    borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
   },

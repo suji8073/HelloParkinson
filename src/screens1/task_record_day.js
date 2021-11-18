@@ -21,7 +21,7 @@ const task_patient = ({}) => {
         flexDirection: "column",
         height: 200,
         marginBottom:"10%",
-        width: "100%",
+        width: 300,
         justifyContent: "center",
       }}
     >
@@ -35,13 +35,12 @@ const task_patient = ({}) => {
           <Text style={styles.num2}>40</Text>
           <Text style={styles.num2}>90</Text>
           <Text style={styles.num2}>50</Text>
-          <View style={styles.num4}></View>
         </View>
         <LineChart
           style={styles.chart}
           data={data}
-          width={300}
-          height={130}
+          width={330}
+          height={100}
           yAxisSuffix="%"
           yAxisInterval={1}
           
@@ -90,17 +89,15 @@ const styles = StyleSheet.create({
     lineHeight:20,
   },
   text3: {
-    flex: 1.6,
+    flex: 1.3,
   },
   text4: {
-    flex: 0.5,
+    flex: 0.3,
   },
   graphView: {
     flex: 3,
-    marginTop: "5%",
     marginBottom: "5%",
     width: "100%",
-    borderColor: "#E5E5E5",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -126,13 +123,10 @@ const styles = StyleSheet.create({
     color: "#484848",
     justifyContent: "center",
     alignItems: "center",
-    flex: 1.5,
+    flex: 1.8,
   },
   num3: {
-    flex: 2,
-  },
-  num4: {
-    flex: 0.3,
+    flex: 1.4,
   },
 
   
