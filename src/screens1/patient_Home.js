@@ -153,7 +153,7 @@ function patient_Home({ navigation }) {
         </View>
         {/* 환자 순위 4~ */}
         <ScrollView
-          style={{ backgroundColor: "#ffffff", margin: "5%", borderRadius: 7 }}
+          style={{ backgroundColor: "#ffffff", margin: "5%", borderRadius: 7, marginBottom:200 }}
         >
           <Task5 record="4" name="김옥분" age="5" sex="여" />
           <Task5 record="5" name="김채현" age="5" sex="여" />

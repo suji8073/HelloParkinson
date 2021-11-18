@@ -8,9 +8,13 @@ const data = {
       data: [75, 25, 40, 90, 55],
       color: (opacity = 0) => `rgba(101, 203, 0, ${opacity})`, // optional
       strokeWidth: 1.5,
+      plugins:{
+        legend:{
+          display:false,
+        }
+      }
     },
   ],
-
 };
 const task_patient = ({}) => {
   return (
@@ -20,7 +24,6 @@ const task_patient = ({}) => {
         alignItems: "flex-start",
         flexDirection: "column",
         height: 200,
-        marginBottom:"10%",
         width: 300,
         justifyContent: "center",
       }}
@@ -41,14 +44,12 @@ const task_patient = ({}) => {
           data={data}
           width={330}
           height={100}
-          yAxisSuffix="%"
-          yAxisInterval={1}
-          
           chartConfig={{
             backgroundColor: "#FFFFFF",
             backgroundGradientFrom: "#FFFFFF",
             backgroundGradientTo: "#FFFFFF",
             decimalPlaces: 0,
+
             color: (opacity = 1) => `rgba(198, 198, 198, ${opacity})`,
             labelColor: (opacity = 1) => `rgba(72, 72, 72, ${opacity})`,
             propsForDots: {
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flex: 1.5,
-    lineHeight:20,
+    lineHeight: 20,
   },
   text3: {
     flex: 1.3,
@@ -110,15 +111,16 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     width: "100%",
+    marginBottom: "5%",
   },
-  numView:{
+  numView: {
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "center",
     width: "100%",
-    marginTop:"8%",
+    marginTop: "8%",
   },
-  num2:{
+  num2: {
     fontSize: 14,
     color: "#484848",
     justifyContent: "center",
@@ -128,6 +130,4 @@ const styles = StyleSheet.create({
   num3: {
     flex: 1.4,
   },
-
-  
 });

@@ -4,7 +4,7 @@ import {
   View,
   Text,
   ScrollView,
-  Left,
+  TouchableOpacity,
   Body,
   TextInput,
 } from "react-native";
@@ -16,7 +16,7 @@ import { EvilIcons } from "@expo/vector-icons";
 
 import Svg from "../icon/noimage.svg";
 
-function patient_profile({ navigation }) {
+function move_1({ navigation }) {
   return (
     <View style={styles.finalView}>
       <View style={styles.menuView}>
@@ -42,21 +42,40 @@ function patient_profile({ navigation }) {
             justifyContent: "space-between",
           }}
         >
-          <Task image = {Svg} text1 = "목 앞 근육 스트레칭" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "목 좌우 근육 스트레칭" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "목통 앞쪽 근육 스트레칭" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "목통 옆쪽 근육 스트레칭" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "목통 회전 근육 스트레칭" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "목통 스트레칭 1단계" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "목통 스트레칭 2단계" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "목통 스트레칭 3단계" text2="1 / 5"></Task>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play");
+            }}
+          >
+            <Task image={Svg} text1="목 앞 근육 스트레칭" text2="1 / 5"></Task>
+          </TouchableOpacity>
+
+          <Task image={Svg} text1="목 좌우 근육 스트레칭" text2="1 / 5"></Task>
+          <Task
+            image={Svg}
+            text1="목통 앞쪽 근육 스트레칭"
+            text2="1 / 5"
+          ></Task>
+          <Task
+            image={Svg}
+            text1="목통 옆쪽 근육 스트레칭"
+            text2="1 / 5"
+          ></Task>
+          <Task
+            image={Svg}
+            text1="목통 회전 근육 스트레칭"
+            text2="1 / 5"
+          ></Task>
+          <Task image={Svg} text1="목통 스트레칭 1단계" text2="1 / 5"></Task>
+          <Task image={Svg} text1="목통 스트레칭 2단계" text2="1 / 5"></Task>
+          <Task image={Svg} text1="목통 스트레칭 3단계" text2="1 / 5"></Task>
         </ScrollView>
       </View>
     </View>
   );
 }
 
-export default patient_profile;
+export default move_1;
 
 const styles = StyleSheet.create({
   finalView: {
@@ -99,7 +118,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
-    marginBottom:"30%",
+    marginBottom: "30%",
   },
 
   margin: {
