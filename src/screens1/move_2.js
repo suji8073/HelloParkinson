@@ -16,7 +16,7 @@ import { EvilIcons } from "@expo/vector-icons";
 
 import Svg from "../icon/noimage.svg";
 
-function patient_profile({ navigation }) {
+function move_2({ navigation }) {
   return (
     <View style={styles.finalView}>
       <View style={styles.menuView}>
@@ -55,7 +55,7 @@ function patient_profile({ navigation }) {
   );
 }
 
-export default patient_profile;
+export default move_2;
 
 const styles = StyleSheet.create({
   finalView: {

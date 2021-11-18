@@ -3,7 +3,7 @@ import {
   StyleSheet,
   View,
   Text,
-  ScrollView,
+  TouchableOpacity,
   Left,
   Body,
   TextInput,
@@ -16,7 +16,7 @@ import { EvilIcons } from "@expo/vector-icons";
 
 import Svg from "../icon/noimage.svg";
 
-function move_4({ navigation }) {
+function move_play({ navigation }) {
   return (
     <View style={styles.finalView}>
       <View style={styles.menuView}>
@@ -25,37 +25,39 @@ function move_4({ navigation }) {
           size={24}
           color="#808080"
           onPress={() => {
-            navigation.navigate("TabNavigation1");
+            navigation.pop();
           }}
         />
         <View style={styles.margin}></View>
-        <Text style={styles.titleText}>구강 및 발성 운동</Text>
+        <Text style={styles.titleText}>나의 운동 목록</Text>
         <View style={styles.margin}></View>
         <EvilIcons name="star" size={30} color="#ffffff" />
       </View>
 
-      <View style={styles.secondView}>
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            flexDirection: "column",
-            justifyContent: "space-between",
+      <View style={styles.secondView}></View>
+
+      <View style={styles.chatControl}>
+        <TouchableOpacity
+          style={styles.sendButton}
+          activeOpacity={0.8}
+          onPress={() => {
+            navigation.navigate("signup4");
           }}
         >
-          <Task image = {Svg} text1 = "아에이오우 소리내기" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "파!파!파!파!파! 소리내기" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "쪽 소리내기" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "혀로 볼 밀기" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "혀로 입천장 밀기" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "똑/딱 소리내기" text2="1 / 5"></Task>
-         
-        </ScrollView>
+          <View style={styles.mg}></View>
+          <AntDesign name="right" size={24} color="#7AC819" />
+          <View style={styles.margin}></View>
+          <Text style={styles.white}> 다   음 </Text>
+          <View style={styles.margin}></View>
+          <AntDesign name="right" size={15} color="#FFFFFF" />
+          <View style={styles.mg}></View>
+        </TouchableOpacity>
       </View>
     </View>
   );
 }
 
-export default move_4;
+export default move_play;
 
 const styles = StyleSheet.create({
   finalView: {
@@ -98,7 +100,35 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
-    marginBottom:"30%",
+    marginLeft: "5%",
+    marginRight: "5%",
+    marginTop: "5%",
+    marginBottom: "5%",
+    flex: 1,
+    borderWidth:1,
+  },
+  white: {
+    fontSize: 17,
+    fontWeight: "bold",
+    color: "#FFFFFF",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  sendButton: {
+    backgroundColor: "#7AC819",
+    width: "90%",
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+  },
+
+  chatControl: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: "15%",
   },
 
   margin: {
@@ -107,4 +137,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
   },
+  mg:{
+    flex: 0.1,
+  }
 });

@@ -1,21 +1,22 @@
 import React from "react";
 import {
-  TouchableOpacity,
-  StatusBar,
   StyleSheet,
   View,
   Text,
   ScrollView,
 } from "react-native";
-import { SimpleLineIcons } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
+
 import { AntDesign } from "@expo/vector-icons";
-import { EvilIcons } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import Task from "../screens1/task_record_day";
 import Task1 from "../screens1/task_graph";
+import SimplePopupMenu from "react-native-simple-popup-menu";
+
+const items = [
+  { id: "1", label: "주" },
+  { id: "2", label: "월" },
+  { id: "3", label: "년" },
+];
 
 function user_statistics({ navigation }) {
   return (
@@ -32,7 +33,15 @@ function user_statistics({ navigation }) {
         <View style={styles.margin}></View>
         <Text style={styles.titleText}>'김옥분'님 의 운동 통계</Text>
         <View style={styles.margin}></View>
-        <Entypo name="dots-three-vertical" size={24} color="#595959" />
+
+        <SimplePopupMenu
+          items={items}
+          cancelLabel={"취소"}
+          //onSelect={() => alert(this.label)}
+          onCancel={() => console.log("onCancel")}
+        >
+          <Entypo name="dots-three-vertical" size={24} color="#595959" />
+        </SimplePopupMenu>
       </View>
 
       <View style={styles.mainView}>
@@ -48,11 +57,6 @@ function user_statistics({ navigation }) {
             <Text style={styles.user_age}>/77세</Text>
             <Text style={styles.user_sex}>/여</Text>
             <View style={styles.margin}></View>
-            <MaterialCommunityIcons
-              name="google-spreadsheet"
-              size={30}
-              color="#0F9D58"
-            />
           </View>
 
           <View style={styles.secondView}>
@@ -119,8 +123,9 @@ const styles = StyleSheet.create({
     marginLeft: "5%",
     marginRight: "5%",
     flexDirection: "row",
+    marginBottom: "2%",
     flex: 1,
-    marginTop: 15,
+    marginTop: "5%",
   },
   user_name: {
     alignItems: "flex-start",
@@ -168,7 +173,7 @@ const styles = StyleSheet.create({
   threeView: {
     marginLeft: "5%",
     marginRight: "5%",
-    marginBottom: "5%",
+    marginBottom: "30%",
     padding: "5%",
     width: "90%",
     backgroundColor: "#FFFFFF",

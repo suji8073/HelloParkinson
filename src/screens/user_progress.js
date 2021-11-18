@@ -110,7 +110,6 @@ const progress = ({ navigation }) => {
         {/* 여기까지 view2/3 */}
         {/* 여기부터 view3/3 */}
 
-        {/* <ScrollView style={{ flexDirection: "row", margin: "1%" }}> */}
         <View styel={styles.threeView}>
           <ScrollView
             contentContainerStyle={{
