@@ -1,111 +1,167 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  Alert,
+} from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { ThemeProvider } from "styled-components/native";
-import checkgreensvg from "../icon/checkgreen.svg";
-import checksilversvg from "../icon/checkgreen.svg";
 
-function signup1({ navigation }) {
-  return (
-    <View style={styles.finalView}>
-      <View style={styles.settingView}>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            navigation.navigate("login");
-          }}
-        >
-          <View>
-            <AntDesign name="left" size={24} color="#CACACA" />
-          </View>
-        </TouchableOpacity>
-      </View>
+import nocheck from "../icon/silver.svg";
+import check from "../icon/checkgreen.svg";
 
-      <View>
-        <Text style={styles.titleText}>
-          굿나잇 파킨슨이 처음이시군요.{"\n"}
-          <Text style={styles.point}>약관내용에 동의</Text>해주세요.
-        </Text>
-      </View>
-      <View style={styles.marginView}></View>
+import { WithLocalSvg } from "react-native-svg";
+import { or } from "react-native-reanimated";
 
-      <View style={styles.groupa}>
-        <View style={styles.group}>
+export default class siginup1 extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      onname1: nocheck,
+      onname2: nocheck,
+      onname3: nocheck,
+    };
+  }
+
+  handleClick1 = () => {
+    if (this.state.onname1 === nocheck) {
+      this.setState({ onname1: check, onname2: check, onname3: check });
+    } else {
+      this.setState({ onname1: nocheck, onname2: nocheck, onname3: nocheck });
+    }
+  };
+  handleClick2 = () => {
+    if (this.state.onname2 === nocheck && this.state.onname3 === check) {
+      this.setState({ onname2: check, onname1: check });
+    } else if (this.state.onname1 === check && this.state.onname2 === check) {
+      this.setState({ onname2: nocheck, onname1: nocheck });
+    } else if (this.state.onname2 === nocheck) {
+      this.setState({ onname2: check });
+    } else {
+      this.setState({ onname2: nocheck });
+    }
+  };
+  handleClick3 = () => {
+    if (this.state.onname3 === nocheck && this.state.onname2 === check) {
+      this.setState({ onname3: check, onname1: check });
+    } else if (this.state.onname1 === check && this.state.onname3 === check) {
+      this.setState({ onname3: nocheck, onname1: nocheck });
+    } else if (this.state.onname3 === nocheck) {
+      this.setState({ onname3: check });
+    } else {
+      this.setState({ onname3: nocheck });
+    }
+  };
+
+  render() {
+    return (
+      <View style={styles.finalView}>
+        <View style={styles.settingView}>
           <TouchableOpacity
-          //onPress={()=>this.moveToAddNewCustomer()}
+            activeOpacity={0.8}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            onPress={() => {
+              navigation.navigate("login");
+            }}
           >
-            <FontAwesome name="circle-thin" size={30} color="#E1E1E1" />
+
+            <View>
+              <AntDesign name="left" size={24} color="#CACACA" />
+            </View>
           </TouchableOpacity>
-          <Text style={styles.MText}> 약관 전체 동의 </Text>
         </View>
-        <View style={styles.line}></View>
-
-        <View style={styles.marginView2}></View>
-
-        <View style={styles.MainView}>
+        <View>
+          <Text style={styles.titleText}>
+            굿나잇 파킨슨이 처음이시군요.{"\n"}
+            <Text style={styles.point}>약관내용에 동의</Text>해주세요.
+          </Text>
+        </View>
+        <View style={styles.marginView}></View>
+        <View style={styles.groupa}>
           <View style={styles.group}>
             <TouchableOpacity
-              //onPress={()=>this.moveToAddNewCustomer()}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              onPress={this.handleClick1}
+            >
+              <WithLocalSvg width={30} height={30} asset={this.state.onname1} />
+            </TouchableOpacity>
+            <Text style={styles.MText}> 약관 전체 동의 </Text>
+          </View>
+          <View style={styles.line}></View>
+
+          <View style={styles.marginView2}></View>
+
+          <View style={styles.MainView}>
+            <View style={styles.group}>
+              <TouchableOpacity
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                onPress={this.handleClick2}
+              >
+                <WithLocalSvg
+                  width={30}
+                  height={30}
+                  asset={this.state.onname2}
+                />
+              </TouchableOpacity>
+
+              <Text style={styles.SText}> 이용약관 동의 (필수) </Text>
+            </View>
+
+            <TouchableOpacity
+                        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
               onPress={() => {
-                document.getElementById("change").name = "";
+                this.props.navigation.navigate("signup2");
               }}
             >
-              <FontAwesome
-                id="change"
-                name="circle-thin"
-                size={30}
-                color="#E1E1E1"
-              />
+              <AntDesign name="right" size={24} color="#CACACA" />
             </TouchableOpacity>
-
-            <Text style={styles.SText}> 이용약관 동의 (필수) </Text>
           </View>
 
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("signup2");
-            }}
-          >
-            <AntDesign name="right" size={24} color="#CACACA" />
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.MainView}>
-          <View style={styles.group}>
+          <View style={styles.MainView}>
+            <View style={styles.group}>
+              <TouchableOpacity
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                onPress={this.handleClick3}
+              >
+                <WithLocalSvg
+                  width={30}
+                  height={30}
+                  asset={this.state.onname3}
+                />
+              </TouchableOpacity>
+              <Text style={styles.SText}>
+                개인정보 수집 및 이용 동의 (필수)
+              </Text>
+            </View>
             <TouchableOpacity
-            //onPress={()=>this.moveToAddNewCustomer()}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              onPress={() => {
+                this.props.navigation.navigate("signup3");
+              }}
             >
-              <FontAwesome name="circle-thin" size={30} color="#E1E1E1" />
+              <AntDesign name="right" size={24} color="#CACACA" />
             </TouchableOpacity>
-            <Text style={styles.SText}>개인정보 수집 및 이용 동의 (필수)</Text>
           </View>
+        </View>
+        <View style={styles.chatControl}>
           <TouchableOpacity
+            style={styles.sendButton}
+            activeOpacity={0.8}
             onPress={() => {
-              navigation.navigate("signup3");
+              this.props.navigation.navigate("signup4");
             }}
           >
-            <AntDesign name="right" size={24} color="#CACACA" />
+            <Text style={styles.white}> 다 음 </Text>
           </TouchableOpacity>
         </View>
       </View>
-
-      <View style={styles.chatControl}>
-        <TouchableOpacity
-          style={styles.sendButton}
-          activeOpacity={0.8}
-          onPress={() => {
-            navigation.navigate("signup4");
-          }}
-        >
-          <Text style={styles.white}> 다 음 </Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
+    );
+  }
 }
-
-export default signup1;
 
 const styles = StyleSheet.create({
   finalView: {

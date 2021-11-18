@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   StyleSheet,
   View,
@@ -9,134 +9,159 @@ import {
   TextInput,
 } from "react-native";
 
-import { MaterialIcons } from "@expo/vector-icons";
+import { WithLocalSvg } from "react-native-svg";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 
-function patient_profile_edit({ navigation }) {
-  return (
-    <View style={styles.finalView}>
-      <View style={styles.menuView}>
-        <EvilIcons name="star" size={30} color="#ffffff" />
+import nocheck from "../icon/radio_btn_nocheck.svg";
+import check from "../icon/radio_button_check.svg";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-        <View style={styles.margin}></View>
-        <Text style={styles.titleText}>프로필</Text>
-        <View style={styles.margin}></View>
-        <AntDesign
-          name="check"
-          size={24}
-          color="#5CB405"
-          onPress={() => {
-            Alert.alert("저장되었습니다.");
-            navigation.navigate("patient_profile");
-          }}
-        />
-      </View>
+export default class patient_profile_edit extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      onname1: check,
+      onname2: nocheck,
+    };
+  }
 
-      <View style={styles.firstView}>
-        <Ionicons
-          name="person-circle-sharp"
-          size={120}
-          color="lightblue"
-          alignItems="center"
-        />
-        <Text style={styles.user_name}>프로필 사진 변경</Text>
-      </View>
-      <View style={styles.secondView}>
-        <View style={styles.memoView}>
-          <Text style={styles.text1}>이름</Text>
-        </View>
-        <View style={styles.textView}>
-          <TextInput
-            style={styles.text2}
-            onChangeText={(text) => {
-              this.setState({ inputText: text });
-            }}
-            placeholder="김옥분"
-          />
-        </View>
-      </View>
+  handleClick1 = () => {
+    if (this.state.onname1 === nocheck && this.state.onname2 === check) {
+      this.setState({ onname1: check, onname2: nocheck });
+    } else if (this.state.onname1 === nocheck) {
+      this.setState({ onname1: check });
+    } else {
+      this.setState({ onname1: nocheck });
+    }
+  };
+  handleClick2 = () => {
+    if (this.state.onname2 === nocheck && this.state.onname1 === check) {
+      this.setState({ onname2: check, onname1: nocheck });
+    } else if (this.state.onname2 === nocheck) {
+      this.setState({ onname2: check });
+    } else {
+      this.setState({ onname2: nocheck });
+    }
+  };
 
-      <View style={styles.secondView}>
-        <View style={styles.memoView}>
-          <Text style={styles.text1}>아이디</Text>
-        </View>
-        <View style={styles.textView}>
-          <TextInput
-            style={styles.text2}
-            onChangeText={(text) => {
-              this.setState({ inputText: text });
-            }}
-            placeholder="seoul1243"
-          />
-        </View>
-      </View>
-
-      <View style={styles.secondView}>
-        <View style={styles.memoView}>
-          <Text style={styles.text1}>비밀번호</Text>
-        </View>
-        <View style={styles.textView}>
-          <TextInput
-            style={styles.text2}
-            onChangeText={(text) => {
-              this.setState({ inputText: text });
-            }}
-            placeholder="(미입력시 기존 비밀번호 유지)"
-          />
-        </View>
-      </View>
-      <View style={styles.secondView}>
-        <View style={styles.memoView}>
-          <Text style={styles.text1}>비밀번호 재확인</Text>
-        </View>
-        <View style={styles.textView}>
-          <TextInput
-            style={styles.text2}
-            onChangeText={(text) => {
-              this.setState({ inputText: text });
-            }}
-            placeholder="(미입력시 기존 비밀번호 유지)"
-          />
-        </View>
-      </View>
-
-      <View style={styles.secondView}>
-        <View style={styles.memoView}>
-          <Text style={styles.text1}>생년월일</Text>
-        </View>
-        <View style={styles.textView}>
-          <TextInput
-            style={styles.text2}
-            onChangeText={(text) => {
-              this.setState({ inputText: text });
-            }}
-            placeholder="1945-03-21"
-          />
-        </View>
-      </View>
-
-      <View style={styles.secondView1}>
-        <View style={styles.memoView}>
-          <Text style={styles.text1}>성별</Text>
-        </View>
-        <View style={styles.ageview}>
-          <MaterialIcons name="radio-button-on" size={24} color="black" />
-          <Text style={styles.text2}> 남</Text>
+  render() {
+    return (
+      <View style={styles.finalView}>
+        <View style={styles.menuView}>
+          <EvilIcons name="star" size={30} color="#ffffff" />
 
           <View style={styles.margin}></View>
-          <MaterialIcons name="radio-button-on" size={24} color="black" />
-          <Text style={styles.text2}> 여</Text>
+          <Text style={styles.titleText}>프로필</Text>
           <View style={styles.margin}></View>
+          <AntDesign
+            name="check"
+            size={24}
+            color="#5CB405"
+            onPress={() => {
+              Alert.alert("저장되었습니다.");
+              this.props.navigation.navigate("patient_profile");
+            }}
+          />
         </View>
+
+        <View style={styles.firstView}>
+          <Ionicons
+            name="person-circle-sharp"
+            size={120}
+            color="lightblue"
+            alignItems="center"
+          />
+          <Text style={styles.user_name}>프로필 사진 변경</Text>
+        </View>
+        <View style={styles.secondView}>
+          <View style={styles.memoView}>
+            <Text style={styles.text1}>이름</Text>
+          </View>
+          <View style={styles.textView}>
+            <Text style={styles.text2}>김옥분</Text>
+          </View>
+        </View>
+
+        <View style={styles.secondView}>
+          <View style={styles.memoView}>
+            <Text style={styles.text1}>아이디</Text>
+          </View>
+          <View style={styles.textView}>
+            <Text style={styles.text2}>seoul1243</Text>
+          </View>
+        </View>
+
+        <View style={styles.secondView}>
+          <View style={styles.memoView}>
+            <Text style={styles.text1}>비밀번호</Text>
+          </View>
+          <View style={styles.textView}>
+            <TextInput
+              style={styles.text2}
+              onChangeText={(text) => {
+                this.setState({ inputText: text });
+              }}
+              placeholder="(미입력시 기존 비밀번호 유지)"
+            />
+          </View>
+        </View>
+        <View style={styles.secondView}>
+          <View style={styles.memoView}>
+            <Text style={styles.text1}>비밀번호 재확인</Text>
+          </View>
+          <View style={styles.textView}>
+            <TextInput
+              style={styles.text2}
+              onChangeText={(text) => {
+                this.setState({ inputText: text });
+              }}
+              placeholder="(미입력시 기존 비밀번호 유지)"
+            />
+          </View>
+        </View>
+
+        <View style={styles.secondView}>
+          <View style={styles.memoView}>
+            <Text style={styles.text1}>생년월일</Text>
+          </View>
+          <View style={styles.textView}>
+            <Text style={styles.text2}>1945-03-21</Text>
+          </View>
+        </View>
+
+        <View style={styles.secondView1}>
+          <View style={styles.memoView}>
+            <Text style={styles.text1}>성별</Text>
+          </View>
+          <View style={styles.ageview}>
+            <TouchableOpacity
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              onPress={this.handleClick1}
+            >
+              <WithLocalSvg width={24} height={24} asset={this.state.onname1} />
+            </TouchableOpacity>
+
+            <Text style={styles.text2}> 남</Text>
+
+            <View style={styles.margin}></View>
+            <TouchableOpacity
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              onPress={this.handleClick2}
+            >
+              <WithLocalSvg width={24} height={24} asset={this.state.onname2} />
+            </TouchableOpacity>
+            <Text style={styles.text2}> 여</Text>
+
+            <View style={styles.margin}></View>
+          </View>
+        </View>
+        <View style={styles.marginView}></View>
       </View>
-      <View style={styles.marginView}></View>
-    </View>
-  );
+    );
+  }
 }
-
-export default patient_profile_edit;
 
 const styles = StyleSheet.create({
   finalView: {
@@ -199,7 +224,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 0.5,
     borderColor: "#E5E5E5",
   },
-  secondView1:{
+  secondView1: {
     // padding:30,
     alignItems: "center",
     justifyContent: "center",

@@ -10,76 +10,80 @@ import {
 import React, { Component } from "react";
 import "react-native-gesture-handler";
 
-function login({ navigation }) {
-  return (
-    <View style={styles.finalView}>
-      <View style={styles.NoneView}></View>
+export default class login extends Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <View style={styles.finalView}>
+        <View style={styles.NoneView}></View>
 
-      <View style={styles.firstView}>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            navigation.navigate("xx");
-          }}
-        >
-          <Text style={styles.titleText}>
-            {"안녕하세요.\n굿나잇 파킨슨 입니다."}
+        <View style={styles.firstView}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => {
+              this.props.navigation.navigate("xx");
+            }}
+          >
+            <Text style={styles.titleText}>
+              {"안녕하세요.\n굿나잇 파킨슨 입니다."}
+            </Text>
+          </TouchableOpacity>
+
+          <Text style={styles.twoText}>
+            {"\n회원 서비스 이용을 위해 로그인 해주세요"}
           </Text>
-        </TouchableOpacity>
-
-        <Text style={styles.twoText}>
-          {"\n회원 서비스 이용을 위해 로그인 해주세요"}
-        </Text>
-      </View>
-
-      <View style={styles.secondView}>
-        <View style={styles.buttonwhite}>
-          <TextInput
-            placeholder="아이디"
-            secureTextEntry={false}
-            style={styles.textInput}
-          />
-        </View>
-        <View style={styles.buttonwhite}>
-          <TextInput
-            secureTextEntry={true}
-            style={styles.textInput}
-            placeholder="비밀번호"
-          />
         </View>
 
-        <TouchableOpacity
-          style={styles.buttongreen}
-          activeOpacity={0.8}
-          onPress={() => {
-            navigation.navigate("TabNavigation");
-          }}
-        >
-          <Text style={styles.green}> 로그인하기 </Text>
-        </TouchableOpacity>
-
-        <View style={styles.thirdView}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("TabNavigation1");
-            }}
-          >
-            <Text style={styles.secondText1}> 계정이 없으신가요?</Text>
-          </TouchableOpacity>
+        <View style={styles.secondView}>
+          <View style={styles.buttonwhite}>
+            <TextInput
+              placeholder="아이디"
+              secureTextEntry={false}
+              style={styles.textInput}
+            />
+          </View>
+          <View style={styles.buttonwhite}>
+            <TextInput
+              secureTextEntry={true}
+              style={styles.textInput}
+              placeholder="비밀번호"
+            />
+          </View>
 
           <TouchableOpacity
+            style={styles.buttongreen}
+            activeOpacity={0.8}
             onPress={() => {
-              navigation.navigate("signup1");
+              this.props.navigation.navigate("TabNavigation");
             }}
           >
-            <Text style={styles.secondText2}> 회원가입 하기.</Text>
+            <Text style={styles.green}> 로그인하기 </Text>
           </TouchableOpacity>
+
+          <View style={styles.thirdView}>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate("TabNavigation1");
+              }}
+            >
+              <Text style={styles.secondText1}> 계정이 없으신가요?</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate("signup1");
+              }}
+            >
+              <Text style={styles.secondText2}> 회원가입 하기.</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
-  );
+    );
+  }
 }
-
 const styles = StyleSheet.create({
   finalView: {
     flex: 1,
@@ -170,5 +174,3 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
 });
-
-export default login;

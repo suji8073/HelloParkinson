@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,131 +10,146 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
-function signup4({ navigation }) {
-  return (
-    <View style={styles.finalView}>
-      <View style={styles.settingView}>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            navigation.navigate("signup1");
-          }}
-        >
-          <View>
-            <AntDesign name="left" size={24} color="#CACACA" />
-          </View>
-        </TouchableOpacity>
-      </View>
+export default class siginup4 extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { colorId: 1 };
+  }
+  onPress = (id) => {
+    this.setState({ colorId: id });
+  };
 
-      <View style={styles.firstView}>
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}
-        >
-          <View style={styles.secondView}>
-            <Text style={styles.titleText}>아이디 / 비밀번호 설정</Text>
-            <View style={styles.numberbutton}>
-              <View style={styles.number3}>
+  render() {
+    return (
+      <View style={styles.finalView}>
+        <View style={styles.settingView}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => {
+              navigation.navigate("signup1");
+            }}
+          >
+            <View>
+              <AntDesign name="left" size={24} color="#CACACA" />
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.firstView}>
+          <ScrollView
+            contentContainerStyle={{
+              flexGrow: 1,
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <View style={styles.secondView}>
+              <Text style={styles.titleText}>아이디 / 비밀번호 설정</Text>
+              <View style={styles.numberbutton}>
+                <View style={styles.number3}>
+                  <TextInput
+                    style={styles.textInput}
+                    secureTextEntry={false}
+                    placeholder="아이디 입력"
+                  />
+                </View>
+              </View>
+              <View style={styles.button1}>
                 <TextInput
                   style={styles.textInput}
-                  secureTextEntry={false}
-                  placeholder="아이디 입력"
+                  secureTextEntry={true}
+                  placeholder="비밀번호 입력"
                 />
               </View>
             </View>
-            <View style={styles.button1}>
-              <TextInput
-                style={styles.textInput}
-                secureTextEntry={true}
-                placeholder="비밀번호 입력"
-              />
-            </View>
-          </View>
 
-          <View style={styles.secondView}>
-            <View style={styles.checkView}>
-              <Text style={styles.titleText}>성명 / 전화번호</Text>
-              <Text style={styles.check}>*</Text>
-            </View>
-            <View style={styles.buttonwhite}>
-              <TextInput
-                style={styles.textInput}
-                secureTextEntry={false}
-                placeholder="이름"
-              />
-            </View>
-
-            <View style={styles.numberbutton}>
-              <View style={styles.number1}>
-                <Text style={styles.MMText}>010</Text>
+            <View style={styles.secondView}>
+              <View style={styles.checkView}>
+                <Text style={styles.titleText}>성명 / 전화번호</Text>
+                <Text style={styles.check}>*</Text>
               </View>
-              <View style={styles.number2}>
+              <View style={styles.buttonwhite}>
                 <TextInput
                   style={styles.textInput}
                   secureTextEntry={false}
-                  placeholder="휴대전화번호"
+                  placeholder="이름"
+                />
+              </View>
+
+              <View style={styles.numberbutton}>
+                <View style={styles.number1}>
+                  <Text style={styles.MMText}>010</Text>
+                </View>
+                <View style={styles.number2}>
+                  <TextInput
+                    style={styles.textInput}
+                    secureTextEntry={false}
+                    placeholder="휴대전화번호"
+                  />
+                </View>
+              </View>
+            </View>
+
+            <View style={styles.secondView}>
+              <View style={styles.checkView}>
+                <Text style={styles.titleText}>생년월일</Text>
+                <Text style={styles.check}>*</Text>
+              </View>
+              <View style={styles.buttonwhite}>
+                <TextInput
+                  style={styles.textInput}
+                  secureTextEntry={false}
+                  placeholder="'-' 제외 8자리를 입력해주세요"
                 />
               </View>
             </View>
-          </View>
 
-          <View style={styles.secondView}>
-            <View style={styles.checkView}>
-              <Text style={styles.titleText}>생년월일</Text>
-              <Text style={styles.check}>*</Text>
-            </View>
-            <View style={styles.buttonwhite}>
-              <TextInput
-                style={styles.textInput}
-                secureTextEntry={false}
-                placeholder="'-' 제외 8자리를 입력해주세요"
-              />
-            </View>
-          </View>
+            <View style={styles.secondView}>
+              <View style={styles.checkView}>
+                <Text style={styles.titleText}>성별</Text>
+                <Text style={styles.check}>*</Text>
+              </View>
+              <View style={styles.numberbutton}>
+                <TouchableOpacity
+                  style={
+                    this.state.colorId === 1 ? styles.genderB2 : styles.genderB1
+                  }
+                  activeOpacity={0.8}
+                  onPress={() => this.onPress(1)}
+                >
+                  <Text style={this.state.colorId === 1 ? styles.gendertext1 : styles.gendertext}> 남자 </Text>
+                </TouchableOpacity>
 
-          <View style={styles.secondView}>
-            <View style={styles.checkView}>
-              <Text style={styles.titleText}>성별</Text>
-              <Text style={styles.check}>*</Text>
+                <TouchableOpacity
+                  style={
+                    this.state.colorId === 2 ? styles.genderB2 : styles.genderB1
+                  }
+                  activeOpacity={0.8}
+                  onPress={() => this.onPress(2)}
+                >
+                  <Text style={this.state.colorId === 2 ? styles.gendertext1 : styles.gendertext}> 여자 </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-            <View style={styles.numberbutton}>
-              <TouchableOpacity
-                style={styles.genderB1}
-                activeOpacity={0.8}
-              >
-                <Text style={styles.gendertext}> 남자 </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.genderB2}
-                activeOpacity={0.8}
-                onPress={() => {}}
-              >
-                <Text style={styles.gendertext}> 여자 </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </View>
+
+        <View style={styles.chatControl}>
+          <TouchableOpacity
+            style={styles.sendButton}
+            activeOpacity={0.8}
+            onPress={() => {
+              Alert.alert("회원가입이 정상적으로 완료되었습니다.");
+              this.props.navigation.navigate("login");
+            }}
+          >
+            <Text style={styles.white}> 회 원 가 입 </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-
-      <View style={styles.chatControl}>
-        <TouchableOpacity
-          style={styles.sendButton}
-          activeOpacity={0.8}
-          onPress={() => {
-            Alert.alert("회원가입이 정상적으로 완료되었습니다.");
-            navigation.navigate("login");
-          }}
-        >
-          <Text style={styles.white}> 회 원 가 입 </Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
+    );
+  }
 }
-export default signup4;
 
 const styles = StyleSheet.create({
   finalView: {
@@ -172,8 +187,8 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: "#000000",
     marginLeft: "5%",
-    width:"95%",
-    height:"100%",
+    width: "95%",
+    height: "100%",
   },
   margin: {
     flex: 1,
@@ -219,7 +234,7 @@ const styles = StyleSheet.create({
   numberbutton: {
     marginLeft: "1%",
     marginRight: "1%",
-    width: "98%",
+    width: "97%",
     height: 45,
     borderColor: "#E5E5E5",
     flexDirection: "row",
@@ -290,6 +305,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  gendertext1:{
+    fontSize: 17,
+    color: "#FFFFFF",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  
 
   white: {
     fontSize: 17,
@@ -305,19 +327,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderColor: "#E1E1E1",
-    borderBottomWidth: 2,
-    borderTopWidth: 2,
-    borderLeftWidth: 2,
+    borderWidth: 2,
   },
 
   genderB2: {
-    backgroundColor: "#F5F5F5",
+    backgroundColor: "#7AC819",
     width: "50%",
     height: 50,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    borderColor: "#E1E1E1",
+    borderColor: "#59A60B",
     borderWidth: 2,
   },
 
