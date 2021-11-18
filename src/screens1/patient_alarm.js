@@ -18,7 +18,10 @@ function patient_alarm({ navigation }) {
         <Text style={styles.titleText}>나의 운동 알림</Text>
         <View style={styles.margin}></View>
       </View>
-      <ScrollView style={{ padding: "5%", backgroundColor: "#F8F8F8" }}>
+
+      <ScrollView
+        style={{ padding: "5%", backgroundColor: "#F8F8F8", height: "100%" }}
+      >
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("alarm_edit");
@@ -54,15 +57,36 @@ function patient_alarm({ navigation }) {
         >
           <Task apm="오후" hour="05" minute="30" cycle="오늘 하루만"></Task>
         </TouchableOpacity>
-        <ActionButton
-          bgColor="rgba(0,0,0,1)"
-          buttonColor="rgba(68,110,26,1)"
-          style={styles.actionbtn}
+        <TouchableOpacity
           onPress={() => {
-            navigation.navigate("alarm_add");
+            navigation.navigate("alarm_edit");
           }}
-        ></ActionButton>
+        >
+          <Task apm="오후" hour="05" minute="30" cycle="오늘 하루만"></Task>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("alarm_edit");
+          }}
+        >
+          <Task apm="오후" hour="05" minute="30" cycle="오늘 하루만"></Task>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("alarm_edit");
+          }}
+        >
+          <Task apm="오후" hour="05" minute="30" cycle="오늘 하루만"></Task>
+        </TouchableOpacity>
       </ScrollView>
+      <ActionButton
+        bgColor="rgba(0,0,0,1)"
+        buttonColor="rgba(68,110,26,1)"
+        style={styles.actionbtn}
+        onPress={() => {
+          navigation.navigate("alarm_add");
+        }}
+      ></ActionButton>
     </View>
   );
 }

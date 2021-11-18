@@ -3,8 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { ThemeProvider } from "styled-components/native";
-import checkgreensvg from "../icon/checkgreen.svg";
-import checksilversvg from "../icon/checkgreen.svg";
+
 function signup1({ navigation }) {
   return (
     <View style={styles.finalView}>

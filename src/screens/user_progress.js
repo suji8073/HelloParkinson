@@ -38,7 +38,7 @@ const progress = ({ navigation }) => {
         {/* 뷰1/3 */}
         <View style={{ flexDirection: "row" }}>
           <View style={{ justifyContent: "center" }}>
-            <Ionicons name="md-checkmark-circle" size={65} color="green" />
+            <Ionicons name="person-circle-sharp" size={120} color="lightblue" />
             {/* 전체 진도율 뷰 */}
           </View>
           <View
@@ -56,9 +56,21 @@ const progress = ({ navigation }) => {
             >
               김옥분/77세/여
             </Text>
-            <Text style={{ marginBottom: "1%", fontSize: 15 }}>
-              오늘 전체 진도율 85%
-            </Text>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={{ marginBottom: "1%", fontSize: 15 }}>
+                오늘 전체 진도율
+              </Text>
+              <Text
+                style={{
+                  marginBottom: "1%",
+                  fontSize: 15,
+                  fontWeight: "bold",
+                  marginLeft: "5%",
+                }}
+              >
+                85%
+              </Text>
+            </View>
             <Text style={{ marginBottom: 10, fontSize: 15 }}>
               여기에 프로그레스 바
             </Text>
@@ -70,18 +82,22 @@ const progress = ({ navigation }) => {
           style={{
             marginBottom: "3%",
             flexDirection: "column",
-            padding: "5%",
+            // padding: "5%",
             borderWidth: 2,
             borderRadius: 7,
             borderColor: "#D6D6D6",
           }}
         >
           {/* 위에꺼 전체 */}
-          <View style={{ flexDirection: "row", marginBottom: "3%" }}>
+          <View style={{ flexDirection: "row", padding: "5%" }}>
             {/* 햄버거아이콘 빼고*/}
             <View style={{ flex: 9, flexDirection: "column" }}>
               <Text>2021년 2월 5일</Text>
-              <Text>신장운동</Text>
+              <Text
+                style={{ fontSize: 19, fontWeight: "bold", paddingTop: "1%" }}
+              >
+                신장운동
+              </Text>
             </View>
             {/* 햄버거 아이콘 */}
             <View style={{ flex: 1 }}>
@@ -89,21 +105,29 @@ const progress = ({ navigation }) => {
             </View>
           </View>
           {/* 여기부터 아래 */}
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "row", paddingBottom: "5%" }}>
             <View style={styles.bordertext}>
-              <Text>완료</Text>
-
-              <Text>0개</Text>
+              <Text style={styles.successtext}>완료</Text>
+              <View style={styles.numView}>
+                <Text style={styles.numtext}>0</Text>
+                <Text style={styles.gaetext}>개</Text>
+              </View>
             </View>
             <View style={styles.bordertext}>
-              <Text>진행중</Text>
-              <Text>0개</Text>
+              <Text style={styles.successtext}>진행중</Text>
+              <View style={styles.numView}>
+                <Text style={styles.numtext}>1</Text>
+                <Text style={styles.gaetext}>개</Text>
+              </View>
             </View>
             <View
               style={{ flex: 2, flexDirection: "column", alignItems: "center" }}
             >
-              <Text>미실시</Text>
-              <Text>0개</Text>
+              <Text style={styles.successtext}>미실시</Text>
+              <View style={styles.numView}>
+                <Text style={styles.numtext}>6</Text>
+                <Text style={styles.gaetext}>개</Text>
+              </View>
             </View>
           </View>
         </View>
@@ -114,10 +138,12 @@ const progress = ({ navigation }) => {
         <View styel={styles.threeView}>
           <ScrollView
             contentContainerStyle={{
+              paddingTop: "3%",
               flexGrow: 1,
               flexDirection: "column",
               justifyContent: "space-between",
               paddingBottom: "5%",
+              paddingHorizontal: "2%",
             }}
           >
             <View style={{ marginBottom: "3%" }}>
@@ -211,10 +237,25 @@ const styles = StyleSheet.create({
     flex: 2,
     flexDirection: "column",
     alignItems: "center",
+    borderColor: "#EAEAEA",
   },
   movetext: {
     fontSize: 17,
-    marginBottom: "1.5%",
+    marginBottom: "3%",
+    color: "#484848",
   },
   movetitletext: { fontSize: 17, fontWeight: "bold", marginBottom: "1.5%" },
+  successtext: {
+    fontSize: 17,
+  },
+  numtext: {
+    fontSize: 21,
+  },
+  gaetext: { fontSize: 16 },
+  numView: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    alignContent: "space-between",
+    marginTop: "7%",
+  },
 });

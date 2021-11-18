@@ -22,7 +22,7 @@ function addmove({ navigation }) {
         <View style={styles.menuView}>
           <AntDesign name="left" size={24} color="#808080" />
           <View style={styles.margin}></View>
-          <Text style={styles.titleText}>'김옥분'님 운동 편집</Text>
+          <Text style={styles.titleText}>'김옥분'님 운 동 편집</Text>
           <View style={styles.margin}></View>
           <TouchableOpacity
             onPress={() => {
