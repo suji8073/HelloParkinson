@@ -31,6 +31,7 @@ import move_2 from "../screens1/move_2";
 import move_3 from "../screens1/move_3";
 import move_4 from "../screens1/move_4";
 import move_play from "../screens1/move_play";
+import xx from "../screens/xx";
 
 const Stack = createStackNavigator();
 
@@ -72,6 +73,7 @@ const StackNavigation = () => {
       <Stack.Screen name="move_3" component={move_3} />
       <Stack.Screen name="move_4" component={move_4} />
       <Stack.Screen name="move_play" component={move_play} />
+      <Stack.Screen name="xx" component={xx} />
 
       <Stack.Screen
         name="patient_profile_edit"

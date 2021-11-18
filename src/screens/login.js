@@ -16,9 +16,17 @@ function login({ navigation }) {
       <View style={styles.NoneView}></View>
 
       <View style={styles.firstView}>
-        <Text style={styles.titleText}>
-          {"안녕하세요.\n굿나잇 파킨슨 입니다."}
-        </Text>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => {
+            navigation.navigate("xx");
+          }}
+        >
+          <Text style={styles.titleText}>
+            {"안녕하세요.\n굿나잇 파킨슨 입니다."}
+          </Text>
+        </TouchableOpacity>
+
         <Text style={styles.twoText}>
           {"\n회원 서비스 이용을 위해 로그인 해주세요"}
         </Text>
@@ -105,7 +113,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: "#000000",
     marginLeft: "5%",
-    height:"100%",
+    height: "100%",
   },
   green: {
     fontSize: 17,

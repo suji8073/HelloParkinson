@@ -104,7 +104,6 @@ function signup4({ navigation }) {
               <TouchableOpacity
                 style={styles.genderB1}
                 activeOpacity={0.8}
-                //onPress={()=>}
               >
                 <Text style={styles.gendertext}> 남자 </Text>
               </TouchableOpacity>
