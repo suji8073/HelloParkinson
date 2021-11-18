@@ -4,20 +4,27 @@ import SearchBar from "./SearchBar";
 import { Entypo } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import Task from "./task1";
+import SimplePopupMenu from "react-native-simple-popup-menu";
 
+const items = [
+  { id: "abc", label: "가나다순" },
+  { id: "star", label: "즐겨찾기순" },
+];
 function list({ navigation }) {
-  fetch("http://152.70.233.113/ping")
-    .then((response) => response.json())
-    .then((data) => console.log(data));
-
   return (
     <View style={styles.finalView}>
       <View style={styles.menuView}>
-        <Entypo name="dots-three-vertical" size={24} color="#ffffff" />
         <View style={styles.margin}></View>
         <Text style={styles.titleText}>환자 목록</Text>
-        <View style={styles.margin}></View>
-        <Entypo name="dots-three-vertical" size={24} color="#595959" />
+        <SimplePopupMenu
+          style={styles.margin}
+          items={items}
+          cancelLabel={"취소"}
+          //onSelect={() => alert(this.label)}
+          onCancel={() => console.log("onCancel")}
+        >
+          <Entypo name="dots-three-vertical" size={24} color="#595959" />
+        </SimplePopupMenu>
       </View>
 
       <View style={styles.secondView}>
@@ -129,6 +136,24 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     fontWeight: "bold",
   },
+  menustyle: {
+    fontSize: 20,
+    alignItems: "flex-end",
+    color: "#000000",
+    justifyContent: "flex-end",
+    fontWeight: "bold",
+    width: 100,
+    borderWidth: 1,
+  },
+  menutext: {
+    alignItems: "flex-start",
+    fontSize: 20,
+    borderWidth: 1,
+    alignItems: "center",
+    color: "#000000",
+    justifyContent: "center",
+    fontWeight: "bold",
+  },
 
   firstView: {
     // padding:30,
@@ -143,8 +168,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   margin: {
-    // padding:30,
-    alignItems: "flex-start",
+    height: 300,
+    alignItems: "flex-end",
     justifyContent: "center",
     flex: 1,
   },

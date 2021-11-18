@@ -11,6 +11,8 @@ import {
 } from "react-native";
 
 import PercentageBar from "./progressbar";
+import Svg1 from "../icon/airplane.svg";
+import { WithLocalSvg } from "react-native-svg";
 const task3 = ({ name, age, sex, progress, minute }) => {
   return (
     //  전체 뷰
@@ -20,7 +22,7 @@ const task3 = ({ name, age, sex, progress, minute }) => {
         borderColor: "#EBEBEB",
         borderWidth: 2,
         margin: "3%",
-        height: 70,
+        height: 100,
         width: "94%",
         flexDirection: "row",
       }}
@@ -28,11 +30,12 @@ const task3 = ({ name, age, sex, progress, minute }) => {
       {/* 사용자와 그래프 뷰 , 숫자*/}
       <View
         style={{
-          width: "100%",
-          height: "100%",
+          width: "90%",
           flexDirection: "column",
+          alignItems: "flex-start",
+          justifyContent: "center",
           flex: 1,
-          margin: 10,
+          margin:"5%",
         }}
       >
         <Text style={{ fontSize: 17 }}>
@@ -42,10 +45,10 @@ const task3 = ({ name, age, sex, progress, minute }) => {
         {/* 그래프와 숫자 뷰 */}
         <View
           style={{
-            alignItems: "flex-start",
             alignItems: "center",
             flexDirection: "row",
             justifyContent: "space-between",
+            marginTop:"3%",
           }}
         >
           <View
@@ -63,7 +66,7 @@ const task3 = ({ name, age, sex, progress, minute }) => {
             style={{
               color: "#484848",
               fontSize: 16,
-              marginLeft: 0.3,
+              marginLeft: "5%",
               justifyContent: "center",
               alignItems: "center",
             }}
@@ -77,14 +80,13 @@ const task3 = ({ name, age, sex, progress, minute }) => {
         style={{
           flexDirection: "column",
           alignItems: "center",
+          justifyContent:"center",
           flex: 0.3,
-          marginTop: 10,
-          marginBottom: 10,
           height: "100%",
         }}
       >
-        <Ionicons name="person-circle-sharp" size={30} color="lightblue" />
-        <Text style={{ color: "#484848", fontSize: 13 }}>{minute}분 전</Text>
+        <WithLocalSvg width={40} height={40} asset={Svg1} />
+        <Text style={{ marginTop:"5%",color: "#484848", fontSize: 13 }}>{minute}분 전</Text>
       </View>
     </View>
   );

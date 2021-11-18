@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import PropTypes from "prop-types";
 import { AntDesign } from "@expo/vector-icons";
-import { EvilIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 function Task({ text1, text2, text3 }) {
   return (
     <View style={styles.Container}>
-      <AntDesign name="smile-circle" size={45} color="black" />
+      <Ionicons name="person-circle-sharp" size={45} color="lightblue" />
       <View style={styles.textgroup}>
         <Text style={styles.titleText}> {text1}</Text>
         <Text style={styles.titleText}> / </Text>

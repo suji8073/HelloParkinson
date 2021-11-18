@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import Task from "./task_record_day";
+import Task1 from "./task_graph";
 
 function patient_record({ navigation }) {
   return (
@@ -33,13 +34,15 @@ function patient_record({ navigation }) {
               <Text style={styles.text2}>주 평균 66.4%</Text>
             </View>
 
-            <View style={styles.graphview}></View>
+            <View style={styles.graphview}>
+              <Task1></Task1>
+            </View>
           </View>
-          
+
           <View style={styles.threeView}>
-          <Task></Task>
-          <Task></Task>
-          <Task></Task>
+            <Task></Task>
+            <Task></Task>
+            <Task></Task>
           </View>
         </ScrollView>
       </View>
@@ -103,14 +106,15 @@ const styles = StyleSheet.create({
   },
   secondView: {
     margin: "5%",
-    padding: "5%",
+    paddingLeft: "5%",
+    paddingRight: "5%",
     width: "90%",
     height: 200,
     backgroundColor: "#FFFFFF",
     borderWidth: 1,
     borderColor: "#E0E0E0",
   },
-  threeView:{
+  threeView: {
     marginLeft: "5%",
     marginRight: "5%",
     marginBottom: "5%",
@@ -134,13 +138,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   textview: {
-    flex: 2,
-    marginBottom: 10,
+    flex: 1,
+    marginTop:"5%",
+    marginBottom: "3%",
     justifyContent: "center",
   },
   graphview: {
     flex: 3,
-    borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
   },

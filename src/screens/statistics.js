@@ -8,14 +8,19 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import styled from "styled-components/native";
+
 import SearchBar from "./SearchBar";
+import OptionsMenu from "react-native-option-menu";
 
 import { Entypo } from "@expo/vector-icons";
 import Task from "./task2";
-
+import SimplePopupMenu from "react-native-simple-popup-menu";
 
 function statistics({ navigation }) {
+  const items = [
+    { id: "age", label: "나이순" },
+    { id: "abc", label: "가나다순" },
+  ];
   return (
     <View style={styles.finalView}>
       <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
@@ -25,7 +30,14 @@ function statistics({ navigation }) {
         <View style={styles.margin}></View>
         <Text style={styles.titleText}>환자 통계 관리</Text>
         <View style={styles.margin}></View>
-        <Entypo name="dots-three-vertical" size={24} color="#595959" />
+        <SimplePopupMenu
+          items={items}
+          cancelLabel={"취소"}
+          //onSelect={() => alert(this.label)}
+          onCancel={() => console.log("onCancel")}
+        >
+          <Entypo name="dots-three-vertical" size={24} color="#595959" />
+        </SimplePopupMenu>
       </View>
 
       <View style={styles.secondView}>
@@ -89,7 +101,6 @@ function statistics({ navigation }) {
           >
             <Task text1="이영현" text2="10" text3="여" />
           </TouchableOpacity>
-
         </ScrollView>
       </View>
     </View>
@@ -110,7 +121,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingRight: 20,
     paddingLeft: 20,
-    marginTop:"10%",
+    marginTop: "10%",
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
@@ -154,8 +165,8 @@ const styles = StyleSheet.create({
   },
   threeView: {
     // padding:30,
-    marginTop:10,
-    marginBottom:230,
+    marginTop: 10,
+    marginBottom: 240,
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",

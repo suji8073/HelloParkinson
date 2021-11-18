@@ -16,6 +16,13 @@ import Task from "./task3";
 import { Entypo } from "@expo/vector-icons";
 import ddaysvg from "../icon/dday.svg";
 import { AntDesign } from "@expo/vector-icons";
+import SimplePopupMenu from "react-native-simple-popup-menu";
+
+const items = [
+  { id: "alarm", label: "알림순" },
+  { id: "progress", label: "진도율순" },
+];
+
 function progress({ navigation }) {
   return (
     <View style={styles.finalView}>
@@ -28,7 +35,14 @@ function progress({ navigation }) {
         <View style={styles.margin}></View>
         <Text style={styles.titleText}>환자 진도율 관리</Text>
         <View style={styles.margin}></View>
-        <Entypo name="dots-three-vertical" size={24} color="#595959" />
+        <SimplePopupMenu
+          items={items}
+          cancelLabel={"취소"}
+          //onSelect={() => alert(this.label)}
+          onCancel={() => console.log("onCancel")}
+        >
+          <Entypo name="dots-three-vertical" size={24} color="#595959" />
+        </SimplePopupMenu>
       </View>
       <View
         style={{
@@ -98,29 +112,53 @@ function progress({ navigation }) {
 
             <AntDesign name="right" size={30} color="#808080" />
           </View>
-          <ScrollView style={{ marginTop: 5 }}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("user_progress");
-              }}
-            >
-              <Task name="김옥분" age="5" sex="여" progress="50%" minute="5" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("user_progress");
-              }}
-            >
-              <Task name="김채현" age="6" sex="남" progress="80%" minute="5" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("user_progress");
-              }}
-            >
-              <Task name="채수지" age="15" sex="여" progress="58%" minute="5" />
-            </TouchableOpacity>
-          </ScrollView>
+      <ScrollView style={{ marginTop: 5, marginBottom: 90 }}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("user_progress");
+          }}
+        >
+          <Task name="김옥분" age="5" sex="여" progress="50%" minute="5" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("user_progress");
+          }}
+        >
+          <Task name="김채현" age="60" sex="남" progress="80%" minute="5" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("user_progress");
+          }}
+        >
+          <Task name="채수지" age="67" sex="여" progress="30%" minute="5" />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("user_progress");
+          }}
+        >
+          <Task name="이영현" age="55" sex="여" progress="79%" minute="0" />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("user_progress");
+          }}
+        >
+          <Task name="신수빈" age="45" sex="여" progress="80%" minute="0" />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("user_progress");
+          }}
+        >
+          <Task name="이지윤" age="89" sex="여" progress="10%" minute="2" />
+        </TouchableOpacity>
+      </ScrollView>
         </View>
       </View>
     </View>
