@@ -4,18 +4,27 @@ import PropTypes from "prop-types";
 import { Ionicons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { WithLocalSvg } from "react-native-svg";
-
 import nocheck from "../icon/radio_btn_nocheck.svg";
 import check from "../icon/radio_button_check.svg";
-function Task({ text1, text2, text3 }) {
+
+function Task({ user, age, sex }) {
+
+
+
   return (
     <View style={styles.Container}>
-      <Ionicons name="person-circle-sharp" size={50} color="lightblue" justifyContent="center" alignItems="center"/>
+      <Ionicons
+        name="person-circle-sharp"
+        size={50}
+        color="lightblue"
+        justifyContent="center"
+        alignItems="center"
+      />
       <View style={styles.textgroup}>
-        <Text style={styles.titleText}> {text1}</Text>
+        <Text style={styles.titleText}> {user}</Text>
         <View style={styles.textgroup1}>
-          <Text style={styles.subtext}> {text2}세 /</Text>
-          <Text style={styles.subtext}> {text3}성</Text>
+          <Text style={styles.subtext}> {age}세 /</Text>
+          <Text style={styles.subtext}> {sex}성</Text>
         </View>
       </View>
       <View style={styles.margin}></View>

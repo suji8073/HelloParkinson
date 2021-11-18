@@ -10,7 +10,7 @@ import user_setting from "../screens/user_setting";
 import user_progress from "../screens/user_progress";
 import user_edit from "../screens/user_edit";
 import moveedit from "../screens/moveedit";
-import moveadd from "../screens/moveadd";
+import progress from "../screens/progress";
 import user_statistics from "../screens/user_statistics";
 import profile from "../screens/profile";
 import TabNavigation from "./Tab";
@@ -54,8 +54,8 @@ const StackNavigation = () => {
       <Stack.Screen name="TabNavigation" component={TabNavigation} />
       <Stack.Screen name="profile" component={profile} />
       <Stack.Screen name="moveedit" component={moveedit} />
-      <Stack.Screen name="moveadd" component={moveadd} />
 
+      <Stack.Screen name="progress" component={progress} />
       <Stack.Screen name="TabNavigation1" component={TabNavigation1} />
 
       <Stack.Screen name="patient_Home" component={patient_Home} />

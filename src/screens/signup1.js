@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import {
   StyleSheet,
   Text,
@@ -67,6 +68,7 @@ export default class siginup1 extends Component {
               navigation.navigate("login");
             }}
           >
+
             <View>
               <AntDesign name="left" size={24} color="#CACACA" />
             </View>

@@ -4,16 +4,16 @@ import PropTypes from "prop-types";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
-function Task({ text1, text2, text3 }) {
+function Task({ user, age, sex }) {
   return (
     <View style={styles.Container}>
       <Ionicons name="person-circle-sharp" size={45} color="lightblue" />
       <View style={styles.textgroup}>
-        <Text style={styles.titleText}> {text1}</Text>
+        <Text style={styles.titleText}> {user}</Text>
         <Text style={styles.titleText}> / </Text>
-        <Text style={styles.titleText}> {text2}</Text>
+        <Text style={styles.titleText}> {age}</Text>
         <Text style={styles.titleText}> / </Text>
-        <Text style={styles.titleText}> {text3}</Text>
+        <Text style={styles.titleText}> {sex}</Text>
       </View>
       <View style={styles.margin}></View>
       <AntDesign name="right" size={24} color="#808080" />
