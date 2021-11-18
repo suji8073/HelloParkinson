@@ -1,11 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { ThemeProvider } from "styled-components/native";
 import checkgreensvg from "../icon/checkgreen.svg";
 import checksilversvg from "../icon/checkgreen.svg";
-
 
 function signup1({ navigation }) {
   return (
@@ -36,7 +35,7 @@ function signup1({ navigation }) {
           <TouchableOpacity
           //onPress={()=>this.moveToAddNewCustomer()}
           >
-            <FontAwesome name="circle-thin" size={30} color="#E1E1E1"/>
+            <FontAwesome name="circle-thin" size={30} color="#E1E1E1" />
           </TouchableOpacity>
           <Text style={styles.MText}> 약관 전체 동의 </Text>
         </View>

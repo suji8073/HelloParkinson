@@ -38,7 +38,7 @@ const progress = ({ navigation }) => {
         {/* 뷰1/3 */}
         <View style={{ flexDirection: "row" }}>
           <View style={{ justifyContent: "center" }}>
-            <Ionicons name="person-circle-sharp" size={120} color="lightblue" />
+            <Ionicons name="person-circle-sharp" size={90} color="lightblue" />
             {/* 전체 진도율 뷰 */}
           </View>
           <View
@@ -80,6 +80,7 @@ const progress = ({ navigation }) => {
         {/* 여기부터 view 2/3 */}
         <View
           style={{
+            marginTop: "5%",
             marginBottom: "3%",
             flexDirection: "column",
             // padding: "5%",
@@ -181,15 +182,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFFFFF",
   },
-
   menuView: {
-    marginTop: 30,
     backgroundColor: "#FFFFFF",
     height: 58,
     flexDirection: "row",
     alignItems: "center",
     paddingRight: 20,
     paddingLeft: 20,
+    marginTop: "10%",
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
@@ -216,6 +216,12 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     backgroundColor: "#FFFFFF",
   },
+  margin: {
+    // padding:30,
+    alignItems: "flex-start",
+    justifyContent: "center",
+    flex: 1,
+  },
   threeView: {
     // padding:30,
     marginTop: 10,
@@ -225,12 +231,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
 
-  margin: {
-    // padding:30,
-    alignItems: "flex-start",
-    justifyContent: "center",
-    flex: 1,
-  },
   bordertext: {
     borderRightWidth: 1,
     flex: 2,
@@ -240,10 +240,10 @@ const styles = StyleSheet.create({
   },
   movetext: {
     fontSize: 17,
-    marginBottom: "3%",
+    marginBottom: "5%",
     color: "#484848",
   },
-  movetitletext: { fontSize: 17, fontWeight: "bold", marginBottom: "1.5%" },
+  movetitletext: { fontSize: 17, fontWeight: "bold", marginBottom: "5%" },
   successtext: {
     fontSize: 17,
   },

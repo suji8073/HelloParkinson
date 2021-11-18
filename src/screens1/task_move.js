@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { WithLocalSvg } from "react-native-svg";
 
-const task_patient = ({ image, text1, text2 }) => {
+const task_move = ({ image, text1, text2 }) => {
   return (
     //  전체 뷰
     <View
@@ -39,7 +39,7 @@ const task_patient = ({ image, text1, text2 }) => {
   );
 };
 
-export default task_patient;
+export default task_move;
 const styles = StyleSheet.create({
   text1: {
     fontSize: 17,
@@ -53,17 +53,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
-    marginTop:10,
+    marginTop: 10,
   },
   imageView: {
-    flex:2.5,
+    flex: 2.5,
     margin: "2%",
     alignItems: "center",
     justifyContent: "center",
   },
-  textView:{
+  textView: {
     margin: "2%",
-    flex:3,
+    flex: 3,
     flexDirection: "column",
-  }
+  },
 });
