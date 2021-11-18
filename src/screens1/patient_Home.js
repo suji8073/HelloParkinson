@@ -49,6 +49,7 @@ function patient_Home({ navigation }) {
                 alignItems: "center",
                 justifyContent: "center",
                 top: "7%",
+                margin: "1%",
               }}
             >
               <View
@@ -81,6 +82,7 @@ function patient_Home({ navigation }) {
               style={{
                 alignItems: "center",
                 justifyContent: "center",
+                margin: "1%",
               }}
             >
               <WithLocalSvg
@@ -120,6 +122,7 @@ function patient_Home({ navigation }) {
                 alignItems: "center",
                 justifyContent: "center",
                 top: "7%",
+                margin: "1%",
               }}
             >
               <View

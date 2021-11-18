@@ -68,6 +68,7 @@ function progress({ navigation }) {
             borderRadius: 19,
             backgroundColor: "#ffffff",
             height: "100%",
+            paddingBottom: 150,
           }}
         >
           <View
@@ -79,7 +80,12 @@ function progress({ navigation }) {
               padding: "2%",
             }}
           >
-            <WithLocalSvg width={30} height={30} asset={ddaysvg} />
+            <WithLocalSvg
+              width={30}
+              height={30}
+              asset={ddaysvg}
+              style={{ position: "absolute", right: "47%", top: "50%" }}
+            />
             <AntDesign name="left" size={30} color="#808080" />
             <View style={styles.dayview}>
               <Text style={styles.lasttext}>일</Text>
@@ -112,53 +118,53 @@ function progress({ navigation }) {
 
             <AntDesign name="right" size={30} color="#808080" />
           </View>
-      <ScrollView style={{ marginTop: 5, marginBottom: 90 }}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("user_progress");
-          }}
-        >
-          <Task name="김옥분" age="5" sex="여" progress="50%" minute="5" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("user_progress");
-          }}
-        >
-          <Task name="김채현" age="60" sex="남" progress="80%" minute="5" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("user_progress");
-          }}
-        >
-          <Task name="채수지" age="67" sex="여" progress="30%" minute="5" />
-        </TouchableOpacity>
+          <ScrollView style={{ marginTop: 5, marginBottom: 90 }}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("user_progress");
+              }}
+            >
+              <Task name="김옥분" age="5" sex="여" progress="50%" minute="5" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("user_progress");
+              }}
+            >
+              <Task name="김채현" age="60" sex="남" progress="80%" minute="5" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("user_progress");
+              }}
+            >
+              <Task name="채수지" age="67" sex="여" progress="30%" minute="5" />
+            </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("user_progress");
-          }}
-        >
-          <Task name="이영현" age="55" sex="여" progress="79%" minute="0" />
-        </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("user_progress");
+              }}
+            >
+              <Task name="이영현" age="55" sex="여" progress="79%" minute="0" />
+            </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("user_progress");
-          }}
-        >
-          <Task name="신수빈" age="45" sex="여" progress="80%" minute="0" />
-        </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("user_progress");
+              }}
+            >
+              <Task name="신수빈" age="45" sex="여" progress="80%" minute="0" />
+            </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("user_progress");
-          }}
-        >
-          <Task name="이지윤" age="89" sex="여" progress="10%" minute="2" />
-        </TouchableOpacity>
-      </ScrollView>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("user_progress");
+              }}
+            >
+              <Task name="이지윤" age="89" sex="여" progress="10%" minute="2" />
+            </TouchableOpacity>
+          </ScrollView>
         </View>
       </View>
     </View>
@@ -216,16 +222,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 15,
     color: "#484848",
+    paddingBottom: "2%",
   },
   dayview: { alignItems: "center", marginHorizontal: "3%" },
   nexttext: {
     fontWeight: "bold",
     fontSize: 15,
     color: "#B5B5B5",
+    paddingBottom: "2%",
   },
   ddaytext: {
     fontWeight: "bold",
     fontSize: 15,
     color: "#ffffff",
+    paddingBottom: "2%",
   },
 });

@@ -7,7 +7,6 @@ import checkgreensvg from "../icon/checkgreen.svg";
 import checksilversvg from "../icon/checkgreen.svg";
 
 
-
 function signup1({ navigation }) {
   return (
     <View style={styles.finalView}>
