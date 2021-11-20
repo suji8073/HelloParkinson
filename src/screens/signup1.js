@@ -7,14 +7,12 @@ import {
   Image,
   Alert,
 } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 
 import nocheck from "../icon/silver.svg";
 import check from "../icon/checkgreen.svg";
 
 import { WithLocalSvg } from "react-native-svg";
-import { or } from "react-native-reanimated";
 
 export default class siginup1 extends Component {
   constructor(props) {
@@ -55,6 +53,14 @@ export default class siginup1 extends Component {
       this.setState({ onname3: nocheck });
     }
   };
+  check_click = () =>{
+    if (this.state.onname1 === check && this.state.onname2 === check && this.state.onname3 === check) {
+      this.props.navigation.navigate("signup4");
+    }
+    else{
+      Alert.alert("약관을 모두 동의해주세요.");
+    }
+  }
 
   render() {
     return (
@@ -149,11 +155,9 @@ export default class siginup1 extends Component {
           <TouchableOpacity
             style={styles.sendButton}
             activeOpacity={0.8}
-            onPress={() => {
-              this.props.navigation.navigate("signup4");
-            }}
+            onPress={this.check_click}
           >
-            <Text style={styles.white}> 다 음 </Text>
+            <Text style={styles.white}  > 다 음 </Text>
           </TouchableOpacity>
         </View>
       </View>

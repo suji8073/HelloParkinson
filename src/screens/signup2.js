@@ -16,19 +16,7 @@ export default class signup2 extends Component {
   render() {
     return (
       <View style={styles.finalView}>
-        <View style={styles.settingView}>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            hitSlop={{ top: 32, bottom: 32, left: 32, right: 32 }}
-            onPress={() => {
-              this.props.navigation.navigate("signup1");
-            }}
-          >
-            <View>
-              <AntDesign name="left" size={24} color="#CACACA" />
-            </View>
-          </TouchableOpacity>
-        </View>
+        <View style={styles.settingView}></View>
         <View>
           <Text style={styles.titleText}>이용약관 동의</Text>
         </View>
@@ -593,7 +581,7 @@ export default class signup2 extends Component {
               });
             }}
           >
-            <Text style={styles.white}> 동 의 함 </Text>
+            <Text style={styles.white}> 확  인 </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -608,7 +596,7 @@ const styles = StyleSheet.create({
   },
 
   settingView: {
-    flex: 2,
+    flex: 1.5,
     justifyContent: "center",
     alignItems: "flex-start",
     marginBottom: "5%",
@@ -629,7 +617,7 @@ const styles = StyleSheet.create({
     fontSize: 21,
     fontWeight: "bold",
     color: "#1E1E1E",
-    marginBottom: "3%",
+    marginBottom: "5%",
   },
   MText: {
     fontSize: 13,

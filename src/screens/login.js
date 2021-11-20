@@ -3,7 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
+  ImageBackground,
   TouchableOpacity,
   TextInput,
 } from "react-native";

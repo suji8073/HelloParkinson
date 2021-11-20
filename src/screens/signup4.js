@@ -13,7 +13,7 @@ import { AntDesign } from "@expo/vector-icons";
 export default class siginup4 extends Component {
   constructor(props) {
     super(props);
-    this.state = { colorId: 1 };
+    this.state = { colorId: 0 };
   }
   onPress = (id) => {
     this.setState({ colorId: id });
@@ -26,7 +26,7 @@ export default class siginup4 extends Component {
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => {
-              navigation.navigate("signup1");
+              this.props.navigation.navigate("signup1");
             }}
           >
             <View>
@@ -117,17 +117,37 @@ export default class siginup4 extends Component {
                   activeOpacity={0.8}
                   onPress={() => this.onPress(1)}
                 >
-                  <Text style={this.state.colorId === 1 ? styles.gendertext1 : styles.gendertext}> 남자 </Text>
+                  <Text
+                    style={
+                      this.state.colorId === 1
+                        ? styles.gendertext1
+                        : styles.gendertext
+                    }
+                  >
+                    {" "}
+                    남자{" "}
+                  </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={
-                    this.state.colorId === 2 ? styles.genderB2 : styles.genderB1
+                    this.state.colorId === 2
+                      ? styles.genderB2
+                      : styles.genderB11
                   }
                   activeOpacity={0.8}
                   onPress={() => this.onPress(2)}
                 >
-                  <Text style={this.state.colorId === 2 ? styles.gendertext1 : styles.gendertext}> 여자 </Text>
+                  <Text
+                    style={
+                      this.state.colorId === 2
+                        ? styles.gendertext1
+                        : styles.gendertext
+                    }
+                  >
+                    {" "}
+                    여자{" "}
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -305,13 +325,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  gendertext1:{
+  gendertext1: {
     fontSize: 17,
     color: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
   },
-  
 
   white: {
     fontSize: 17,
@@ -321,18 +340,34 @@ const styles = StyleSheet.create({
 
   genderB1: {
     backgroundColor: "#F5F5F5",
-    width: "50%",
+    width: "49%",
     height: 50,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     borderColor: "#E1E1E1",
-    borderWidth: 2,
+    borderTopWidth: 2,
+    borderBottomWidth: 2,
+    borderLeftWidth: 2,
+    borderRightWidth: 1,
+  },
+  genderB11: {
+    backgroundColor: "#F5F5F5",
+    width: "49%",
+    height: 50,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    borderColor: "#E1E1E1",
+    borderTopWidth: 2,
+    borderBottomWidth: 2,
+    borderLeftWidth: 1,
+    borderRightWidth: 2,
   },
 
   genderB2: {
     backgroundColor: "#7AC819",
-    width: "50%",
+    width: "49%",
     height: 50,
     flexDirection: "row",
     alignItems: "center",

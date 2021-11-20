@@ -12,18 +12,7 @@ import { AntDesign } from "@expo/vector-icons";
 function signup3({ navigation }) {
   return (
     <View style={styles.finalView}>
-      <View style={styles.settingView}>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            navigation.navigate("signup2");
-          }}
-        >
-          <View>
-            <AntDesign name="left" size={24} color="#CACACA" />
-          </View>
-        </TouchableOpacity>
-      </View>
+      <View style={styles.settingView}></View>
       <View>
         <Text style={styles.titleText}>이용약관 동의</Text>
       </View>
@@ -90,7 +79,7 @@ function signup3({ navigation }) {
             navigation.navigate("signup1");
           }}
         >
-          <Text style={styles.white}> 동 의 함 </Text>
+          <Text style={styles.white}> 확 인 </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -101,59 +90,59 @@ export default signup3;
 const styles = StyleSheet.create({
   finalView: {
     flex: 1,
-    padding:20,
-    backgroundColor: '#FFFFFF',
+    padding: 20,
+    backgroundColor: "#FFFFFF",
   },
 
   settingView: {
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
+    flex: 1.5,
+    justifyContent: "center",
+    alignItems: "flex-start",
     marginBottom: "5%",
     marginTop: "10%",
   },
 
   MainView: {
-    width:'100%',
-    flex : 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    backgroundColor : '#ECECEC'
+    width: "100%",
+    flex: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    backgroundColor: "#ECECEC",
   },
 
-  titleText:{
-    alignSelf: 'flex-start',
+  titleText: {
+    alignSelf: "flex-start",
     fontSize: 21,
-    fontWeight: 'bold',
-    color: '#1E1E1E',
-    marginBottom: "3%"
+    fontWeight: "bold",
+    color: "#1E1E1E",
+    marginBottom: "5%",
   },
-  MText:{
+  MText: {
     fontSize: 13,
-    color: '#000000',
-    padding:20,
-    lineHeight:20,
+    color: "#000000",
+    padding: 20,
+    lineHeight: 20,
   },
 
-  white:{
+  white: {
     fontSize: 17,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    fontWeight: "bold",
+    color: "#FFFFFF",
   },
 
-  sendButton:{
-    backgroundColor: '#7AC819',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width : '100%',
+  sendButton: {
+    backgroundColor: "#7AC819",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
     height: "35%",
   },
 
   chatControl: {
-    flexDirection: 'row',
-    flex:7,
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    flex: 7,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
