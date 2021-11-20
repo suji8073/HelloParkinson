@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   View,
+  FlatList,
   Text,
   ScrollView,
 } from "react-native";
@@ -13,7 +14,8 @@ import {
 import PercentageBar from "./progressbar";
 import Svg1 from "../icon/airplane.svg";
 import { WithLocalSvg } from "react-native-svg";
-const task3 = ({ name, age, sex, progress, minute }) => {
+
+const task3 = ({ user, age, sex, progress, minute }) => {
   return (
     //  전체 뷰
     <View
@@ -35,11 +37,11 @@ const task3 = ({ name, age, sex, progress, minute }) => {
           alignItems: "flex-start",
           justifyContent: "center",
           flex: 1,
-          margin:"5%",
+          margin: "5%",
         }}
       >
         <Text style={{ fontSize: 17 }}>
-          {name} / {age} / {sex}
+          {user} / {age} / {sex}
         </Text>
 
         {/* 그래프와 숫자 뷰 */}
@@ -48,12 +50,10 @@ const task3 = ({ name, age, sex, progress, minute }) => {
             alignItems: "center",
             flexDirection: "row",
             justifyContent: "space-between",
-            marginTop:"3%",
+            marginTop: "3%",
           }}
         >
-          <View
-            style={{ width: "80%", justifyContent: "center" }}
-          >
+          <View style={{ width: "80%", justifyContent: "center" }}>
             <PercentageBar
               height={20}
               backgroundColor={"#E5E5E5"}
@@ -80,24 +80,18 @@ const task3 = ({ name, age, sex, progress, minute }) => {
         style={{
           flexDirection: "column",
           alignItems: "center",
-          justifyContent:"center",
+          justifyContent: "center",
           flex: 0.3,
           height: "100%",
         }}
       >
         <WithLocalSvg width={40} height={40} asset={Svg1} />
-        <Text style={{ marginTop:"5%",color: "#484848", fontSize: 13 }}>{minute}분 전</Text>
+        <Text style={{ marginTop: "5%", color: "#484848", fontSize: 13 }}>
+          {minute}분 전
+        </Text>
       </View>
     </View>
   );
 };
-
-// task3_1.PropTypes = {
-//   name: PropTypes.string.isRequired,
-//   age: PropTypes.string.isRequired,
-//   sex: PropTypes.string.isRequired,
-//   progress: PropTypes.string.isRequired,
-//   minute: PropTypes.string.isRequired,
-// };
 
 export default task3;

@@ -1,5 +1,12 @@
-import React from "react";
-import { TouchableOpacity, Alert, StyleSheet, View, Text } from "react-native";
+import React, { Component } from "react";
+import {
+  TouchableOpacity,
+  Alert,
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+} from "react-native";
 import SearchBar from "./SearchBar";
 import { Entypo } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
@@ -10,105 +17,107 @@ const items = [
   { id: "abc", label: "가나다순" },
   { id: "star", label: "즐겨찾기순" },
 ];
-function list({ navigation }) {
-  return (
-    <View style={styles.finalView}>
-      <View style={styles.menuView}>
-        <View style={styles.margin}></View>
-        <Text style={styles.titleText}>환자 목록</Text>
-        <SimplePopupMenu
-          style={styles.margin}
-          items={items}
-          cancelLabel={"취소"}
-          //onSelect={() => alert(this.label)}
-          onCancel={() => console.log("onCancel")}
-        >
-          <Entypo name="dots-three-vertical" size={24} color="#595959" />
-        </SimplePopupMenu>
+const DATA = [
+  {
+    id: "1",
+    user: "박규동",
+    age: "5",
+    sex: "여",
+    progress: "50%",
+    minute: "5",
+    completed: false,
+  },
+  {
+    id: "2",
+    user: "채수지",
+    age: "5",
+    sex: "여",
+    progress: "50%",
+    minute: "5",
+    completed: false,
+  },
+  {
+    id: "3",
+    user: "기매현",
+    age: "5",
+    sex: "여",
+    progress: "50%",
+    minute: "5",
+    completed: false,
+  },
+  {
+    id: "4",
+    user: "김해년",
+    age: "5",
+    sex: "여",
+    progress: "50%",
+    minute: "5",
+    completed: false,
+  },
+  {
+    id: "5",
+    user: "십누딩",
+    age: "5",
+    sex: "여",
+    progress: "50%",
+    minute: "5",
+    completed: false,
+  },
+];
+
+export default class list extends Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <View style={styles.finalView}>
+        <View style={styles.menuView}>
+          <View style={styles.margin}></View>
+          <Text style={styles.titleText}>환자 목록</Text>
+          <SimplePopupMenu
+            style={styles.margin}
+            items={items}
+            cancelLabel={"취소"}
+            //onSelect={() => alert(this.label)}
+            onCancel={() => console.log("onCancel")}
+          >
+            <Entypo name="dots-three-vertical" size={24} color="#595959" />
+          </SimplePopupMenu>
+        </View>
+
+        <View style={styles.secondView}>
+          <SearchBar />
+        </View>
+
+        <View style={styles.threeView}>
+          <ScrollView
+            contentContainerStyle={{
+              flexGrow: 1,
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <FlatList
+              data={DATA}
+              renderItem={({ item }) => {
+                return (
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.props.navigation.navigate("user_setting");
+                    }}
+                  >
+                    <Task user={item.user} age={item.age} sex={item.sex}></Task>
+                  </TouchableOpacity>
+                );
+              }}
+            />
+          </ScrollView>
+        </View>
       </View>
-
-      <View style={styles.secondView}>
-        <SearchBar />
-      </View>
-
-      <View style={styles.threeView}>
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("user_setting");
-            }}
-          >
-            <Task text1="정산철" text2="64" text3="남" />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("user_setting");
-            }}
-          >
-            <Task text1="김인자" text2="69" text3="여" />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("user_setting");
-            }}
-          >
-            <Task text1="김옥분" text2="77" text3="여" />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("user_setting");
-            }}
-          >
-            <Task text1="채수지" text2="13" text3="여" />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("user_setting");
-            }}
-          >
-            <Task text1="김채현" text2="15" text3="여" />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("user_setting");
-            }}
-          >
-            <Task text1="신수빈" text2="22" text3="여" />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("user_setting");
-            }}
-          >
-            <Task text1="이영현" text2="20" text3="여" />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("user_setting");
-            }}
-          >
-            <Task text1="배수지" text2="23" text3="여" />
-          </TouchableOpacity>
-        </ScrollView>
-      </View>
-    </View>
-  );
+    );
+  }
 }
-
-export default list;
 
 const styles = StyleSheet.create({
   finalView: {
