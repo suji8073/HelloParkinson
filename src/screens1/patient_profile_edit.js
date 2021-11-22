@@ -24,8 +24,18 @@ export default class patient_profile_edit extends Component {
     this.state = {
       onname1: check,
       onname2: nocheck,
+      user_pw: "",
+      user_pww: "",
     };
   }
+  edit_finish = () => {
+    if (this.state.user_pw !== this.state.user_pww) {
+      Alert.alert("비밀번호가 일치하지 않습니다.");
+    } else {
+      Alert.alert("저장되었습니다.");
+      this.props.navigation.navigate("patient_profile");
+    }
+  };
 
   handleClick1 = () => {
     if (this.state.onname1 === nocheck && this.state.onname2 === check) {
@@ -59,10 +69,7 @@ export default class patient_profile_edit extends Component {
             name="check"
             size={24}
             color="#5CB405"
-            onPress={() => {
-              Alert.alert("저장되었습니다.");
-              this.props.navigation.navigate("patient_profile");
-            }}
+            onPress={this.edit_finish}
           />
         </View>
 
@@ -101,7 +108,7 @@ export default class patient_profile_edit extends Component {
             <TextInput
               style={styles.text2}
               onChangeText={(text) => {
-                this.setState({ inputText: text });
+                this.setState({ user_pw: text });
               }}
               placeholder="(미입력시 기존 비밀번호 유지)"
             />
@@ -115,7 +122,7 @@ export default class patient_profile_edit extends Component {
             <TextInput
               style={styles.text2}
               onChangeText={(text) => {
-                this.setState({ inputText: text });
+                this.setState({ user_pww: text });
               }}
               placeholder="(미입력시 기존 비밀번호 유지)"
             />

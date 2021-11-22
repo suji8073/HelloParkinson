@@ -10,8 +10,6 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import ActionButton from "react-native-action-button";
-import { Directions } from "react-native-gesture-handler";
-import styled from "styled-components/native";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 

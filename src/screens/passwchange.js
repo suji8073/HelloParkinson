@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   View,
   Text,
@@ -11,105 +11,111 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 
-function passwchange({ navigation }) {
-  return (
-    <View style={styles.finalView}>
-      <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
-      <View style={styles.menu1View}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("TabNavigation");
+export default class passwchange extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user_pw: "",
+    };
+  }
+  render() {
+    return (
+      <View style={styles.finalView}>
+        <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
+        <View style={styles.menu1View}>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate("TabNavigation");
+            }}
+          >
+            <AntDesign name="left" size={24} color="#CACACA" />
+          </TouchableOpacity>
+          <View style={styles.margin}></View>
+          <Text style={styles.titleText}>프로필 편집</Text>
+          <View style={styles.margin}></View>
+          <TouchableOpacity
+            onPress={() => {
+              Alert.alert("비밀번호가 정상적으로 변경되었습니다.");
+              this.props.navigation.navigate("TabNavigation");
+            }}
+          >
+            <AntDesign name="check" size={24} color="#5CB405" />
+          </TouchableOpacity>
+        </View>
+        {/* 아이콘과 관리자 이름 뷰 */}
+        <View
+          style={{
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop: "8%",
           }}
         >
-          <AntDesign name="left" size={24} color="#CACACA" />
-        </TouchableOpacity>
-        <View style={styles.margin}></View>
-        <Text style={styles.titleText}>프로필 편집</Text>
-        <View style={styles.margin}></View>
-        <TouchableOpacity
-          onPress={() => {
-            Alert.alert("비밀번호가 정상적으로 변경되었습니다.");
-            navigation.navigate("TabNavigation");
-          }}
-        >
-          <AntDesign name="check" size={24} color="#5CB405" />
-        </TouchableOpacity>
-      </View>
-      {/* 아이콘과 관리자 이름 뷰 */}
-      <View
-        style={{
-          flexDirection: "column",
-          alignItems: "center",
-          marginTop: "8%",
-        }}
-      >
-        <Ionicons name="person-circle-sharp" size={120} color="lightblue" />
-        <Text style={styles.titleText}>관리자</Text>
-      </View>
+          <Ionicons name="person-circle-sharp" size={120} color="lightblue" />
+          <Text style={styles.titleText}>관리자</Text>
+        </View>
 
-      <View
-        style={{
-          borderTopWidth: 0.3,
-          borderTopColor: "#DCDCDC",
-          marginTop: "15%",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          justifyContent: "center",
-        }}
-      >
-        {/* 한줄씩 뷰 */}
-        <View style={styles.menuanswerView}>
-          {/* 메뉴 뷰 */}
-          <View style={styles.menuView}>
-            <Text style={styles.menuText}>계정 이름</Text>
+        <View
+          style={{
+            borderTopWidth: 0.3,
+            borderTopColor: "#DCDCDC",
+            marginTop: "15%",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            justifyContent: "center",
+          }}
+        >
+          {/* 한줄씩 뷰 */}
+          <View style={styles.menuanswerView}>
+            {/* 메뉴 뷰 */}
+            <View style={styles.menuView}>
+              <Text style={styles.menuText}>계정 이름</Text>
+            </View>
+            {/* 답 뷰 */}
+            <View style={styles.answerView}>
+              <Text style={styles.answerText}>서울대학교 의료진</Text>
+            </View>
           </View>
-          {/* 답 뷰 */}
-          <View style={styles.answerView}>
-            <Text style={styles.answerText}>서울대학교 의료진</Text>
+          {/* 한줄 끝 */}
+          {/* 두번째줄 뷰 */}
+          <View style={styles.menuanswerView}>
+            <View style={styles.menuView}>
+              <Text style={styles.menuText}>아이디</Text>
+            </View>
+            <View style={styles.answerView}>
+              <Text style={styles.answerText}>seoul1234</Text>
+            </View>
           </View>
-        </View>
-        {/* 한줄 끝 */}
-        {/* 두번째줄 뷰 */}
-        <View style={styles.menuanswerView}>
-          <View style={styles.menuView}>
-            <Text style={styles.menuText}>아이디</Text>
+          {/* 두번째줄 끝 */}
+          {/* 세번째줄 뷰 */}
+          <View style={styles.menuanswerView}>
+            <View style={styles.menuView}>
+              <Text style={styles.menuText}>기존 비밀번호</Text>
+            </View>
+            <View style={styles.answerView}>
+              <Text style={styles.answerText1}>*********</Text>
+            </View>
           </View>
-          <View style={styles.answerView}>
-            <Text style={styles.answerText}>seoul1234</Text>
-          </View>
-        </View>
-        {/* 두번째줄 끝 */}
-        {/* 세번째줄 뷰 */}
-        <View style={styles.menuanswerView}>
-          <View style={styles.menuView}>
-            <Text style={styles.menuText}>기존 비밀번호</Text>
-          </View>
-          <View style={styles.answerView}>
-            <Text style={styles.answerText1}>*********</Text>
-          </View>
-        </View>
-        {/* 세번째줄 끝 */}
-        {/* 네번째줄 뷰 */}
-        <View style={styles.menuanswerView}>
-          <View style={styles.menuView}>
-            <Text style={styles.menuText}>새로운 비밀번호</Text>
-          </View>
-          <View style={styles.answerView}>
-            <TextInput
-              style={styles.textInput}
-              onChangeText={(text) => {
-                this.setState({ inputText: text });
-              }}
-              placeholder="(미 입력시 기존 비밀번호 유지)"
-            />
+          {/* 세번째줄 끝 */}
+          {/* 네번째줄 뷰 */}
+          <View style={styles.menuanswerView}>
+            <View style={styles.menuView}>
+              <Text style={styles.menuText}>새로운 비밀번호</Text>
+            </View>
+            <View style={styles.answerView}>
+              <TextInput
+                style={styles.textInput}
+                onChangeText={(text) => {
+                  this.setState({ user_pw: text });
+                }}
+                placeholder="(미 입력시 기존 비밀번호 유지)"
+              />
+            </View>
           </View>
         </View>
       </View>
-    </View>
-  );
+    );
+  }
 }
-
-export default passwchange;
 
 const styles = StyleSheet.create({
   finalView: {

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Image, Text, View, ImageBackground, StyleSheet } from "react-native";
-import { render } from "react-dom";
 import { WithLocalSvg } from "react-native-svg";
 import {
   widthPercentageToDP as wp,

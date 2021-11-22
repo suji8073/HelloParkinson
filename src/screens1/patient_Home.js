@@ -62,7 +62,7 @@ function patient_Home({ navigation }) {
                 }}
               >
                 <Image
-                  source={require("../image/ch.jpg")}
+                  source={require("../image/image.png")}
                   style={{
                     width: 100,
                     height: 100,
@@ -101,7 +101,7 @@ function patient_Home({ navigation }) {
                 }}
               >
                 <Image
-                  source={require("../image/ch.jpg")}
+                  source={require("../image/image.png")}
                   style={{
                     width: 100,
                     height: 100,
@@ -133,7 +133,7 @@ function patient_Home({ navigation }) {
                 }}
               >
                 <Image
-                  source={require("../image/ch.jpg")}
+                  source={require("../image/image.png")}
                   style={{
                     width: 100,
                     height: 100,

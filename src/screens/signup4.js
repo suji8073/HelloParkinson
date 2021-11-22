@@ -13,10 +13,75 @@ import { AntDesign } from "@expo/vector-icons";
 export default class siginup4 extends Component {
   constructor(props) {
     super(props);
-    this.state = { colorId: 0 };
+    this.state = {
+      user_sex: 0,
+      user_id: "",
+      usingid: false,
+      user_pw: "",
+      user_name: "",
+      user_telphone: "",
+      user_age: "",
+      text: "",
+    };
   }
-  onPress = (id) => {
-    this.setState({ colorId: id });
+
+  onPress_age = (id) => {
+    this.setState({ user_sex: id });
+    alert(this.state.user_sex);
+  };
+
+  login_input = () => {
+    alert(this.state.user_id);
+
+    fetch("http://152.70.233.113/signup/id" + this.state.user_id, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log("통신 확인");
+        if (json.dup === 0) {
+          alert("사용 가능한 아이디입니다."); //알람!
+          this.setState({
+            usingid: true,
+          });
+        } else {
+          // 1이면 중복
+          alert("존재하는 아이디입니다. 다른 아이디를 입력하세요.");
+        }
+      });
+  };
+  signup_check = () => {
+    Alert.alert(
+      this.state.user_id +
+        " " +
+        this.state.user_pw +
+        " " +
+        this.state.user_name +
+        " " +
+        this.state.user_telphone +
+        " " +
+        this.state.user_age +
+        " " +
+        this.state.user_sex // 남자는 1, 여자는 2
+    );
+
+    fetch("http://152.70.233.113/signup/phone", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(this.state.user_pw),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log("통신 확인");
+        if (json.dup === 0) {
+          Alert.alert("회원가입이 정상적으로 완료되었습니다.");
+          this.props.navigation.navigate("login");
+        } else {
+          // 1이면 중복
+          alert("존재하는 사용자입니다.");
+        }
+      });
   };
 
   render() {
@@ -45,20 +110,37 @@ export default class siginup4 extends Component {
           >
             <View style={styles.secondView}>
               <Text style={styles.titleText}>아이디 / 비밀번호 설정</Text>
-              <View style={styles.numberbutton}>
-                <View style={styles.number3}>
-                  <TextInput
-                    style={styles.textInput}
-                    secureTextEntry={false}
-                    placeholder="아이디 입력"
-                  />
+              <View style={styles.buttonwhite1}>
+                <TextInput
+                  style={styles.textInput1}
+                  secureTextEntry={false}
+                  placeholder="아이디 입력"
+                  onChangeText={(text) => {
+                    this.setState({ user_id: text });
+                  }}
+                />
+                <View style={styles.clickbtn}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={this.login_input}
+                  >
+                    <View style={styles.margin}></View>
+                    <View style={styles.user_id_click}>
+                      <Text style={styles.ttext}>중복확인</Text>
+                    </View>
+                    <View style={styles.margin}></View>
+                  </TouchableOpacity>
                 </View>
               </View>
+
               <View style={styles.button1}>
                 <TextInput
                   style={styles.textInput}
                   secureTextEntry={true}
                   placeholder="비밀번호 입력"
+                  onChangeText={(pw) => {
+                    this.setState({ user_pw: pw });
+                  }}
                 />
               </View>
             </View>
@@ -73,6 +155,9 @@ export default class siginup4 extends Component {
                   style={styles.textInput}
                   secureTextEntry={false}
                   placeholder="이름"
+                  onChangeText={(name) => {
+                    this.setState({ user_name: name });
+                  }}
                 />
               </View>
 
@@ -85,6 +170,9 @@ export default class siginup4 extends Component {
                     style={styles.textInput}
                     secureTextEntry={false}
                     placeholder="휴대전화번호"
+                    onChangeText={(tel) => {
+                      this.setState({ user_telphone: tel });
+                    }}
                   />
                 </View>
               </View>
@@ -100,6 +188,9 @@ export default class siginup4 extends Component {
                   style={styles.textInput}
                   secureTextEntry={false}
                   placeholder="'-' 제외 8자리를 입력해주세요"
+                  onChangeText={(age) => {
+                    this.setState({ user_age: age });
+                  }}
                 />
               </View>
             </View>
@@ -112,14 +203,16 @@ export default class siginup4 extends Component {
               <View style={styles.numberbutton}>
                 <TouchableOpacity
                   style={
-                    this.state.colorId === 1 ? styles.genderB2 : styles.genderB1
+                    this.state.user_sex === 1
+                      ? styles.genderB2
+                      : styles.genderB1
                   }
                   activeOpacity={0.8}
-                  onPress={() => this.onPress(1)}
+                  onPress={() => this.onPress_age(1)}
                 >
                   <Text
                     style={
-                      this.state.colorId === 1
+                      this.state.user_sex === 1
                         ? styles.gendertext1
                         : styles.gendertext
                     }
@@ -131,16 +224,16 @@ export default class siginup4 extends Component {
 
                 <TouchableOpacity
                   style={
-                    this.state.colorId === 2
+                    this.state.user_sex === 2
                       ? styles.genderB2
                       : styles.genderB11
                   }
                   activeOpacity={0.8}
-                  onPress={() => this.onPress(2)}
+                  onPress={() => this.onPress_age(2)}
                 >
                   <Text
                     style={
-                      this.state.colorId === 2
+                      this.state.user_sex === 2
                         ? styles.gendertext1
                         : styles.gendertext
                     }
@@ -158,10 +251,7 @@ export default class siginup4 extends Component {
           <TouchableOpacity
             style={styles.sendButton}
             activeOpacity={0.8}
-            onPress={() => {
-              Alert.alert("회원가입이 정상적으로 완료되었습니다.");
-              this.props.navigation.navigate("login");
-            }}
+            onPress={this.signup_check}
           >
             <Text style={styles.white}> 회 원 가 입 </Text>
           </TouchableOpacity>
@@ -210,8 +300,36 @@ const styles = StyleSheet.create({
     width: "95%",
     height: "100%",
   },
+
+  textInput1: {
+    fontSize: 17,
+    color: "#000000",
+    marginLeft: "5%",
+    flex: 4,
+  },
+
+  clickbtn: {
+    fontSize: 17,
+    color: "#000000",
+    marginRight: "5%",
+    flex: 1,
+    height: "100%",
+    flexDirection: "row",
+  },
+
+  user_id_click: {
+    backgroundColor: "#5CB405",
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 4,
+    width: 60,
+    borderColor: "#5CB405",
+    borderWidth: 1,
+  },
+
   margin: {
     flex: 1,
+    width: "100%",
   },
 
   MText: {
@@ -237,6 +355,17 @@ const styles = StyleSheet.create({
     borderColor: "#E5E5E5",
   },
 
+  buttonwhite1: {
+    justifyContent: "center",
+    marginLeft: "1%",
+    marginRight: "1%",
+    width: "98%",
+    height: 45,
+    borderWidth: 2,
+    borderColor: "#E5E5E5",
+    flexDirection: "row",
+  },
+
   button1: {
     marginLeft: "1%",
     marginRight: "1%",
@@ -254,7 +383,7 @@ const styles = StyleSheet.create({
   numberbutton: {
     marginLeft: "1%",
     marginRight: "1%",
-    width: "97%",
+    width: "98%",
     height: 45,
     borderColor: "#E5E5E5",
     flexDirection: "row",
@@ -283,10 +412,11 @@ const styles = StyleSheet.create({
   },
 
   number3: {
-    width: "100%",
+    marginLeft: "1%",
+    marginRight: "1%",
+    width: "98%",
     height: 45,
     borderWidth: 2,
-    marginRight: "1%",
     borderColor: "#E5E5E5",
     flexDirection: "row",
   },
@@ -327,6 +457,12 @@ const styles = StyleSheet.create({
   },
   gendertext1: {
     fontSize: 17,
+    color: "#FFFFFF",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  ttext: {
+    fontSize: 15,
     color: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
