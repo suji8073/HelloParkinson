@@ -23,11 +23,17 @@ export default class list extends Component {
     super(props);
     this.state = {
       data: [],
+      N_birth: 19431218,
+      N_gender: "",
+      N_memo: "",
+      N_team: "",
+      N_name: "",
+      user_id: "",
     };
   }
 
   userfunc = () => {
-    fetch("http://152.70.233.113/user", {
+    fetch("http://152.70.233.113/chamuser", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -41,6 +47,38 @@ export default class list extends Component {
     return this.state.data;
   };
 
+  onMenuPress = (id) => {
+    if (id === "abc") {
+      // 가나다순 클릭했을 때
+      fetch("", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          this.setState({ data: json });
+        });
+      return this.state.data;
+    } else if (id === "star") {
+      // 즐겨찾기순 클릭했을 때
+      fetch("", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          this.setState({ data: json });
+        });
+      return this.state.data;
+    }
+  };
+
   render() {
     return (
       <View style={styles.finalView}>
@@ -52,6 +90,9 @@ export default class list extends Component {
           <SimplePopupMenu
             style={styles.margin}
             items={items}
+            onSelect={(items) => {
+              this.onMenuPress(items.id);
+            }}
             cancelLabel={"취소"}
             onCancel={() => console.log("onCancel")}
           >
@@ -64,33 +105,46 @@ export default class list extends Component {
         </View>
 
         <View style={styles.threeView}>
-          <ScrollView
-            nestedScrollEnabled={true}
-            contentContainerStyle={{
-              flexGrow: 1,
-              flexDirection: "column",
-              justifyContent: "space-between",
+          <FlatList
+            data={this.userfunc()}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    alert(item.id);
+                    fetch("http://152.70.233.113/chamuser/id/" + item.id, {
+                      method: "GET",
+                      headers: { "Content-Type": "application/json" },
+                    })
+                      .then((res) => res.json())
+                      .then((json) => {
+                        console.log("통신 확인");
+                        this.setState({
+                          N_birth: json.info.birth,
+                          N_gender: json.info.gender,
+                          N_memo: json.info.memo,
+                          N_team: json.info.team,
+                          N_name: json.info.name,
+                        });
+                      });
+                    this.props.navigation.navigate("user_setting", {
+                      paramName1: this.state.N_birth,
+                      paramName2: this.state.N_gender,
+                      paramName3: this.state.N_memo,
+                      paramName4: this.state.N_team,
+                      paramName5: this.state.N_name,
+                    });
+                  }}
+                >
+                  <Task
+                    user={item.name}
+                    age={item.birth}
+                    sex={item.gender}
+                  ></Task>
+                </TouchableOpacity>
+              );
             }}
-          >
-            <FlatList
-              data={this.userfunc()}
-              renderItem={({ item }) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.props.navigation.navigate("user_setting");
-                    }}
-                  >
-                    <Task
-                      user={item.name}
-                      age={item.birth}
-                      sex={item.gender}
-                    ></Task>
-                  </TouchableOpacity>
-                );
-              }}
-            />
-          </ScrollView>
+          />
         </View>
       </View>
     );

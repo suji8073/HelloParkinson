@@ -5,7 +5,6 @@ import {
   View,
   Text,
   FlatList,
-  ScrollView,
 } from "react-native";
 import { WithLocalSvg } from "react-native-svg";
 
@@ -14,10 +13,7 @@ import { Entypo } from "@expo/vector-icons";
 import ddaysvg from "../icon/dday.svg";
 import { AntDesign } from "@expo/vector-icons";
 import SimplePopupMenu from "react-native-simple-popup-menu";
-import {
-  TouchableHighlight,
-  TouchableOpacity,
-} from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const items = [
   { id: "alarm", label: "알림순" },
@@ -33,7 +29,7 @@ export default class progress extends Component {
     };
   }
   userfunc = () => {
-    fetch("http://152.70.233.113/user", {
+    fetch("http://152.70.233.113/chamuser", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -63,6 +59,38 @@ export default class progress extends Component {
     return this.state.data;
   };
 
+  onMenuPress = (id) => {
+    if (id === "alarm") {
+      // 알림순
+      fetch("", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          this.setState({ data: json });
+        });
+      return this.state.data;
+    } else if (id === "progress") {
+      // 진도율순
+      fetch("", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          this.setState({ data: json });
+        });
+      return this.state.data;
+    }
+  };
+
   render() {
     return (
       <View style={styles.finalView}>
@@ -78,7 +106,9 @@ export default class progress extends Component {
           <SimplePopupMenu
             items={items}
             cancelLabel={"취소"}
-            //onSelect={() => alert(this.label)}
+            onSelect={(items) => {
+              this.onMenuPress(items.id);
+            }}
             onCancel={() => console.log("onCancel")}
           >
             <Entypo name="dots-three-vertical" size={24} color="#595959" />

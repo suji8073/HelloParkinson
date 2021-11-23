@@ -46,7 +46,7 @@ const TabNavigation1 = () => {
           headerTitleAlign: "center",
           tabBarLabelStyle: {
             fontSize: 17,
-            fontWeight:"bold"
+            fontWeight: "bold",
           },
           tabBarIcon: (props) => menuIcon1({ ...props, name: "home" }),
         }}
@@ -61,7 +61,7 @@ const TabNavigation1 = () => {
           headerTitleAlign: "center",
           tabBarLabelStyle: {
             fontSize: 17,
-            fontWeight:"bold"
+            fontWeight: "bold",
           },
           tabBarIcon: (props) =>
             menuIcon1({ ...props, name: "controller-play" }),
@@ -76,10 +76,9 @@ const TabNavigation1 = () => {
           headerTitleAlign: "center",
           tabBarLabelStyle: {
             fontSize: 17,
-            fontWeight:"bold"
+            fontWeight: "bold",
           },
-          tabBarIcon: (props) =>
-            menuIcon({ ...props, name: "md-pie-chart-outline" }),
+          tabBarIcon: (props) => menuIcon({ ...props, name: "podium" }),
         }}
       />
       <Tab.Screen
@@ -91,9 +90,9 @@ const TabNavigation1 = () => {
           headerTitleAlign: "center",
           tabBarLabelStyle: {
             fontSize: 17,
-            fontWeight:"bold"
+            fontWeight: "bold",
           },
-          tabBarIcon: (props) => menuIcon({ ...props, name: "podium" }),
+          tabBarIcon: (props) => menuIcon({ ...props, name: "alarm-outline" }),
         }}
       />
     </Tab.Navigator>

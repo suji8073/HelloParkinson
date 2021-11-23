@@ -20,7 +20,10 @@ function Task({ user, age, sex }) {
       <View style={styles.textgroup}>
         <Text style={styles.titleText}> {user}</Text>
         <View style={styles.textgroup1}>
-          <Text style={styles.subtext}> {age}세 /</Text>
+          <Text style={styles.subtext}>
+            {" "}
+            {2020 - parseInt(age / 10000)}세 /
+          </Text>
           <Text style={styles.subtext}> {sex}성</Text>
         </View>
       </View>
