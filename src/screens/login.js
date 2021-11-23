@@ -3,9 +3,9 @@ import {
   StyleSheet,
   Text,
   View,
-  ImageBackground,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from "react-native";
 import React, { Component } from "react";
 import "react-native-gesture-handler";
@@ -13,7 +13,54 @@ import "react-native-gesture-handler";
 export default class login extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      id: "",
+      pw: "",
+    };
   }
+  login_check = () => {
+    console.log("아이디: " + this.state.id);
+    console.log("비밀번호: " + this.state.pw);
+
+    if (this.state.id !== "" || this.state.pw !== "") {
+      console.log("들어갔는지 확인!");
+      try {
+        fetch("http://152.70.233.113/chamlogin", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: this.state.id,
+            pw: this.state.pw,
+          }),
+        })
+          .then((res) => res.json())
+          .catch((error) => {
+            // TODO FIXME replace the red screen with something informative.
+            console.error(error);
+          })
+          .then((json) => {
+            console.log("로그인 통신 확인");
+            if (json.admin == 0) {
+              this.props.navigation.navigate("TabNavigation");
+            } else if (json.admin == 1) {
+              this.props.navigation.navigate("TabNavigation1");
+            } else {
+              Alert.alert(
+                // 모든 정보가 다 기입되지 않았을 때
+                "아이디 또는 비밀번호가 일치하지 않습니다."
+              );
+            }
+          });
+      } catch (e) {
+        console.log(e.message);
+      }
+    } else {
+      Alert.alert(
+        // 모든 정보가 다 기입되지 않았을 때
+        "아이디와 비밀번호를 정확하게 입력해주세요."
+      );
+    }
+  };
   render() {
     return (
       <View style={styles.finalView}>
@@ -42,6 +89,9 @@ export default class login extends Component {
               placeholder="아이디"
               secureTextEntry={false}
               style={styles.textInput}
+              onChangeText={(text) => {
+                this.setState({ id: text });
+              }}
             />
           </View>
           <View style={styles.buttonwhite}>
@@ -49,15 +99,16 @@ export default class login extends Component {
               secureTextEntry={true}
               style={styles.textInput}
               placeholder="비밀번호"
+              onChangeText={(text) => {
+                this.setState({ pw: text });
+              }}
             />
           </View>
 
           <TouchableOpacity
             style={styles.buttongreen}
             activeOpacity={0.8}
-            onPress={() => {
-              this.props.navigation.navigate("TabNavigation");
-            }}
+            onPress={this.login_check}
           >
             <Text style={styles.green}> 로그인하기 </Text>
           </TouchableOpacity>

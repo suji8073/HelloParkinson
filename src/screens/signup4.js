@@ -14,7 +14,7 @@ export default class siginup4 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_sex: 0,
+      user_sex: 1,
       user_id: "",
       usingid: false,
       user_pw: "",
@@ -22,18 +22,27 @@ export default class siginup4 extends Component {
       user_telphone: "",
       user_age: "",
       text: "",
+      empty_check_id: 0,
+      user_gender: "여",
     };
   }
 
-  onPress_age = (id) => {
-    this.setState({ user_sex: id });
-    alert(this.state.user_sex);
+  onPress_age1 = () => {
+    if (this.state.user_sex !== 1) {
+      this.setState({ user_sex: 1 });
+      console.log(this.state.user_sex);
+    }
   };
 
+  onPress_age2 = () => {
+    if (this.state.user_sex !== 2) {
+      this.setState({ user_sex: 2 });
+      console.log(this.state.user_sex);
+    }
+  };
+  // 1이면 여자, 2면 남자
   login_input = () => {
-    alert(this.state.user_id);
-
-    fetch("http://152.70.233.113/signup/id" + this.state.user_id, {
+    fetch("http://152.70.233.113/chamsignup/id/" + this.state.user_id, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
@@ -41,47 +50,97 @@ export default class siginup4 extends Component {
       .then((json) => {
         console.log("통신 확인");
         if (json.dup === 0) {
-          alert("사용 가능한 아이디입니다."); //알람!
+          Alert.alert("사용 가능한 아이디입니다."); //알람!
           this.setState({
             usingid: true,
           });
         } else {
           // 1이면 중복
-          alert("존재하는 아이디입니다. 다른 아이디를 입력하세요.");
+          Alert.alert("존재하는 아이디입니다.\n다른 아이디를 입력하세요.");
         }
       });
   };
-  signup_check = () => {
-    Alert.alert(
-      this.state.user_id +
-        " " +
-        this.state.user_pw +
-        " " +
-        this.state.user_name +
-        " " +
-        this.state.user_telphone +
-        " " +
-        this.state.user_age +
-        " " +
-        this.state.user_sex // 남자는 1, 여자는 2
-    );
 
-    fetch("http://152.70.233.113/signup/phone", {
-      method: "GET",
+  empty_check = () => {
+    if (
+      // 모두 공백이 아니면
+      this.state.user_id !== "" &&
+      this.state.user_pw !== "" &&
+      this.state.user_name !== "" &&
+      this.state.user_telphone !== "" &&
+      this.state.user_age !== ""
+    ) {
+      this.setState({ empty_check_id: 1 });
+    } else this.setState({ empty_check_id: 0 });
+  };
+
+  signup = () => {
+    fetch("http://152.70.233.113/chamsignup", {
+      method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(this.state.user_pw),
+      body: JSON.stringify({
+        name: this.state.user_name,
+        UID: this.state.user_id,
+        gender: this.state.user_gender,
+        birth: this.state.user_age,
+        password: this.state.user_pw,
+        phone_number: "010" + this.state.user_telphone,
+      }),
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log("통신 확인");
-        if (json.dup === 0) {
-          Alert.alert("회원가입이 정상적으로 완료되었습니다.");
-          this.props.navigation.navigate("login");
-        } else {
-          // 1이면 중복
-          alert("존재하는 사용자입니다.");
-        }
+        console.log("회원가입 성공!");
+        Alert.alert("회원가입이 정상적으로 완료되었습니다.");
+        this.props.navigation.navigate("login");
       });
+  };
+
+  signup_check = () => {
+    if (this.state.usingid === true) {
+      if (
+        // 모두 공백이 아니면
+        this.state.user_id !== "" &&
+        this.state.user_pw !== "" &&
+        this.state.user_name !== "" &&
+        this.state.user_telphone !== "" &&
+        this.state.user_age !== ""
+      ) {
+        if (this.state.user_sex === 1) {
+          this.setState({ user_gender: "남" });
+        } else {
+          this.setState({ user_gender: "여" });
+        }
+        alert(this.state.user_gender);
+        // 모든 정보가 다 기입되면
+        fetch(
+          "http://152.70.233.113/chamsignup/phone/" + this.state.user_telphone,
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          }
+        )
+          .then((res) => res.json())
+          .then((json) => {
+            console.log("얍통신 확인");
+            if (json.dup === 0) {
+              this.signup();
+            } else {
+              // 1이면 중복
+              Alert.alert("존재하는 사용자입니다.");
+            }
+          });
+      } else {
+        Alert.alert(
+          // 모든 정보가 다 기입되지 않았을 때
+          "모든 정보를 올바르게 입력했는지 확인한 후 다시 시도하십시오."
+        );
+      }
+    } else {
+      Alert.alert(
+        // 아이디 중복 확인 안 했을 때
+        "아이디 중복 확인을 해주세요!"
+      );
+    }
   };
 
   render() {
@@ -200,15 +259,16 @@ export default class siginup4 extends Component {
                 <Text style={styles.titleText}>성별</Text>
                 <Text style={styles.check}>*</Text>
               </View>
+              <View style={{ marginBottom: 3 }}></View>
               <View style={styles.numberbutton}>
                 <TouchableOpacity
                   style={
                     this.state.user_sex === 1
-                      ? styles.genderB2
+                      ? styles.genderB2 //클릭됨
                       : styles.genderB1
                   }
                   activeOpacity={0.8}
-                  onPress={() => this.onPress_age(1)}
+                  onPress={this.onPress_age1}
                 >
                   <Text
                     style={
@@ -229,7 +289,8 @@ export default class siginup4 extends Component {
                       : styles.genderB11
                   }
                   activeOpacity={0.8}
-                  onPress={() => this.onPress_age(2)}
+                  onPress={this.onPress_age2}
+                  onChangeText={this.onPress_age2}
                 >
                   <Text
                     style={
@@ -249,11 +310,19 @@ export default class siginup4 extends Component {
 
         <View style={styles.chatControl}>
           <TouchableOpacity
-            style={styles.sendButton}
+            style={
+              this.state.usingid === true
+                ? styles.sendButton
+                : styles.sendButton1
+            }
             activeOpacity={0.8}
             onPress={this.signup_check}
           >
-            <Text style={styles.white}> 회 원 가 입 </Text>
+            <Text
+              style={this.state.usingid === true ? styles.white : styles.white1}
+            >
+              회 원 가 입
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -473,6 +542,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#FFFFFF",
   },
+  white1: {
+    fontSize: 17,
+    fontWeight: "bold",
+    color: "#AFAFAF",
+  },
 
   genderB1: {
     backgroundColor: "#F5F5F5",
@@ -514,6 +588,14 @@ const styles = StyleSheet.create({
 
   sendButton: {
     backgroundColor: "#7AC819",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    height: "35%",
+  },
+
+  sendButton1: {
+    backgroundColor: "#F5F5F5",
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
