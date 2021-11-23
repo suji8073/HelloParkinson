@@ -17,7 +17,7 @@ const items = [
   { id: "abc", label: "가나다순" },
   { id: "star", label: "즐겨찾기순" },
 ];
-const year = new Date();
+const today = new Date();
 export default class list extends Component {
   constructor(props) {
     super(props);
@@ -27,7 +27,7 @@ export default class list extends Component {
   }
 
   userfunc = () => {
-    fetch("http://152.70.233.113/user", {
+    fetch("http://152.70.233.113/chamuser", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -37,6 +37,7 @@ export default class list extends Component {
       .then((res) => res.json())
       .then((json) => {
         this.setState({ data: json });
+        // this.setState({ birth: data.birth.slice(0, 4) - 2021 });
       });
     return this.state.data;
   };
@@ -46,9 +47,7 @@ export default class list extends Component {
       <View style={styles.finalView}>
         <View style={styles.menuView}>
           <View style={styles.margin}></View>
-          <TouchableOpacity onPress={this.userfunc}>
-            <Text style={styles.titleText}>환자 목록</Text>
-          </TouchableOpacity>
+          <Text style={styles.titleText}>환자 목록</Text>
           <SimplePopupMenu
             style={styles.margin}
             items={items}
@@ -64,33 +63,26 @@ export default class list extends Component {
         </View>
 
         <View style={styles.threeView}>
-          <ScrollView
-            nestedScrollEnabled={true}
-            contentContainerStyle={{
-              flexGrow: 1,
-              flexDirection: "column",
-              justifyContent: "space-between",
+          <FlatList
+            data={this.userfunc()}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity
+                  activeOpacity={0.8} //깜빡임을 조절하는 기능
+                  hitSlop={{ top: 50, bottom: 100, left: 100, right: 70 }}
+                  onPress={() => {
+                    this.props.navigation.navigate("user_setting");
+                  }}
+                >
+                  <Task
+                    user={item.name}
+                    age={item.birth}
+                    sex={item.gender}
+                  ></Task>
+                </TouchableOpacity>
+              );
             }}
-          >
-            <FlatList
-              data={this.userfunc()}
-              renderItem={({ item }) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.props.navigation.navigate("user_setting");
-                    }}
-                  >
-                    <Task
-                      user={item.name}
-                      age={item.birth}
-                      sex={item.gender}
-                    ></Task>
-                  </TouchableOpacity>
-                );
-              }}
-            />
-          </ScrollView>
+          />
         </View>
       </View>
     );

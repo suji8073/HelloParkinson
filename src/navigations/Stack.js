@@ -11,6 +11,7 @@ import user_progress from "../screens/user_progress";
 import user_edit from "../screens/user_edit";
 import moveedit from "../screens/moveedit";
 import progress from "../screens/progress";
+
 import user_statistics from "../screens/user_statistics";
 import profile from "../screens/profile";
 import TabNavigation from "./Tab";
@@ -31,6 +32,8 @@ import move_2 from "../screens1/move_2";
 import move_3 from "../screens1/move_3";
 import move_4 from "../screens1/move_4";
 import move_play from "../screens1/move_play";
+//import task1 from "../screens/task1";
+//      <Stack.Screen name="task1" component={task1}/>
 
 import test from "../screens/test";
 const Stack = createStackNavigator();

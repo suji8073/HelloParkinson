@@ -1,47 +1,69 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
-import PropTypes from "prop-types";
+import React, { Component } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Alert,
+  TouchableOpacityComponent,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
+
 import { WithLocalSvg } from "react-native-svg";
-import nocheck from "../icon/radio_btn_nocheck.svg";
-import check from "../icon/radio_button_check.svg";
+import silverstarsvg from "../icon/silverstar.svg";
+import greenstartsvg from "../icon/greenstar.svg";
+const year = 2021 - 1;
 
-function Task({ user, age, sex }) {
-  return (
-    <View style={styles.Container}>
-      <Ionicons
-        name="person-circle-sharp"
-        size={50}
-        color="lightblue"
-        justifyContent="center"
-        alignItems="center"
-      />
-      <View style={styles.textgroup}>
-        <Text style={styles.titleText}> {user}</Text>
-        <View style={styles.textgroup1}>
-          <Text style={styles.subtext}> {age}세 /</Text>
-          <Text style={styles.subtext}> {sex}성</Text>
+export default class task1 extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      star: silverstarsvg,
+    };
+  }
+
+  handleClick = () => {
+    if (this.state.star === silverstarsvg) {
+      this.setState({ star: greenstartsvg });
+    } else {
+      this.setState({ star: silverstarsvg });
+    }
+  };
+
+  render() {
+    return (
+      <View style={styles.Container}>
+        <View style={styles.full}>
+          <View>
+            <Ionicons
+              name="person-circle-sharp"
+              size={50}
+              color="lightblue"
+              justifyContent="center"
+              alignItems="center"
+            />
+          </View>
+          <View>
+            <View style={styles.textgroup}>
+              <Text style={styles.titleText}>{this.props.user}</Text>
+              <View style={styles.textgroup1}>
+                <Text style={styles.subtext}>
+                  {year - parseInt(this.props.age / 10000)}세 /
+                </Text>
+                <Text style={styles.subtext}> {this.props.sex}성</Text>
+              </View>
+            </View>
+          </View>
         </View>
+        <View style={styles.margin}></View>
+        <TouchableOpacity onPress={this.handleClick}>
+          <WithLocalSvg width={30} height={30} asset={this.state.star} />
+        </TouchableOpacity>
       </View>
-      <View style={styles.margin}></View>
-      <EvilIcons
-        name="star"
-        size={40}
-        color="green"
-        //type={images.update}
-      />
-    </View>
-  );
+    );
+  }
 }
-
-// Task.propTypes = {
-//   user: PropTypes.string.isRequired,
-//   age: PropTypes.string.isRequired,
-//   sex: PropTypes.string.isRequired,
-// };
-
-export default Task;
 
 const styles = StyleSheet.create({
   Container: {
@@ -56,6 +78,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     height: 90,
     borderRadius: 10,
+    flexDirection: "row",
+  },
+  full: {
     flexDirection: "row",
   },
 

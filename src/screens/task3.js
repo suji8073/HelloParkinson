@@ -14,7 +14,7 @@ import {
 import PercentageBar from "./progressbar";
 import Svg1 from "../icon/airplane.svg";
 import { WithLocalSvg } from "react-native-svg";
-
+const year = 2021 - 1;
 const task3 = ({ user, age, sex, progress, minute }) => {
   return (
     //  전체 뷰
@@ -41,7 +41,7 @@ const task3 = ({ user, age, sex, progress, minute }) => {
         }}
       >
         <Text style={{ fontSize: 17 }}>
-          {user} / {age} / {sex}
+          {user} / {year - parseInt(age / 10000)} / {sex}
         </Text>
 
         {/* 그래프와 숫자 뷰 */}

@@ -8,11 +8,11 @@ const data = {
       data: [75, 25, 40, 90, 55],
       color: (opacity = 0) => `rgba(101, 203, 0, ${opacity})`, // optional
       strokeWidth: 1.5,
-      plugins:{
-        legend:{
-          display:false,
-        }
-      }
+      plugins: {
+        legend: {
+          display: false,
+        },
+      },
     },
   ],
 };

@@ -45,9 +45,9 @@ export default class login extends Component {
           .then((json) => {
             console.log("로그인 통신 확인");
             if (json.admin == 0) {
-              this.props.navigation.navigate("TabNavigation");
-            } else if (json.admin == 1) {
               this.props.navigation.navigate("TabNavigation1");
+            } else if (json.admin == 1) {
+              this.props.navigation.navigate("TabNavigation");
             } else {
               Alert.alert(
                 // 모든 정보가 다 기입되지 않았을 때

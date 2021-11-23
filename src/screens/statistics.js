@@ -28,7 +28,7 @@ export default class statistics extends Component {
     };
   }
   userfunc = () => {
-    fetch("http://152.70.233.113/user", {
+    fetch("http://152.70.233.113/chamuser", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -66,26 +66,24 @@ export default class statistics extends Component {
         </View>
 
         <View style={styles.threeView}>
-          <ScrollView>
-            <FlatList
-              data={this.userfunc()}
-              renderItem={({ item }) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.props.navigation.navigate("user_statistics");
-                    }}
-                  >
-                    <Task
-                      user={item.name}
-                      age={item.birth}
-                      sex={item.gender}
-                    ></Task>
-                  </TouchableOpacity>
-                );
-              }}
-            />
-          </ScrollView>
+          <FlatList
+            data={this.userfunc()}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.navigation.navigate("user_statistics");
+                  }}
+                >
+                  <Task
+                    user={item.name}
+                    age={item.birth}
+                    sex={item.gender}
+                  ></Task>
+                </TouchableOpacity>
+              );
+            }}
+          />
         </View>
       </View>
     );

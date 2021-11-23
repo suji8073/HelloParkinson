@@ -30,10 +30,23 @@ export default class progress extends Component {
     this.state = {
       data: [],
       alarmtime: [],
+      user_progress: 0,
     };
   }
   userfunc = () => {
-    fetch("http://152.70.233.113/user", {
+    fetch("http://152.70.233.113/chamuser/id/", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({ data: json });
+      });
+
+    fetch("http://152.70.233.113/chamuser/id/", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -49,7 +62,7 @@ export default class progress extends Component {
 
   // 알림 전송 시간 받아오기
   alarm_time = () => {
-    fetch("http://152.70.233.113/user", {
+    fetch("http://152.70.233.113/chamuser", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -131,6 +144,7 @@ export default class progress extends Component {
             </View>
 
             <FlatList
+              style={{ marginBottom: 80 }}
               data={this.userfunc()}
               renderItem={({ item }) => {
                 return (

@@ -11,7 +11,7 @@ import {
 
 import React, { Component } from "react";
 import "react-native-gesture-handler";
-
+const ee = [];
 export default class test extends Component {
   constructor(props) {
     super(props);
@@ -19,20 +19,20 @@ export default class test extends Component {
       data: [],
     };
   }
-  //   userfunc = () => {
-  //     fetch("http://152.70.233.113/user", {
-  //       method: "GET",
-  //       headers: {
-  //         Accept: "application/json",
-  //         "Content-Type": "application/json",
-  //       },
-  //     })
-  //       .then((res) => res.json())
-  //       .then((json) => {
-  //         ;this.setState({ data: json })
-  //         console.log(this.state.data);
-  //       });
-  //   };
+  userfunc = () => {
+    fetch("http://152.70.233.113/chamuser", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({ data: json });
+      });
+    return this.state.data;
+  };
 
   render() {
     return (
@@ -42,50 +42,13 @@ export default class test extends Component {
           <Text style={styles.titleText}>데이터 불러오기</Text>
           <View style={styles.margin}></View>
         </View>
-
-        <Text onPress={this.userfunc}>김채현</Text>
+        <TouchableOpacity onPress={this.userfunc}>
+          <Text>rlacogus</Text>
+          {console.log(this.state.data)}
+        </TouchableOpacity>
       </View>
     );
   }
-
-  // import React, { useState, useEffect } from "react";
-  // import axios from "axios";
-
-  // function test() {
-  //   const [users, setUsers] = useState(null);
-  //   const [loading, setLoading] = useState(false);
-  //   const [error, setError] = useState(null);
-
-  //   useEffect(() => {
-  //     const fetchUsers = async () => {
-  //       try {
-  //         // 요청이 시작 할 때에는 error 와 users 를 초기화하고
-  //         setError(null);
-  //         setUsers(null);
-  //         // loading 상태를 true 로 바꿉니다.
-  //         setLoading(true);
-  //         const response = await axios.get("http://152.70.233.113/user");
-  //         setUsers(response.data); // 데이터는 response.data 안에 들어있습니다.
-  //       } catch (e) {
-  //         setError(e);
-  //       }
-  //       setLoading(false);
-  //     };
-
-  //     fetchUsers();
-  //   }, []);
-
-  //   if (loading) return <div>로딩중..</div>;
-  //   if (error) return <div>에러가 발생했습니다</div>;
-  //   if (!users) return null;
-  //   return (
-  //     <ul>
-  //       {users.map((user) => (
-  //         <li key={user.id}>
-  //           {user.username} ({user.name})
-  //         </li>
-  //       ))}
-  //     </ul>
 }
 
 const styles = StyleSheet.create({
