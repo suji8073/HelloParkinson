@@ -8,9 +8,6 @@ import nocheck from "../icon/radio_btn_nocheck.svg";
 import check from "../icon/radio_button_check.svg";
 
 function Task({ user, age, sex }) {
-
-
-
   return (
     <View style={styles.Container}>
       <Ionicons
@@ -38,11 +35,11 @@ function Task({ user, age, sex }) {
   );
 }
 
-Task.propTypes = {
-  text1: PropTypes.string.isRequired,
-  text2: PropTypes.string.isRequired,
-  text3: PropTypes.string.isRequired,
-};
+// Task.propTypes = {
+//   user: PropTypes.string.isRequired,
+//   age: PropTypes.string.isRequired,
+//   sex: PropTypes.string.isRequired,
+// };
 
 export default Task;
 

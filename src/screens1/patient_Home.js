@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   TouchableOpacity,
   StatusBar,
@@ -6,6 +6,7 @@ import {
   View,
   Text,
   Image,
+  FlatList,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
@@ -16,164 +17,252 @@ import firstsvg from "../icon/first.svg";
 import secondsvg from "../icon/second.svg";
 import thirdsvg from "../icon/third.svg";
 import crownsvg from "../icon/crown.svg";
-function patient_Home({ navigation }) {
-  return (
-    <View style={styles.finalView}>
-      <View style={styles.menuView}>
-        <Ionicons name="person-circle-sharp" size={35} color="#ffffff" />
-        <View style={styles.margin}></View>
-        <Text style={styles.titleText}>굿나잇 파킨슨</Text>
-        <View style={styles.margin}></View>
+const DATA = [
+  {
+    id: "1",
+    user: "박규동",
+    age: "5",
+    sex: "여",
+    progress: "50%",
+    minute: "5",
+    completed: false,
+    record: "4",
+  },
+  {
+    id: "2",
+    user: "채수지",
+    age: "5",
+    sex: "여",
+    progress: "50%",
+    minute: "5",
+    completed: false,
+    record: "5",
+  },
+  {
+    id: "3",
+    user: "기매현",
+    age: "5",
+    sex: "여",
+    progress: "50%",
+    minute: "5",
+    completed: false,
+    record: "6",
+  },
+  {
+    id: "4",
+    user: "김해년",
+    age: "5",
+    sex: "여",
+    progress: "50%",
+    minute: "5",
+    completed: false,
+    record: "7",
+  },
+  {
+    id: "5",
+    user: "십누딩",
+    age: "5",
+    sex: "여",
+    progress: "50%",
+    minute: "5",
+    completed: false,
+    record: "8",
+  },
+];
+export default class patient_Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+    };
+  }
+  userfunc = () => {
+    fetch("http://152.70.233.113/user", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({ data: json });
+      });
+    return this.state.data;
+  };
+  render() {
+    return (
+      <View style={styles.finalView}>
+        <View style={styles.menuView}>
+          <Ionicons name="person-circle-sharp" size={35} color="#ffffff" />
+          <View style={styles.margin}></View>
+          <Text style={styles.titleText}>굿나잇 파킨슨</Text>
+          <View style={styles.margin}></View>
 
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("patient_profile");
-          }}
-        >
-          <Ionicons name="person-circle-sharp" size={35} color="#5CB405" />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.secondView}>
-        {/* 환자 1~3 */}
-        <View style={{ height: "27%", marginTop: "3%" }}>
-          <View
-            style={{
-              margin: "5%",
-              flexDirection: "row",
-              alignContent: "flex-end",
-              justifyContent: "space-evenly",
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate("patient_profile");
             }}
           >
+            <Ionicons name="person-circle-sharp" size={35} color="#5CB405" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.secondView}>
+          {/* 환자 1~3 */}
+          <View style={{ height: "27%", marginTop: "3%" }}>
             <View
               style={{
-                alignItems: "center",
-                justifyContent: "center",
-                top: "7%",
-                margin: "1%",
+                margin: "5%",
+                flexDirection: "row",
+                alignContent: "flex-end",
+                justifyContent: "space-evenly",
               }}
             >
               <View
                 style={{
-                  borderRadius: 400 / 2,
-                  borderColor: "#C4C4C4",
-                  borderWidth: 10,
-                  // position: "absolute",
-                  // top: "20%",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  top: "7%",
+                  margin: "1%",
                 }}
               >
-                <Image
-                  source={require("../image/image.png")}
+                <View
+
                   style={{
-                    width: 100,
-                    height: 100,
                     borderRadius: 400 / 2,
+                    borderColor: "#C4C4C4",
+                    borderWidth: 10,
+                    // position: "absolute",
+                    // top: "20%",
                   }}
+                >
+                  <Image
+                    source={require("../image/ch.jpg")}
+                    style={{
+                      width: 90,
+                      height: 90,
+                      borderRadius: 400 / 2,
+                    }}
+                  />
+                </View>
+                <WithLocalSvg
+                  style={{ top: "80%", position: "absolute" }}
+                  width={30}
+                  height={30}
+                  asset={secondsvg}
                 />
+                <Text style={styles.prizetext}>신수빈[80%]</Text>
               </View>
-              <WithLocalSvg
-                style={{ top: "80%", position: "absolute" }}
-                width={30}
-                height={30}
-                asset={secondsvg}
-              />
-              <Text style={styles.prizetext}>신수빈[80%]</Text>
-            </View>
-            <View
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                margin: "1%",
-              }}
-            >
-              <WithLocalSvg
-                width={50}
-                height={40}
-                asset={crownsvg}
-                style={{ top: "-20%", position: "absolute" }}
-              />
               <View
                 style={{
-                  borderRadius: 400 / 2,
-                  borderColor: "#F8D500",
-                  borderWidth: 10,
-                  // top: "40%",
-                  // position: "absolute",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  margin: "1%",
                 }}
               >
-                <Image
-                  source={require("../image/image.png")}
-                  style={{
-                    width: 100,
-                    height: 100,
-                    borderRadius: 400 / 2,
-                  }}
+
+                <WithLocalSvg
+                  width={50}
+                  height={40}
+                  asset={crownsvg}
+                  style={{ top: "-20%", position: "absolute" }}
                 />
+                <View
+
+                  style={{
+                    borderRadius: 400 / 2,
+                    borderColor: "#F8D500",
+                    borderWidth: 10,
+                    // top: "40%",
+                    // position: "absolute",
+                  }}
+                >
+                  <Image
+                    source={require("../image/ch.jpg")}
+                    style={{
+                      width: 90,
+                      height: 90,
+                      borderRadius: 400 / 2,
+                    }}
+                  />
+                </View>
+                <WithLocalSvg
+                  style={{ top: "80%", position: "absolute" }}
+                  width={30}
+                  height={30}
+                  asset={firstsvg}
+                />
+                <Text style={styles.prizetext}>오석형[98%]</Text>
               </View>
-              <WithLocalSvg
-                style={{ top: "80%", position: "absolute" }}
-                width={30}
-                height={30}
-                asset={firstsvg}
-              />
-              <Text style={styles.prizetext}>오석형[98%]</Text>
-            </View>
-            <View
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                top: "7%",
-                margin: "1%",
-              }}
-            >
               <View
                 style={{
-                  borderRadius: 400 / 2,
-                  borderColor: "#DA9B73",
-                  borderWidth: 10,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  top: "7%",
+                  margin: "1%",
                 }}
               >
-                <Image
-                  source={require("../image/image.png")}
+                <View
+
                   style={{
-                    width: 100,
-                    height: 100,
                     borderRadius: 400 / 2,
+                    borderColor: "#DA9B73",
+                    borderWidth: 10,
                   }}
+                >
+                  <Image
+                    source={require("../image/ch.jpg")}
+                    style={{
+                      width: 90,
+                      height: 90,
+                      borderRadius: 400 / 2,
+                    }}
+                  />
+                </View>
+                <WithLocalSvg
+                  style={{ top: "80%", position: "absolute" }}
+                  width={30}
+                  height={30}
+                  asset={thirdsvg}
                 />
+                <Text style={styles.prizetext}>이영현[65%]</Text>
               </View>
-              <WithLocalSvg
-                style={{ top: "80%", position: "absolute" }}
-                width={30}
-                height={30}
-                asset={thirdsvg}
-              />
-              <Text style={styles.prizetext}>이영현[65%]</Text>
             </View>
           </View>
+          {/* 환자 순위 4~ */}
+          <ScrollView
+            style={{
+              backgroundColor: "#ffffff",
+              margin: "5%",
+              borderRadius: 7,
+              marginBottom: 200,
+            }}
+          >
+            <FlatList
+              data={this.userfunc()}
+              renderItem={({ item }) => {
+                return (
+                  // <TouchableOpacity
+                  //   onPress={() => {
+                  //     this.props.navigation.navigate("user_setting");
+                  //   }}
+                  // >
+                  <Task5
+                    record={item.record}
+                    name={item.name}
+                    age={item.birth}
+                    sex={item.gender}
+                  ></Task5>
+                  // </TouchableOpacity>
+                );
+              }}
+            />
+          </ScrollView>
         </View>
-        {/* 환자 순위 4~ */}
-        <ScrollView
-          style={{
-            backgroundColor: "#ffffff",
-            margin: "5%",
-            borderRadius: 7,
-            marginBottom: 200,
-          }}
-        >
-          <Task5 record="4" name="김옥분" age="5" sex="여" />
-          <Task5 record="5" name="김채현" age="5" sex="여" />
-          <Task5 record="6" name="김옥분" age="5" sex="여" />
-          <Task5 record="7" name="김옥분" age="5" sex="여" />
-          <Task5 record="8" name="김옥분" age="5" sex="여" />
-          <Task5 record="9" name="김옥분" age="5" sex="여" />
-          <Task5 record="10" name="김옥분" age="5" sex="여" />
-        </ScrollView>
       </View>
-    </View>
-  );
+    );
+  }
 }
-
-export default patient_Home;
 
 const styles = StyleSheet.create({
   finalView: {

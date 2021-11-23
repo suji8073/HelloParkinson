@@ -24,58 +24,44 @@ const items = [
   { id: "progress", label: "진도율순" },
 ];
 
-const DATA = [
-  {
-    id: "1",
-    user: "박규동",
-    age: "5",
-    sex: "여",
-    progress: "50%",
-    minute: "5",
-    completed: false,
-  },
-  {
-    id: "2",
-    user: "채수지",
-    age: "5",
-    sex: "여",
-    progress: "50%",
-    minute: "5",
-    completed: false,
-  },
-  {
-    id: "3",
-    user: "기매현",
-    age: "5",
-    sex: "여",
-    progress: "50%",
-    minute: "5",
-    completed: false,
-  },
-  {
-    id: "4",
-    user: "김해년",
-    age: "5",
-    sex: "여",
-    progress: "50%",
-    minute: "5",
-    completed: false,
-  },
-  {
-    id: "5",
-    user: "십누딩",
-    age: "5",
-    sex: "여",
-    progress: "50%",
-    minute: "5",
-    completed: false,
-  },
-];
-
 export default class progress extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      data: [],
+      alarmtime: [],
+    };
   }
+  userfunc = () => {
+    fetch("http://152.70.233.113/user", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({ data: json });
+      });
+    return this.state.data;
+  };
+
+  // 알림 전송 시간 받아오기
+  alarm_time = () => {
+    fetch("http://152.70.233.113/user", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({ data: json });
+      });
+    return this.state.data;
+  };
 
   render() {
     return (
@@ -145,7 +131,7 @@ export default class progress extends Component {
             </View>
 
             <FlatList
-              data={DATA}
+              data={this.userfunc()}
               renderItem={({ item }) => {
                 return (
                   <TouchableOpacity
@@ -154,9 +140,9 @@ export default class progress extends Component {
                     }}
                   >
                     <Task
-                      user={item.user}
-                      age={item.age}
-                      sex={item.sex}
+                      user={item.name}
+                      age={item.birth}
+                      sex={item.gender}
                       progress={item.progress}
                       minute={item.minute}
                     ></Task>

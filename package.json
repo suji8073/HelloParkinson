@@ -38,6 +38,10 @@
     "react-native-svg": "^12.1.1",
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12",
+    "react-native-youtube": "^2.0.2",
+    "react-native-youtube-iframe": "^2.2.1",
+    "react-native-yt-player": "^1.1.0",
+    "react-youtube": "^7.13.1",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
