@@ -10,6 +10,10 @@ import {
 import React, { Component } from "react";
 import "react-native-gesture-handler";
 
+import { WithLocalSvg } from "react-native-svg";
+
+import logosvg from "../icon/logo.svg";
+
 export default class login extends Component {
   constructor(props) {
     super(props);
@@ -20,14 +24,20 @@ export default class login extends Component {
         <View style={styles.NoneView}></View>
 
         <View style={styles.firstView}>
+          <WithLocalSvg
+            width={80}
+            height={80}
+            asset={logosvg}
+            style={{ margin: "3%" }}
+          />
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => {
-              this.props.navigation.navigate("xx");
+              this.props.navigation.navigate("test");
             }}
           >
             <Text style={styles.titleText}>
-              {"안녕하세요.\n굿나잇 파킨슨 입니다."}
+              {"안녕하세요.\n헬로우 파킨슨 입니다."}
             </Text>
           </TouchableOpacity>
 
@@ -91,13 +101,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   NoneView: {
-    flex: 2,
+    flex: 1,
   },
   firstView: {
     // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
-    flex: 3,
+    flex: 4,
     backgroundColor: "#FFFFFF",
   },
   secondView: {
@@ -131,6 +141,7 @@ const styles = StyleSheet.create({
     color: "#000000",
     fontWeight: "bold",
     lineHeight: 40,
+    marginTop: "1%",
   },
   twoText: {
     alignItems: "flex-start",

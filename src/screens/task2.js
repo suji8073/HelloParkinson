@@ -22,9 +22,9 @@ function Task({ user, age, sex }) {
 }
 
 Task.propTypes = {
-  text1: PropTypes.string.isRequired,
-  text2: PropTypes.string.isRequired,
-  text3: PropTypes.string.isRequired,
+  user: PropTypes.string.isRequired,
+  age: PropTypes.string.isRequired,
+  sex: PropTypes.string.isRequired,
 };
 
 export default Task;

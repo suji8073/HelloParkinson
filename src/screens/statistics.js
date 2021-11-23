@@ -20,57 +20,27 @@ const items = [
   { id: "age", label: "나이순" },
   { id: "abc", label: "가나다순" },
 ];
-const DATA = [
-  {
-    id: "1",
-    user: "박규동",
-    age: "5",
-    sex: "여",
-    progress: "50%",
-    minute: "5",
-    completed: false,
-  },
-  {
-    id: "2",
-    user: "채수지",
-    age: "5",
-    sex: "여",
-    progress: "50%",
-    minute: "5",
-    completed: false,
-  },
-  {
-    id: "3",
-    user: "기매현",
-    age: "5",
-    sex: "여",
-    progress: "50%",
-    minute: "5",
-    completed: false,
-  },
-  {
-    id: "4",
-    user: "김해년",
-    age: "5",
-    sex: "여",
-    progress: "50%",
-    minute: "5",
-    completed: false,
-  },
-  {
-    id: "5",
-    user: "십누딩",
-    age: "5",
-    sex: "여",
-    progress: "50%",
-    minute: "5",
-    completed: false,
-  },
-];
 export default class statistics extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      data: [],
+    };
   }
+  userfunc = () => {
+    fetch("http://152.70.233.113/user", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({ data: json });
+      });
+    return this.state.data;
+  };
   render() {
     return (
       <View style={styles.finalView}>
@@ -98,7 +68,7 @@ export default class statistics extends Component {
         <View style={styles.threeView}>
           <ScrollView>
             <FlatList
-              data={DATA}
+              data={this.userfunc()}
               renderItem={({ item }) => {
                 return (
                   <TouchableOpacity
@@ -106,66 +76,15 @@ export default class statistics extends Component {
                       this.props.navigation.navigate("user_statistics");
                     }}
                   >
-                    <Task user={item.user} age={item.age} sex={item.sex}></Task>
+                    <Task
+                      user={item.name}
+                      age={item.birth}
+                      sex={item.gender}
+                    ></Task>
                   </TouchableOpacity>
                 );
               }}
             />
-            {/* <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("user_statistics");
-            }}
-          >
-            <Task text1="정산철" text2="64" text3="남" />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("user_statistics");
-            }}
-          >
-            <Task text1="김옥분" text2="77" text3="여" />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("user_statistics");
-            }}
-          >
-            <Task text1="최영순" text2="73" text3="여" />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("user_statistics");
-            }}
-          >
-            <Task text1="채수지" text2="13" text3="여" />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("user_statistics");
-            }}
-          >
-            <Task text1="김채현" text2="16" text3="여" />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("user_statistics");
-            }}
-          >
-            <Task text1="신수빈" text2="10" text3="여" />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("user_statistics");
-            }}
-          >
-            <Task text1="이영현" text2="10" text3="여" />
-          </TouchableOpacity> */}
           </ScrollView>
         </View>
       </View>
