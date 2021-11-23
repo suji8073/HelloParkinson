@@ -127,6 +127,7 @@ export default class patient_Home extends Component {
                 }}
               >
                 <View
+
                   style={{
                     borderRadius: 400 / 2,
                     borderColor: "#C4C4C4",
@@ -159,6 +160,7 @@ export default class patient_Home extends Component {
                   margin: "1%",
                 }}
               >
+
                 <WithLocalSvg
                   width={50}
                   height={40}
@@ -166,6 +168,7 @@ export default class patient_Home extends Component {
                   style={{ top: "-20%", position: "absolute" }}
                 />
                 <View
+
                   style={{
                     borderRadius: 400 / 2,
                     borderColor: "#F8D500",
@@ -200,6 +203,7 @@ export default class patient_Home extends Component {
                 }}
               >
                 <View
+
                   style={{
                     borderRadius: 400 / 2,
                     borderColor: "#DA9B73",

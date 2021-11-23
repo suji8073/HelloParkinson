@@ -3,6 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 // import TabNavigation from './navigations/Tab';
 // import ScreenLogin from './screens/login'
 import StackNavigation from './navigations/Stack';
+
+
 const App = () => {
   return (
     <NavigationContainer>

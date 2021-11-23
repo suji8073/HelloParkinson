@@ -8,14 +8,12 @@ import {
   Image,
   Alert,
 } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 
 import nocheck from "../icon/silver.svg";
 import check from "../icon/checkgreen.svg";
 
 import { WithLocalSvg } from "react-native-svg";
-import { or } from "react-native-reanimated";
 
 export default class siginup1 extends Component {
   constructor(props) {
@@ -56,6 +54,17 @@ export default class siginup1 extends Component {
       this.setState({ onname3: nocheck });
     }
   };
+  check_click = () => {
+    if (
+      this.state.onname1 === check &&
+      this.state.onname2 === check &&
+      this.state.onname3 === check
+    ) {
+      this.props.navigation.navigate("signup4");
+    } else {
+      Alert.alert("약관을 모두 동의해주세요.");
+    }
+  };
 
   render() {
     return (
@@ -65,10 +74,9 @@ export default class siginup1 extends Component {
             activeOpacity={0.8}
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
             onPress={() => {
-              navigation.navigate("login");
+              this.props.navigation.navigate("login");
             }}
           >
-
             <View>
               <AntDesign name="left" size={24} color="#CACACA" />
             </View>
@@ -76,7 +84,7 @@ export default class siginup1 extends Component {
         </View>
         <View>
           <Text style={styles.titleText}>
-            굿나잇 파킨슨이 처음이시군요.{"\n"}
+            헬로우 파킨슨이 처음이시군요.{"\n"}
             <Text style={styles.point}>약관내용에 동의</Text>해주세요.
           </Text>
         </View>
@@ -112,7 +120,7 @@ export default class siginup1 extends Component {
             </View>
 
             <TouchableOpacity
-                        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
               onPress={() => {
                 this.props.navigation.navigate("signup2");
               }}
@@ -151,9 +159,7 @@ export default class siginup1 extends Component {
           <TouchableOpacity
             style={styles.sendButton}
             activeOpacity={0.8}
-            onPress={() => {
-              this.props.navigation.navigate("signup4");
-            }}
+            onPress={this.check_click}
           >
             <Text style={styles.white}> 다 음 </Text>
           </TouchableOpacity>

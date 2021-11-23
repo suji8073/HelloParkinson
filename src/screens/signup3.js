@@ -12,18 +12,7 @@ import { AntDesign } from "@expo/vector-icons";
 function signup3({ navigation }) {
   return (
     <View style={styles.finalView}>
-      <View style={styles.settingView}>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            navigation.navigate("signup2");
-          }}
-        >
-          <View>
-            <AntDesign name="left" size={24} color="#CACACA" />
-          </View>
-        </TouchableOpacity>
-      </View>
+      <View style={styles.settingView}></View>
       <View>
         <Text style={styles.titleText}>이용약관 동의</Text>
       </View>
@@ -46,11 +35,9 @@ function signup3({ navigation }) {
             {"\n"}
             APP 회원가입{"\n"}
             {"\n"}
-            ·성명, 생년월일, 연락처{"\n"}
+            ·성명, 생년월일, 성별, 연락처{"\n"}
             {"\n"}
             APP 서비스 관련{"\n"}
-            {"\n"}
-            ·보험계약정보{"\n"}
             {"\n"}
             ·APP 접속 정보 및 서비스 이용정보{"\n"}
             {"\n"}
@@ -65,14 +52,14 @@ function signup3({ navigation }) {
             {"\n"}
             4. 보유 및 이용기간{"\n"}
             {"\n"}
-            이용자가 회원탈회를 요청하거나 개인정보의 수집·이용 등에 대한 동의를
+            이용자가 회원탈퇴를 요청하거나 개인정보의 수집·이용 등에 대한 동의를
             철회할 때까지 보유·이용합니다. 다만, 다음의 정보에 대해서는 아래의
             이유로 예외로 합니다.{"\n"}
             {"\n"}
             ·기타 법률에 의해 이용자의 개인정보를 보존해야 할 필요가 있는
             경우에는 해당 법률의 규정에 따릅니다.{"\n"}
             {"\n"}
-            ·정보통신망 이용촉진 및 정보보 등에 관한 법률에 따라 APP을
+            ·정보통신망 이용촉진 및 정보 등에 관한 법률에 따라 APP을
             대통령령으로 정하는 기간동안 로그인하지 아니하는 이용자의 개인정보를
             보호하기 위하여 개인정보 파기 등 필요한 조치를 취합니다. APP 회원은
             1년간 미로그인시 회원정보 삭제 또는 분리보관 및 탈퇴 또는
@@ -90,7 +77,7 @@ function signup3({ navigation }) {
             navigation.navigate("signup1");
           }}
         >
-          <Text style={styles.white}> 동 의 함 </Text>
+          <Text style={styles.white}> 확 인 </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -101,59 +88,59 @@ export default signup3;
 const styles = StyleSheet.create({
   finalView: {
     flex: 1,
-    padding:20,
-    backgroundColor: '#FFFFFF',
+    padding: 20,
+    backgroundColor: "#FFFFFF",
   },
 
   settingView: {
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
+    flex: 1.5,
+    justifyContent: "center",
+    alignItems: "flex-start",
     marginBottom: "5%",
     marginTop: "10%",
   },
 
   MainView: {
-    width:'100%',
-    flex : 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    backgroundColor : '#ECECEC'
+    width: "100%",
+    flex: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    backgroundColor: "#ECECEC",
   },
 
-  titleText:{
-    alignSelf: 'flex-start',
+  titleText: {
+    alignSelf: "flex-start",
     fontSize: 21,
-    fontWeight: 'bold',
-    color: '#1E1E1E',
-    marginBottom: "3%"
+    fontWeight: "bold",
+    color: "#1E1E1E",
+    marginBottom: "5%",
   },
-  MText:{
+  MText: {
     fontSize: 13,
-    color: '#000000',
-    padding:20,
-    lineHeight:20,
+    color: "#000000",
+    padding: 20,
+    lineHeight: 20,
   },
 
-  white:{
+  white: {
     fontSize: 17,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    fontWeight: "bold",
+    color: "#FFFFFF",
   },
 
-  sendButton:{
-    backgroundColor: '#7AC819',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width : '100%',
+  sendButton: {
+    backgroundColor: "#7AC819",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
     height: "35%",
   },
 
   chatControl: {
-    flexDirection: 'row',
-    flex:7,
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    flex: 7,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
