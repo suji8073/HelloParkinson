@@ -16,6 +16,7 @@ import { Feather } from "@expo/vector-icons";
 
 import on from "../icon/r_btn_on.svg";
 import off from "../icon/r_btn_off.svg";
+const year = 2021 - 1;
 
 import { WithLocalSvg } from "react-native-svg";
 
@@ -28,10 +29,47 @@ export default class user_edit extends Component {
       user_age: "",
       user_sex: 1,
       user_group: "",
-      memo: "",
+      user_memo: "",
       age1: on,
       age2: off,
+
+      birth: 19431218,
+      gender: "",
+      memo: "",
+      team: "",
+      name: "",
+      UID: "",
+      progress: 0,
     };
+  }
+
+  componentDidMount() {
+    console.log(this.props.route.params.paramName1);
+    fetch(
+      "http://152.70.233.113/chamuser/id/" + this.props.route.params.paramName1,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({
+          birth: json.info.birth,
+          gender: json.info.gender,
+          memo: json.info.memo,
+          team: json.info.team,
+          name: json.info.name,
+          UID: json.info.UID,
+          progress: json.info.progress,
+        });
+      });
+    console.log(2020 - parseInt(this.state.birth / 10000));
+    if (this.state.gender === "M") {
+      this.setState({ age1: on, age2: off });
+    } else {
+    }
+    this.setState({ age1: off, age2: on });
   }
 
   sex_click1 = () => {
@@ -79,17 +117,6 @@ export default class user_edit extends Component {
     } else {
       this.setState({ user_sex: 2 }); // 여자
     }
-    Alert.alert(
-      this.state.user_name +
-        " " +
-        this.state.user_id +
-        " " +
-        this.state.user_age +
-        " " +
-        this.state.user_sex +
-        " " +
-        this.state.user_sex // 남자는 1, 여자는 2
-    );
 
     fetch("http://152.70.233.113/", {
       method: "GET",
@@ -152,7 +179,7 @@ export default class user_edit extends Component {
                 onChangeText={(text) => {
                   this.setState({ user_name: text });
                 }}
-                placeholder="김옥분"
+                placeholder={this.state.name}
               />
             </View>
           </View>
@@ -167,7 +194,7 @@ export default class user_edit extends Component {
                 onChangeText={(text) => {
                   this.setState({ user_id: text });
                 }}
-                placeholder="seoul1243"
+                placeholder={this.state.UID}
               />
             </View>
           </View>
@@ -182,7 +209,7 @@ export default class user_edit extends Component {
                 onChangeText={(text) => {
                   this.setState({ user_age: text });
                 }}
-                placeholder="77"
+                placeholder="30"
               />
             </View>
           </View>
@@ -197,7 +224,7 @@ export default class user_edit extends Component {
                 hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                 onPress={this.sex_click1}
               >
-                <WithLocalSvg width={24} height={24} asset={this.state.age1} />
+                <WithLocalSvg width={20} height={20} asset={this.state.age1} />
               </TouchableOpacity>
               <Text style={styles.text2}> 남</Text>
 
@@ -206,7 +233,7 @@ export default class user_edit extends Component {
                 hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                 onPress={this.sex_click2}
               >
-                <WithLocalSvg width={24} height={24} asset={this.state.age2} />
+                <WithLocalSvg width={20} height={20} asset={this.state.age2} />
               </TouchableOpacity>
               <Text style={styles.text2}> 여</Text>
               <View style={styles.margin}></View>
@@ -230,9 +257,9 @@ export default class user_edit extends Component {
               <TextInput
                 style={styles.text2}
                 onChangeText={(text) => {
-                  this.setState({ memo: text });
+                  this.setState({ user_memo: text });
                 }}
-                placeholder={"신장 운동 중점\n약 복용 알림도 필요"}
+                placeholder={this.state.memo}
               />
             </View>
           </View>
@@ -298,7 +325,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 10,
     backgroundColor: "#FFFFFF",
-    borderWidth: 0.5,
+    borderTopWidth: 0.5,
     borderColor: "#E5E5E5",
   },
 

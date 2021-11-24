@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   Button,
   StatusBar,
@@ -14,167 +14,251 @@ import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
 import { Entypo } from "@expo/vector-icons";
-const progress = ({ navigation }) => {
-  return (
-    <View style={styles.finalView}>
-      {/* 상단바 */}
-      <View style={styles.menuView}>
-        <AntDesign
-          name="left"
-          size={24}
-          color="#808080"
-          onPress={() => {
-            navigation.navigate("TabNavigation");
-          }}
-        />
-        <View style={styles.margin}></View>
-        <Text style={styles.titleText}>'김옥분'님의 운동 진도율</Text>
-        <View style={styles.margin}></View>
-      </View>
-      {/* 본문 전체 뷰 */}
-      <View style={{ margin: "5%" }}>
-        {/* 뷰1/3 */}
-        <View style={{ flexDirection: "row" }}>
-          <View style={{ justifyContent: "center" }}>
-            <Ionicons name="person-circle-sharp" size={90} color="lightblue" />
-            {/* 전체 진도율 뷰 */}
-          </View>
-          <View
-            style={{
-              marginLeft: "4%",
-              marginTop: "3%",
-              flexDirection: "column",
-              flex: 0.7,
-              alignItems: "flex-start",
-              justifyContent: "center",
+import PercentageBar from "../screens/progressbar";
+const year = 2021 - 1;
+
+export default class progress extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      birth: 19431218,
+      gender: "",
+      memo: "",
+      team: "",
+      name: "",
+      progress: 0,
+    };
+  }
+
+  componentDidMount() {
+    console.log(this.props.route.params.paramName1);
+    fetch(
+      "http://152.70.233.113/chamuser/id/" + this.props.route.params.paramName1,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({
+          birth: json.info.birth,
+          gender: json.info.gender,
+          memo: json.info.memo,
+          team: json.info.team,
+          name: json.info.name,
+          progress: json.info.progress,
+        });
+      });
+  }
+
+  dots = () => {}; // 햄버거 버튼을 클릭하였을 때 실행될 코드
+
+  render() {
+    return (
+      <View style={styles.finalView}>
+        {/* 상단바 */}
+        <View style={styles.menuView}>
+          <AntDesign
+            name="left"
+            size={24}
+            color="#808080"
+            onPress={() => {
+              this.props.navigation.pop();
             }}
-          >
-            <Text
-              style={{ marginBottom: 10, fontSize: 23, fontWeight: "bold" }}
-            >
-              김옥분/77세/여
-            </Text>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ marginBottom: "1%", fontSize: 15 }}>
-                오늘 전체 진도율
-              </Text>
-              <Text
-                style={{
-                  marginBottom: "1%",
-                  fontSize: 15,
-                  fontWeight: "bold",
-                  marginLeft: "5%",
-                }}
-              >
-                85%
-              </Text>
-            </View>
-            <Text style={{ marginBottom: 10, fontSize: 15 }}>
-              여기에 프로그레스 바
-            </Text>
-          </View>
+          />
+          <View style={styles.margin}></View>
+          <Text style={styles.titleText}>
+            '{this.state.name}'님의 운동 진도율
+          </Text>
+          <View style={styles.margin}></View>
         </View>
-        {/* 여기까지 view 1/3 */}
-        {/* 여기부터 view 2/3 */}
-        <View
-          style={{
-            marginTop: "5%",
-            marginBottom: "3%",
-            flexDirection: "column",
-            // padding: "5%",
-            borderWidth: 2,
-            borderRadius: 7,
-            borderColor: "#D6D6D6",
-          }}
-        >
-          {/* 위에꺼 전체 */}
-          <View style={{ flexDirection: "row", padding: "5%" }}>
-            {/* 햄버거아이콘 빼고*/}
-            <View style={{ flex: 9, flexDirection: "column" }}>
-              <Text>2021년 2월 5일</Text>
-              <Text
-                style={{ fontSize: 19, fontWeight: "bold", paddingTop: "1%" }}
-              >
-                신장운동
-              </Text>
-            </View>
-            {/* 햄버거 아이콘 */}
-            <View style={{ flex: 1 }}>
-              <Entypo name="dots-three-vertical" size={24} color="#595959" />
-            </View>
-          </View>
-          {/* 여기부터 아래 */}
-          <View style={{ flexDirection: "row", paddingBottom: "5%" }}>
-            <View style={styles.bordertext}>
-              <Text style={styles.successtext}>완료</Text>
-              <View style={styles.numView}>
-                <Text style={styles.numtext}>0</Text>
-                <Text style={styles.gaetext}>개</Text>
-              </View>
-            </View>
-            <View style={styles.bordertext}>
-              <Text style={styles.successtext}>진행중</Text>
-              <View style={styles.numView}>
-                <Text style={styles.numtext}>1</Text>
-                <Text style={styles.gaetext}>개</Text>
-              </View>
+        {/* 본문 전체 뷰 */}
+        <View style={{ margin: "5%" }}>
+          {/* 뷰1/3 */}
+          <View style={{ flexDirection: "row" }}>
+            <View style={{ justifyContent: "center" }}>
+              <Ionicons
+                name="person-circle-sharp"
+                size={90}
+                color="lightblue"
+              />
+              {/* 전체 진도율 뷰 */}
             </View>
             <View
-              style={{ flex: 2, flexDirection: "column", alignItems: "center" }}
+              style={{
+                marginLeft: "4%",
+                marginTop: "3%",
+                flexDirection: "column",
+                flex: 1,
+                alignItems: "flex-start",
+                justifyContent: "center",
+              }}
             >
-              <Text style={styles.successtext}>미실시</Text>
-              <View style={styles.numView}>
-                <Text style={styles.numtext}>6</Text>
-                <Text style={styles.gaetext}>개</Text>
+              <Text
+                style={{ marginBottom: 10, fontSize: 23, fontWeight: "bold" }}
+              >
+                {this.state.name} / {year - parseInt(this.state.birth / 10000)}{" "}
+                / {this.state.gender}
+              </Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={{ marginBottom: "1%", fontSize: 15 }}>
+                  오늘 전체 진도율
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 15,
+                    fontWeight: "bold",
+                    marginLeft: "3%",
+                  }}
+                >
+                  {this.state.progress}%
+                </Text>
+              </View>
+              <View style={styles.per}>
+                <View
+                  style={{
+                    width: 100 * 2,
+                    height: 10,
+                    marginVertical: 5,
+                    borderRadius: 7,
+                    borderColor: "#E5E5E5",
+                    backgroundColor: "#E5E5E5",
+                    borderWidth: 1,
+                  }}
+                />
+                <View
+                  style={{
+                    width:
+                      this.state.progress * 2 ? this.state.progress * 2 : 0,
+                    height: 10,
+                    marginVertical: 5,
+                    borderRadius: 7,
+                    backgroundColor: "#7AC819",
+                    position: "absolute",
+                  }}
+                />
               </View>
             </View>
           </View>
-        </View>
-        {/* 여기까지 view2/3 */}
-        {/* 여기부터 view3/3 */}
-
-        <View styel={styles.threeView}>
-          <ScrollView
-            contentContainerStyle={{
-              paddingTop: "3%",
-              flexGrow: 1,
+          {/* 여기까지 view 1/3 */}
+          {/* 여기부터 view 2/3 */}
+          <View
+            style={{
+              marginTop: "5%",
+              marginBottom: "3%",
               flexDirection: "column",
-              justifyContent: "space-between",
-              paddingBottom: "5%",
-              paddingHorizontal: "2%",
+              // padding: "5%",
+              borderWidth: 2,
+              borderRadius: 7,
+              borderColor: "#D6D6D6",
             }}
           >
-            <View style={{ marginBottom: "3%" }}>
-              <Text style={styles.movetitletext}>진행중</Text>
-              <Text style={styles.movetext}>날개뼈모으기</Text>
-              <Text style={styles.movetext}>여기에 프로그레스 바</Text>
+            {/* 위에꺼 전체 */}
+            <View style={{ flexDirection: "row", padding: "5%" }}>
+              {/* 햄버거아이콘 빼고*/}
+              <View style={{ flex: 9, flexDirection: "column" }}>
+                <Text>2021년 2월 5일</Text>
+                <Text
+                  style={{ fontSize: 19, fontWeight: "bold", paddingTop: "1%" }}
+                >
+                  신장운동
+                </Text>
+              </View>
+              {/* 햄버거 아이콘 */}
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: "flex-end",
+                  justifyContent: "flex-start",
+                }}
+              >
+                <TouchableOpacity onPress={this.dots}>
+                  <Entypo
+                    name="dots-three-vertical"
+                    size={20}
+                    color="#595959"
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
-            <View>
-              <Text style={styles.movetitletext}>미실시 운동</Text>
-              <Text style={styles.movetext}>몸쪽 앞쪽 근육</Text>
-              <Text style={styles.movetext}>운동회전 근육 스트레칭</Text>
-              <Text style={styles.movetext}>몸통 스트레칭 1단계</Text>
-              <Text style={styles.movetext}>몸통 스트레칭 2단계</Text>
-              <Text style={styles.movetext}>몸쪽 앞쪽 근육</Text>
-              <Text style={styles.movetext}>운동회전 근육 스트레칭</Text>
-              <Text style={styles.movetext}>몸통 스트레칭 1단계</Text>
-              <Text style={styles.movetext}>몸통 스트레칭 2단계</Text>
+            {/* 여기부터 아래 */}
+            <View style={{ flexDirection: "row", paddingBottom: "5%" }}>
+              <View style={styles.bordertext}>
+                <Text style={styles.successtext}>완료</Text>
+                <View style={styles.numView}>
+                  <Text style={styles.numtext}>0</Text>
+                  <Text style={styles.gaetext}>개</Text>
+                </View>
+              </View>
+              <View style={styles.bordertext}>
+                <Text style={styles.successtext}>진행 중</Text>
+                <View style={styles.numView}>
+                  <Text style={styles.numtext}>1</Text>
+                  <Text style={styles.gaetext}>개</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flex: 2,
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={styles.successtext}>미실시</Text>
+                <View style={styles.numView}>
+                  <Text style={styles.numtext}>6</Text>
+                  <Text style={styles.gaetext}>개</Text>
+                </View>
+              </View>
             </View>
-          </ScrollView>
-        </View>
-      </View>
-      <ActionButton
-        bgColor="rgba(0,0,0,1)"
-        buttonColor="rgba(68,110,26,1)"
-        onPress={() => {
-          navigation.navigate("moveedit");
-        }}
-      ></ActionButton>
-    </View>
-  );
-};
+          </View>
+          {/* 여기까지 view2/3 */}
+          {/* 여기부터 view3/3 */}
 
-export default progress;
+          <View styel={styles.threeView}>
+            <ScrollView
+              contentContainerStyle={{
+                paddingTop: "3%",
+                flexGrow: 1,
+                flexDirection: "column",
+                justifyContent: "space-between",
+                paddingBottom: "5%",
+                paddingHorizontal: "2%",
+              }}
+            >
+              <View style={{ marginBottom: "3%" }}>
+                <Text style={styles.movetitletext}>진행 중</Text>
+                <Text style={styles.movetext}>날개뼈 모으기</Text>
+              </View>
+              <View>
+                <Text style={styles.movetitletext}>미실시 운동</Text>
+                <Text style={styles.movetext}>몸쪽 앞쪽 근육</Text>
+                <Text style={styles.movetext}>운동회전 근육 스트레칭</Text>
+                <Text style={styles.movetext}>몸통 스트레칭 1단계</Text>
+                <Text style={styles.movetext}>몸통 스트레칭 2단계</Text>
+                <Text style={styles.movetext}>몸쪽 앞쪽 근육</Text>
+                <Text style={styles.movetext}>운동회전 근육 스트레칭</Text>
+                <Text style={styles.movetext}>몸통 스트레칭 1단계</Text>
+                <Text style={styles.movetext}>몸통 스트레칭 2단계</Text>
+              </View>
+            </ScrollView>
+          </View>
+        </View>
+        <ActionButton
+          bgColor="rgba(0,0,0,1)"
+          buttonColor="rgba(68,110,26,1)"
+          onPress={() => {
+            this.props.navigation.navigate("moveedit", {
+              paramName1: this.props.route.params.paramName1,
+            });
+          }}
+        ></ActionButton>
+      </View>
+    );
+  }
+}
+
 const styles = StyleSheet.create({
   finalView: {
     flex: 1,
@@ -200,6 +284,9 @@ const styles = StyleSheet.create({
     color: "#000000",
     justifyContent: "center",
     fontWeight: "bold",
+  },
+  per: {
+    width: "90%",
   },
 
   firstView: {
@@ -247,12 +334,17 @@ const styles = StyleSheet.create({
   },
   numtext: {
     fontSize: 21,
+    fontWeight: "bold",
+    alignItems: "flex-end",
   },
-  gaetext: { fontSize: 16 },
+  gaetext: {
+    fontSize: 16,
+    marginLeft: "2%",
+  },
+
   numView: {
     flexDirection: "row",
     alignItems: "flex-end",
-    alignContent: "space-between",
     marginTop: "7%",
   },
 });

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { WithLocalSvg } from "react-native-svg";
 import { Ionicons } from "@expo/vector-icons";
+const year = 2021 - 1;
 
 const task_home = ({ record, name, age, sex }) => {
   return (
@@ -32,7 +33,7 @@ const task_home = ({ record, name, age, sex }) => {
           color="lightblue"
         />
         <Text style={{ fontSize: 17 }}>
-          {name}/ {age}/ {sex}
+          {name} / {year - parseInt(age / 10000)}세 / {sex}
         </Text>
       </View>
     </View>

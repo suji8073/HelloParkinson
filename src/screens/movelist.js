@@ -1,31 +1,52 @@
 // 운동 편집 리스트뷰의 생김새
-import React from "react";
+import React, { Component } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { WithLocalSvg } from "react-native-svg";
 
-const Movelist = ({ movename, moveminute, movesec }) => {
-  return (
-    //   스몰리스트 뷰
-    <View style={styles.finallist}>
-      {/* 운동이름, 운동시간 */}
-      <View style={styles.moveinfoView}>
-        <Text style={{ fontSize: 18, marginBottom: 5 }}>{movename}</Text>
-        <Text style={{ fontSize: 6 - 8 }}>
-          {moveminute}분{movesec}초
-        </Text>
-      </View>
+import OFF from "../icon/r_btn_off.svg";
+import ON from "../icon/r_btn_on.svg";
 
-      {/* 아이콘 뷰 */}
-      <TouchableOpacity onPress={() => {}}>
-        <View>
-          <FontAwesome name="dot-circle-o" size={40} color="#E5E5E5" />
+export default class Movelist extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      on_off: ON,
+    };
+  }
+
+  Click_icon = () => {
+    if (this.state.on_off === ON) {
+      this.setState({ on_off: OFF });
+    } else {
+      this.setState({ on_off: ON });
+    }
+  };
+
+  render() {
+    return (
+      //   스몰리스트 뷰
+      <View style={styles.finallist}>
+        {/* 운동이름, 운동시간 */}
+        <View style={styles.moveinfoView}>
+          <Text style={{ fontSize: 18, marginBottom: 5 }}>
+            {this.props.movename}
+          </Text>
+          <Text style={{ fontSize: 6 - 8 }}>
+            {this.props.moveminute}분 {this.props.movesec}초
+          </Text>
         </View>
-      </TouchableOpacity>
-    </View>
-  );
-};
-export default Movelist;
+
+        {/* 아이콘 뷰 */}
+
+        <TouchableOpacity onPress={this.Click_icon}>
+          <WithLocalSvg width={25} height={25} asset={this.state.on_off} />
+        </TouchableOpacity>
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   finallist: {

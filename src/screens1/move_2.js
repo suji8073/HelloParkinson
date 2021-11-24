@@ -42,13 +42,93 @@ function move_2({ navigation }) {
             justifyContent: "space-between",
           }}
         >
-          <Task image = {Svg} text1 = "엉덩이 틀기" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "엎드려 누운 상태에서 다리 들기" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "엉덩이 옆 근육 운동" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "무릎 벌리기" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "무릎 펴기" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "발목 운동" text2="1 / 5"></Task>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: 2,
+                paramName2: 1,
+              });
+            }}
+          >
+            <Task image={Svg} text1="엉덩이 틀기" text2="1 / 5"></Task>
+          </TouchableOpacity>
 
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: 2,
+                paramName2: 1,
+              });
+            }}
+          >
+            <Task image={Svg} text1="엎드려 누운 상태에서 다리 들기" text2="1 / 5"></Task>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: 2,
+                paramName2: 1,
+              });
+            }}
+          >
+            <Task image={Svg} text1="엉덩이 옆 근육 운동" text2="1 / 5"></Task>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: 2,
+                paramName2: 1,
+              });
+            }}
+          >
+            <Task image={Svg} text1="무릎 벌리기" text2="1 / 5"></Task>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: 2,
+                paramName2: 1,
+              });
+            }}
+          >
+            <Task image={Svg} text1="무릎 펴기" text2="1 / 5"></Task>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: 2,
+                paramName2: 1,
+              });
+            }}
+          >
+            <Task image={Svg} text1="런지" text2="1 / 5"></Task>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: 2,
+                paramName2: 1,
+              });
+            }}
+          >
+            <Task image={Svg} text1="런지" text2="1 / 5"></Task>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: 2,
+                paramName2: 1,
+              });
+            }}
+          >
+            <Task image={Svg} text1="런지" text2="1 / 5"></Task>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     </View>
@@ -98,7 +178,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
-    marginBottom:"30%",
+    marginBottom: "30%",
   },
 
   margin: {

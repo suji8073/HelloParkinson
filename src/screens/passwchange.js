@@ -28,7 +28,7 @@ export default class passwchange extends Component {
               this.props.navigation.navigate("TabNavigation");
             }}
           >
-            <AntDesign name="left" size={24} color="#CACACA" />
+            <AntDesign name="left" size={24} color="#808080" />
           </TouchableOpacity>
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>프로필 편집</Text>

@@ -107,7 +107,9 @@ export default class statistics extends Component {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    this.props.navigation.navigate("user_statistics");
+                    this.props.navigation.navigate("user_statistics", {
+                      paramName1: item.id,
+                    });
                   }}
                 >
                   <Task

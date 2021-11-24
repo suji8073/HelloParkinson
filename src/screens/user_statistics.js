@@ -1,10 +1,5 @@
-import React from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-} from "react-native";
+import React, { Component } from "react";
+import { StyleSheet, View, Text, ScrollView } from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
@@ -18,72 +13,115 @@ const items = [
   { id: "3", label: "년" },
 ];
 
-function user_statistics({ navigation }) {
-  return (
-    <View style={styles.finalView}>
-      <View style={styles.menuView}>
-        <AntDesign
-          name="left"
-          size={24}
-          color="#808080"
-          onPress={() => {
-            navigation.navigate("TabNavigation");
-          }}
-        />
-        <View style={styles.margin}></View>
-        <Text style={styles.titleText}>'김옥분'님 의 운동 통계</Text>
-        <View style={styles.margin}></View>
+export default class user_statistics extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      birth: 19431218,
+      gender: "",
+      memo: "",
+      team: "",
+      name: "",
+      UID: 0,
+      progress: 0,
+    };
+  }
 
-        <SimplePopupMenu
-          items={items}
-          cancelLabel={"취소"}
-          //onSelect={() => alert(this.label)}
-          onCancel={() => console.log("onCancel")}
-        >
-          <Entypo name="dots-three-vertical" size={24} color="#595959" />
-        </SimplePopupMenu>
-      </View>
+  componentDidMount() {
+    console.log(this.props.route.params.paramName1);
+    fetch(
+      "http://152.70.233.113/chamuser/id/" + this.props.route.params.paramName1,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        console.log("여기 11111잘 들어가나 확인 ~~ 한다~~");
+        this.setState({
+          birth: json.info.birth,
+          gender: json.info.gender,
+          memo: json.info.memo,
+          team: json.info.team,
+          name: json.info.name,
+          UID: json.info.UID,
+          progress: json.info.progress,
+        });
+      });
+  }
 
-      <View style={styles.mainView}>
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}
-        >
-          <View style={styles.firstView}>
-            <Text style={styles.user_name}>김옥분</Text>
-            <Text style={styles.user_age}>/77세</Text>
-            <Text style={styles.user_sex}>/여</Text>
-            <View style={styles.margin}></View>
-          </View>
+  render() {
+    return (
+      <View style={styles.finalView}>
+        <View style={styles.menuView}>
+          <AntDesign
+            name="left"
+            size={24}
+            color="#808080"
+            onPress={() => {
+              this.props.navigation.pop();
+            }}
+          />
+          <View style={styles.margin}></View>
+          <Text style={styles.titleText}>
+            '{this.state.name}'님 의 운동 통계
+          </Text>
+          <View style={styles.margin}></View>
 
-          <View style={styles.secondView}>
-            <View style={styles.textview}>
-              <Text style={styles.text1}>주 평균</Text>
-              <Text style={styles.text2}>66.4%</Text>
+          <SimplePopupMenu
+            items={items}
+            cancelLabel={"취소"}
+            //onSelect={() => alert(this.label)}
+            onCancel={() => console.log("onCancel")}
+          >
+            <Entypo name="dots-three-vertical" size={24} color="#595959" />
+          </SimplePopupMenu>
+        </View>
+
+        <View style={styles.mainView}>
+          <ScrollView
+            contentContainerStyle={{
+              flexGrow: 1,
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <View style={styles.firstView}>
+              <Text style={styles.user_name}>{this.state.name}</Text>
+              <Text style={styles.user_age}>
+                {" "}
+                / {2020 - parseInt(this.state.birth / 10000)}세
+              </Text>
+              <Text style={styles.user_sex}> / {this.state.gender}</Text>
               <View style={styles.margin}></View>
-              <Text style={styles.text3}>2021년 1월 31일 ~ 2월 6일</Text>
             </View>
 
-            <View style={styles.graphview}>
-              <Task1></Task1>
-            </View>
-          </View>
+            <View style={styles.secondView}>
+              <View style={styles.textview}>
+                <Text style={styles.text1}>주 평균</Text>
+                <Text style={styles.text2}>{this.state.progress}%</Text>
+                <View style={styles.margin}></View>
+                <Text style={styles.text3}>2021년 1월 31일 ~ 2월 6일</Text>
+              </View>
 
-          <View style={styles.threeView}>
-            <Task></Task>
-            <Task></Task>
-            <Task></Task>
-          </View>
-        </ScrollView>
+              <View style={styles.graphview}>
+                <Task1></Task1>
+              </View>
+            </View>
+
+            <View style={styles.threeView}>
+              <Task></Task>
+              <Task></Task>
+              <Task></Task>
+            </View>
+          </ScrollView>
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
 }
 
-export default user_statistics;
 const styles = StyleSheet.create({
   finalView: {
     flex: 1,

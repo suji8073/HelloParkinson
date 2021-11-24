@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   StyleSheet,
   View,
@@ -16,48 +16,50 @@ import { EvilIcons } from "@expo/vector-icons";
 
 import Svg from "../icon/noimage.svg";
 
-function move_play({ navigation }) {
-  return (
-    <View style={styles.finalView}>
-      <View style={styles.menuView}>
-        <AntDesign
-          name="left"
-          size={24}
-          color="#808080"
-          onPress={() => {
-            navigation.pop();
-          }}
-        />
-        <View style={styles.margin}></View>
-        <Text style={styles.titleText}>나의 운동 목록</Text>
-        <View style={styles.margin}></View>
-        <EvilIcons name="star" size={30} color="#ffffff" />
-      </View>
-
-      <View style={styles.secondView}></View>
-
-      <View style={styles.chatControl}>
-        <TouchableOpacity
-          style={styles.sendButton}
-          activeOpacity={0.8}
-          onPress={() => {
-            navigation.navigate("signup4");
-          }}
-        >
-          <View style={styles.mg}></View>
-          <AntDesign name="right" size={24} color="#7AC819" />
+export default class move_play extends Component {
+  render() {
+    return (
+      <View style={styles.finalView}>
+        <View style={styles.menuView}>
+          <AntDesign
+            name="left"
+            size={24}
+            color="#808080"
+            onPress={() => {
+              navigation.pop();
+            }}
+          />
           <View style={styles.margin}></View>
-          <Text style={styles.white}> 다   음 </Text>
+          <Text style={styles.titleText}>
+            나의 운동 목록{this.props.route.params.paramName1}
+          </Text>
           <View style={styles.margin}></View>
-          <AntDesign name="right" size={15} color="#FFFFFF" />
-          <View style={styles.mg}></View>
-        </TouchableOpacity>
+          <EvilIcons name="star" size={30} color="#ffffff" />
+        </View>
+
+        <View style={styles.secondView}></View>
+
+        <View style={styles.chatControl}>
+          <TouchableOpacity
+            style={styles.sendButton}
+            activeOpacity={0.8}
+            onPress={() => {
+              navigation.navigate("signup4");
+            }}
+          >
+            <View style={styles.mg}></View>
+            <AntDesign name="right" size={24} color="#7AC819" />
+            <View style={styles.margin}></View>
+            <Text style={styles.white}> 다 음 </Text>
+            <View style={styles.margin}></View>
+            <AntDesign name="right" size={15} color="#FFFFFF" />
+            <View style={styles.mg}></View>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
 }
-
-export default move_play;
 
 const styles = StyleSheet.create({
   finalView: {
@@ -105,7 +107,7 @@ const styles = StyleSheet.create({
     marginTop: "5%",
     marginBottom: "5%",
     flex: 1,
-    borderWidth:1,
+    borderWidth: 1,
   },
   white: {
     fontSize: 17,
@@ -137,7 +139,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
   },
-  mg:{
+  mg: {
     flex: 0.1,
-  }
+  },
 });

@@ -154,7 +154,7 @@ export default class siginup4 extends Component {
             }}
           >
             <View>
-              <AntDesign name="left" size={24} color="#CACACA" />
+              <AntDesign name="left" size={24} color="#808080" />
             </View>
           </TouchableOpacity>
         </View>

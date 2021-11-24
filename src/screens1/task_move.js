@@ -2,13 +2,7 @@
 import React from "react";
 // import PropTypes from "prop-types";
 import { Ionicons } from "@expo/vector-icons";
-import {
-  TouchableOpacity,
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-} from "react-native";
+import { TouchableOpacity, StyleSheet, View, Text, Image } from "react-native";
 import { WithLocalSvg } from "react-native-svg";
 
 const task_move = ({ image, text1, text2 }) => {
@@ -28,7 +22,7 @@ const task_move = ({ image, text1, text2 }) => {
       }}
     >
       <View style={styles.imageView}>
-        <WithLocalSvg width={140} height={70} asset={image} />
+        <Image style={{ height: 70, width: 130 }} source={image} />
       </View>
 
       <View style={styles.textView}>

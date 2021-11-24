@@ -193,7 +193,7 @@ export default class patient_Home extends Component {
                   //   }}
                   // >
                   <Task5
-                    record={item.record}
+                    record={item.id}
                     name={item.name}
                     age={item.birth}
                     sex={item.gender}

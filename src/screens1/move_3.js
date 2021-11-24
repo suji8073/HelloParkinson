@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   StyleSheet,
   View,
@@ -16,44 +16,65 @@ import { EvilIcons } from "@expo/vector-icons";
 
 import Svg from "../icon/noimage.svg";
 
-function move_3({ navigation }) {
-  return (
-    <View style={styles.finalView}>
-      <View style={styles.menuView}>
-        <AntDesign
-          name="left"
-          size={24}
-          color="#808080"
-          onPress={() => {
-            navigation.navigate("TabNavigation1");
-          }}
-        />
-        <View style={styles.margin}></View>
-        <Text style={styles.titleText}>균형 협응 운동</Text>
-        <View style={styles.margin}></View>
-        <EvilIcons name="star" size={30} color="#ffffff" />
-      </View>
+export default class move_3 extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+    };
+  }
+  userfunc = () => {
+    fetch("http://152.70.233.113/user", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({ data: json });
+      });
+    return this.state.data;
+  };
+  render() {
+    return (
+      <View style={styles.finalView}>
+        <View style={styles.menuView}>
+          <AntDesign
+            name="left"
+            size={24}
+            color="#808080"
+            onPress={() => {
+              navigation.navigate("TabNavigation1");
+            }}
+          />
+          <View style={styles.margin}></View>
+          <Text style={styles.titleText}>균형 협응 운동</Text>
+          <View style={styles.margin}></View>
+          <EvilIcons name="star" size={30} color="#ffffff" />
+        </View>
 
-      <View style={styles.secondView}>
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}
-        >
-          <Task image = {Svg} text1 = "한발 서기" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "버드독" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "앉은 상태에서 제자리 걷기" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "움직이는 런지" text2="1 / 5"></Task>
-         
-        </ScrollView>
+        <View style={styles.secondView}>
+          <FlatList
+            data={this.userfunc()}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.navigation.navigate("move_play");
+                  }}
+                >
+                  <Task name={item.name} id={item.id} link={item.link}></Task>
+                </TouchableOpacity>
+              );
+            }}
+          />
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
 }
-
-export default move_3;
 
 const styles = StyleSheet.create({
   finalView: {
@@ -96,7 +117,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
-    marginBottom:"30%",
+    marginBottom: "30%",
   },
 
   margin: {

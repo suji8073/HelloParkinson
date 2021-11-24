@@ -1,11 +1,5 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  StatusBar,
-  View,
-  Text,
-  FlatList,
-} from "react-native";
+import { StyleSheet, StatusBar, View, Text, FlatList } from "react-native";
 import { WithLocalSvg } from "react-native-svg";
 
 import Task from "./task3";
@@ -29,37 +23,8 @@ export default class progress extends Component {
       user_progress: 0,
     };
   }
+
   userfunc = () => {
-
-    fetch("http://152.70.233.113/chamuser/id/", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        this.setState({ data: json });
-      });
-
-    fetch("http://152.70.233.113/chamuser/id/", {
-
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        this.setState({ data: json });
-      });
-    return this.state.data;
-  };
-
-  // 알림 전송 시간 받아오기
-  alarm_time = () => {
     fetch("http://152.70.233.113/chamuser", {
       method: "GET",
       headers: {
@@ -74,35 +39,14 @@ export default class progress extends Component {
     return this.state.data;
   };
 
+  // 알림 전송 시간 받아오기
+  alarm_time = () => {};
+
   onMenuPress = (id) => {
     if (id === "alarm") {
       // 알림순
-      fetch("", {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((json) => {
-          this.setState({ data: json });
-        });
-      return this.state.data;
     } else if (id === "progress") {
       // 진도율순
-      fetch("", {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((json) => {
-          this.setState({ data: json });
-        });
-      return this.state.data;
     }
   };
 
@@ -143,6 +87,7 @@ export default class progress extends Component {
                 style={{ position: "absolute", right: "47%", top: "50%" }}
               />
               <AntDesign name="left" size={30} color="#808080" />
+
               <View style={styles.dayview}>
                 <Text style={styles.lasttext}>일</Text>
                 <Text style={styles.lasttext}>31</Text>

@@ -18,8 +18,42 @@ import Svg2 from "../icon/piechart.svg";
 import Svg3 from "../icon/graph.svg";
 
 import { WithLocalSvg } from "react-native-svg";
+const year = 2021 - 1;
 
 export default class user_setting extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      birth: 19431218,
+      gender: "",
+      memo: "",
+      team: "",
+      name: "",
+      id: 0,
+    };
+  }
+
+  componentDidMount() {
+    fetch(
+      "http://152.70.233.113/chamuser/id/" + this.props.route.params.paramName1,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        console.log("여기 잘 들어가나 확인 ~~ 한다~~");
+        this.setState({
+          birth: json.info.birth,
+          gender: json.info.gender,
+          memo: json.info.memo,
+          team: json.info.team,
+          name: json.info.name,
+          id: json.info.id,
+        });
+      });
+  }
   render() {
     return (
       <View style={styles.finalView}>
@@ -29,13 +63,13 @@ export default class user_setting extends Component {
             size={24}
             color="#808080"
             onPress={() => {
-              navigation.navigate("TabNavigation");
+              this.props.navigation.navigate("TabNavigation");
             }}
           />
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>환자 정보</Text>
           <View style={styles.margin}></View>
-          <EvilIcons name="star" size={30} color="green" />
+          <EvilIcons name="star" size={30} color="white" />
         </View>
 
         <View style={styles.firstView}>
@@ -47,15 +81,10 @@ export default class user_setting extends Component {
               alignItems="center"
             />
           </View>
-          <Text style={styles.group_num}>
-            {this.props.route.params.paramName4}조
-          </Text>
-          <Text style={styles.user_name}>
-            {this.props.route.params.paramName5}
-          </Text>
+          <Text style={styles.group_num}>{this.state.team}조</Text>
+          <Text style={styles.user_name}>{this.state.name}</Text>
           <Text style={styles.user_age}>
-            {this.props.route.params.paramName1}/
-            {this.props.route.params.paramName2}
+            {year - parseInt(this.state.birth / 10000)}세 / {this.state.gender}
           </Text>
         </View>
 
@@ -65,7 +94,9 @@ export default class user_setting extends Component {
               style={styles.group}
               activeOpacity={0.8}
               onPress={() => {
-                this.props.navigation.navigate("user_edit");
+                this.props.navigation.navigate("user_edit", {
+                  paramName1: this.state.id,
+                });
               }}
             >
               <WithLocalSvg width={30} height={40} asset={Svg1} />
@@ -76,7 +107,9 @@ export default class user_setting extends Component {
               style={styles.group}
               activeOpacity={0.8}
               onPress={() => {
-                this.props.navigation.navigate("user_statistics");
+                this.props.navigation.navigate("user_statistics", {
+                  paramName1: this.state.id,
+                });
               }}
             >
               <WithLocalSvg width={30} height={40} asset={Svg2} />
@@ -87,7 +120,9 @@ export default class user_setting extends Component {
               style={styles.group}
               activeOpacity={0.8}
               onPress={() => {
-                this.props.navigation.navigate("user_progress");
+                this.props.navigation.navigate("user_progress", {
+                  paramName1: this.state.id,
+                });
               }}
             >
               <WithLocalSvg width={30} height={40} asset={Svg3} />
@@ -100,9 +135,7 @@ export default class user_setting extends Component {
             <Text style={styles.text2}>메모</Text>
           </View>
           <View style={styles.textView}>
-            <Text style={styles.text2}>
-              {this.props.route.params.paramName3}
-            </Text>
+            <Text style={styles.text2}>{this.state.memo}</Text>
           </View>
         </View>
         <View style={styles.marginView}></View>

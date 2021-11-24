@@ -4,19 +4,52 @@ import React, { Component } from "react";
 import {
   View,
   ScrollView,
-  StatusBar,
   TouchableOpacity,
   Text,
   Alert,
   StyleSheet,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
 import Movelist from "./movelist";
+
 export default class progress extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      birth: 19431218,
+      gender: "",
+      memo: "",
+      team: "",
+      name: "",
+      progress: 0,
+      clickOn: 1,
+    };
   }
+
+  componentDidMount() {
+    console.log(this.props.route.params.paramName1);
+    fetch(
+      "http://152.70.233.113/chamuser/id/" + this.props.route.params.paramName1,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        console.log("여기 11111잘 들어가나 확인 ~~ 한다~~");
+        this.setState({
+          birth: json.info.birth,
+          gender: json.info.gender,
+          memo: json.info.memo,
+          team: json.info.team,
+          name: json.info.name,
+          progress: json.info.progress,
+        });
+      });
+  }
+
   render() {
     return (
       <View style={styles.finalView}>
@@ -30,7 +63,7 @@ export default class progress extends Component {
             }}
           />
           <View style={styles.margin}></View>
-          <Text style={styles.titleText}>김옥분님 운동편집</Text>
+          <Text style={styles.titleText}>'{this.state.name}'님 운동 편집</Text>
           <View style={styles.margin}></View>
           <AntDesign
             name="check"
@@ -43,76 +76,40 @@ export default class progress extends Component {
           />
         </View>
         {/* 운동카테고리 목록 뷰 */}
-        <View style={{ flexDirection: "column" }}>
-          <ScrollView
-            horizontal={true}
-            contentContainerStyle={{
-              flexGrow: 1,
-              flexDirection: "row",
-              marginRight: 200,
-            }}
-          >
-            <TouchableOpacity>
-              <View style={styles.moveView}>
-                <Text style={styles.movebtn}>확정리스트</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <View style={styles.moveView}>
-                <Text style={styles.movebtn}>신장</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <View style={styles.moveView}>
-                <Text style={styles.movebtn}>근력</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <View style={styles.moveView}>
-                <Text style={styles.movebtn}>균형/협응</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <View style={styles.moveView}>
-                <Text style={styles.movebtn}>구강/발성</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <View style={styles.moveView}>
-                <Text style={styles.movebtn}>유산소</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <View style={styles.moveView}>
-                <Text style={styles.movebtn}>유산소</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <View style={styles.moveView}>
-                <Text style={styles.movebtn}>유산소</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <View style={styles.moveView}>
-                <Text style={styles.movebtn}>유산소</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <View style={styles.moveView}>
-                <Text style={styles.movebtn}>유산소</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <View style={styles.moveView}>
-                <Text style={styles.movebtn}>유산소</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <View style={styles.moveView}>
-                <Text style={styles.movebtn}>유산소</Text>
-              </View>
-            </TouchableOpacity>
-          </ScrollView>
+        <View style={styles.listview}>
+          <View style={styles.margin}></View>
+          <TouchableOpacity>
+            <View
+              style={
+                this.state.clickOn === 1
+                  ? styles.moveView_on //클릭됨
+                  : styles.moveView
+              }
+            >
+              <Text style={styles.movebtn}>확정 리스트</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View style={styles.moveView}>
+              <Text style={styles.movebtn}>신장</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View style={styles.moveView}>
+              <Text style={styles.movebtn}>근력</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View style={styles.moveView}>
+              <Text style={styles.movebtn}>균형/협응</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View style={styles.moveView}>
+              <Text style={styles.movebtn}>구강/발성</Text>
+            </View>
+          </TouchableOpacity>
+          <View style={styles.margin}></View>
         </View>
         <View>
           {/* 리스트 뷰 전체 뷰 */}
@@ -140,6 +137,36 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFFFFF",
   },
+  listview: {
+    flexDirection: "row",
+  },
+  moveView: {
+    borderColor: "#BBBBBB",
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    backgroundColor: "#BBBBBB",
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 3,
+    marginVertical: 10,
+  },
+  moveView_on: {
+    borderColor: "#5CB405",
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    backgroundColor: "#5CB405",
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 3,
+    marginVertical: 10,
+  },
+  movebtn: {
+    color: "#FFFFFF",
+    fontSize: 17,
+  },
+
   menuView: {
     backgroundColor: "#FFFFFF",
     height: 58,
@@ -179,17 +206,5 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,
-  },
-  movebtn: { color: "#FFFFFF", justifyContent: "flex-end" },
-  moveView: {
-    borderColor: "#BBBBBB",
-    borderRadius: 35,
-    backgroundColor: "#BBBBBB",
-    paddingHorizontal: 5,
-    paddingVertical: 8,
-    justifyContent: "center",
-    alignItems: "center",
-    marginHorizontal: "5%",
-    marginVertical: 5,
   },
 });

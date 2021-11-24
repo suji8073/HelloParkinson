@@ -20,7 +20,7 @@ const task_patient = ({ allcount, done, progress }) => {
         alignItems: "flex-start",
         alignItems: "center",
         flexDirection: "row",
-        marginTop:10,
+        marginTop: 10,
         height: 20,
         width: "88%",
         justifyContent: "space-between",
@@ -43,7 +43,7 @@ const task_patient = ({ allcount, done, progress }) => {
           alignItems: "center",
         }}
       >
-        {done+"/"+allcount}
+        {done + "/" + allcount}
       </Text>
     </View>
   );
