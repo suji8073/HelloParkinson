@@ -17,58 +17,7 @@ import firstsvg from "../icon/first.svg";
 import secondsvg from "../icon/second.svg";
 import thirdsvg from "../icon/third.svg";
 import crownsvg from "../icon/crown.svg";
-const DATA = [
-  {
-    id: "1",
-    user: "박규동",
-    age: "5",
-    sex: "여",
-    progress: "50%",
-    minute: "5",
-    completed: false,
-    record: "4",
-  },
-  {
-    id: "2",
-    user: "채수지",
-    age: "5",
-    sex: "여",
-    progress: "50%",
-    minute: "5",
-    completed: false,
-    record: "5",
-  },
-  {
-    id: "3",
-    user: "기매현",
-    age: "5",
-    sex: "여",
-    progress: "50%",
-    minute: "5",
-    completed: false,
-    record: "6",
-  },
-  {
-    id: "4",
-    user: "김해년",
-    age: "5",
-    sex: "여",
-    progress: "50%",
-    minute: "5",
-    completed: false,
-    record: "7",
-  },
-  {
-    id: "5",
-    user: "십누딩",
-    age: "5",
-    sex: "여",
-    progress: "50%",
-    minute: "5",
-    completed: false,
-    record: "8",
-  },
-];
+
 export default class patient_Home extends Component {
   constructor(props) {
     super(props);
@@ -77,7 +26,7 @@ export default class patient_Home extends Component {
     };
   }
   userfunc = () => {
-    fetch("http://152.70.233.113/user", {
+    fetch("http://152.70.233.113/chamuser", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -127,7 +76,6 @@ export default class patient_Home extends Component {
                 }}
               >
                 <View
-
                   style={{
                     borderRadius: 400 / 2,
                     borderColor: "#C4C4C4",
@@ -160,7 +108,6 @@ export default class patient_Home extends Component {
                   margin: "1%",
                 }}
               >
-
                 <WithLocalSvg
                   width={50}
                   height={40}
@@ -168,7 +115,6 @@ export default class patient_Home extends Component {
                   style={{ top: "-20%", position: "absolute" }}
                 />
                 <View
-
                   style={{
                     borderRadius: 400 / 2,
                     borderColor: "#F8D500",
@@ -203,7 +149,6 @@ export default class patient_Home extends Component {
                 }}
               >
                 <View
-
                   style={{
                     borderRadius: 400 / 2,
                     borderColor: "#DA9B73",

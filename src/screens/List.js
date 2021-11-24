@@ -17,7 +17,7 @@ const items = [
   { id: "abc", label: "가나다순" },
   { id: "star", label: "즐겨찾기순" },
 ];
-const year = new Date();
+const today = new Date();
 export default class list extends Component {
   constructor(props) {
     super(props);
@@ -43,6 +43,7 @@ export default class list extends Component {
       .then((res) => res.json())
       .then((json) => {
         this.setState({ data: json });
+        // this.setState({ birth: data.birth.slice(0, 4) - 2021 });
       });
     return this.state.data;
   };
@@ -84,9 +85,7 @@ export default class list extends Component {
       <View style={styles.finalView}>
         <View style={styles.menuView}>
           <View style={styles.margin}></View>
-          <TouchableOpacity onPress={this.userfunc}>
-            <Text style={styles.titleText}>환자 목록</Text>
-          </TouchableOpacity>
+          <Text style={styles.titleText}>환자 목록</Text>
           <SimplePopupMenu
             style={styles.margin}
             items={items}
@@ -110,6 +109,10 @@ export default class list extends Component {
             renderItem={({ item }) => {
               return (
                 <TouchableOpacity
+
+                  activeOpacity={0.8} //깜빡임을 조절하는 기능
+                  hitSlop={{ top: 50, bottom: 100, left: 100, right: 70 }}
+
                   onPress={() => {
                     alert(item.id);
                     fetch("http://152.70.233.113/chamuser/id/" + item.id, {
@@ -134,6 +137,7 @@ export default class list extends Component {
                       paramName4: this.state.N_team,
                       paramName5: this.state.N_name,
                     });
+
                   }}
                 >
                   <Task

@@ -101,26 +101,24 @@ export default class statistics extends Component {
         </View>
 
         <View style={styles.threeView}>
-          <ScrollView>
-            <FlatList
-              data={this.userfunc()}
-              renderItem={({ item }) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.props.navigation.navigate("user_statistics");
-                    }}
-                  >
-                    <Task
-                      user={item.name}
-                      age={item.birth}
-                      sex={item.gender}
-                    ></Task>
-                  </TouchableOpacity>
-                );
-              }}
-            />
-          </ScrollView>
+          <FlatList
+            data={this.userfunc()}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.navigation.navigate("user_statistics");
+                  }}
+                >
+                  <Task
+                    user={item.name}
+                    age={item.birth}
+                    sex={item.gender}
+                  ></Task>
+                </TouchableOpacity>
+              );
+            }}
+          />
         </View>
       </View>
     );

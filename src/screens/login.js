@@ -45,10 +45,12 @@ export default class login extends Component {
           .then((json) => {
             console.log("로그인 통신 확인");
             if (json.admin == 0) {
+
               // 환자
               this.props.navigation.navigate("TabNavigation1");
             } else if (json.admin == 1) {
               // 관리자
+
               this.props.navigation.navigate("TabNavigation");
             } else {
               Alert.alert(
