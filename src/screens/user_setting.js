@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   StyleSheet,
   View,
@@ -19,91 +19,97 @@ import Svg3 from "../icon/graph.svg";
 
 import { WithLocalSvg } from "react-native-svg";
 
-function user_setting({ navigation }) {
-  return (
-    <View style={styles.finalView}>
-      <View style={styles.menuView}>
-        <AntDesign
-          name="left"
-          size={24}
-          color="#808080"
-          onPress={() => {
-            navigation.navigate("TabNavigation");
-          }}
-        />
-        <View style={styles.margin}></View>
-        <Text style={styles.titleText}>환자 정보</Text>
-        <View style={styles.margin}></View>
-        <EvilIcons name="star" size={30} color="green" />
-      </View>
-
-      <View style={styles.firstView}>
-        <View style={styles.icon}>
-          <Ionicons
-            name="person-circle-sharp"
-            size={120}
-            color="lightblue"
-            alignItems="center"
+export default class user_setting extends Component {
+  render() {
+    return (
+      <View style={styles.finalView}>
+        <View style={styles.menuView}>
+          <AntDesign
+            name="left"
+            size={24}
+            color="#808080"
+            onPress={() => {
+              navigation.navigate("TabNavigation");
+            }}
           />
+          <View style={styles.margin}></View>
+          <Text style={styles.titleText}>환자 정보</Text>
+          <View style={styles.margin}></View>
+          <EvilIcons name="star" size={30} color="green" />
         </View>
-        <Text style={styles.group_num}>3조</Text>
-        <Text style={styles.user_name}>김옥분</Text>
-        <Text style={styles.user_age}>77 / 여</Text>
-      </View>
 
-      <View style={styles.secondView}>
-        <View style={styles.numberbutton}>
-          <TouchableOpacity
-            style={styles.group}
-            activeOpacity={0.8}
-            onPress={() => {
-              navigation.navigate("user_edit");
-            }}
-          >
-            <WithLocalSvg width={30} height={40} asset={Svg1} />
-            <Text style={styles.twotext}>환자 정보 편집</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.group}
-            activeOpacity={0.8}
-            onPress={() => {
-              navigation.navigate("user_statistics");
-              
-            }}
-          >
-            <WithLocalSvg width={30} height={40} asset={Svg2} />
-            <Text style={styles.twotext}>운동 통계 확인</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.group}
-            activeOpacity={0.8}
-            onPress={() => {
-              navigation.navigate("user_progress");
-            }}
-          >
-            <WithLocalSvg width={30} height={40} asset={Svg3} />
-            <Text style={styles.twotext}>진도율 확인</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style={styles.threeView}>
-        <View style={styles.memoView}>
-          <Text style={styles.text2}>메모</Text>
-        </View>
-        <View style={styles.textView}>
-          <Text style={styles.text2}>
-            신장 운동 중점{"\n"}약 복용 알림도 필요
+        <View style={styles.firstView}>
+          <View style={styles.icon}>
+            <Ionicons
+              name="person-circle-sharp"
+              size={120}
+              color="lightblue"
+              alignItems="center"
+            />
+          </View>
+          <Text style={styles.group_num}>
+            {this.props.route.params.paramName4}조
+          </Text>
+          <Text style={styles.user_name}>
+            {this.props.route.params.paramName5}
+          </Text>
+          <Text style={styles.user_age}>
+            {this.props.route.params.paramName1}/
+            {this.props.route.params.paramName2}
           </Text>
         </View>
-      </View>
-      <View style={styles.marginView}></View>
-    </View>
-  );
-}
 
-export default user_setting;
+        <View style={styles.secondView}>
+          <View style={styles.numberbutton}>
+            <TouchableOpacity
+              style={styles.group}
+              activeOpacity={0.8}
+              onPress={() => {
+                this.props.navigation.navigate("user_edit");
+              }}
+            >
+              <WithLocalSvg width={30} height={40} asset={Svg1} />
+              <Text style={styles.twotext}>환자 정보 편집</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.group}
+              activeOpacity={0.8}
+              onPress={() => {
+                this.props.navigation.navigate("user_statistics");
+              }}
+            >
+              <WithLocalSvg width={30} height={40} asset={Svg2} />
+              <Text style={styles.twotext}>운동 통계 확인</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.group}
+              activeOpacity={0.8}
+              onPress={() => {
+                this.props.navigation.navigate("user_progress");
+              }}
+            >
+              <WithLocalSvg width={30} height={40} asset={Svg3} />
+              <Text style={styles.twotext}>진도율 확인</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.threeView}>
+          <View style={styles.memoView}>
+            <Text style={styles.text2}>메모</Text>
+          </View>
+          <View style={styles.textView}>
+            <Text style={styles.text2}>
+              {this.props.route.params.paramName3}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.marginView}></View>
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   finalView: {

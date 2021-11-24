@@ -1,12 +1,11 @@
-import React, {useState} from 'react';
-import styled from 'styled-components/native';
-import { Ionicons } from '@expo/vector-icons';
-
+import React, { useState } from "react";
+import styled from "styled-components/native";
+import { Ionicons } from "@expo/vector-icons";
 
 const SearchBarWrapper = styled.View`
   flex-direction: row;
   align-items: center;
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
   border-radius: 10px;
   padding: 10px 10px 10px 10px;
   display: flex;
@@ -17,13 +16,17 @@ const SearchInput = styled.TextInput`
   margin-left: 10px;
   include-font-padding: false;
   padding: 0px;
-  flex:3;
+  flex: 3;
 `;
 
-
-
 export default function SearchBar() {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
+
+  const onKeyPress = (props) => {
+    if (props.key == "Enter") {
+      alert(setValue);
+    }
+  };
 
   return (
     <SearchBarWrapper>
@@ -31,10 +34,11 @@ export default function SearchBar() {
         autoCapitalize="none"
         autoCorrect={false}
         onChangeText={setValue}
-        placeholder=""
+        placeholder="환자 이름 입력해랑~"
         returnKeyType="search"
         returnKeyLabel="search"
         value={value}
+        onKeyPress={onKeyPress}
       />
       <Ionicons name="search" size={20} color="#595959" />
     </SearchBarWrapper>

@@ -23,6 +23,7 @@ export default class task1 extends Component {
     };
   }
 
+
   handleClick = () => {
     if (this.state.star === silverstarsvg) {
       this.setState({ star: greenstartsvg });
@@ -55,6 +56,7 @@ export default class task1 extends Component {
               </View>
             </View>
           </View>
+
         </View>
         <View style={styles.margin}></View>
         <TouchableOpacity onPress={this.handleClick}>

@@ -12,6 +12,7 @@ import Task from "./task_alarm";
 import { WithLocalSvg } from "react-native-svg";
 
 import plussvg from "../icon/plus.svg";
+import ActionButton from "react-native-action-button";
 
 export default class patient_alarm extends Component {
   constructor(props) {
@@ -49,87 +50,66 @@ export default class patient_alarm extends Component {
           <ScrollView>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("alarm_edit");
-              }}
-            >
-              <Task
-                apm="오전"
-                hour="09"
-                minute="30"
-                cycle="일주일마다 반복"
-              ></Task>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("alarm_edit");
+                this.props.navigation.navigate("alarm_edit");
               }}
             >
               <Task apm="오후" hour="12" minute="10" cycle="매일 반복"></Task>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("alarm_edit");
-              }}
-            >
-              <Task
-                apm="오전"
-                hour="09"
-                minute="30"
-                cycle="일주일마다 반복"
-              ></Task>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("alarm_edit");
+                this.props.navigation.navigate("alarm_edit");
               }}
             >
               <Task apm="오후" hour="12" minute="10" cycle="매일 반복"></Task>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("alarm_edit");
-              }}
-            >
-              <Task
-                apm="오전"
-                hour="09"
-                minute="30"
-                cycle="일주일마다 반복"
-              ></Task>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("alarm_edit");
+                this.props.navigation.navigate("alarm_edit");
               }}
             >
               <Task apm="오후" hour="12" minute="10" cycle="매일 반복"></Task>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("alarm_edit");
+                this.props.navigation.navigate("alarm_edit");
               }}
             >
-              <Task
-                apm="오전"
-                hour="09"
-                minute="30"
-                cycle="일주일마다 반복"
-              ></Task>
+              <Task apm="오후" hour="12" minute="10" cycle="매일 반복"></Task>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("alarm_edit");
+                this.props.navigation.navigate("alarm_edit");
+              }}
+            >
+              <Task apm="오후" hour="12" minute="10" cycle="매일 반복"></Task>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate("alarm_edit");
               }}
             >
               <Task apm="오후" hour="12" minute="10" cycle="매일 반복"></Task>
             </TouchableOpacity>
           </ScrollView>
-          <WithLocalSvg
-            width={90}
-            height={90}
-            asset={plussvg}
+          {/* <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate("alarm_edit");
+            }}
+          > */}
+          {/* <WithLocalSvg
+              width={90}
+              height={90}
+              asset={plussvg}
+              style={styles.plusbtn}
+            /> */}
+          <ActionButton
+            buttonColor="#577F67"
             style={styles.plusbtn}
-          />
+            onPress={() => {
+              this.props.navigation.navigate("alarm_add");
+            }}
+          ></ActionButton>
+          {/* </TouchableOpacity> */}
         </View>
       </View>
     );
@@ -184,6 +164,6 @@ const styles = StyleSheet.create({
   plusbtn: {
     position: "absolute",
     left: "80%",
-    bottom: "33%",
+    bottom: "30%",
   },
 });

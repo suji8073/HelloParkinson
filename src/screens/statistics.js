@@ -41,6 +41,39 @@ export default class statistics extends Component {
       });
     return this.state.data;
   };
+
+  onMenuPress = (id) => {
+    if (id === "age") {
+      // 나이순
+      fetch("", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          this.setState({ data: json });
+        });
+      return this.state.data;
+    } else if (id === "abc") {
+      // 가나다순
+      fetch("", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          this.setState({ data: json });
+        });
+      return this.state.data;
+    }
+  };
+
   render() {
     return (
       <View style={styles.finalView}>
@@ -54,7 +87,9 @@ export default class statistics extends Component {
           <SimplePopupMenu
             items={items}
             cancelLabel={"취소"}
-            //onSelect={() => alert(this.label)}
+            onSelect={(items) => {
+              this.onMenuPress(items.id);
+            }}
             onCancel={() => console.log("onCancel")}
           >
             <Entypo name="dots-three-vertical" size={24} color="#595959" />
