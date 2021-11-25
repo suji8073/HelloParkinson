@@ -8,8 +8,11 @@ import {
   ScrollView,
 } from "react-native";
 import Task from "./task_alarm";
-
+import trashsvg from "../icon/trashcan.svg";
+import checksvg from "../icon/check.svg";
 import { WithLocalSvg } from "react-native-svg";
+
+import Icon from "react-native-vector-icons/Ionicons";
 
 import plussvg from "../icon/plus.svg";
 import ActionButton from "react-native-action-button";
@@ -105,10 +108,13 @@ export default class patient_alarm extends Component {
           <ActionButton
             buttonColor="#577F67"
             style={styles.plusbtn}
-            onPress={() => {
+            icon={<WithLocalSvg width={90} height={90} asset={trashsvg} />}
+          >
+            onPress=
+            {() => {
               this.props.navigation.navigate("alarm_add");
             }}
-          ></ActionButton>
+          </ActionButton>
           {/* </TouchableOpacity> */}
         </View>
       </View>

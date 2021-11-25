@@ -17,6 +17,59 @@ import { EvilIcons } from "@expo/vector-icons";
 import Svg from "../icon/noimage.svg";
 
 export default class move_play extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      user_name: "",
+      user_id: "",
+      user_age: "",
+      user_sex: 1,
+      user_group: "",
+      user_memo: "",
+      age1: on,
+      age2: off,
+
+      birth: 19431218,
+      gender: "",
+      memo: "",
+      team: "",
+      name: "",
+      UID: "",
+      progress: 0,
+    };
+  }
+
+  componentDidMount() {
+    console.log(this.props.route.params.paramName1);
+    fetch(
+      "http://152.70.233.113/chammotion",
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({
+          birth: json.info.birth,
+          gender: json.info.gender,
+          memo: json.info.memo,
+          team: json.info.team,
+          name: json.info.name,
+          UID: json.info.UID,
+          progress: json.info.progress,
+        });
+      });
+    console.log(2020 - parseInt(this.state.birth / 10000));
+    if (this.state.gender === "M") {
+      this.setState({ age1: on, age2: off });
+    } else {
+    }
+    this.setState({ age1: off, age2: on });
+  }
+
+
   render() {
     return (
       <View style={styles.finalView}>

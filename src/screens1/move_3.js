@@ -24,7 +24,7 @@ export default class move_3 extends Component {
     };
   }
   userfunc = () => {
-    fetch("http://152.70.233.113/user", {
+    fetch("http://152.70.233.113/chamuser", {
       method: "GET",
       headers: {
         Accept: "application/json",

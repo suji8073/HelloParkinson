@@ -31,6 +31,10 @@ export default class list extends Component {
     };
   }
 
+  componentDidMount(){
+    this.userfunc();
+  }
+
   userfunc = () => {
     fetch("http://152.70.233.113/chamuser", {
       method: "GET",
@@ -42,9 +46,7 @@ export default class list extends Component {
       .then((res) => res.json())
       .then((json) => {
         this.setState({ data: json });
-        // this.setState({ birth: data.birth.slice(0, 4) - 2021 });
       });
-    return this.state.data;
   };
 
   onMenuPress = (id) => {
@@ -104,12 +106,12 @@ export default class list extends Component {
 
         <View style={styles.threeView}>
           <FlatList
-            data={this.userfunc()}
+            keyExtractor={(item, index) => index}
+            data={this.state.data}
             renderItem={({ item }) => {
               return (
                 <TouchableOpacity
                   activeOpacity={0.8} //깜빡임을 조절하는 기능
-                  hitSlop={{ top: 50, bottom: 100, left: 100, right: 70 }}
                   onPress={() => {
                     this.props.navigation.navigate("user_setting", {
                       paramName1: item.id,

@@ -2,13 +2,13 @@ import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 
-const data1 = 80;
-const data2 = 100;
-const data3 = 30;
-const data4 = 50;
-const data5 = 10;
-const data6 = 25;
-const data7 = 30;
+const data1 = 80 * 0.8;
+const data2 = 100 * 0.8;
+const data3 = 30 * 0.8;
+const data4 = 50 * 0.8;
+const data5 = 10 * 0.8;
+const data6 = 25 * 0.8;
+const data7 = 30 * 0.8;
 
 const task_graph = ({}) => {
   return (

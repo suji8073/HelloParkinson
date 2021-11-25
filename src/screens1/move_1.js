@@ -56,8 +56,7 @@ function move_1({ navigation }) {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("move_play", {
-                paramName1: 1,
-                paramName2: 1,
+                paramName1: 1 - 1,
               });
             }}
           >

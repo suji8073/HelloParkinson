@@ -25,6 +25,10 @@ export default class patient_Home extends Component {
       data: [],
     };
   }
+
+  componentDidMount() {
+    this.userfunc();
+  }
   userfunc = () => {
     fetch("http://152.70.233.113/chamuser", {
       method: "GET",
@@ -37,7 +41,6 @@ export default class patient_Home extends Component {
       .then((json) => {
         this.setState({ data: json });
       });
-    return this.state.data;
   };
   render() {
     return (
@@ -184,7 +187,7 @@ export default class patient_Home extends Component {
             }}
           >
             <FlatList
-              data={this.userfunc()}
+              data={this.state.data}
               renderItem={({ item }) => {
                 return (
                   // <TouchableOpacity
