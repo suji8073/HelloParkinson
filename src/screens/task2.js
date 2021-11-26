@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from "react-native";
 import PropTypes from "prop-types";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-const year = 2021 - 1;
+const year = 2021 + 1;
 function Task({ user, age, sex }) {
   return (
     <View style={styles.Container}>

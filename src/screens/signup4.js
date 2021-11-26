@@ -277,8 +277,7 @@ export default class siginup4 extends Component {
                         : styles.gendertext
                     }
                   >
-                    {" "}
-                    남자{" "}
+                    남자
                   </Text>
                 </TouchableOpacity>
 

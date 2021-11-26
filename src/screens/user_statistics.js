@@ -7,12 +7,12 @@ import Task from "../screens1/task_record_day";
 import Task1 from "../screens1/task_graph";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 
-const items = [
-  { id: "1", label: "주" },
-  { id: "2", label: "월" },
-  { id: "3", label: "년" },
-];
-
+// const items = [
+//   { id: "1", label: "주" },
+//   { id: "2", label: "월" },
+//   { id: "3", label: "년" },
+// ];
+const year = 2021 + 1;
 export default class user_statistics extends Component {
   constructor(props) {
     super(props);
@@ -69,14 +69,14 @@ export default class user_statistics extends Component {
           </Text>
           <View style={styles.margin}></View>
 
-          <SimplePopupMenu
+          {/* <SimplePopupMenu
             items={items}
             cancelLabel={"취소"}
             //onSelect={() => alert(this.label)}
             onCancel={() => console.log("onCancel")}
           >
             <Entypo name="dots-three-vertical" size={24} color="#595959" />
-          </SimplePopupMenu>
+          </SimplePopupMenu> */}
         </View>
 
         <View style={styles.mainView}>
@@ -91,7 +91,7 @@ export default class user_statistics extends Component {
               <Text style={styles.user_name}>{this.state.name}</Text>
               <Text style={styles.user_age}>
                 {" "}
-                / {2020 - parseInt(this.state.birth / 10000)}세
+                / {year - parseInt(this.state.birth / 10000)}세
               </Text>
               <Text style={styles.user_sex}> / {this.state.gender}</Text>
               <View style={styles.margin}></View>

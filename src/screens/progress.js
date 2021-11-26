@@ -23,7 +23,9 @@ export default class progress extends Component {
       user_progress: 0,
     };
   }
-
+  componentDidMount() {
+    this.userfunc();
+  }
   userfunc = () => {
     fetch("http://152.70.233.113/chamuser", {
       method: "GET",
@@ -122,7 +124,7 @@ export default class progress extends Component {
 
             <FlatList
               style={{ marginBottom: 80 }}
-              data={this.userfunc()}
+              data={this.state.data}
               renderItem={({ item }) => {
                 return (
                   <TouchableOpacity

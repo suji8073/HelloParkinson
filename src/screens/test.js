@@ -19,6 +19,9 @@ export default class test extends Component {
       data: [],
     };
   }
+  componentDidMount() {
+    this.userfunc();
+  }
   userfunc = () => {
     fetch("http://152.70.233.113/chamuser", {
       method: "GET",
@@ -42,7 +45,7 @@ export default class test extends Component {
           <Text style={styles.titleText}>데이터 불러오기</Text>
           <View style={styles.margin}></View>
         </View>
-        <TouchableOpacity onPress={this.userfunc}>
+        <TouchableOpacity>
           <Text>rlacogus</Text>
           {console.log(this.state.data)}
         </TouchableOpacity>

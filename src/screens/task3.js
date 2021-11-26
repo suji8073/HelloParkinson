@@ -14,7 +14,7 @@ import {
 import PercentageBar from "./progressbar";
 import Svg1 from "../icon/airplane.svg";
 import { WithLocalSvg } from "react-native-svg";
-const year = 2021 - 1;
+const year = 2021 + 1;
 const task3 = ({ user, age, sex, progress, minute }) => {
   return (
     //  전체 뷰
@@ -71,7 +71,7 @@ const task3 = ({ user, age, sex, progress, minute }) => {
               alignItems: "center",
             }}
           >
-            {progress}
+            {progress}%
           </Text>
         </View>
       </View>
@@ -86,9 +86,9 @@ const task3 = ({ user, age, sex, progress, minute }) => {
         }}
       >
         <WithLocalSvg width={40} height={40} asset={Svg1} />
-        <Text style={{ marginTop: "5%", color: "#484848", fontSize: 13 }}>
+        {/* <Text style={{ marginTop: "5%", color: "#484848", fontSize: 13 }}>
           {minute}분 전
-        </Text>
+        </Text> */}
       </View>
     </View>
   );
