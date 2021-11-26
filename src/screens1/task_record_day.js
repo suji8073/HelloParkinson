@@ -1,77 +1,80 @@
-import React from "react";
+import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 
-const data = {
-  datasets: [
-    {
-      data: [75, 25, 40, 90, 55],
-      color: (opacity = 0) => `rgba(101, 203, 0, ${opacity})`, // optional
-      strokeWidth: 1.5,
-      plugins: {
-        legend: {
-          display: false,
-        },
-      },
-    },
-  ],
-};
-const task_patient = ({}) => {
-  return (
-    //  전체 뷰
-    <View
-      style={{
-        alignItems: "flex-start",
-        flexDirection: "column",
-        height: 200,
-        width: 300,
-        justifyContent: "center",
-      }}
-    >
-      <Text style={styles.text1}>2월 6일</Text>
+export default class task_patient extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      CAT1: 0,
+      CAT2: 0,
+      CAT3: 0,
+      CAT4: 0,
+      CAT5: 0,
+      R_date: "",
+      data: [],
+    };
+  }
 
-      <View style={styles.graphView}>
-        <View style={styles.numView}>
-          <View style={styles.num3}></View>
-          <Text style={styles.num2}>75</Text>
-          <Text style={styles.num2}>25</Text>
-          <Text style={styles.num2}>40</Text>
-          <Text style={styles.num2}>90</Text>
-          <Text style={styles.num2}>50</Text>
-        </View>
-        <LineChart
-          style={styles.chart}
-          data={data}
-          width={330}
-          height={100}
-          chartConfig={{
-            backgroundColor: "#FFFFFF",
-            backgroundGradientFrom: "#FFFFFF",
-            backgroundGradientTo: "#FFFFFF",
-            decimalPlaces: 0,
+  componentDidMount() {
+    console.log(this.props.text);
+    fetch("http://152.70.233.113/chamuser/day/suji", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({
+          CAT1: json.CAT1,
+          CAT2: json.CAT2,
+          CAT3: json.CAT3,
+          CAT4: json.CAT4,
+          CAT5: json.CAT5,
+          data: json,
+          R_date: json.R_date,
+        });
+        console.log(this.state.data);
+      });
+  }
 
-            color: (opacity = 1) => `rgba(198, 198, 198, ${opacity})`,
-            labelColor: (opacity = 1) => `rgba(72, 72, 72, ${opacity})`,
-            propsForDots: {
-              r: "4",
-            },
-          }}
-        />
-        <View style={styles.textView}>
-          <View style={styles.text3}></View>
-          <Text style={styles.text2}>신장</Text>
-          <Text style={styles.text2}>근육</Text>
-          <Text style={styles.text2}>구강{"\n"}발성</Text>
-          <Text style={styles.text2}>균형{"\n"}협응</Text>
-          <Text style={styles.text2}>유산소</Text>
-          <View style={styles.text4}></View>
+  render() {
+    return (
+      //  전체 뷰
+      <View
+        style={{
+          alignItems: "flex-start",
+          flexDirection: "column",
+          height: 200,
+          width: 300,
+          justifyContent: "center",
+        }}
+      >
+        <Text style={styles.text1}>{this.state.R_date}</Text>
+
+        <View style={styles.graphView}>
+          <View style={styles.numView}>
+            <View style={styles.num3}></View>
+            <Text style={styles.num2}>75</Text>
+            <Text style={styles.num2}>25</Text>
+            <Text style={styles.num2}>40</Text>
+            <Text style={styles.num2}>90</Text>
+            <Text style={styles.num2}>50</Text>
+          </View>
+
+          <View style={styles.textView}>
+            <View style={styles.text3}></View>
+            <Text style={styles.text2}>신장</Text>
+            <Text style={styles.text2}>근육</Text>
+            <Text style={styles.text2}>구강{"\n"}발성</Text>
+            <Text style={styles.text2}>균형{"\n"}협응</Text>
+            <Text style={styles.text2}>유산소</Text>
+            <View style={styles.text4}></View>
+          </View>
         </View>
       </View>
-    </View>
-  );
-};
-
-export default task_patient;
+    );
+  }
+}
 const styles = StyleSheet.create({
   text1: {
     alignItems: "flex-start",

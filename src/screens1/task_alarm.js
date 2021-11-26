@@ -3,6 +3,8 @@ import { StyleSheet, View, Text, Touchable } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Flex } from "native-base";
+
+
 const alarm_task = ({ navigation, apm, hour, minute, cycle }) => {
   return (
     <View
@@ -29,11 +31,7 @@ const alarm_task = ({ navigation, apm, hour, minute, cycle }) => {
         </Text>
         <Text style={{ fontSize: 17 }}>{cycle}</Text>
       </View>
-      {/* <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("alarm_edit");
-        }}
-      > */}
+
       <View
         style={{
           flex: 1,

@@ -27,6 +27,7 @@ export default class statistics extends Component {
       data: [],
     };
   }
+
   componentDidMount() {
     this.userfunc();
   }
@@ -42,7 +43,6 @@ export default class statistics extends Component {
       .then((json) => {
         this.setState({ data: json });
       });
-    return this.state.data;
   };
 
   onMenuPress = (id) => {

@@ -19,7 +19,9 @@ export default class test extends Component {
       data: [],
     };
   }
-  componentDidMount() {
+
+  componentDidMount(){
+
     this.userfunc();
   }
   userfunc = () => {
@@ -34,7 +36,6 @@ export default class test extends Component {
       .then((json) => {
         this.setState({ data: json });
       });
-    return this.state.data;
   };
 
   render() {

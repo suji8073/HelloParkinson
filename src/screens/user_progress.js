@@ -12,6 +12,8 @@ import { ScrollView } from "react-native-gesture-handler";
 import ActionButton from "react-native-action-button";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import action_icon from "../icon/action_icon.svg";
+import { WithLocalSvg } from "react-native-svg";
 
 import { Entypo } from "@expo/vector-icons";
 import PercentageBar from "../screens/progressbar";
@@ -245,14 +247,22 @@ export default class progress extends Component {
             </ScrollView>
           </View>
         </View>
+
         <ActionButton
-          bgColor="rgba(0,0,0,1)"
-          buttonColor="rgba(68,110,26,1)"
-          onPress={() => {
-            this.props.navigation.navigate("moveedit", {
-              paramName1: this.props.route.params.paramName1,
-            });
-          }}
+          buttonColor="#577F67"
+          style={styles.plusbtn}
+          renderIcon={() => (
+            <WithLocalSvg
+              width={80}
+              height={80}
+              asset={action_icon}
+              onPress={() => {
+                this.props.navigation.navigate("moveedit", {
+                  paramName1: this.props.route.params.paramName1,
+                });
+              }}
+            />
+          )}
         ></ActionButton>
       </View>
     );
@@ -306,6 +316,11 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,
+  },
+  plusbtn: {
+    position: "absolute",
+    left: "80%",
+    bottom: "8%",
   },
   threeView: {
     // padding:30,

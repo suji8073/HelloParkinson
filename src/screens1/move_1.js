@@ -13,8 +13,7 @@ import Task from "./task_move";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 
-let id = "1-1";
-let Svg1 = require("../image/" + id + ".png");
+let Svg1 = require("../image/1-1.png");
 let Svg2 = require("../image/1-2.png");
 let Svg3 = require("../image/1-3.png");
 let Svg4 = require("../image/1-4.png");
@@ -56,8 +55,8 @@ function move_1({ navigation }) {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("move_play", {
-                paramName1: 1,
-                paramName2: 1,
+                paramName1: "1-1",
+                paramName2:"신장운동"
               });
             }}
           >
@@ -66,8 +65,8 @@ function move_1({ navigation }) {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("move_play", {
-                paramName1: 1,
-                paramName2: 2,
+                paramName1: "1-2",
+                paramName2:"신장운동"
               });
             }}
           >
@@ -80,8 +79,8 @@ function move_1({ navigation }) {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("move_play", {
-                paramName1: 1,
-                paramName2: 3,
+                paramName1: "1-3",
+                paramName2:"신장운동"
               });
             }}
           >
@@ -94,8 +93,8 @@ function move_1({ navigation }) {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("move_play", {
-                paramName1: 1,
-                paramName2: 4,
+                paramName1: "1-4",
+                paramName2:"신장운동"
               });
             }}
           >
@@ -108,8 +107,8 @@ function move_1({ navigation }) {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("move_play", {
-                paramName1: 1,
-                paramName2: 5,
+                paramName1: "1-5",
+                paramName2:"신장운동"
               });
             }}
           >
@@ -122,8 +121,8 @@ function move_1({ navigation }) {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("move_play", {
-                paramName1: 1,
-                paramName2: 6,
+                paramName1: "1-6",
+                paramName2:"신장운동"
               });
             }}
           >
@@ -133,8 +132,8 @@ function move_1({ navigation }) {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("move_play", {
-                paramName1: 1,
-                paramName2: 7,
+                paramName1: "1-7",
+                paramName2:"신장운동"
               });
             }}
           >
@@ -144,8 +143,8 @@ function move_1({ navigation }) {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("move_play", {
-                paramName1: 1,
-                paramName2: 8,
+                paramName1: "1-8",
+                paramName2:"신장운동"
               });
             }}
           >
@@ -155,8 +154,8 @@ function move_1({ navigation }) {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("move_play", {
-                paramName1: 1,
-                paramName2: 9,
+                paramName1: "1-9",
+                paramName2:"신장운동"
               });
             }}
           >
@@ -166,8 +165,8 @@ function move_1({ navigation }) {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("move_play", {
-                paramName1: 1,
-                paramName2: 10,
+                paramName1: "1-10",
+                paramName2:"신장운동"
               });
             }}
           >
@@ -177,8 +176,8 @@ function move_1({ navigation }) {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("move_play", {
-                paramName1: 1,
-                paramName2: 11,
+                paramName1: "1-11",
+                paramName2:"신장운동"
               });
             }}
           >
@@ -192,8 +191,8 @@ function move_1({ navigation }) {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("move_play", {
-                paramName1: 1,
-                paramName2: 12,
+                paramName1: "1-12",
+                paramName2:"신장운동"
               });
             }}
           >

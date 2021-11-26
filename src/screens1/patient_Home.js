@@ -31,7 +31,12 @@ export default class patient_Home extends Component {
       // progress: 0,
     };
   }
+
   componentDidMount() {
+    this.userfunc();
+  }
+  userfunc = () => {
+
     fetch("http://152.70.233.113/chamuser", {
       method: "GET",
       headers: {
@@ -59,8 +64,9 @@ export default class patient_Home extends Component {
         //   progress: Array.from(data.progress),
         // });
       });
-    // console.log("cogus");
-  }
+
+  };
+
   render() {
     return (
       <View style={styles.finalView}>
@@ -211,7 +217,9 @@ export default class patient_Home extends Component {
             }}
           >
             <FlatList
+
               data={this.state.data.slice(3)}
+
               renderItem={({ item }) => {
                 return (
                   // <TouchableOpacity

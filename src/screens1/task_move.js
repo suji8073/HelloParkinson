@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     color: "#000000",
     justifyContent: "center",
     fontWeight: "bold",
+    width: "90%",
   },
   text2: {
     fontSize: 16,

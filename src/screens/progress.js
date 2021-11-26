@@ -23,9 +23,12 @@ export default class progress extends Component {
       user_progress: 0,
     };
   }
+
+
   componentDidMount() {
     this.userfunc();
   }
+
   userfunc = () => {
     fetch("http://152.70.233.113/chamuser", {
       method: "GET",
@@ -38,7 +41,6 @@ export default class progress extends Component {
       .then((json) => {
         this.setState({ data: json });
       });
-    return this.state.data;
   };
 
   // 알림 전송 시간 받아오기
@@ -129,7 +131,9 @@ export default class progress extends Component {
                 return (
                   <TouchableOpacity
                     onPress={() => {
-                      this.props.navigation.navigate("user_progress");
+                      this.props.navigation.navigate("user_progress", {
+                        paramName1: item.id,
+                      });
                     }}
                   >
                     <Task
