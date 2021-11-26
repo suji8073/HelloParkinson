@@ -21,6 +21,7 @@ export default class test extends Component {
   }
 
   componentDidMount(){
+
     this.userfunc();
   }
   userfunc = () => {
@@ -45,7 +46,7 @@ export default class test extends Component {
           <Text style={styles.titleText}>데이터 불러오기</Text>
           <View style={styles.margin}></View>
         </View>
-        <TouchableOpacity onPress={this.userfunc}>
+        <TouchableOpacity>
           <Text>rlacogus</Text>
           {console.log(this.state.data)}
         </TouchableOpacity>

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { WithLocalSvg } from "react-native-svg";
 import { Ionicons } from "@expo/vector-icons";
-const year = 2021 - 1;
+const year = 2021 + 1;
 
 const task_home = ({ record, name, age, sex }) => {
   return (

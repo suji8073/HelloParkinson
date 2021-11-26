@@ -16,7 +16,7 @@ import { Feather } from "@expo/vector-icons";
 
 import on from "../icon/r_btn_on.svg";
 import off from "../icon/r_btn_off.svg";
-const year = 2021 - 1;
+const year = 2021 + 1;
 
 import { WithLocalSvg } from "react-native-svg";
 
@@ -118,22 +118,22 @@ export default class user_edit extends Component {
       this.setState({ user_sex: 2 }); // 여자
     }
 
-    fetch("http://152.70.233.113/", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        console.log("통신 확인");
-        if (json.dup === 0) {
-          Alert.alert("저장되었습니다.");
-          this.props.navigation.navigate("user_setting");
-        } else {
-          // 1이면 중복
-          alert("존재하는 사용자입니다.");
-        }
-      });
+    // fetch("http://152.70.233.113/", {
+    //   method: "GET",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify(),
+    // })
+    //   .then((res) => res.json())
+    //   .then((json) => {
+    //     console.log("통신 확인");
+    //     if (json.dup === 0) {
+    //       Alert.alert("저장되었습니다.");
+    //       this.props.navigation.navigate("user_setting");
+    //     } else {
+    //       // 1이면 중복
+    //       alert("존재하는 사용자입니다.");
+    //     }
+    //   });
   };
 
   render() {

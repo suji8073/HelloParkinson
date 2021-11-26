@@ -13,7 +13,7 @@ import { EvilIcons } from "@expo/vector-icons";
 import { WithLocalSvg } from "react-native-svg";
 import silverstarsvg from "../icon/silverstar.svg";
 import greenstartsvg from "../icon/greenstar.svg";
-const year = 2021 - 1;
+const year = 2021 + 1;
 
 export default class task1 extends Component {
   constructor(props) {
@@ -22,7 +22,6 @@ export default class task1 extends Component {
       star: silverstarsvg,
     };
   }
-
 
   handleClick = () => {
     if (this.state.star === silverstarsvg) {
@@ -56,7 +55,6 @@ export default class task1 extends Component {
               </View>
             </View>
           </View>
-
         </View>
         <View style={styles.margin}></View>
         <TouchableOpacity onPress={this.handleClick}>

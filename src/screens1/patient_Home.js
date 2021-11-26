@@ -17,12 +17,18 @@ import firstsvg from "../icon/first.svg";
 import secondsvg from "../icon/second.svg";
 import thirdsvg from "../icon/third.svg";
 import crownsvg from "../icon/crown.svg";
+import Task from "../screens1/task_text";
 
 export default class patient_Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data: [],
+      // id: "",
+      // name: "",
+      // gender: "",
+      // birth: "",
+      // progress: 0,
     };
   }
 
@@ -30,6 +36,7 @@ export default class patient_Home extends Component {
     this.userfunc();
   }
   userfunc = () => {
+
     fetch("http://152.70.233.113/chamuser", {
       method: "GET",
       headers: {
@@ -39,9 +46,27 @@ export default class patient_Home extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        this.setState({ data: json });
+        console.log("여기 잘 들어가나 확인 ~~ 한다~~");
+        this.setState({
+          data: json,
+          // id: json.id,
+          // name: json.name,
+          // gender: json.gender,
+          // birth: json.birth,
+          // progress: json.progress,
+        });
+        this.setState({ data: Array.from(data) });
+        // this.setState({
+        //   id: data.id,
+        //   name: Array.from(data.name),
+        //   gender: Array.from(data.gender),
+        //   birth: Array.from(data.birth),
+        //   progress: Array.from(data.progress),
+        // });
       });
+
   };
+
   render() {
     return (
       <View style={styles.finalView}>
@@ -102,7 +127,12 @@ export default class patient_Home extends Component {
                   height={30}
                   asset={secondsvg}
                 />
-                <Text style={styles.prizetext}>신수빈[80%]</Text>
+
+                {/* <Task
+                 
+                  name={this.state.data.slice(1, 2).name}
+                  progress={Array.from(this.state.data.slice(1, 2))["progress"]}
+                ></Task> */}
               </View>
               <View
                 style={{
@@ -141,7 +171,7 @@ export default class patient_Home extends Component {
                   height={30}
                   asset={firstsvg}
                 />
-                <Text style={styles.prizetext}>오석형[98%]</Text>
+                <Text style={styles.prizetext}>1위</Text>
               </View>
               <View
                 style={{
@@ -187,7 +217,9 @@ export default class patient_Home extends Component {
             }}
           >
             <FlatList
-              data={this.state.data}
+
+              data={this.state.data.slice(3)}
+
               renderItem={({ item }) => {
                 return (
                   // <TouchableOpacity

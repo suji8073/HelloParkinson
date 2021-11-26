@@ -18,7 +18,7 @@ import Svg2 from "../icon/piechart.svg";
 import Svg3 from "../icon/graph.svg";
 
 import { WithLocalSvg } from "react-native-svg";
-const year = 2021 - 1;
+const year = 2021 + 1;
 
 export default class user_setting extends Component {
   constructor(props) {

@@ -17,7 +17,7 @@ import { WithLocalSvg } from "react-native-svg";
 
 import { Entypo } from "@expo/vector-icons";
 import PercentageBar from "../screens/progressbar";
-const year = 2021 - 1;
+const year = 2021 + 1;
 
 export default class progress extends Component {
   constructor(props) {

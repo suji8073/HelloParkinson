@@ -24,6 +24,7 @@ export default class progress extends Component {
     };
   }
 
+
   componentDidMount() {
     this.userfunc();
   }

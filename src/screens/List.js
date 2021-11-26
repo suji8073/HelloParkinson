@@ -17,6 +17,7 @@ const items = [
   { id: "abc", label: "가나다순" },
   { id: "star", label: "즐겨찾기순" },
 ];
+// sorting필요함 !!
 const today = new Date();
 export default class list extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ export default class list extends Component {
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.userfunc();
   }
 
@@ -106,7 +107,9 @@ export default class list extends Component {
 
         <View style={styles.threeView}>
           <FlatList
+
             keyExtractor={(item, index) => index}
+
             data={this.state.data}
             renderItem={({ item }) => {
               return (
