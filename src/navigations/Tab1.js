@@ -19,7 +19,7 @@ const menuIcon1 = ({ name, size, color }) => {
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigation1 = (props) => {
+const TabNavigation1 = () => {
   return (
     <Tab.Navigator
       initialRouteName="patient_Home"
@@ -39,7 +39,6 @@ const TabNavigation1 = (props) => {
       <Tab.Screen
         name="홈"
         component={patient_Home}
-        initialParams={{ paramName: props.paramName }}
         options={{
           headerShown: false,
           tabBarLabel: "홈",
@@ -56,7 +55,6 @@ const TabNavigation1 = (props) => {
       <Tab.Screen
         name="운동"
         component={patient_move}
-        initialParams={{ paramName: props.paramName }}
         options={{
           headerShown: false,
           tabBarLabel: "운동",
@@ -72,7 +70,6 @@ const TabNavigation1 = (props) => {
       <Tab.Screen
         name="기록"
         component={patient_record}
-        initialParams={{ paramName: props.paramName }}
         options={{
           headerShown: false,
           tabBarLabel: "기록",
@@ -87,7 +84,6 @@ const TabNavigation1 = (props) => {
       <Tab.Screen
         name="알림"
         component={patient_alarm}
-        initialParams={{ paramName: props.paramName }}
         options={{
           headerShown: false,
           tabBarLabel: "알림",

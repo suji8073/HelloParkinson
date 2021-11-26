@@ -48,9 +48,7 @@ export default class patient_Home extends Component {
         <View style={styles.menuView}>
           <Ionicons name="person-circle-sharp" size={35} color="#ffffff" />
           <View style={styles.margin}></View>
-          <Text style={styles.titleText}>
-            굿나잇 파킨슨{this.props.route.params.paramName}
-          </Text>
+          <Text style={styles.titleText}>굿나잇 파킨슨</Text>
           <View style={styles.margin}></View>
 
           <TouchableOpacity

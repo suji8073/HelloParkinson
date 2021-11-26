@@ -50,47 +50,57 @@ export default class patient_alarm extends Component {
           <ScrollView>
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate("alarm_edit");
+                this.props.navigation.navigate("alarm_edit", {
+                  apm: "오전",
+                  hour: "10",
+                  minute: "00",
+                  cycle: "매일 반복하기",
+                });
               }}
             >
-              <Task apm="오후" hour="12" minute="10" cycle="매일 반복"></Task>
+              <Task
+                apm="오전"
+                hour="10"
+                minute="00"
+                cycle="매일 반복하기"
+              ></Task>
             </TouchableOpacity>
+
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate("alarm_edit");
+                this.props.navigation.navigate("alarm_edit", {
+                  apm: "오후",
+                  hour: "12",
+                  minute: "30",
+                  cycle: "일주일마다 반복하기",
+                });
               }}
             >
-              <Task apm="오후" hour="12" minute="10" cycle="매일 반복"></Task>
+              <Task
+                apm="오후"
+                hour="12"
+                minute="30"
+                cycle="일주일마다 반복하기"
+              ></Task>
             </TouchableOpacity>
+
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate("alarm_edit");
+                this.props.navigation.navigate("alarm_edit", {
+                  apm: "오후",
+                  hour: "3",
+                  minute: "30",
+                  cycle: "오늘 하루만 알림",
+                });
               }}
             >
-              <Task apm="오후" hour="12" minute="10" cycle="매일 반복"></Task>
+              <Task
+                apm="오후"
+                hour="3"
+                minute="30"
+                cycle="오늘 하루만 알림"
+              ></Task>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate("alarm_edit");
-              }}
-            >
-              <Task apm="오후" hour="12" minute="10" cycle="매일 반복"></Task>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate("alarm_edit");
-              }}
-            >
-              <Task apm="오후" hour="12" minute="10" cycle="매일 반복"></Task>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate("alarm_edit");
-              }}
-            >
-              <Task apm="오후" hour="12" minute="10" cycle="매일 반복"></Task>
-            </TouchableOpacity>
-            
           </ScrollView>
           {/* <TouchableOpacity
             onPress={() => {
