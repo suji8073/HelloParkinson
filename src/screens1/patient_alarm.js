@@ -8,11 +8,8 @@ import {
   ScrollView,
 } from "react-native";
 import Task from "./task_alarm";
-import trashsvg from "../icon/trashcan.svg";
-import checksvg from "../icon/check.svg";
-import { WithLocalSvg } from "react-native-svg";
 
-import Icon from "react-native-vector-icons/Ionicons";
+import { WithLocalSvg } from "react-native-svg";
 
 import plussvg from "../icon/plus.svg";
 import ActionButton from "react-native-action-button";
@@ -93,6 +90,7 @@ export default class patient_alarm extends Component {
             >
               <Task apm="오후" hour="12" minute="10" cycle="매일 반복"></Task>
             </TouchableOpacity>
+            
           </ScrollView>
           {/* <TouchableOpacity
             onPress={() => {
@@ -105,17 +103,21 @@ export default class patient_alarm extends Component {
               asset={plussvg}
               style={styles.plusbtn}
             /> */}
+
           <ActionButton
             buttonColor="#577F67"
             style={styles.plusbtn}
-            icon={<WithLocalSvg width={90} height={90} asset={trashsvg} />}
-          >
-            onPress=
-            {() => {
-              this.props.navigation.navigate("alarm_add");
-            }}
-          </ActionButton>
-          {/* </TouchableOpacity> */}
+            renderIcon={() => (
+              <WithLocalSvg
+                width={90}
+                height={90}
+                asset={plussvg}
+                onPress={() => {
+                  this.props.navigation.navigate("alarm_add");
+                }}
+              />
+            )}
+          ></ActionButton>
         </View>
       </View>
     );
@@ -169,7 +171,7 @@ const styles = StyleSheet.create({
   },
   plusbtn: {
     position: "absolute",
-    left: "80%",
+    left: "70%",
     bottom: "30%",
   },
 });

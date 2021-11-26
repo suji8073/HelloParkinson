@@ -13,6 +13,7 @@ import plussvg from "../icon/plus.svg";
 import nosvg from "../icon/no.svg";
 import { WithLocalSvg } from "react-native-svg";
 import { AntDesign } from "@expo/vector-icons";
+
 function alarm_add({ navigation }) {
   return (
     <View style={styles.finalView}>
@@ -137,7 +138,11 @@ function alarm_add({ navigation }) {
               alignItems: "flex-start",
             }}
           >
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.pop();
+              }}
+            >
               <WithLocalSvg width={90} height={90} asset={nosvg} />
             </TouchableOpacity>
             <TouchableOpacity>

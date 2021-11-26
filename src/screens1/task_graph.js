@@ -1,67 +1,91 @@
-import React from "react";
+import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
-import { LineChart } from "react-native-chart-kit";
 
-const data1 = 80 * 0.8;
-const data2 = 100 * 0.8;
-const data3 = 30 * 0.8;
-const data4 = 50 * 0.8;
-const data5 = 10 * 0.8;
-const data6 = 25 * 0.8;
-const data7 = 30 * 0.8;
+export default class task_graph extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      mon: 0,
+      tus: 0,
+      wed: 0,
+      thr: 0,
+      fri: 0,
+      sat: 0,
+      sun: 0,
+    };
+  }
 
-const task_graph = ({}) => {
-  return (
-    //  전체 뷰
-    <View
-      style={{
-        alignItems: "center",
-        flexDirection: "column",
-        width: "100%",
-        height: "100%",
-        justifyContent: "center",
-      }}
-    >
-      <View style={styles.graphView}>
-        <View style={styles.margin1}></View>
-        <View style={styles.chart} height={data1}></View>
-        <View style={styles.margin}></View>
-        <View style={styles.chart} height={data2}></View>
-        <View style={styles.margin}></View>
-        <View style={styles.chart} height={data3}></View>
-        <View style={styles.margin}></View>
-        <View style={styles.chart} height={data4}></View>
-        <View style={styles.margin}></View>
-        <View style={styles.chart} height={data5}></View>
-        <View style={styles.margin}></View>
-        <View style={styles.chart} height={data6}></View>
-        <View style={styles.margin}></View>
-        <View style={styles.chart} height={data7}></View>
-        <View style={styles.margin1}></View>
+  componentDidMount() {
+    console.log(this.props.text);
+    fetch("http://152.70.233.113/chamuser/id/" + this.props.text, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({
+          mon: json.info.mon * 0.8,
+          tus: json.info.tus * 0.8,
+          wed: json.info.wed * 0.8,
+          thr: json.info.thr * 0.8,
+          fri: json.info.fri * 0.8,
+          sat: json.info.sat * 0.8,
+          sun: json.info.sun * 0.8,
+        });
+      });
+  }
+
+  render() {
+    return (
+      //  전체 뷰
+      <View
+        style={{
+          alignItems: "center",
+          flexDirection: "column",
+          width: "100%",
+          height: "100%",
+          justifyContent: "center",
+        }}
+      >
+        <View style={styles.graphView}>
+          <View style={styles.margin1}></View>
+          <View style={styles.chart} height={this.state.sun}></View>
+          <View style={styles.margin}></View>
+          <View style={styles.chart} height={this.state.tus}></View>
+          <View style={styles.margin1}></View>
+          <View style={styles.chart} height={this.state.mon}></View>
+          <View style={styles.margin}></View>
+          <View style={styles.chart} height={this.state.wed}></View>
+          <View style={styles.margin}></View>
+          <View style={styles.chart} height={this.state.thr}></View>
+          <View style={styles.margin}></View>
+          <View style={styles.chart} height={this.state.fri}></View>
+          <View style={styles.margin}></View>
+          <View style={styles.chart} height={this.state.sat}></View>
+          <View style={styles.margin}></View>
+        </View>
+
+        <View style={styles.textView}>
+          <View style={styles.margin2}></View>
+          <Text style={styles.text1}>일</Text>
+          <View style={styles.margin}></View>
+          <Text style={styles.text1}>월</Text>
+          <View style={styles.margin}></View>
+          <Text style={styles.text1}>화</Text>
+          <View style={styles.margin}></View>
+          <Text style={styles.text1}>수</Text>
+          <View style={styles.margin}></View>
+          <Text style={styles.text1}>목</Text>
+          <View style={styles.margin}></View>
+          <Text style={styles.text1}>금</Text>
+          <View style={styles.margin}></View>
+          <Text style={styles.text1}>토</Text>
+          <View style={styles.margin2}></View>
+        </View>
       </View>
-
-      <View style={styles.textView}>
-        <View style={styles.margin2}></View>
-        <Text style={styles.text1}>일</Text>
-        <View style={styles.margin}></View>
-        <Text style={styles.text1}>월</Text>
-        <View style={styles.margin}></View>
-        <Text style={styles.text1}>화</Text>
-        <View style={styles.margin}></View>
-        <Text style={styles.text1}>수</Text>
-        <View style={styles.margin}></View>
-        <Text style={styles.text1}>목</Text>
-        <View style={styles.margin}></View>
-        <Text style={styles.text1}>금</Text>
-        <View style={styles.margin}></View>
-        <Text style={styles.text1}>토</Text>
-        <View style={styles.margin2}></View>
-      </View>
-    </View>
-  );
-};
-
-export default task_graph;
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   text1: {

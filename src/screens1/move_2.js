@@ -4,17 +4,29 @@ import {
   View,
   Text,
   ScrollView,
-  Left,
+  TouchableOpacity,
   Body,
   TextInput,
 } from "react-native";
 import Task from "./task_move";
 
-import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 
-import Svg from "../icon/noimage.svg";
+let Svg1 = require("../image/2-1.png");
+let Svg2 = require("../image/2-2.png");
+let Svg3 = require("../image/2-3.png");
+let Svg4 = require("../image/2-4.png");
+let Svg5 = require("../image/2-5.png");
+let Svg6 = require("../image/2-6.png");
+let Svg7 = require("../image/2-7.png");
+let Svg8 = require("../image/2-8.png");
+let Svg9 = require("../image/2-9.png");
+let Svg10 = require("../image/2-10.png");
+let Svg11 = require("../image/2-11.png");
+let Svg12 = require("../image/2-12.png");
+let Svg13 = require("../image/2-13.png");
+let Svg14 = require("../image/2-14.png");
 
 function move_2({ navigation }) {
   return (
@@ -45,89 +57,167 @@ function move_2({ navigation }) {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("move_play", {
-                paramName1: 2,
-                paramName2: 1,
+                paramName1: "2-1",
+                paramName2: "근력 운동",
               });
             }}
           >
-            <Task image={Svg} text1="엉덩이 틀기" text2="1 / 5"></Task>
+            <Task image={Svg1} text1="엉덩이 들기" text2="1 / 5"></Task>
           </TouchableOpacity>
 
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("move_play", {
-                paramName1: 2,
-                paramName2: 1,
+                paramName1: "2-2",
+                paramName2: "근력 운동",
               });
             }}
           >
-            <Task image={Svg} text1="엎드려 누운 상태에서 다리 들기" text2="1 / 5"></Task>
+            <Task
+              image={Svg2}
+              text1="엎드려 누운 상태에서 다리 들기"
+              text2="1 / 5"
+            ></Task>
           </TouchableOpacity>
 
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("move_play", {
-                paramName1: 2,
-                paramName2: 1,
+                paramName1: "2-3",
+                paramName2: "근력 운동",
               });
             }}
           >
-            <Task image={Svg} text1="엉덩이 옆 근육 운동" text2="1 / 5"></Task>
+            <Task image={Svg3} text1="엉덩이 옆 근육 운동" text2="1 / 5"></Task>
           </TouchableOpacity>
 
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("move_play", {
-                paramName1: 2,
-                paramName2: 1,
+                paramName1: "2-4",
+                paramName2: "근력 운동",
               });
             }}
           >
-            <Task image={Svg} text1="무릎 벌리기" text2="1 / 5"></Task>
+            <Task image={Svg4} text1="무릎 벌리기" text2="1 / 5"></Task>
           </TouchableOpacity>
 
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("move_play", {
-                paramName1: 2,
-                paramName2: 1,
+                paramName1: "2-5",
+                paramName2: "근력 운동",
               });
             }}
           >
-            <Task image={Svg} text1="무릎 펴기" text2="1 / 5"></Task>
+            <Task image={Svg5} text1="무릎 펴기" text2="1 / 5"></Task>
           </TouchableOpacity>
 
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("move_play", {
-                paramName1: 2,
-                paramName2: 1,
+                paramName1: "2-6",
+                paramName2: "근력 운동",
               });
             }}
           >
-            <Task image={Svg} text1="런지" text2="1 / 5"></Task>
+            <Task image={Svg6} text1="런지" text2="1 / 5"></Task>
           </TouchableOpacity>
 
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("move_play", {
-                paramName1: 2,
-                paramName2: 1,
+                paramName1: "2-7",
+                paramName2: "근력 운동",
               });
             }}
           >
-            <Task image={Svg} text1="런지" text2="1 / 5"></Task>
+            <Task image={Svg7} text1="좌우 런지" text2="1 / 5"></Task>
           </TouchableOpacity>
 
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("move_play", {
-                paramName1: 2,
-                paramName2: 1,
+                paramName1: "2-8",
+                paramName2: "근력 운동",
               });
             }}
           >
-            <Task image={Svg} text1="런지" text2="1 / 5"></Task>
+            <Task image={Svg8} text1="발전된 런지" text2="1 / 5"></Task>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: "2-9",
+                paramName2: "근력 운동",
+              });
+            }}
+          >
+            <Task
+              image={Svg9}
+              text1="손목 및 팔꿈치 주변 근육"
+              text2="1 / 5"
+            ></Task>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: "2-10",
+                paramName2: "근력 운동",
+              });
+            }}
+          >
+            <Task image={Svg10} text1="날개 뼈 모음 근육" text2="1 / 5"></Task>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: "2-11",
+                paramName2: "근력 운동",
+              });
+            }}
+          >
+            <Task image={Svg11} text1="앉았다 일어서기" text2="1 / 5"></Task>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: "2-12",
+                paramName2: "근력 운동",
+              });
+            }}
+          >
+            <Task
+              image={Svg12}
+              text1="발전된 앉았다 일어서기"
+              text2="1 / 5"
+            ></Task>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: "2-13",
+                paramName2: "근력 운동",
+              });
+            }}
+          >
+            <Task image={Svg13} text1="어깨 운동 1단계" text2="1 / 5"></Task>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: "2-14",
+                paramName2: "근력 운동",
+              });
+            }}
+          >
+            <Task image={Svg14} text1="어깨 운동 2단계" text2="1 / 5"></Task>
           </TouchableOpacity>
         </ScrollView>
       </View>

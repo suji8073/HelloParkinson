@@ -22,13 +22,12 @@ export default class user_statistics extends Component {
       memo: "",
       team: "",
       name: "",
-      UID: 0,
+      UID: "",
       progress: 0,
     };
   }
 
   componentDidMount() {
-    console.log(this.props.route.params.paramName1);
     fetch(
       "http://152.70.233.113/chamuser/id/" + this.props.route.params.paramName1,
       {
@@ -38,7 +37,6 @@ export default class user_statistics extends Component {
     )
       .then((res) => res.json())
       .then((json) => {
-        console.log("여기 11111잘 들어가나 확인 ~~ 한다~~");
         this.setState({
           birth: json.info.birth,
           gender: json.info.gender,
@@ -52,6 +50,7 @@ export default class user_statistics extends Component {
   }
 
   render() {
+    console.log(this.state.UID);
     return (
       <View style={styles.finalView}>
         <View style={styles.menuView}>
@@ -106,14 +105,12 @@ export default class user_statistics extends Component {
               </View>
 
               <View style={styles.graphview}>
-                <Task1></Task1>
+                <Task1 text={this.props.route.params.paramName1}></Task1>
               </View>
             </View>
 
             <View style={styles.threeView}>
-              <Task></Task>
-              <Task></Task>
-              <Task></Task>
+              <Task text={this.state.UID}></Task>
             </View>
           </ScrollView>
         </View>

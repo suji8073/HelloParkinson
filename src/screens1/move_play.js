@@ -4,7 +4,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Left,
   Body,
   TextInput,
 } from "react-native";
@@ -13,37 +12,26 @@ import Task from "./task_move";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
-
-import Svg from "../icon/noimage.svg";
+import { WebView } from "react-native-webview";
 
 export default class move_play extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      user_name: "",
-      user_id: "",
-      user_age: "",
-      user_sex: 1,
-      user_group: "",
-      user_memo: "",
-      age1: on,
-      age2: off,
-
-      birth: 19431218,
-      gender: "",
-      memo: "",
-      team: "",
+      id: "",
       name: "",
-      UID: "",
-      progress: 0,
+      link: "",
     };
   }
 
   componentDidMount() {
-    console.log(this.props.route.params.paramName1);
+    this.userfunc();
+  }
+
+  userfunc = () => {
     fetch(
-      "http://152.70.233.113/chammotion",
+      "http://152.70.233.113/chammotion/id/" +
+        this.props.route.params.paramName1,
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -51,24 +39,14 @@ export default class move_play extends Component {
     )
       .then((res) => res.json())
       .then((json) => {
+        console.log("들어갔냐???????????????????");
         this.setState({
-          birth: json.info.birth,
-          gender: json.info.gender,
-          memo: json.info.memo,
-          team: json.info.team,
-          name: json.info.name,
-          UID: json.info.UID,
-          progress: json.info.progress,
+          name: json.name,
+          id: json.id,
+          link: json.link,
         });
       });
-    console.log(2020 - parseInt(this.state.birth / 10000));
-    if (this.state.gender === "M") {
-      this.setState({ age1: on, age2: off });
-    } else {
-    }
-    this.setState({ age1: off, age2: on });
-  }
-
+  };
 
   render() {
     return (
@@ -79,18 +57,30 @@ export default class move_play extends Component {
             size={24}
             color="#808080"
             onPress={() => {
-              navigation.pop();
+              this.props.navigation.pop();
             }}
           />
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>
-            나의 운동 목록{this.props.route.params.paramName1}
+            {this.props.route.params.paramName2}
           </Text>
           <View style={styles.margin}></View>
           <EvilIcons name="star" size={30} color="#ffffff" />
         </View>
 
-        <View style={styles.secondView}></View>
+        <View style={styles.secondView}>
+          <WebView
+            style={{ width: "100%", height: "100%" }}
+            mixedContentMode="always"
+            source={{
+              uri: this.state.link,
+            }}
+            useWebKit={true} // ios 필수
+            scrollEnabled={false}
+            domStorageEnabled={true}
+            javaScriptEnabled={true}
+          />
+        </View>
 
         <View style={styles.chatControl}>
           <TouchableOpacity
@@ -160,7 +150,6 @@ const styles = StyleSheet.create({
     marginTop: "5%",
     marginBottom: "5%",
     flex: 1,
-    borderWidth: 1,
   },
   white: {
     fontSize: 17,

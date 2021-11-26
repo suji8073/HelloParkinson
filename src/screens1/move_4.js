@@ -1,10 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   StyleSheet,
   View,
   Text,
   ScrollView,
-  Left,
+  TouchableOpacity,
   Body,
   TextInput,
 } from "react-native";
@@ -14,7 +14,20 @@ import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 
-import Svg from "../icon/noimage.svg";
+let Svg1 = require("../image/4-1.png");
+let Svg2 = require("../image/4-2.png");
+let Svg3 = require("../image/4-3.png");
+let Svg4 = require("../image/4-4.png");
+let Svg5 = require("../image/4-5.png");
+let Svg6 = require("../image/4-6.png");
+let Svg7 = require("../image/4-7.png");
+let Svg8 = require("../image/4-8.png");
+let Svg9 = require("../image/4-9.png");
+let Svg10 = require("../image/4-10.png");
+let Svg11 = require("../image/4-11.png");
+let Svg12 = require("../image/4-12.png");
+let Svg13 = require("../image/4-13.png");
+let Svg14 = require("../image/4-14.png");
 
 function move_4({ navigation }) {
   return (
@@ -42,19 +55,167 @@ function move_4({ navigation }) {
             justifyContent: "space-between",
           }}
         >
-          <Task image = {Svg} text1 = "아에이오우 소리내기" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "파!파!파!파!파! 소리내기" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "쪽 소리내기" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "혀로 볼 밀기" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "혀로 입천장 밀기" text2="1 / 5"></Task>
-          <Task image = {Svg} text1 = "똑/딱 소리내기" text2="1 / 5"></Task>
-         
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: "4-1",
+                paramName2: "구강 및 발성 운동",
+              });
+            }}
+          >
+            <Task image={Svg1} text1="아에이오우 소리내기" text2="1 / 5"></Task>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: "4-2",
+                paramName2: "구강 및 발성 운동",
+              });
+            }}
+          >
+            <Task image={Svg2} text1="파파파파파 소리내기" text2="1 / 5"></Task>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: "4-3",
+                paramName2: "구강 및 발성 운동",
+              });
+            }}
+          >
+            <Task image={Svg3} text1="쪽 소리내기" text2="1 / 5"></Task>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: "4-4",
+                paramName2: "구강 및 발성 운동",
+              });
+            }}
+          >
+            <Task image={Svg4} text1="혀로 볼 밀기" text2="1 / 5"></Task>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: "4-5",
+                paramName2: "구강 및 발성 운동",
+              });
+            }}
+          >
+            <Task image={Svg5} text1="혀로 입천장 밀기" text2="1 / 5"></Task>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: "4-6",
+                paramName2: "구강 및 발성 운동",
+              });
+            }}
+          >
+            <Task image={Svg6} text1="똑딱 소리내기" text2="1 / 5"></Task>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: "4-7",
+                paramName2: "구강 및 발성 운동",
+              });
+            }}
+          >
+            <Task image={Svg7} text1="혀 물고 침 삼키기" text2="1 / 5"></Task>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: "4-8",
+                paramName2: "구강 및 발성 운동",
+              });
+            }}
+          >
+            <Task image={Svg8} text1="아 짧게 소리내기" text2="1 / 5"></Task>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: "4-9",
+                paramName2: "구강 및 발성 운동",
+              });
+            }}
+          >
+            <Task image={Svg9} text1="아 길게 소리내기" text2="1 / 5"></Task>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: "4-10",
+                paramName2: "구강 및 발성 운동",
+              });
+            }}
+          >
+            <Task
+              image={Svg10}
+              text1="고음 가성으로 소리내기"
+              text2="1 / 5"
+            ></Task>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: "4-11",
+                paramName2: "구강 및 발성 운동",
+              });
+            }}
+          >
+            <Task image={Svg11} text1="도레미파솔라시도" text2="1 / 5"></Task>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: "4-12",
+                paramName2: "구강 및 발성 운동",
+              });
+            }}
+          >
+            <Task
+              image={Svg12}
+              text1="큰 소리로 음절 읽기"
+              text2="1 / 5"
+            ></Task>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: "4-13",
+                paramName2: "구강 및 발성 운동",
+              });
+            }}
+          >
+            <Task image={Svg13} text1="큰 소리로 글 읽기" text2="1 / 5"></Task>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("move_play", {
+                paramName1: "4-14",
+                paramName2: "구강 및 발성 운동",
+              });
+            }}
+          >
+            <Task image={Svg14} text1="애국가 부르기" text2="1 / 5"></Task>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     </View>
   );
 }
-
 export default move_4;
 
 const styles = StyleSheet.create({
@@ -98,7 +259,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
-    marginBottom:"30%",
+    marginBottom: "30%",
   },
 
   margin: {
