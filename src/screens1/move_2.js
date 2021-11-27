@@ -56,7 +56,7 @@ function move_2({ navigation }) {
         >
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "2-1",
                 paramName2: "근력 운동",
               });
@@ -67,7 +67,7 @@ function move_2({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "2-2",
                 paramName2: "근력 운동",
               });
@@ -82,7 +82,7 @@ function move_2({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "2-3",
                 paramName2: "근력 운동",
               });
@@ -93,7 +93,7 @@ function move_2({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "2-4",
                 paramName2: "근력 운동",
               });
@@ -104,7 +104,7 @@ function move_2({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "2-5",
                 paramName2: "근력 운동",
               });
@@ -115,7 +115,7 @@ function move_2({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "2-6",
                 paramName2: "근력 운동",
               });
@@ -126,7 +126,7 @@ function move_2({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "2-7",
                 paramName2: "근력 운동",
               });
@@ -137,7 +137,7 @@ function move_2({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "2-8",
                 paramName2: "근력 운동",
               });
@@ -148,7 +148,7 @@ function move_2({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "2-9",
                 paramName2: "근력 운동",
               });
@@ -163,7 +163,7 @@ function move_2({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "2-10",
                 paramName2: "근력 운동",
               });
@@ -174,7 +174,7 @@ function move_2({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "2-11",
                 paramName2: "근력 운동",
               });
@@ -185,7 +185,7 @@ function move_2({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "2-12",
                 paramName2: "근력 운동",
               });
@@ -200,7 +200,7 @@ function move_2({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "2-13",
                 paramName2: "근력 운동",
               });
@@ -211,7 +211,7 @@ function move_2({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "2-14",
                 paramName2: "근력 운동",
               });

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   TouchableOpacity,
   StatusBar,
@@ -6,51 +6,73 @@ import {
   View,
   Text,
   ScrollView,
+  Alert,
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import Task from "./task_record_day";
 import Task1 from "./task_graph";
 
-function patient_record({ navigation }) {
-  return (
-    <View style={styles.finalView}>
-      <View style={styles.menuView}>
-        <View style={styles.margin}></View>
-        <Text style={styles.titleText}>나의 운동 기록</Text>
-        <View style={styles.margin}></View>
-      </View>
+export default class patient_record extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      User_id: "sitl7890",
+      id: 0,
+      progress: 0,
+    };
+  }
 
-      <View style={styles.mainView}>
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}
-        >
-          <View style={styles.secondView}>
-            <View style={styles.textview}>
-              <Text style={styles.text1}>2021년 1월 31일 ~ 2월 6일</Text>
-              <Text style={styles.text2}>주 평균 66.4%</Text>
+  componentDidMount() {
+    fetch("http://152.70.233.113/chamuser/uid/" + this.state.User_id, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({
+          id: json.info.id,
+          progress: json.info.progress,
+        });
+      });
+  }
+  render() {
+    return (
+      <View style={styles.finalView}>
+        <View style={styles.menuView}>
+          <View style={styles.margin}></View>
+          <Text style={styles.titleText}>나의 운동 기록{this.state.id}</Text>
+          <View style={styles.margin}></View>
+        </View>
+
+        <View style={styles.mainView}>
+          <ScrollView
+            contentContainerStyle={{
+              flexGrow: 1,
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <View style={styles.secondView}>
+              <View style={styles.textview}>
+                <Text style={styles.text1}>2021년 1월 31일 ~ 2월 6일</Text>
+                <Text style={styles.text2}>주 평균 {this.state.id}%</Text>
+              </View>
+
+              <View style={styles.graphview}>
+                <Task1 text={5}></Task1>
+              </View>
             </View>
 
-            <View style={styles.graphview}>
-              <Task1></Task1>
-            </View>
-          </View>
+            <View style={styles.threeView}>
 
-          <View style={styles.threeView}>
-            <Task></Task>
-            <Task></Task>
-            <Task></Task>
-          </View>
-        </ScrollView>
+              <Task text={5}></Task>
+            </View>
+          </ScrollView>
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
 }
-
-export default patient_record;
 const styles = StyleSheet.create({
   finalView: {
     flex: 1,
@@ -139,7 +161,7 @@ const styles = StyleSheet.create({
   },
   textview: {
     flex: 1,
-    marginTop:"5%",
+    marginTop: "5%",
     marginBottom: "3%",
     justifyContent: "center",
   },

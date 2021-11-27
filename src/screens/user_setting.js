@@ -52,6 +52,7 @@ export default class user_setting extends Component {
           name: json.info.name,
           id: json.info.id,
         });
+        console.log(this.state.birth);
       });
   }
   render() {

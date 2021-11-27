@@ -19,16 +19,12 @@ const items = [
 ];
 // sorting필요함 !!
 const today = new Date();
+
 export default class list extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data: [],
-      birth: 19431218,
-      gender: "",
-      memo: "",
-      team: "",
-      name: "",
     };
   }
 
@@ -37,7 +33,7 @@ export default class list extends Component {
   }
 
   userfunc = () => {
-    fetch("http://152.70.233.113/chamuser", {
+    fetch("http://152.70.233.113/chamuser?sort=name", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -107,9 +103,7 @@ export default class list extends Component {
 
         <View style={styles.threeView}>
           <FlatList
-
             keyExtractor={(item, index) => index}
-
             data={this.state.data}
             renderItem={({ item }) => {
               return (

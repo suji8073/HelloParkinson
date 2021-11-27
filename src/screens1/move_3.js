@@ -20,7 +20,6 @@ let Svg3 = require("../image/3-3.png");
 let Svg4 = require("../image/3-4.png");
 let Svg5 = require("../image/3-5.png");
 
-
 function move_3({ navigation }) {
   return (
     <View style={styles.finalView}>
@@ -49,7 +48,7 @@ function move_3({ navigation }) {
         >
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "3-1",
                 paramName2: "균형 협응 운동",
               });
@@ -59,9 +58,8 @@ function move_3({ navigation }) {
           </TouchableOpacity>
 
           <TouchableOpacity
-
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "3-2",
                 paramName2: "균형 협응 운동",
               });
@@ -71,7 +69,7 @@ function move_3({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "3-3",
                 paramName2: "균형 협응 운동",
               });
@@ -82,7 +80,7 @@ function move_3({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "3-4",
                 paramName2: "균형 협응 운동",
               });
@@ -96,7 +94,7 @@ function move_3({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "3-5",
                 paramName2: "균형 협응 운동",
               });

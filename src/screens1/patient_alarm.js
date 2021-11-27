@@ -102,17 +102,6 @@ export default class patient_alarm extends Component {
               ></Task>
             </TouchableOpacity>
           </ScrollView>
-          {/* <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.navigate("alarm_edit");
-            }}
-          > */}
-          {/* <WithLocalSvg
-              width={90}
-              height={90}
-              asset={plussvg}
-              style={styles.plusbtn}
-            /> */}
 
           <ActionButton
             buttonColor="#577F67"

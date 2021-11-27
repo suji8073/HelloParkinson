@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Body,
   TextInput,
+  Alert,
 } from "react-native";
 import Task from "./task_move";
 
@@ -21,12 +22,29 @@ export default class move_play extends Component {
       id: "",
       name: "",
       link: "",
+      isLoading: true,
+      cat1: "",
+      cat2: "",
+      nowpage: "",
     };
   }
 
   componentDidMount() {
     this.userfunc();
+    this.setState({
+      cat1: String(this.props.route.params.paramName1).substring(0, 1),
+      cat2: String(this.props.route.params.paramName1).substring(2, 4),
+    });
+
+    this.Time();
   }
+
+  Time = () => {
+    // 1,000가 1초
+    setTimeout(() => {
+      this.setState({ isLoading: false });
+    }, 10000);
+  };
 
   userfunc = () => {
     fetch(
@@ -39,13 +57,89 @@ export default class move_play extends Component {
     )
       .then((res) => res.json())
       .then((json) => {
-        console.log("들어갔냐???????????????????");
         this.setState({
           name: json.name,
           id: json.id,
           link: json.link,
         });
       });
+  };
+  nextpage = () => {
+    if (this.state.isLoading === false) {
+      if (this.state.cat1 == 1) {
+        if (this.state.cat2 == 12) {
+          this.props.navigation.navigate("TabNavigation1");
+        } else {
+          this.props.navigation.reset({
+            routes: [
+              {
+                name: "move_play",
+                params: {
+                  paramName1: String(
+                    this.state.cat1 + "-" + (parseInt(this.state.cat2) + 1)
+                  ),
+                  paramName2: "신장운동",
+                },
+              },
+            ],
+          });
+        }
+      } else if (this.state.cat1 == 2) {
+        if (this.state.cat2 == 14) {
+          this.props.navigation.navigate("TabNavigation1");
+        } else {
+          this.props.navigation.reset({
+            routes: [
+              {
+                name: "move_play",
+                params: {
+                  paramName1: String(
+                    this.state.cat1 + "-" + (parseInt(this.state.cat2) + 1)
+                  ),
+                  paramName2: "근력운동",
+                },
+              },
+            ],
+          });
+        }
+      } else if (this.state.cat1 == 3) {
+        if (this.state.cat2 == 5) {
+          this.props.navigation.navigate("TabNavigation1");
+        } else {
+          this.props.navigation.reset({
+            routes: [
+              {
+                name: "move_play",
+                params: {
+                  paramName1: String(
+                    this.state.cat1 + "-" + (parseInt(this.state.cat2) + 1)
+                  ),
+                  paramName2: "균형 및 협응 운동",
+                },
+              },
+            ],
+          });
+        }
+      } else if (this.state.cat1 == 4) {
+        if (this.state.cat2 == 14) {
+          this.props.navigation.navigate("TabNavigation1");
+        } else {
+          this.props.navigation.reset({
+            routes: [
+              {
+                name: "move_play",
+                params: {
+                  paramName1: String(
+                    this.state.cat1 + "-" + (parseInt(this.state.cat2) + 1)
+                  ),
+                  paramName2: "구강 및 발성 운동",
+                },
+              },
+            ],
+          });
+        }
+      }
+    }
   };
 
   render() {
@@ -57,7 +151,7 @@ export default class move_play extends Component {
             size={24}
             color="#808080"
             onPress={() => {
-              this.props.navigation.pop();
+              this.props.navigation.navigate("TabNavigation1");
             }}
           />
           <View style={styles.margin}></View>
@@ -77,25 +171,40 @@ export default class move_play extends Component {
             }}
             useWebKit={true} // ios 필수
             scrollEnabled={false}
-            domStorageEnabled={true}
+            //domStorageEnabled={true}
             javaScriptEnabled={true}
           />
         </View>
 
         <View style={styles.chatControl}>
           <TouchableOpacity
-            style={styles.sendButton}
+            style={
+              this.state.isLoading === false
+                ? styles.sendButton
+                : styles.sendButton1
+            }
             activeOpacity={0.8}
-            onPress={() => {
-              navigation.navigate("signup4");
-            }}
+            onPress={this.nextpage}
           >
             <View style={styles.mg}></View>
-            <AntDesign name="right" size={24} color="#7AC819" />
             <View style={styles.margin}></View>
-            <Text style={styles.white}> 다 음 </Text>
             <View style={styles.margin}></View>
-            <AntDesign name="right" size={15} color="#FFFFFF" />
+            <Text
+              style={
+                this.state.isLoading === false ? styles.white : styles.white1
+              }
+            >
+              {" "}
+              다 음{" "}
+            </Text>
+            <View style={styles.margin}></View>
+            <View style={styles.margin}>
+              <AntDesign
+                name="right"
+                size={15}
+                color={this.state.isLoading === false ? "#FFFFFF" : "#AFAFAF"}
+              />
+            </View>
             <View style={styles.mg}></View>
           </TouchableOpacity>
         </View>
@@ -158,9 +267,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  white1: {
+    fontSize: 17,
+    fontWeight: "bold",
+    color: "#AFAFAF",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 
   sendButton: {
     backgroundColor: "#7AC819",
+    width: "90%",
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+  },
+  sendButton1: {
+    backgroundColor: "#F5F5F5",
     width: "90%",
     height: 50,
     alignItems: "center",
@@ -177,7 +301,8 @@ const styles = StyleSheet.create({
 
   margin: {
     // padding:30,
-    alignItems: "flex-start",
+    alignItems: "flex-end",
+    paddingRight: 20,
     justifyContent: "center",
     flex: 1,
   },

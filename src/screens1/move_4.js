@@ -57,7 +57,7 @@ function move_4({ navigation }) {
         >
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "4-1",
                 paramName2: "구강 및 발성 운동",
               });
@@ -67,7 +67,7 @@ function move_4({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "4-2",
                 paramName2: "구강 및 발성 운동",
               });
@@ -77,7 +77,7 @@ function move_4({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "4-3",
                 paramName2: "구강 및 발성 운동",
               });
@@ -87,7 +87,7 @@ function move_4({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "4-4",
                 paramName2: "구강 및 발성 운동",
               });
@@ -97,7 +97,7 @@ function move_4({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "4-5",
                 paramName2: "구강 및 발성 운동",
               });
@@ -107,7 +107,7 @@ function move_4({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "4-6",
                 paramName2: "구강 및 발성 운동",
               });
@@ -118,7 +118,7 @@ function move_4({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "4-7",
                 paramName2: "구강 및 발성 운동",
               });
@@ -129,7 +129,7 @@ function move_4({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "4-8",
                 paramName2: "구강 및 발성 운동",
               });
@@ -140,7 +140,7 @@ function move_4({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "4-9",
                 paramName2: "구강 및 발성 운동",
               });
@@ -151,7 +151,7 @@ function move_4({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "4-10",
                 paramName2: "구강 및 발성 운동",
               });
@@ -166,7 +166,7 @@ function move_4({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "4-11",
                 paramName2: "구강 및 발성 운동",
               });
@@ -177,7 +177,7 @@ function move_4({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "4-12",
                 paramName2: "구강 및 발성 운동",
               });
@@ -192,7 +192,7 @@ function move_4({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "4-13",
                 paramName2: "구강 및 발성 운동",
               });
@@ -203,7 +203,7 @@ function move_4({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("move_play", {
+              navigation.push("move_play", {
                 paramName1: "4-14",
                 paramName2: "구강 및 발성 운동",
               });
