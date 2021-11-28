@@ -26,7 +26,42 @@ export default class patient_profile_edit extends Component {
       onname2: nocheck,
       user_pw: "",
       user_pww: "",
+      birth: 20001010,
+      gender: "",
+      memo: "",
+      team: "",
+      name: "",
+      UID: "",
+      progress: "",
     };
+  }
+
+  componentDidMount() {
+    fetch(
+      "http://152.70.233.113/chamuser/uid/" +
+        this.props.route.params.paramName1,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({
+          birth: json.info.birth,
+          gender: json.info.gender,
+          memo: json.info.memo,
+          team: json.info.team,
+          name: json.info.name,
+          UID: json.info.UID,
+          progress: json.info.progress,
+        });
+      });
+    if (this.state.gender === "M") {
+      this.setState({ onname1: check, onname2: nocheck });
+    } else {
+      this.setState({ onname1: nocheck, onname2: check });
+    }
   }
   edit_finish = () => {
     if (this.state.user_pw !== this.state.user_pww) {
@@ -87,7 +122,7 @@ export default class patient_profile_edit extends Component {
             <Text style={styles.text1}>이름</Text>
           </View>
           <View style={styles.textView}>
-            <Text style={styles.text2}>김옥분</Text>
+            <Text style={styles.text2}>{this.state.name}</Text>
           </View>
         </View>
 
@@ -96,7 +131,7 @@ export default class patient_profile_edit extends Component {
             <Text style={styles.text1}>아이디</Text>
           </View>
           <View style={styles.textView}>
-            <Text style={styles.text2}>seoul1243</Text>
+            <Text style={styles.text2}>{this.state.UID}</Text>
           </View>
         </View>
 
@@ -134,7 +169,11 @@ export default class patient_profile_edit extends Component {
             <Text style={styles.text1}>생년월일</Text>
           </View>
           <View style={styles.textView}>
-            <Text style={styles.text2}>1945-03-21</Text>
+            <Text style={styles.text2}>
+              {parseInt(this.state.birth / 10000)}-
+              {String(this.state.birth).substring(4, 6)}-
+              {String(this.state.birth).substring(6, 8)}
+            </Text>
           </View>
         </View>
 

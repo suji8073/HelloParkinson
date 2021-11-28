@@ -25,6 +25,7 @@ export default class list extends Component {
     super(props);
     this.state = {
       data: [],
+
       birth: 19431218,
       gender: "",
       memo: "",
@@ -32,6 +33,7 @@ export default class list extends Component {
       name: "",
       id: "",
       // bookmark: "",
+
     };
   }
 

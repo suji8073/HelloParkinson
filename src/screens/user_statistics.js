@@ -7,11 +7,6 @@ import Task from "../screens1/task_record_day";
 import Task1 from "../screens1/task_graph";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 
-// const items = [
-//   { id: "1", label: "주" },
-//   { id: "2", label: "월" },
-//   { id: "3", label: "년" },
-// ];
 const year = 2021 + 1;
 export default class user_statistics extends Component {
   constructor(props) {
@@ -68,14 +63,6 @@ export default class user_statistics extends Component {
           </Text>
           <View style={styles.margin}></View>
 
-          {/* <SimplePopupMenu
-            items={items}
-            cancelLabel={"취소"}
-            //onSelect={() => alert(this.label)}
-            onCancel={() => console.log("onCancel")}
-          >
-            <Entypo name="dots-three-vertical" size={24} color="#595959" />
-          </SimplePopupMenu> */}
         </View>
 
         <View style={styles.mainView}>
@@ -98,7 +85,7 @@ export default class user_statistics extends Component {
 
             <View style={styles.secondView}>
               <View style={styles.textview}>
-                <Text style={styles.text1}>주 평균</Text>
+                <Text style={styles.text1}>주 평균{this.props.route.params.paramName1}</Text>
                 <Text style={styles.text2}>{this.state.progress}%</Text>
                 <View style={styles.margin}></View>
                 <Text style={styles.text3}>2021년 1월 31일 ~ 2월 6일</Text>
@@ -110,7 +97,7 @@ export default class user_statistics extends Component {
             </View>
 
             <View style={styles.threeView}>
-              <Task text={this.state.UID}></Task>
+              {/*<Task text={this.state.UID}></Task>*/}
             </View>
           </ScrollView>
         </View>

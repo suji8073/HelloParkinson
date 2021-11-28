@@ -11,15 +11,9 @@ import { WithLocalSvg } from "react-native-svg";
 import { Ionicons } from "@expo/vector-icons";
 const year = 2021 + 1;
 
-const task_home = ({ record, name, age, sex }) => {
+const task_home = ({ record, name, age, sex, check }) => {
   return (
-    <View
-      style={{
-        paddingHorizontal: "8%",
-        alignItems: "center",
-        flexDirection: "row",
-      }}
-    >
+    <View style={check === name ? styles.view1 : styles.view2}>
       <View style={styles.numtext}>
         <Text style={{ fontSize: 23, color: "#5CB405", fontWeight: "bold" }}>
           {record}
@@ -48,5 +42,17 @@ const styles = StyleSheet.create({
     flex: 9.7,
     flexDirection: "row",
     alignItems: "center",
+  },
+  view1: {
+    paddingHorizontal: "8%",
+    alignItems: "center",
+    flexDirection: "row",
+    borderWidth: 3,
+    borderColor: "#5CB405",
+  },
+  view2: {
+    paddingHorizontal: "8%",
+    alignItems: "center",
+    flexDirection: "row",
   },
 });

@@ -61,6 +61,25 @@ export default class task_patient extends Component {
             <Text style={styles.num2}>50</Text>
           </View>
 
+          <LineChart
+            style={styles.chart}
+            data={this.state.data}
+            width={330}
+            height={100}
+            chartConfig={{
+              backgroundColor: "#FFFFFF",
+              backgroundGradientFrom: "#FFFFFF",
+              backgroundGradientTo: "#FFFFFF",
+              decimalPlaces: 0,
+
+              color: (opacity = 1) => `rgba(198, 198, 198, ${opacity})`,
+              labelColor: (opacity = 1) => `rgba(72, 72, 72, ${opacity})`,
+              propsForDots: {
+                r: "4",
+              },
+            }}
+          />
+
           <View style={styles.textView}>
             <View style={styles.text3}></View>
             <Text style={styles.text2}>신장</Text>

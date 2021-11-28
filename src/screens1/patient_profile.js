@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   StyleSheet,
   View,
@@ -14,95 +14,136 @@ import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 
-function patient_profile({ navigation }) {
-  return (
-    <View style={styles.finalView}>
-      <View style={styles.menuView}>
-        <AntDesign
-          name="left"
-          size={24}
-          color="#808080"
-          onPress={() => {
-            navigation.navigate("TabNavigation1");
-          }}
-        />
-        <View style={styles.margin}></View>
-        <Text style={styles.titleText}>프로필</Text>
-        <View style={styles.margin}></View>
-        <EvilIcons name="star" size={30} color="#ffffff" />
-      </View>
+export default class patient_profile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      birth: 20001010,
+      gender: "",
+      memo: "",
+      team: "",
+      name: "",
+      UID: "",
+      progress: "",
+    };
+  }
 
-      <View style={styles.firstView}>
-        <Ionicons
-          name="person-circle-sharp"
-          size={120}
-          color="lightblue"
-          alignItems="center"
-        />
-        <Text style={styles.user_name}>프로필 사진 변경</Text>
-      </View>
+  componentDidMount() {
+    fetch(
+      "http://152.70.233.113/chamuser/uid/" +
+        this.props.route.params.paramName1,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({
+          birth: json.info.birth,
+          gender: json.info.gender,
+          memo: json.info.memo,
+          team: json.info.team,
+          name: json.info.name,
+          UID: json.info.UID,
+          progress: json.info.progress,
+        });
+      });
+  }
+  render() {
+    return (
+      <View style={styles.finalView}>
+        <View style={styles.menuView}>
+          <AntDesign
+            name="left"
+            size={24}
+            color="#808080"
+            onPress={() => {
+              this.props.navigation.navigate("TabNavigation1");
+            }}
+          />
+          <View style={styles.margin}></View>
+          <Text style={styles.titleText}>프로필</Text>
+          <View style={styles.margin}></View>
+          <EvilIcons name="star" size={30} color="#ffffff" />
+        </View>
 
-      <View style={styles.secondView}>
-        <View style={styles.memoView}>
-          <Text style={styles.text1}>이름</Text>
+        <View style={styles.firstView}>
+          <Ionicons
+            name="person-circle-sharp"
+            size={120}
+            color="lightblue"
+            alignItems="center"
+          />
+          <Text style={styles.user_name}>프로필 사진 변경</Text>
         </View>
-        <View style={styles.textView}>
-          <Text style={styles.text2}>김옥분</Text>
-        </View>
-      </View>
 
-      <View style={styles.secondView}>
-        <View style={styles.memoView}>
-          <Text style={styles.text1}>아이디</Text>
+        <View style={styles.secondView}>
+          <View style={styles.memoView}>
+            <Text style={styles.text1}>이름</Text>
+          </View>
+          <View style={styles.textView}>
+            <Text style={styles.text2}>{this.state.name}</Text>
+          </View>
         </View>
-        <View style={styles.textView}>
-          <Text style={styles.text2}>seoul1243</Text>
-        </View>
-      </View>
 
-      <View style={styles.secondView}>
-        <View style={styles.memoView}>
-          <Text style={styles.text1}>비밀번호</Text>
+        <View style={styles.secondView}>
+          <View style={styles.memoView}>
+            <Text style={styles.text1}>아이디</Text>
+          </View>
+          <View style={styles.textView}>
+            <Text style={styles.text2}>{this.state.UID}</Text>
+          </View>
         </View>
-        <View style={styles.textView}>
-          <Text style={styles.text2}>***********</Text>
-        </View>
-      </View>
 
-      <View style={styles.secondView}>
-        <View style={styles.memoView}>
-          <Text style={styles.text1}>생년월일</Text>
+        <View style={styles.secondView}>
+          <View style={styles.memoView}>
+            <Text style={styles.text1}>비밀번호</Text>
+          </View>
+          <View style={styles.textView}>
+            <Text style={styles.text2}>***********</Text>
+          </View>
         </View>
-        <View style={styles.textView}>
-          <Text style={styles.text2}>1945-03-21</Text>
-        </View>
-      </View>
 
-      <View style={styles.secondView}>
-        <View style={styles.memoView}>
-          <Text style={styles.text1}>성별</Text>
+        <View style={styles.secondView}>
+          <View style={styles.memoView}>
+            <Text style={styles.text1}>생년월일</Text>
+          </View>
+          <View style={styles.textView}>
+            <Text style={styles.text2}>
+              {parseInt(this.state.birth / 10000)}-
+              {String(this.state.birth).substring(4, 6)}-
+              {String(this.state.birth).substring(6, 8)}
+            </Text>
+          </View>
         </View>
-        <View style={styles.textView}>
-          <Text style={styles.text2}>여</Text>
-        </View>
-      </View>
 
-      <View style={styles.threeView}>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            navigation.navigate("patient_profile_edit");
-          }}
-        >
-          <Text style={styles.user_name}>비밀번호 변경하기</Text>
-        </TouchableOpacity>
+        <View style={styles.secondView}>
+          <View style={styles.memoView}>
+            <Text style={styles.text1}>성별</Text>
+          </View>
+          <View style={styles.textView}>
+            <Text style={styles.text2}>{this.state.gender}</Text>
+          </View>
+        </View>
+
+        <View style={styles.threeView}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => {
+              this.props.navigation.navigate("patient_profile_edit", {
+                paramName1: this.state.UID,
+              });
+            }}
+          >
+            <Text style={styles.user_name}>비밀번호 변경하기</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.marginView}></View>
       </View>
-      <View style={styles.marginView}></View>
-    </View>
-  );
+    );
+  }
 }
-
-export default patient_profile;
 
 const styles = StyleSheet.create({
   finalView: {
