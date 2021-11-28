@@ -11,7 +11,6 @@ import React, { Component } from "react";
 import "react-native-gesture-handler";
 
 import { WithLocalSvg } from "react-native-svg";
-
 import logosvg from "../icon/logo.svg";
 
 export default class login extends Component {
@@ -41,17 +40,20 @@ export default class login extends Component {
           .catch((error) => {
             // TODO FIXME replace the red screen with something informative.
             console.error(error);
+            Alert.alert(
+              // 모든 정보가 다 기입되지 않았을 때
+              "아이디 또는 비밀번호가 일치하지 않습니다."
+            );
           })
           .then((json) => {
             console.log("로그인 통신 확인");
             if (json.admin == 0) {
               // 환자
               this.props.navigation.navigate("TabNavigation1", {
-                paramName: this.state.id,
+                paramName1: this.state.id,
               });
             } else if (json.admin == 1) {
               // 관리자
-
               this.props.navigation.navigate("TabNavigation");
             } else {
               Alert.alert(

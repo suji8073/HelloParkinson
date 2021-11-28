@@ -141,6 +141,17 @@ export default class move_play extends Component {
       }
     }
   };
+  where_page = () => {
+    if (this.state.cat1 == 1) {
+      this.props.navigation.navigate("move_1");
+    } else if (this.state.cat1 == 2) {
+      this.props.navigation.navigate("move_2");
+    } else if (this.state.cat1 == 3) {
+      this.props.navigation.navigate("move_3");
+    } else if (this.state.cat1 == 4) {
+      this.props.navigation.navigate("move_4");
+    }
+  };
 
   render() {
     return (
@@ -150,9 +161,7 @@ export default class move_play extends Component {
             name="left"
             size={24}
             color="#808080"
-            onPress={() => {
-              this.props.navigation.navigate("TabNavigation1");
-            }}
+            onPress={this.where_page}
           />
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>

@@ -3,40 +3,6 @@ import { StyleSheet, View, Text } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 
 export default class task_patient extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      CAT1: 0,
-      CAT2: 0,
-      CAT3: 0,
-      CAT4: 0,
-      CAT5: 0,
-      R_date: "",
-      data: [],
-    };
-  }
-
-  componentDidMount() {
-    console.log(this.props.text);
-    fetch("http://152.70.233.113/chamuser/day/suji", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        this.setState({
-          CAT1: json.CAT1,
-          CAT2: json.CAT2,
-          CAT3: json.CAT3,
-          CAT4: json.CAT4,
-          CAT5: json.CAT5,
-          data: json,
-          R_date: json.R_date,
-        });
-        console.log(this.state.data);
-      });
-  }
-
   render() {
     return (
       //  전체 뷰
@@ -47,31 +13,58 @@ export default class task_patient extends Component {
           height: 200,
           width: 300,
           justifyContent: "center",
+          marginTop: 5,
         }}
       >
-        <Text style={styles.text1}>{this.state.R_date}</Text>
+        <Text style={styles.text1}>
+          {String(this.props.R_date).substring(0, 2)}월&nbsp;
+          {String(this.props.R_date).substring(2, 4)}일
+        </Text>
 
         <View style={styles.graphView}>
           <View style={styles.numView}>
             <View style={styles.num3}></View>
-            <Text style={styles.num2}>75</Text>
-            <Text style={styles.num2}>25</Text>
-            <Text style={styles.num2}>40</Text>
-            <Text style={styles.num2}>90</Text>
-            <Text style={styles.num2}>50</Text>
+            <Text style={styles.num2}>{this.props.CAT1}</Text>
+            <View style={styles.num1}></View>
+            <Text style={styles.num2}>{this.props.CAT2}</Text>
+            <View style={styles.num1}></View>
+            <Text style={styles.num2}>{this.props.CAT3}</Text>
+            <View style={styles.num1}></View>
+            <Text style={styles.num2}>{this.props.CAT4}</Text>
+            <View style={styles.num1}></View>
+            <Text style={styles.num2}>{this.props.CAT5}</Text>
+            <View style={styles.num4}></View>
           </View>
 
           <LineChart
             style={styles.chart}
-            data={this.state.data}
-            width={330}
+            data={{
+              datasets: [
+                {
+                  data: [
+                    this.props.CAT1,
+                    this.props.CAT2,
+                    this.props.CAT3,
+                    this.props.CAT4,
+                    this.props.CAT5,
+                  ],
+                  color: (opacity = 0) => `rgba(101, 203, 0, ${opacity})`, // optional
+                  strokeWidth: 1.5,
+                  plugins: {
+                    legend: {
+                      display: false,
+                    },
+                  },
+                },
+              ],
+            }}
+            width={300}
             height={100}
             chartConfig={{
               backgroundColor: "#FFFFFF",
               backgroundGradientFrom: "#FFFFFF",
               backgroundGradientTo: "#FFFFFF",
               decimalPlaces: 0,
-
               color: (opacity = 1) => `rgba(198, 198, 198, ${opacity})`,
               labelColor: (opacity = 1) => `rgba(72, 72, 72, ${opacity})`,
               propsForDots: {
@@ -81,13 +74,17 @@ export default class task_patient extends Component {
           />
 
           <View style={styles.textView}>
-            <View style={styles.text3}></View>
-            <Text style={styles.text2}>신장</Text>
-            <Text style={styles.text2}>근육</Text>
-            <Text style={styles.text2}>구강{"\n"}발성</Text>
-            <Text style={styles.text2}>균형{"\n"}협응</Text>
-            <Text style={styles.text2}>유산소</Text>
             <View style={styles.text4}></View>
+            <Text style={styles.text2}>신장</Text>
+            <View style={styles.text3}></View>
+            <Text style={styles.text2}>근육</Text>
+            <View style={styles.text3}></View>
+            <Text style={styles.text2}>구강{"\n"}발성</Text>
+            <View style={styles.text3}></View>
+            <Text style={styles.text2}>균형{"\n"}협응</Text>
+            <View style={styles.text3}></View>
+            <Text style={styles.text2}>유산소</Text>
+            <View style={styles.text5}></View>
           </View>
         </View>
       </View>
@@ -106,50 +103,65 @@ const styles = StyleSheet.create({
   text2: {
     fontSize: 17,
     color: "#484848",
-    justifyContent: "center",
     alignItems: "center",
-    flex: 1.5,
+    justifyContent: "center",
     lineHeight: 20,
   },
   text3: {
-    flex: 1.3,
+    width: 30,
+    justifyContent: "center",
+    alignItems: "center",
   },
   text4: {
-    flex: 0.3,
+    width: 30,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text5: {
+    width: 6,
+    justifyContent: "center",
+    alignItems: "center",
   },
   graphView: {
     flex: 3,
     marginBottom: "5%",
     width: "100%",
+    height: "100%",
     alignItems: "center",
     justifyContent: "center",
   },
   chart: {
     alignItems: "center",
     justifyContent: "center",
+    paddingRight: 10,
+    marginLeft: 50,
+    paddingLeft: 20,
   },
   textView: {
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "center",
-    width: "100%",
     marginBottom: "5%",
   },
   numView: {
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "center",
-    width: "100%",
     marginTop: "8%",
+  },
+  num1: {
+    width: 40,
   },
   num2: {
     fontSize: 14,
     color: "#484848",
     justifyContent: "center",
     alignItems: "center",
-    flex: 1.8,
   },
   num3: {
-    flex: 1.4,
+    width: 30,
+  },
+  num4: {
+    width: 15,
   },
 });

@@ -15,6 +15,7 @@ export default class task_graph extends Component {
     };
   }
 
+
   componentDidMount() {
     console.log(this.props.text);
     fetch("http://152.70.233.113/chamuser/id/" + this.props.text, {
@@ -50,36 +51,36 @@ export default class task_graph extends Component {
         <View style={styles.graphView}>
           <View style={styles.margin1}></View>
           <View style={styles.chart} height={this.state.sun}></View>
-          <View style={styles.margin}></View>
+          <View style={styles.margin3}></View>
           <View style={styles.chart} height={this.state.tus}></View>
           <View style={styles.margin1}></View>
           <View style={styles.chart} height={this.state.mon}></View>
-          <View style={styles.margin}></View>
+          <View style={styles.margin3}></View>
           <View style={styles.chart} height={this.state.wed}></View>
-          <View style={styles.margin}></View>
+          <View style={styles.margin3}></View>
           <View style={styles.chart} height={this.state.thr}></View>
-          <View style={styles.margin}></View>
+          <View style={styles.margin3}></View>
           <View style={styles.chart} height={this.state.fri}></View>
-          <View style={styles.margin}></View>
+          <View style={styles.margin3}></View>
           <View style={styles.chart} height={this.state.sat}></View>
-          <View style={styles.margin}></View>
+          <View style={styles.margin3}></View>
         </View>
 
         <View style={styles.textView}>
           <View style={styles.margin2}></View>
-          <Text style={styles.text1}>일</Text>
-          <View style={styles.margin}></View>
-          <Text style={styles.text1}>월</Text>
-          <View style={styles.margin}></View>
-          <Text style={styles.text1}>화</Text>
-          <View style={styles.margin}></View>
-          <Text style={styles.text1}>수</Text>
-          <View style={styles.margin}></View>
-          <Text style={styles.text1}>목</Text>
-          <View style={styles.margin}></View>
-          <Text style={styles.text1}>금</Text>
-          <View style={styles.margin}></View>
-          <Text style={styles.text1}>토</Text>
+          <Text style={styles.text11}>일</Text>
+          <View style={styles.margin3}></View>
+          <Text style={styles.text11}>월</Text>
+          <View style={styles.margin3}></View>
+          <Text style={styles.text11}>화</Text>
+          <View style={styles.margin3}></View>
+          <Text style={styles.text11}>수</Text>
+          <View style={styles.margin3}></View>
+          <Text style={styles.text11}>목</Text>
+          <View style={styles.margin3}></View>
+          <Text style={styles.text11}>금</Text>
+          <View style={styles.margin3}></View>
+          <Text style={styles.text11}>토</Text>
           <View style={styles.margin2}></View>
         </View>
       </View>
@@ -88,21 +89,13 @@ export default class task_graph extends Component {
 }
 
 const styles = StyleSheet.create({
-  text1: {
-    alignItems: "flex-start",
-    fontSize: 17,
-    alignItems: "center",
-    color: "#000000",
-    justifyContent: "center",
-    fontWeight: "bold",
-  },
   graphView: {
     flexDirection: "row",
     flex: 2,
     alignItems: "flex-end",
     justifyContent: "center",
   },
-  margin: {
+  margin3: {
     flex: 0.5,
   },
   margin1: {
@@ -122,7 +115,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#5CB405",
   },
 
-  text1: {
+  text11: {
     fontSize: 14,
     color: "#484848",
     justifyContent: "center",

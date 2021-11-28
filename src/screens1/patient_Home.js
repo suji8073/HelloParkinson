@@ -23,12 +23,12 @@ export default class patient_Home extends Component {
     this.state = {
       data: [],
       User_name: "김연자",
-      User_id: "sitl7890",
     };
   }
 
   componentDidMount() {
     this.userfunc();
+    this.findname();
   }
   userfunc = () => {
     fetch("http://152.70.233.113/chamuser?sort=prog", {
@@ -46,6 +46,26 @@ export default class patient_Home extends Component {
       });
   };
 
+  findname = () => {
+    fetch(
+      "http://152.70.233.113/chamuser/uid/" +
+        this.props.route.params.paramsName,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({
+          User_name: json.info.name,
+        });
+      });
+  };
+
   render() {
     return (
       <View style={styles.finalView}>
@@ -58,7 +78,7 @@ export default class patient_Home extends Component {
           <TouchableOpacity
             onPress={() => {
               this.props.navigation.navigate("patient_profile", {
-                paramName1: this.state.User_id,
+                paramName1: this.props.route.params.paramsName,
               });
             }}
           >
