@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Alert,
-  Left,
-  Body,
-  TextInput,
-} from "react-native";
+import { StyleSheet, View, Text, Alert, TextInput } from "react-native";
 
 import { WithLocalSvg } from "react-native-svg";
 import { Ionicons } from "@expo/vector-icons";
@@ -33,10 +25,17 @@ export default class patient_profile_edit extends Component {
       name: "",
       UID: "",
       progress: "",
+      M: "남",
+      F: "여",
     };
   }
 
   componentDidMount() {
+    this.userfunc();
+    this.change_gender();
+  }
+
+  userfunc() {
     fetch(
       "http://152.70.233.113/chamuser/uid/" +
         this.props.route.params.paramName1,
@@ -57,12 +56,16 @@ export default class patient_profile_edit extends Component {
           progress: json.info.progress,
         });
       });
-    if (this.state.gender === "M") {
+  }
+
+  change_gender = () => {
+    if (this.state.gender === this.state.M) {
       this.setState({ onname1: check, onname2: nocheck });
-    } else {
+    } else if (this.state.gender === this.state.F) {
       this.setState({ onname1: nocheck, onname2: check });
     }
-  }
+  };
+
   edit_finish = () => {
     if (this.state.user_pw !== this.state.user_pww) {
       Alert.alert("비밀번호가 일치하지 않습니다.");
@@ -98,7 +101,7 @@ export default class patient_profile_edit extends Component {
           <EvilIcons name="star" size={30} color="#ffffff" />
 
           <View style={styles.margin}></View>
-          <Text style={styles.titleText}>프로필</Text>
+          <Text style={styles.titleText}>프로필{this.state.gender}</Text>
           <View style={styles.margin}></View>
           <AntDesign
             name="check"

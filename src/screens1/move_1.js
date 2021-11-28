@@ -35,7 +35,9 @@ function move_1({ navigation }) {
           size={24}
           color="#808080"
           onPress={() => {
-            navigation.navigate("TabNavigation1");
+            navigation.navigate("TabNavigation1", {
+              paramName1: "1-2",
+            });
           }}
         />
         <View style={styles.margin}></View>
@@ -56,7 +58,7 @@ function move_1({ navigation }) {
             onPress={() => {
               navigation.push("move_play", {
                 paramName1: "1-1",
-                paramName2:"신장운동"
+                paramName2: "신장운동",
               });
             }}
           >
@@ -66,7 +68,7 @@ function move_1({ navigation }) {
             onPress={() => {
               navigation.push("move_play", {
                 paramName1: "1-2",
-                paramName2:"신장운동"
+                paramName2: "신장운동",
               });
             }}
           >
@@ -80,7 +82,7 @@ function move_1({ navigation }) {
             onPress={() => {
               navigation.push("move_play", {
                 paramName1: "1-3",
-                paramName2:"신장운동"
+                paramName2: "신장운동",
               });
             }}
           >
@@ -94,7 +96,7 @@ function move_1({ navigation }) {
             onPress={() => {
               navigation.push("move_play", {
                 paramName1: "1-4",
-                paramName2:"신장운동"
+                paramName2: "신장운동",
               });
             }}
           >
@@ -108,7 +110,7 @@ function move_1({ navigation }) {
             onPress={() => {
               navigation.push("move_play", {
                 paramName1: "1-5",
-                paramName2:"신장운동"
+                paramName2: "신장운동",
               });
             }}
           >
@@ -122,7 +124,7 @@ function move_1({ navigation }) {
             onPress={() => {
               navigation.push("move_play", {
                 paramName1: "1-6",
-                paramName2:"신장운동"
+                paramName2: "신장운동",
               });
             }}
           >
@@ -133,7 +135,7 @@ function move_1({ navigation }) {
             onPress={() => {
               navigation.push("move_play", {
                 paramName1: "1-7",
-                paramName2:"신장운동"
+                paramName2: "신장운동",
               });
             }}
           >
@@ -144,7 +146,7 @@ function move_1({ navigation }) {
             onPress={() => {
               navigation.push("move_play", {
                 paramName1: "1-8",
-                paramName2:"신장운동"
+                paramName2: "신장운동",
               });
             }}
           >
@@ -155,7 +157,7 @@ function move_1({ navigation }) {
             onPress={() => {
               navigation.push("move_play", {
                 paramName1: "1-9",
-                paramName2:"신장운동"
+                paramName2: "신장운동",
               });
             }}
           >
@@ -166,7 +168,7 @@ function move_1({ navigation }) {
             onPress={() => {
               navigation.push("move_play", {
                 paramName1: "1-10",
-                paramName2:"신장운동"
+                paramName2: "신장운동",
               });
             }}
           >
@@ -177,7 +179,7 @@ function move_1({ navigation }) {
             onPress={() => {
               navigation.push("move_play", {
                 paramName1: "1-11",
-                paramName2:"신장운동"
+                paramName2: "신장운동",
               });
             }}
           >
@@ -192,7 +194,7 @@ function move_1({ navigation }) {
             onPress={() => {
               navigation.push("move_play", {
                 paramName1: "1-12",
-                paramName2:"신장운동"
+                paramName2: "신장운동",
               });
             }}
           >
