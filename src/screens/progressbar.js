@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 const PercentageBar = ({
   navigation,
@@ -15,10 +15,10 @@ const PercentageBar = ({
   const [getCompletedColor, setCompletedColor] = useState(completedColor);
   return (
     <View>
-      <View style={{justifyContent: 'center'}}>
+      <View style={{ justifyContent: "center", alignItems: "stretch" }}>
         <View
           style={{
-            width: '100%',
+            width: 100,
             height: getheight,
             marginVertical: 5,
             borderRadius: 7,
@@ -34,10 +34,9 @@ const PercentageBar = ({
             marginVertical: 5,
             borderRadius: 7,
             backgroundColor: getCompletedColor,
-            position: 'absolute',
+            position: "absolute",
           }}
         />
-      
       </View>
     </View>
   );

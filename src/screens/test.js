@@ -17,15 +17,12 @@ export default class test extends Component {
     super(props);
     this.state = {
       data: [],
+      text: "cogus",
     };
   }
 
-  componentDidMount(){
-
-    this.userfunc();
-  }
-  userfunc = () => {
-    fetch("http://152.70.233.113/chamuser", {
+  componentDidMount() {
+    fetch("http://152.70.233.113/chamuser?sort=name", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -36,7 +33,7 @@ export default class test extends Component {
       .then((json) => {
         this.setState({ data: json });
       });
-  };
+  }
 
   render() {
     return (
@@ -46,9 +43,8 @@ export default class test extends Component {
           <Text style={styles.titleText}>데이터 불러오기</Text>
           <View style={styles.margin}></View>
         </View>
-        <TouchableOpacity>
-          <Text>rlacogus</Text>
-          {console.log(this.state.data)}
+        <TouchableOpacity onPress={this.setState({ text: 123 })}>
+          <Text>{this.state.text}</Text>
         </TouchableOpacity>
       </View>
     );

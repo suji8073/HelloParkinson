@@ -25,6 +25,15 @@ export default class list extends Component {
     super(props);
     this.state = {
       data: [],
+
+      birth: 19431218,
+      gender: "",
+      memo: "",
+      team: "",
+      name: "",
+      id: "",
+      // bookmark: "",
+
     };
   }
 
@@ -48,8 +57,8 @@ export default class list extends Component {
 
   onMenuPress = (id) => {
     if (id === "abc") {
-      // 가나다순 클릭했을 때
-      fetch("", {
+      // 가나다순 클릭 했을 때
+      fetch("http://152.70.233.113/chamuser?sort=name", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -63,7 +72,7 @@ export default class list extends Component {
       return this.state.data;
     } else if (id === "star") {
       // 즐겨찾기순 클릭했을 때
-      fetch("", {
+      fetch("http://152.70.233.113/chamuser?sort=book", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -116,9 +125,11 @@ export default class list extends Component {
                   }}
                 >
                   <Task
+                    id={item.id}
                     user={item.name}
                     age={item.birth}
                     sex={item.gender}
+                    // book={item.bookmark}
                   ></Task>
                 </TouchableOpacity>
               );

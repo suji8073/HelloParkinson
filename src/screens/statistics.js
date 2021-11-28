@@ -17,8 +17,8 @@ import Task from "./task2";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 
 const items = [
-  { id: "age", label: "나이순" },
   { id: "abc", label: "가나다순" },
+  { id: "age", label: "나이순" },
 ];
 export default class statistics extends Component {
   constructor(props) {
@@ -32,7 +32,7 @@ export default class statistics extends Component {
     this.userfunc();
   }
   userfunc = () => {
-    fetch("http://152.70.233.113/chamuser", {
+    fetch("http://152.70.233.113/chamuser?sort=name", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -47,8 +47,8 @@ export default class statistics extends Component {
 
   onMenuPress = (id) => {
     if (id === "age") {
-      // 나이순
-      fetch("", {
+      // 진도율순 "http://152.70.233.113/chamuser?sort=age",
+      fetch({
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -62,7 +62,7 @@ export default class statistics extends Component {
       return this.state.data;
     } else if (id === "abc") {
       // 가나다순
-      fetch("", {
+      fetch("http://152.70.233.113/chamuser?sort=name", {
         method: "GET",
         headers: {
           Accept: "application/json",

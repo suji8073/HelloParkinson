@@ -10,7 +10,7 @@ import SimplePopupMenu from "react-native-simple-popup-menu";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const items = [
-  { id: "alarm", label: "알림순" },
+  { id: "abc", label: "가나다순" },
   { id: "progress", label: "진도율순" },
 ];
 
@@ -24,13 +24,12 @@ export default class progress extends Component {
     };
   }
 
-
   componentDidMount() {
     this.userfunc();
   }
 
   userfunc = () => {
-    fetch("http://152.70.233.113/chamuser", {
+    fetch("http://152.70.233.113/chamuser?sort=name", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -47,10 +46,34 @@ export default class progress extends Component {
   alarm_time = () => {};
 
   onMenuPress = (id) => {
-    if (id === "alarm") {
-      // 알림순
+    if (id === "abc") {
+      // 가나다순 클릭했을 때
+      fetch("http://152.70.233.113/chamuser?sort=name", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          this.setState({ data: json });
+        });
+      return this.state.data;
     } else if (id === "progress") {
-      // 진도율순
+      // 즐겨찾기순 클릭했을 때
+      fetch("http://152.70.233.113/chamuser?sort=prog", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          this.setState({ data: json });
+        });
+      return this.state.data;
     }
   };
 
