@@ -19,6 +19,7 @@ const items = [
 ];
 // sorting필요함 !!
 const today = new Date();
+
 export default class list extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +30,8 @@ export default class list extends Component {
       memo: "",
       team: "",
       name: "",
+      id: "",
+      // bookmark: "",
     };
   }
 
@@ -37,7 +40,7 @@ export default class list extends Component {
   }
 
   userfunc = () => {
-    fetch("http://152.70.233.113/chamuser", {
+    fetch("http://152.70.233.113/chamuser?sort=name", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -52,8 +55,8 @@ export default class list extends Component {
 
   onMenuPress = (id) => {
     if (id === "abc") {
-      // 가나다순 클릭했을 때
-      fetch("", {
+      // 가나다순 클릭 했을 때
+      fetch("http://152.70.233.113/chamuser?sort=name", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -67,7 +70,7 @@ export default class list extends Component {
       return this.state.data;
     } else if (id === "star") {
       // 즐겨찾기순 클릭했을 때
-      fetch("", {
+      fetch("http://152.70.233.113/chamuser?sort=book", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -107,9 +110,7 @@ export default class list extends Component {
 
         <View style={styles.threeView}>
           <FlatList
-
             keyExtractor={(item, index) => index}
-
             data={this.state.data}
             renderItem={({ item }) => {
               return (
@@ -122,9 +123,11 @@ export default class list extends Component {
                   }}
                 >
                   <Task
+                    id={item.id}
                     user={item.name}
                     age={item.birth}
                     sex={item.gender}
+                    // book={item.bookmark}
                   ></Task>
                 </TouchableOpacity>
               );

@@ -11,7 +11,12 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Movelist from "./movelist";
-
+const motion = [
+  "신장운동",
+  " 근력운동",
+  "균형 및 협응 운동",
+  "구강 및 발성 운동",
+];
 export default class progress extends Component {
   constructor(props) {
     super(props);
@@ -23,9 +28,71 @@ export default class progress extends Component {
       team: "",
       name: "",
       progress: 0,
-      clickOn: 1,
+      categ: "one",
+      click1: 1,
+      click2: 0,
+      click3: 0,
+      click4: 0,
+      click5: 0,
+      m1: [],
+      m2: [],
+      m3: [],
+      m4: [],
+      // m_five: [],
+      data: { name: ["채현", "채햏"] },
     };
   }
+
+  handleClick1 = () => {
+    this.setState({
+      categ: "one",
+      click1: 1,
+      click2: 0,
+      click3: 0,
+      click4: 0,
+      click5: 0,
+    });
+  };
+  handleClick2 = () => {
+    this.setState({
+      categ: "two",
+      click1: 0,
+      click2: 1,
+      click3: 0,
+      click4: 0,
+      click5: 0,
+    });
+  };
+  handleClick3 = () => {
+    this.setState({
+      categ: "three",
+      click1: 0,
+      click2: 0,
+      click3: 1,
+      click4: 0,
+      click5: 0,
+    });
+  };
+  handleClick4 = () => {
+    this.setState({
+      categ: "four",
+      click1: 0,
+      click2: 0,
+      click3: 0,
+      click4: 1,
+      click5: 0,
+    });
+  };
+  handleClick5 = () => {
+    this.setState({
+      categ: "five",
+      click1: 0,
+      click2: 0,
+      click3: 0,
+      click4: 0,
+      click5: 1,
+    });
+  };
 
   componentDidMount() {
     console.log(this.props.route.params.paramName1);
@@ -48,6 +115,42 @@ export default class progress extends Component {
           progress: json.info.progress,
         });
       });
+    // fetch("http://152.70.233.113/chammotion/cat/신장운동", {
+    //   method: "GET",
+    //   headers: { "Content-Type": "application/json" },
+    // })
+    //   .then((res) => res.json())
+    //   .then((json) => {
+    //     console.log("여기 11111잘 들어가나 확인 ~~ 한다~~");
+    //     this.setState({ m1: json });
+    //   });
+    // fetch("http://152.70.233.113/chammotion/cat/근력운동", {
+    //   method: "GET",
+    //   headers: { "Content-Type": "application/json" },
+    // })
+    //   .then((res) => res.json())
+    //   .then((json) => {
+    //     console.log("여기 11111잘 들어가나 확인 ~~ 한다~~");
+    //     this.setState({ m2: json });
+    //   });
+    // fetch("http://152.70.233.113/chammotion/cat/균형 및 협응운동", {
+    //   method: "GET",
+    //   headers: { "Content-Type": "application/json" },
+    // })
+    //   .then((res) => res.json())
+    //   .then((json) => {
+    //     console.log("여기 11111잘 들어가나 확인 ~~ 한다~~");
+    //     this.setState({ m3: json });
+    //   });
+    // fetch("http://152.70.233.113/chammotion/cat/구강 및 발성 운동", {
+    //   method: "GET",
+    //   headers: { "Content-Type": "application/json" },
+    // })
+    //   .then((res) => res.json())
+    //   .then((json) => {
+    //     console.log("여기 11111잘 들어가나 확인 ~~ 한다~~");
+    //     this.setState({ m4: json });
+    //   });
   }
 
   render() {
@@ -78,55 +181,60 @@ export default class progress extends Component {
         {/* 운동카테고리 목록 뷰 */}
         <View style={styles.listview}>
           <View style={styles.margin}></View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={this.handleClick1}>
             <View
               style={
-                this.state.clickOn === 1
-                  ? styles.moveView_on //클릭됨
-                  : styles.moveView
+                this.state.click1 === 1 ? styles.moveView_on : styles.moveView
               }
             >
-              <Text style={styles.movebtn}>확정 리스트</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={styles.moveView}>
               <Text style={styles.movebtn}>신장</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={styles.moveView}>
+          <TouchableOpacity onPress={this.handleClick2}>
+            <View
+              style={
+                this.state.click2 === 1 ? styles.moveView_on : styles.moveView
+              }
+            >
               <Text style={styles.movebtn}>근력</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={styles.moveView}>
+          <TouchableOpacity onPress={this.handleClick3}>
+            <View
+              style={
+                this.state.click3 === 1 ? styles.moveView_on : styles.moveView
+              }
+            >
               <Text style={styles.movebtn}>균형/협응</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={styles.moveView}>
+          <TouchableOpacity onPress={this.handleClick4}>
+            <View
+              style={
+                this.state.click4 === 1 ? styles.moveView_on : styles.moveView
+              }
+            >
               <Text style={styles.movebtn}>구강/발성</Text>
             </View>
           </TouchableOpacity>
-          <View style={styles.margin}></View>
+          <TouchableOpacity onPress={this.handleClick5}>
+            <View
+              style={
+                this.state.click5 === 1 ? styles.moveView_on : styles.moveView
+              }
+            >
+              <Text style={styles.movebtn}>유산소</Text>
+            </View>
+          </TouchableOpacity>
         </View>
-        <View>
-          {/* 리스트 뷰 전체 뷰 */}
-          <ScrollView>
-            <Movelist
-              movename="목 앞 근육 스트레칭"
-              moveminute="5"
-              movesec="30"
-            />
-            <Movelist movename="목 날개뼈 모으기" moveminute="1" movesec="30" />
-            <Movelist
-              movename="손목 및 팔꿈치 근육 스트레칭"
-              moveminute="4"
-              movesec="50"
-            />
-          </ScrollView>
-        </View>
+
+        <FlatList
+          style={{ marginBottom: 80 }}
+          data={this.state.data}
+          renderItem={({ item }) => {
+            return <Movelist>mname={item.name}</Movelist>;
+          }}
+        />
       </View>
     );
   }
@@ -150,10 +258,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: 3,
     marginVertical: 10,
+    height: 35,
   },
   moveView_on: {
     borderColor: "#5CB405",
     borderRadius: 20,
+    height: 35,
     paddingHorizontal: 10,
     paddingVertical: 5,
     backgroundColor: "#5CB405",
@@ -161,6 +271,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: 3,
     marginVertical: 10,
+    fontSize: 17,
   },
   movebtn: {
     color: "#FFFFFF",
@@ -202,7 +313,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   margin: {
-    // padding:30,
+    paddingBottom: 30,
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,
