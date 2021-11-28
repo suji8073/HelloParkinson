@@ -53,7 +53,12 @@ const task3 = ({ user, age, sex, progress, minute }) => {
             marginTop: "3%",
           }}
         >
-          <View style={{ width: "80%", justifyContent: "center" }}>
+          <View
+            style={{
+              width: "80%",
+              justifyContent: "center",
+            }}
+          >
             <PercentageBar
               height={20}
               backgroundColor={"#E5E5E5"}

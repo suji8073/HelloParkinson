@@ -20,14 +20,37 @@ export default class task1 extends Component {
     super(props);
     this.state = {
       star: silverstarsvg,
+      id: this.props.id,
     };
   }
-
+  componentDidMount() {
+    this.setState({ id: this.props.id });
+    Alert.alert(this.props.id);
+  }
   handleClick = () => {
+    // if(this.props.book ===1)
     if (this.state.star === silverstarsvg) {
       this.setState({ star: greenstartsvg });
+
+      fetch("http://152.70.233.113/chamuser/bookmark", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user: id,
+        }),
+      });
+
+      // Alert.alert("즐겨찾기에 추가되었습니다.");
     } else {
       this.setState({ star: silverstarsvg });
+      // fetch("http://152.70.233.113/chamuser/bookmark", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({
+      //     user: "cogus",
+      //   }),
+      // });
+      // Alert.alert("즐겨찾기에서 해제되었습니다.");
     }
   };
 
