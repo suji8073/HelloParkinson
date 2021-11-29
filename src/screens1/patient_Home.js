@@ -163,7 +163,7 @@ export default class patient_Home extends Component {
                   height={30}
                   asset={firstsvg}
                 />
-                <Text style={styles.prizetext}>오석형[100%]</Text>
+                <Text style={styles.prizetext}>오석형[98%]</Text>
               </View>
               <View
                 style={{

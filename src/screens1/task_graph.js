@@ -15,7 +15,6 @@ export default class task_graph extends Component {
     };
   }
 
-
   componentDidMount() {
     console.log(this.props.text);
     fetch("http://152.70.233.113/chamuser/id/" + this.props.text, {
@@ -30,7 +29,6 @@ export default class task_graph extends Component {
           wed: json.info.wed * 0.8,
           thr: json.info.thr * 0.8,
           fri: json.info.fri * 0.8,
-          sat: json.info.sat * 0.8,
           sun: json.info.sun * 0.8,
         });
       });
@@ -53,35 +51,35 @@ export default class task_graph extends Component {
           <View style={styles.chart} height={this.state.sun}></View>
           <View style={styles.margin3}></View>
           <View style={styles.chart} height={this.state.tus}></View>
-          <View style={styles.margin1}></View>
+          <View style={styles.margin3}></View>
           <View style={styles.chart} height={this.state.mon}></View>
           <View style={styles.margin3}></View>
           <View style={styles.chart} height={this.state.wed}></View>
           <View style={styles.margin3}></View>
           <View style={styles.chart} height={this.state.thr}></View>
           <View style={styles.margin3}></View>
-          <View style={styles.chart} height={this.state.fri}></View>
+          <View style={styles.chart1} height={this.state.fri}></View>
           <View style={styles.margin3}></View>
           <View style={styles.chart} height={this.state.sat}></View>
-          <View style={styles.margin3}></View>
+          <View style={styles.margin1}></View>
         </View>
 
         <View style={styles.textView}>
           <View style={styles.margin2}></View>
           <Text style={styles.text11}>일</Text>
-          <View style={styles.margin3}></View>
+          <View style={styles.margin4}></View>
           <Text style={styles.text11}>월</Text>
-          <View style={styles.margin3}></View>
+          <View style={styles.margin4}></View>
           <Text style={styles.text11}>화</Text>
-          <View style={styles.margin3}></View>
+          <View style={styles.margin4}></View>
           <Text style={styles.text11}>수</Text>
-          <View style={styles.margin3}></View>
+          <View style={styles.margin4}></View>
           <Text style={styles.text11}>목</Text>
-          <View style={styles.margin3}></View>
+          <View style={styles.margin4}></View>
           <Text style={styles.text11}>금</Text>
-          <View style={styles.margin3}></View>
+          <View style={styles.margin4}></View>
           <Text style={styles.text11}>토</Text>
-          <View style={styles.margin2}></View>
+          <View style={styles.margin5}></View>
         </View>
       </View>
     );
@@ -101,8 +99,15 @@ const styles = StyleSheet.create({
   margin1: {
     flex: 0.3,
   },
+
   margin2: {
-    flex: 0.3,
+    flex: 0.09,
+  },
+  margin4: {
+    flex: 0.19,
+  },
+  margin5: {
+    flex: 0.11,
   },
   textView: {
     flexDirection: "row",
@@ -113,6 +118,10 @@ const styles = StyleSheet.create({
   chart: {
     flex: 0.8,
     backgroundColor: "#5CB405",
+  },
+  chart1: {
+    flex: 0.8,
+    backgroundColor: "#316200",
   },
 
   text11: {

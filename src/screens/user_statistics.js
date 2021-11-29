@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  SafeAreaView,
+  FlatList,
+} from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
@@ -19,10 +26,15 @@ export default class user_statistics extends Component {
       name: "",
       UID: "",
       progress: 0,
+      data: [],
     };
   }
-
   componentDidMount() {
+    this.function1();
+    this.function2();
+  }
+
+  function1 = () => {
     fetch(
       "http://152.70.233.113/chamuser/id/" + this.props.route.params.paramName1,
       {
@@ -42,10 +54,24 @@ export default class user_statistics extends Component {
           progress: json.info.progress,
         });
       });
-  }
+  };
+
+  function2 = () => {
+    fetch(
+      "http://152.70.233.113/chamuser/day/" +
+        this.props.route.params.paramName2,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({ data: json });
+      });
+  };
 
   render() {
-    console.log(this.state.UID);
     return (
       <View style={styles.finalView}>
         <View style={styles.menuView}>
@@ -62,7 +88,6 @@ export default class user_statistics extends Component {
             '{this.state.name}'님 의 운동 통계
           </Text>
           <View style={styles.margin}></View>
-
         </View>
 
         <View style={styles.mainView}>
@@ -85,10 +110,10 @@ export default class user_statistics extends Component {
 
             <View style={styles.secondView}>
               <View style={styles.textview}>
-                <Text style={styles.text1}>주 평균{this.props.route.params.paramName1}</Text>
+                <Text style={styles.text1}>주 평균</Text>
                 <Text style={styles.text2}>{this.state.progress}%</Text>
                 <View style={styles.margin}></View>
-                <Text style={styles.text3}>2021년 1월 31일 ~ 2월 6일</Text>
+                <Text style={styles.text3}>2021년 12월 02일 ~ 12월 03일</Text>
               </View>
 
               <View style={styles.graphview}>
@@ -97,7 +122,24 @@ export default class user_statistics extends Component {
             </View>
 
             <View style={styles.threeView}>
-              {/*<Task text={this.state.UID}></Task>*/}
+              <SafeAreaView>
+                <FlatList
+                  keyExtractor={(item, index) => index}
+                  data={this.state.data}
+                  renderItem={({ item }) => {
+                    return (
+                      <Task
+                        CAT1={item.CAT1}
+                        CAT2={item.CAT2}
+                        CAT3={item.CAT3}
+                        CAT4={item.CAT4}
+                        CAT5={item.CAT5}
+                        R_date={item.R_date}
+                      ></Task>
+                    );
+                  }}
+                />
+              </SafeAreaView>
             </View>
           </ScrollView>
         </View>
@@ -195,7 +237,7 @@ const styles = StyleSheet.create({
   threeView: {
     marginLeft: "5%",
     marginRight: "5%",
-    marginBottom: "30%",
+    marginBottom: 150,
     padding: "5%",
     width: "90%",
     backgroundColor: "#FFFFFF",

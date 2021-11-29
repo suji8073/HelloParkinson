@@ -112,6 +112,7 @@ export default class statistics extends Component {
                   onPress={() => {
                     this.props.navigation.navigate("user_statistics", {
                       paramName1: item.id,
+                      paramName2: item.UID,
                     });
                   }}
                 >

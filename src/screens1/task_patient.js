@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from "react-native";
 
-import PercentageBar from "../screens/progressbar";
+import PercentageBar from "../screens/progressbar1";
 
 const task_patient = ({ allcount, done, progress }) => {
   return (

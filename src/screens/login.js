@@ -11,6 +11,7 @@ import React, { Component } from "react";
 import "react-native-gesture-handler";
 
 import { WithLocalSvg } from "react-native-svg";
+
 import logosvg from "../icon/logo.svg";
 
 export default class login extends Component {
@@ -49,6 +50,7 @@ export default class login extends Component {
             console.log("로그인 통신 확인");
             if (json.admin == 0) {
               // 환자
+              console.log("로그인 통신 확인");
               this.props.navigation.navigate("TabNavigation1", {
                 paramName1: this.state.id,
               });

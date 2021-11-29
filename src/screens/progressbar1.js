@@ -18,7 +18,7 @@ const PercentageBar = ({
       <View style={{ justifyContent: "center", alignItems: "stretch" }}>
         <View
           style={{
-            width: 100 * 1.8,
+            width: 180,
             height: getheight,
             marginVertical: 5,
             borderRadius: 7,
@@ -29,7 +29,7 @@ const PercentageBar = ({
         />
         <View
           style={{
-            width: getPercentage* 1.8 ? getPercentage* 1.8 : 0,
+            width: getPercentage ? getPercentage : 0,
             height: getheight,
             marginVertical: 5,
             borderRadius: 7,

@@ -148,6 +148,7 @@ export default class progress extends Component {
             </View>
 
             <FlatList
+              keyExtractor={(item, index) => index}
               style={{ marginBottom: 80 }}
               data={this.state.data}
               renderItem={({ item }) => {

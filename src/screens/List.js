@@ -33,14 +33,12 @@ export default class list extends Component {
       name: "",
       id: "",
       // bookmark: "",
-
     };
   }
 
   componentDidMount() {
     this.userfunc();
   }
-
   userfunc = () => {
     fetch("http://152.70.233.113/chamuser?sort=name", {
       method: "GET",
@@ -57,8 +55,8 @@ export default class list extends Component {
 
   onMenuPress = (id) => {
     if (id === "abc") {
-      // 가나다순 클릭 했을 때
-      fetch("http://152.70.233.113/chamuser?sort=name", {
+      // 가나다순 클릭했을 때
+      fetch("", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -72,7 +70,7 @@ export default class list extends Component {
       return this.state.data;
     } else if (id === "star") {
       // 즐겨찾기순 클릭했을 때
-      fetch("http://152.70.233.113/chamuser?sort=book", {
+      fetch("", {
         method: "GET",
         headers: {
           Accept: "application/json",

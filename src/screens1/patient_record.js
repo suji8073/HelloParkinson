@@ -14,8 +14,6 @@ export default class patient_record extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      User_id: "sitl7890",
-      id: 0,
       progress: 0,
       mon: 0,
       tus: 0,
@@ -40,14 +38,12 @@ export default class patient_record extends Component {
       .then((res) => res.json())
       .then((json) => {
         this.setState({
-          id: json.info.id,
           progress: json.info.progress,
           mon: json.info.mon * 0.8,
           tus: json.info.tus * 0.8,
           wed: json.info.wed * 0.8,
           thr: json.info.thr * 0.8,
           fri: json.info.fri * 0.8,
-          sat: json.info.sat * 0.8,
           sun: json.info.sun * 0.8,
         });
       });
@@ -72,7 +68,7 @@ export default class patient_record extends Component {
       <View style={styles.finalView}>
         <View style={styles.menuView}>
           <View style={styles.margin}></View>
-          <Text style={styles.titleText}>나의 운동 기록{this.state.id}</Text>
+          <Text style={styles.titleText}>나의 운동 기록</Text>
           <View style={styles.margin}></View>
         </View>
 
@@ -86,7 +82,7 @@ export default class patient_record extends Component {
           >
             <View style={styles.secondView}>
               <View style={styles.textview}>
-                <Text style={styles.text1}>2021년 11월 25일 ~ 11월 26일</Text>
+                <Text style={styles.text1}>2021년 12월 02일 ~ 12월 03일</Text>
                 <Text style={styles.text2}>주 평균 {this.state.progress}%</Text>
               </View>
 
@@ -96,14 +92,14 @@ export default class patient_record extends Component {
                   <View style={styles.chart} height={this.state.sun}></View>
                   <View style={styles.margin3}></View>
                   <View style={styles.chart} height={this.state.tus}></View>
-                  <View style={styles.margin1}></View>
+                  <View style={styles.margin3}></View>
                   <View style={styles.chart} height={this.state.mon}></View>
                   <View style={styles.margin3}></View>
                   <View style={styles.chart} height={this.state.wed}></View>
                   <View style={styles.margin3}></View>
                   <View style={styles.chart} height={this.state.thr}></View>
                   <View style={styles.margin3}></View>
-                  <View style={styles.chart} height={this.state.fri}></View>
+                  <View style={styles.chart1} height={this.state.fri}></View>
                   <View style={styles.margin3}></View>
                   <View style={styles.chart} height={this.state.sat}></View>
                   <View style={styles.margin3}></View>
@@ -112,19 +108,19 @@ export default class patient_record extends Component {
                 <View style={styles.textView}>
                   <View style={styles.margin2}></View>
                   <Text style={styles.text11}>일</Text>
-                  <View style={styles.margin3}></View>
+                  <View style={styles.margin4}></View>
                   <Text style={styles.text11}>월</Text>
-                  <View style={styles.margin3}></View>
+                  <View style={styles.margin4}></View>
                   <Text style={styles.text11}>화</Text>
-                  <View style={styles.margin3}></View>
+                  <View style={styles.margin4}></View>
                   <Text style={styles.text11}>수</Text>
-                  <View style={styles.margin3}></View>
+                  <View style={styles.margin4}></View>
                   <Text style={styles.text11}>목</Text>
-                  <View style={styles.margin3}></View>
+                  <View style={styles.margin4}></View>
                   <Text style={styles.text11}>금</Text>
-                  <View style={styles.margin3}></View>
+                  <View style={styles.margin4}></View>
                   <Text style={styles.text11}>토</Text>
-                  <View style={styles.margin2}></View>
+                  <View style={styles.margin5}></View>
                 </View>
               </View>
             </View>
@@ -169,11 +165,21 @@ const styles = StyleSheet.create({
   margin3: {
     flex: 0.5,
   },
+  chart1: {
+    flex: 0.8,
+    backgroundColor: "#316200",
+  },
   margin1: {
     flex: 0.3,
   },
   margin2: {
-    flex: 0.3,
+    flex: 0.09,
+  },
+  margin4: {
+    flex: 0.19,
+  },
+  margin5: {
+    flex: 0.11,
   },
   textView: {
     flexDirection: "row",

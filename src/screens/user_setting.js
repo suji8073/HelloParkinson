@@ -30,6 +30,7 @@ export default class user_setting extends Component {
       team: "",
       name: "",
       id: 0,
+      UID: "",
     };
   }
 
@@ -43,7 +44,6 @@ export default class user_setting extends Component {
     )
       .then((res) => res.json())
       .then((json) => {
-        console.log("여기 잘 들어가나 확인 ~~ 한다~~");
         this.setState({
           birth: json.info.birth,
           gender: json.info.gender,
@@ -51,8 +51,8 @@ export default class user_setting extends Component {
           team: json.info.team,
           name: json.info.name,
           id: json.info.id,
+          UID: json.info.UID,
         });
-        console.log(this.state.birth);
       });
   }
   render() {
@@ -110,6 +110,7 @@ export default class user_setting extends Component {
               onPress={() => {
                 this.props.navigation.navigate("user_statistics", {
                   paramName1: this.state.id,
+                  paramName2: this.state.UID,
                 });
               }}
             >

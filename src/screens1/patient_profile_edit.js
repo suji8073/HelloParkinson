@@ -101,7 +101,7 @@ export default class patient_profile_edit extends Component {
           <EvilIcons name="star" size={30} color="#ffffff" />
 
           <View style={styles.margin}></View>
-          <Text style={styles.titleText}>프로필{this.state.gender}</Text>
+          <Text style={styles.titleText}>프로필</Text>
           <View style={styles.margin}></View>
           <AntDesign
             name="check"
