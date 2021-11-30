@@ -21,7 +21,7 @@ export default class patient_move extends Component {
         <View style={styles.menuView}>
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>
-            나의 운동 목록{this.props.route.params.paramsName}
+            나의 운동 목록
           </Text>
           <View style={styles.margin}></View>
         </View>

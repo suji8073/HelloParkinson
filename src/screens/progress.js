@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, StatusBar, View, Text, FlatList } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Text,
+  FlatList,
+} from "react-native";
 import { WithLocalSvg } from "react-native-svg";
 
 import Task from "./task3";
@@ -7,7 +13,6 @@ import { Entypo } from "@expo/vector-icons";
 import ddaysvg from "../icon/dday.svg";
 import { AntDesign } from "@expo/vector-icons";
 import SimplePopupMenu from "react-native-simple-popup-menu";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 const items = [
   { id: "abc", label: "가나다순" },
@@ -165,7 +170,6 @@ export default class progress extends Component {
 const styles = StyleSheet.create({
   finalView: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
   },
   menuView: {
     backgroundColor: "#FFFFFF",
@@ -189,8 +193,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   fouuview: {
-    marginTop: 10,
-    marginBottom: 150,
+    paddingTop: 10,
+    marginBottom: 300,
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
@@ -243,10 +247,11 @@ const styles = StyleSheet.create({
   },
   threeView: {
     borderRadius: 19,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#FFFFFF",
   },
   fourView: {
     flexDirection: "row",
+    backgroundColor: "#FFFFFF",
     marginTop: "5%",
     alignItems: "center",
     justifyContent: "space-evenly",

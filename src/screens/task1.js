@@ -8,7 +8,6 @@ import {
   TouchableOpacityComponent,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { EvilIcons } from "@expo/vector-icons";
 
 import { WithLocalSvg } from "react-native-svg";
 import silverstarsvg from "../icon/silverstar.svg";
@@ -21,20 +20,19 @@ export default class task1 extends Component {
     this.state = {
       star: silverstarsvg,
       id: 0,
-      book: silverstarsvg,
     };
   }
   componentDidMount() {
-    this.setState({ id: this.props.id, bookmark: this.props.bookmark });
+    this.setState({ id: this.props.id });
     if (this.props.book === 1) {
-      this.setState({ book: greenstarsvg });
+      this.setState({ star: greenstarsvg });
     } else {
-      this.setState({ book: silverstarsvg });
+      this.setState({ star: silverstarsvg });
     }
   }
   handleClick = () => {
     if (this.state.star === silverstarsvg) {
-      this.setState({ star: greenstarsvg, bookmark: 1 });
+      this.setState({ star: greenstarsvg });
 
       fetch("http://152.70.233.113/chamuser/bookmark", {
         method: "POST",
@@ -43,10 +41,9 @@ export default class task1 extends Component {
           user: String(this.props.id),
         }),
       });
-
       Alert.alert("즐겨찾기에 추가되었습니다.");
     } else {
-      this.setState({ star: silverstarsvg, bookmark: 0 });
+      this.setState({ star: silverstarsvg });
       fetch("http://152.70.233.113/chamuser/bookmark", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -84,7 +81,7 @@ export default class task1 extends Component {
         </View>
         <View style={styles.margin}></View>
         <TouchableOpacity onPress={this.handleClick}>
-          <WithLocalSvg width={30} height={30} asset={this.state.book} />
+          <WithLocalSvg width={30} height={30} asset={this.state.star} />
         </TouchableOpacity>
       </View>
     );

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { TouchableOpacity, StyleSheet, View, Text } from "react-native";
+import { TouchableOpacity, StyleSheet, View, Text, Alert } from "react-native";
 
 import silverstarsvg from "../icon/silverstar.svg";
 import greenstarsvg from "../icon/greenstar.svg";
@@ -21,9 +21,8 @@ export default class task3 extends Component {
 
   handleClick = () => {
     if (this.state.alarm === airplane) {
+      Alert.alert("알림을 보냅니다.");
       this.setState({ alarm: greenairplane });
-    } else {
-      this.setState({ alarm: airplane });
     }
   };
 
@@ -39,6 +38,9 @@ export default class task3 extends Component {
           height: 100,
           width: "94%",
           flexDirection: "row",
+          paddingRight: "5%",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         {/* 사용자와 그래프 뷰 , 숫자*/}
@@ -93,19 +95,7 @@ export default class task3 extends Component {
             </Text>
           </View>
         </View>
-        {/* 아이콘, 시간 */}
-        <TouchableOpacity
-          style={{
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            flex: 0.3,
-            height: "100%",
-            borderWidth: 1,
-          }}
-          onPress={this.handleClick}
-          activeOpacity={1}
-        >
+        <TouchableOpacity onPress={this.handleClick} activeOpacity={1}>
           <WithLocalSvg width={40} height={40} asset={this.state.alarm} />
         </TouchableOpacity>
       </View>

@@ -26,9 +26,6 @@ export default class list extends Component {
     super(props);
     this.state = {
       data: [],
-      first: [],
-      second: [],
-
       birth: 19431218,
       gender: "",
       memo: "",
@@ -87,7 +84,7 @@ export default class list extends Component {
     }
   };*/
 
-  
+
   bookcheck = (book) => {
     if (book === 1) {
       return greenstarsvg;

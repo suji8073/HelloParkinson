@@ -33,8 +33,7 @@ import move_2 from "../screens1/move_2";
 import move_3 from "../screens1/move_3";
 import move_4 from "../screens1/move_4";
 import move_play from "../screens1/move_play";
-//import task1 from "../screens/task1";
-//      <Stack.Screen name="task1" component={task1}/>
+
 
 import test from "../screens/test";
 const Stack = createStackNavigator();

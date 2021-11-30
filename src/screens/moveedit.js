@@ -3,7 +3,6 @@
 import React, { Component } from "react";
 import {
   View,
-  ScrollView,
   FlatList,
   TouchableOpacity,
   Text,
@@ -12,7 +11,7 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Movelist from "./movelist";
-import O2_task from "./O2_task";
+import O2_task from "./O2_task.js";
 export default class progress extends Component {
   constructor(props) {
     super(props);
@@ -40,7 +39,7 @@ export default class progress extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        this.setState({ data: json });
+        this.setState({ data: json, m1: json });
       });
 
     fetch("http://152.70.233.113/chammotion/cat/근력운동", {
@@ -112,6 +111,17 @@ export default class progress extends Component {
     });
   };
 
+  handleClick5 = () => {
+    this.setState({
+      data: <O2_task></O2_task>,
+      click1: 0,
+      click2: 0,
+      click3: 0,
+      click4: 0,
+      click5: 1,
+    });
+  };
+
   render() {
     return (
       <View style={styles.finalView}>
@@ -166,7 +176,7 @@ export default class progress extends Component {
                 this.state.click3 === 1 ? styles.moveView_on : styles.moveView
               }
             >
-              <Text style={styles.movebtn}>균형/협응</Text>
+              <Text style={styles.movebtn}>균형 / 협응</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={this.handleClick4}>
@@ -175,10 +185,10 @@ export default class progress extends Component {
                 this.state.click4 === 1 ? styles.moveView_on : styles.moveView
               }
             >
-              <Text style={styles.movebtn}>구강/발성</Text>
+              <Text style={styles.movebtn}>구강 / 발성</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.props.navigation.navigate("O2_task")}>
+          <TouchableOpacity onPress={this.handleClick5}>
             <View
               style={
                 this.state.click5 === 1 ? styles.moveView_on : styles.moveView
@@ -187,16 +197,13 @@ export default class progress extends Component {
               <Text style={styles.movebtn}>유산소</Text>
             </View>
           </TouchableOpacity>
+          <View style={styles.margin}></View>
         </View>
 
         <FlatList
-
           style={{
-            // marginBottom: 80,
-            borderWidth: 1,
             backgroundColor: "#F8F8F8",
           }}
-
           data={this.state.data}
           renderItem={({ item }) => {
             return <Movelist name={item.name}></Movelist>;
@@ -214,9 +221,9 @@ const styles = StyleSheet.create({
   },
   listview: {
     flexDirection: "row",
-    borderWidth: 0.8,
-
+    backgroundColor: "#FFFFFF",
   },
+  fouuview: {},
   moveView: {
     borderColor: "#BBBBBB",
     borderRadius: 20,
