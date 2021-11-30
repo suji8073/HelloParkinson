@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Movelist from "./movelist";
-
+import O2_task from "./O2_task";
 export default class progress extends Component {
   constructor(props) {
     super(props);
@@ -178,7 +178,7 @@ export default class progress extends Component {
               <Text style={styles.movebtn}>구강/발성</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.handleClick5}>
+          <TouchableOpacity onPress={this.props.navigation.navigate("O2_task")}>
             <View
               style={
                 this.state.click5 === 1 ? styles.moveView_on : styles.moveView
@@ -190,7 +190,13 @@ export default class progress extends Component {
         </View>
 
         <FlatList
-          style={{ marginBottom: 80, borderWidth: 1 }}
+
+          style={{
+            // marginBottom: 80,
+            borderWidth: 1,
+            backgroundColor: "#F8F8F8",
+          }}
+
           data={this.state.data}
           renderItem={({ item }) => {
             return <Movelist name={item.name}></Movelist>;
@@ -208,7 +214,8 @@ const styles = StyleSheet.create({
   },
   listview: {
     flexDirection: "row",
-    borderWidth: 1,
+    borderWidth: 0.8,
+
   },
   moveView: {
     borderColor: "#BBBBBB",
@@ -275,7 +282,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   margin: {
-    paddingBottom: 30,
+    // paddingBottom: 30,
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,

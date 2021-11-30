@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import { TouchableOpacity, StyleSheet, View, Text } from "react-native";
 
+import silverstarsvg from "../icon/silverstar.svg";
+import greenstarsvg from "../icon/greenstar.svg";
 import PercentageBar from "./progressbar";
 import airplane from "../icon/airplane.svg";
 import greenairplane from "../icon/greenairplane.svg";
