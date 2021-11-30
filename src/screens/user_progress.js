@@ -230,7 +230,7 @@ export default class progress extends Component {
             >
               <View style={{ marginBottom: "3%" }}>
                 <Text style={styles.movetitletext}>
-                  진행 중{this.props.route.params.paramName1}
+                  진행 중
                 </Text>
                 <Text style={styles.movetext}>날개뼈 모으기</Text>
               </View>

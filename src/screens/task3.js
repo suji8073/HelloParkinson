@@ -25,90 +25,88 @@ export default class task3 extends Component {
     }
   };
 
-
   render() {
     return (
       //  전체 뷰
+      <View
+        style={{
+          borderRadius: 15,
+          borderColor: "#EBEBEB",
+          borderWidth: 2,
+          margin: "3%",
+          height: 100,
+          width: "94%",
+          flexDirection: "row",
+        }}
+      >
+        {/* 사용자와 그래프 뷰 , 숫자*/}
         <View
           style={{
-            borderRadius: 15,
-            borderColor: "#EBEBEB",
-            borderWidth: 2,
-            margin: "3%",
-            height: 100,
-            width: "94%",
-            flexDirection: "row",
+            width: "90%",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            justifyContent: "center",
+            flex: 1,
+            margin: "5%",
           }}
         >
-          {/* 사용자와 그래프 뷰 , 숫자*/}
+          <Text style={{ fontSize: 17 }}>
+            {this.props.user} / {year - parseInt(this.props.age / 10000)} /{" "}
+            {this.props.sex}
+          </Text>
+
+          {/* 그래프와 숫자 뷰 */}
           <View
             style={{
-              width: "90%",
-              flexDirection: "column",
-              alignItems: "flex-start",
-              justifyContent: "center",
-              flex: 1,
-              margin: "5%",
-              borderWidth: 1,
+              alignItems: "center",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginTop: "3%",
             }}
           >
-            <Text style={{ fontSize: 17 }}>
-              {this.props.user} / {year - parseInt(this.props.age / 10000)} /{" "}
-              {this.props.sex}
-            </Text>
-
-            {/* 그래프와 숫자 뷰 */}
             <View
               style={{
-                alignItems: "center",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginTop: "3%",
-                borderWidth: 1,
+                width: "80%",
+                justifyContent: "center",
               }}
             >
-              <View
-                style={{
-                  width: "80%",
-                  justifyContent: "center",
-                }}
-              >
-                <PercentageBar
-                  height={20}
-                  backgroundColor={"#E5E5E5"}
-                  completedColor={"#7AC819"}
-                  percentage={this.props.progress}
-                />
-              </View>
-
-              <Text
-                style={{
-                  color: "#484848",
-                  fontSize: 16,
-                  marginLeft: "5%",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                {this.props.progress}%
-              </Text>
+              <PercentageBar
+                height={20}
+                backgroundColor={"#E5E5E5"}
+                completedColor={"#7AC819"}
+                percentage={this.props.progress}
+              />
             </View>
+
+            <Text
+              style={{
+                color: "#484848",
+                fontSize: 16,
+                marginLeft: "5%",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {this.props.progress}%
+            </Text>
           </View>
-          {/* 아이콘, 시간 */}
-          <TouchableOpacity
-            style={{
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              flex: 0.3,
-              height: "100%",
-            }}
-            onPress={this.handleClick}
-            activeOpacity={0.8}
-          >
-            <WithLocalSvg width={40} height={40} asset={this.state.alarm} />
-          </TouchableOpacity>
         </View>
+        {/* 아이콘, 시간 */}
+        <TouchableOpacity
+          style={{
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            flex: 0.3,
+            height: "100%",
+            borderWidth: 1,
+          }}
+          onPress={this.handleClick}
+          activeOpacity={1}
+        >
+          <WithLocalSvg width={40} height={40} asset={this.state.alarm} />
+        </TouchableOpacity>
+      </View>
     );
   }
 }

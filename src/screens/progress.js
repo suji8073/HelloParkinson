@@ -30,14 +30,6 @@ export default class progress extends Component {
     this.userfunc();
   }
 
-  showMsg = () => {
-    this.setState({ data: this.state.first });
-  };
-
-  showMs1g = () => {
-    this.setState({ data: this.state.second });
-  };
-
   userfunc = () => {
     fetch("http://152.70.233.113/chamuser?sort=name", {
       method: "GET",
@@ -52,8 +44,9 @@ export default class progress extends Component {
       });
   };
 
-  onMenuPress = (id) => {
+  /*onMenuPress = (id) => {
     if (id === "abc") {
+
       // 가나다순 클릭했을 때
       fetch("http://152.70.233.113/chamuser?sort=name", {
         method: "GET",
@@ -80,7 +73,7 @@ export default class progress extends Component {
           this.setState({ second: json }, this.showMs1g());
         });
     }
-  };
+  };*/
 
   render() {
     return (
@@ -88,17 +81,7 @@ export default class progress extends Component {
         <View style={styles.menuView}>
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>환자 목록</Text>
-          <SimplePopupMenu
-            style={styles.margin}
-            items={items}
-            onSelect={(items) => {
-              this.onMenuPress(items.id);
-            }}
-            cancelLabel={"취소"}
-            onCancel={() => console.log("onCancel")}
-          >
-            <Entypo name="dots-three-vertical" size={24} color="#595959" />
-          </SimplePopupMenu>
+          <View style={styles.margin}></View>
         </View>
 
         <View style={styles.twoView}>
@@ -155,7 +138,6 @@ export default class progress extends Component {
             renderItem={({ item }) => {
               return (
                 <TouchableOpacity
-                  style={{ borderWidth: 1 }}
                   activeOpacity={0.8} //깜빡임을 조절하는 기능
                   onPress={() => {
                     this.props.navigation.navigate("user_progress", {

@@ -56,15 +56,8 @@ export default class list extends Component {
       });
   };
 
-  showMsg = () => {
-    this.setState({ data: this.state.first });
-  };
 
-  showMs1g = () => {
-    this.setState({ data: this.state.second });
-  };
-
-  onMenuPress = (id) => {
+  /*onMenuPress = (id) => {
     if (id === "abc") {
       // 가나다순 클릭했을 때
       fetch("http://152.70.233.113/chamuser?sort=name", {
@@ -92,7 +85,9 @@ export default class list extends Component {
           this.setState({ second: json }, this.showMs1g());
         });
     }
-  };
+  };*/
+
+  
   bookcheck = (book) => {
     if (book === 1) {
       return greenstarsvg;
@@ -106,17 +101,7 @@ export default class list extends Component {
         <View style={styles.menuView}>
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>환자 목록</Text>
-          <SimplePopupMenu
-            style={styles.margin}
-            items={items}
-            onSelect={(items) => {
-              this.onMenuPress(items.id);
-            }}
-            cancelLabel={"취소"}
-            onCancel={() => console.log("onCancel")}
-          >
-            <Entypo name="dots-three-vertical" size={24} color="#595959" />
-          </SimplePopupMenu>
+          <View style={styles.margin}></View>
         </View>
 
         <View style={styles.secondView}>
