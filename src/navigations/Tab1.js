@@ -5,7 +5,7 @@ import patient_Home from "../screens1/patient_Home";
 import patient_alarm from "../screens1/patient_alarm";
 import patient_record from "../screens1/patient_record";
 import patient_move from "../screens1/patient_move";
-
+import patient_move1 from "../screens1/patient_move1";
 import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 
@@ -56,7 +56,7 @@ export default function TabNavigation1({ route, navigation }) {
 
       <Tab.Screen
         name="운동"
-        component={patient_move}
+        component={name_user === "kw1234" ? patient_move : patient_move1}
         initialParams={{ paramsName: name_user }}
         options={{
           headerShown: false,

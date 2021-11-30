@@ -12,6 +12,7 @@ import { Entypo } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import Task from "./task1";
 import SimplePopupMenu from "react-native-simple-popup-menu";
+import { themeTools } from "native-base";
 
 const items = [
   { id: "abc", label: "가나다순" },
@@ -25,6 +26,8 @@ export default class list extends Component {
     super(props);
     this.state = {
       data: [],
+      first: [],
+      second: [],
 
       birth: 19431218,
       gender: "",
@@ -53,10 +56,18 @@ export default class list extends Component {
       });
   };
 
+  showMsg = () => {
+    this.setState({ data: this.state.first });
+  };
+
+  showMs1g = () => {
+    this.setState({ data: this.state.second });
+  };
+
   onMenuPress = (id) => {
     if (id === "abc") {
       // 가나다순 클릭했을 때
-      fetch("", {
+      fetch("http://152.70.233.113/chamuser?sort=name", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -65,12 +76,11 @@ export default class list extends Component {
       })
         .then((res) => res.json())
         .then((json) => {
-          this.setState({ data: json });
+          this.setState({ first: json }, this.showMsg());
         });
-      return this.state.data;
     } else if (id === "star") {
       // 즐겨찾기순 클릭했을 때
-      fetch("", {
+      fetch("http://152.70.233.113/chamuser?sort=book", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -79,9 +89,8 @@ export default class list extends Component {
       })
         .then((res) => res.json())
         .then((json) => {
-          this.setState({ data: json });
+          this.setState({ second: json }, this.showMs1g());
         });
-      return this.state.data;
     }
   };
   bookcheck = (book) => {
@@ -133,7 +142,7 @@ export default class list extends Component {
                     user={item.name}
                     age={item.birth}
                     sex={item.gender}
-                    book={bookcheck(item.bookmark)}
+                    book={item.bookmark}
                   ></Task>
                 </TouchableOpacity>
               );

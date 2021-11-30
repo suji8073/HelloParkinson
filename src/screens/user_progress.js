@@ -33,7 +33,6 @@ export default class progress extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.route.params.paramName1);
     fetch(
       "http://152.70.233.113/chamuser/id/" + this.props.route.params.paramName1,
       {
@@ -230,7 +229,9 @@ export default class progress extends Component {
               }}
             >
               <View style={{ marginBottom: "3%" }}>
-                <Text style={styles.movetitletext}>진행 중</Text>
+                <Text style={styles.movetitletext}>
+                  진행 중{this.props.route.params.paramName1}
+                </Text>
                 <Text style={styles.movetext}>날개뼈 모으기</Text>
               </View>
               <View>
@@ -258,7 +259,7 @@ export default class progress extends Component {
               asset={action_icon}
               onPress={() => {
                 this.props.navigation.navigate("moveedit", {
-                  paramName1: this.props.route.params.paramName1,
+                  paramName1: this.state.name,
                 });
               }}
             />

@@ -87,16 +87,8 @@ export default class statistics extends Component {
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>환자 통계 관리</Text>
           <View style={styles.margin}></View>
-          <SimplePopupMenu
-            items={items}
-            cancelLabel={"취소"}
-            onSelect={(items) => {
-              this.onMenuPress(items.id);
-            }}
-            onCancel={() => console.log("onCancel")}
-          >
-            <Entypo name="dots-three-vertical" size={24} color="#595959" />
-          </SimplePopupMenu>
+
+          <Entypo name="dots-three-vertical" size={24} color="#ffffff" />
         </View>
 
         <View style={styles.secondView}>

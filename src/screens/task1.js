@@ -21,16 +21,18 @@ export default class task1 extends Component {
     this.state = {
       star: silverstarsvg,
       id: 0,
-      bookmark: this.props.bookmark,
+      book: silverstarsvg,
     };
   }
   componentDidMount() {
     this.setState({ id: this.props.id, bookmark: this.props.bookmark });
-
-    console.log(this.state.id);
+    if (this.props.book === 1) {
+      this.setState({ book: greenstarsvg });
+    } else {
+      this.setState({ book: silverstarsvg });
+    }
   }
   handleClick = () => {
-    // if (this.props.book === 1) {
     if (this.state.star === silverstarsvg) {
       this.setState({ star: greenstarsvg, bookmark: 1 });
 
@@ -53,14 +55,6 @@ export default class task1 extends Component {
         }),
       });
       Alert.alert("즐겨찾기에서 해제되었습니다.");
-    }
-  };
-  bookcheck = () => {
-    if (this.props.bookmark === 1) {
-      Alert.alert("hey~");
-      return greenstarsvg;
-    } else {
-      return silverstarsvg;
     }
   };
   render() {
@@ -90,7 +84,7 @@ export default class task1 extends Component {
         </View>
         <View style={styles.margin}></View>
         <TouchableOpacity onPress={this.handleClick}>
-          <WithLocalSvg width={30} height={30} asset={this.props.book} />
+          <WithLocalSvg width={30} height={30} asset={this.state.book} />
         </TouchableOpacity>
       </View>
     );
