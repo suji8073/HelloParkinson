@@ -1,23 +1,16 @@
-// progress.js에 들어갈 리스트뷰 모양
 import React, { Component } from "react";
-// import PropTypes from "prop-types";
-import { Ionicons } from "@expo/vector-icons";
-import {
-  TouchableOpacity,
-  StyleSheet,
-  View,
-  FlatList,
-  Text,
-  ScrollView,
-} from "react-native";
+
+import { TouchableOpacity, StyleSheet, View, Text } from "react-native";
 
 import silverstarsvg from "../icon/silverstar.svg";
 import greenstarsvg from "../icon/greenstar.svg";
 import PercentageBar from "./progressbar";
 import airplane from "../icon/airplane.svg";
 import greenairplane from "../icon/greenairplane.svg";
+
 import { WithLocalSvg } from "react-native-svg";
 const year = 2021 + 1;
+
 export default class task3 extends Component {
   constructor(props) {
     super(props);
@@ -33,6 +26,7 @@ export default class task3 extends Component {
       this.setState({ alarm: airplane });
     }
   };
+
   render() {
     return (
       //  전체 뷰
@@ -100,19 +94,20 @@ export default class task3 extends Component {
           </View>
         </View>
         {/* 아이콘, 시간 */}
-        <View
+        <TouchableOpacity
           style={{
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
             flex: 0.3,
             height: "100%",
+            borderWidth: 1,
           }}
+          onPress={this.handleClick}
+          activeOpacity={1}
         >
-          <TouchableOpacity onPress={this.handleClick}>
-            <WithLocalSvg width={40} height={40} asset={this.state.alarm} />
-          </TouchableOpacity>
-        </View>
+          <WithLocalSvg width={40} height={40} asset={this.state.alarm} />
+        </TouchableOpacity>
       </View>
     );
   }

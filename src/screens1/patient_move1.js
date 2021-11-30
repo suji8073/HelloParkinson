@@ -40,7 +40,7 @@ export default class patient_move extends Component {
               <View style={styles.listview}>
                 <Text style={styles.text2}>신장(스트레칭)운동</Text>
                 <View style={styles.progressView}>
-                  <Task allcount="12" done="7" progress="58%" />
+                  <Task allcount="12" done="0" progress="0%" />
                 </View>
               </View>
             </View>
@@ -59,7 +59,7 @@ export default class patient_move extends Component {
               <View style={styles.listview}>
                 <Text style={styles.text2}>근력운동</Text>
                 <View style={styles.progressView}>
-                  <Task allcount="14" done="14" progress="100%" />
+                  <Task allcount="14" done="0" progress="0%" />
                 </View>
               </View>
             </View>
@@ -78,7 +78,7 @@ export default class patient_move extends Component {
               <View style={styles.listview}>
                 <Text style={styles.text2}>균형 및 협응 운동</Text>
                 <View style={styles.progressView}>
-                  <Task allcount="5" done="3" progress="60%" />
+                  <Task allcount="5" done="0" progress="0%" />
                 </View>
               </View>
             </View>
@@ -97,7 +97,7 @@ export default class patient_move extends Component {
               <View style={styles.listview}>
                 <Text style={styles.text2}>구강 및 발성 운동</Text>
                 <View style={styles.progressView}>
-                  <Task allcount="14" done="7" progress="50%" />
+                  <Task allcount="14" done="0" progress="0%" />
                 </View>
               </View>
             </View>
@@ -116,7 +116,7 @@ export default class patient_move extends Component {
               <View style={styles.listview}>
                 <Text style={styles.text2}>유산소 운동</Text>
                 <View style={styles.progressView}>
-                  <Task allcount="12" done="4" progress="33%" />
+                  <Task allcount="0" done="0" progress="0%" />
                 </View>
               </View>
             </View>

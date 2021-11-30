@@ -56,7 +56,9 @@ export default class login extends Component {
               });
             } else if (json.admin == 1) {
               // 관리자
-              this.props.navigation.navigate("TabNavigation");
+              this.props.navigation.navigate("TabNavigation", {
+                paramName1: "name",
+              });
             } else {
               Alert.alert(
                 // 모든 정보가 다 기입되지 않았을 때
@@ -133,13 +135,7 @@ export default class login extends Component {
           </TouchableOpacity>
 
           <View style={styles.thirdView}>
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate("TabNavigation1");
-              }}
-            >
-              <Text style={styles.secondText1}> 계정이 없으신가요?</Text>
-            </TouchableOpacity>
+            <Text style={styles.secondText1}> 계정이 없으신가요?</Text>
 
             <TouchableOpacity
               onPress={() => {

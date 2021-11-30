@@ -26,6 +26,8 @@ export default class list extends Component {
     super(props);
     this.state = {
       data: [],
+      first: [],
+      second: [],
 
       birth: 19431218,
       gender: "",
@@ -54,10 +56,11 @@ export default class list extends Component {
       });
   };
 
-  onMenuPress = (id) => {
+
+  /*onMenuPress = (id) => {
     if (id === "abc") {
       // 가나다순 클릭했을 때
-      fetch("", {
+      fetch("http://152.70.233.113/chamuser?sort=name", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -66,9 +69,8 @@ export default class list extends Component {
       })
         .then((res) => res.json())
         .then((json) => {
-          this.setState({ data: json });
+          this.setState({ first: json }, this.showMsg());
         });
-      return this.state.data;
     } else if (id === "star") {
       // 즐겨찾기순 클릭했을 때
       fetch("http://152.70.233.113/chamuser?sort=book", {
@@ -80,11 +82,12 @@ export default class list extends Component {
       })
         .then((res) => res.json())
         .then((json) => {
-          this.setState({ data: json });
+          this.setState({ second: json }, this.showMs1g());
         });
-      return this.state.data;
     }
-  };
+  };*/
+
+  
   bookcheck = (book) => {
     if (book === 1) {
       return greenstarsvg;
@@ -98,17 +101,7 @@ export default class list extends Component {
         <View style={styles.menuView}>
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>환자 목록</Text>
-          <SimplePopupMenu
-            style={styles.margin}
-            items={items}
-            onSelect={(items) => {
-              this.onMenuPress(items.id);
-            }}
-            cancelLabel={"취소"}
-            onCancel={() => console.log("onCancel")}
-          >
-            <Entypo name="dots-three-vertical" size={24} color="#595959" />
-          </SimplePopupMenu>
+          <View style={styles.margin}></View>
         </View>
 
         <View style={styles.secondView}>

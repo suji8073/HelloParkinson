@@ -117,6 +117,8 @@ export default class user_edit extends Component {
     } else {
       this.setState({ user_sex: 2 }); // 여자
     }
+    Alert.alert("저장되었습니다.");
+    this.props.navigation.navigate("user_setting");
 
     // fetch("http://152.70.233.113/", {
     //   method: "GET",

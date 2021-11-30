@@ -26,8 +26,6 @@ export default class task1 extends Component {
   }
   componentDidMount() {
     this.setState({ id: this.props.id, bookmark: this.props.bookmark });
-
-    console.log(this.state.id);
     if (this.props.book === 1) {
       this.setState({ book: greenstarsvg });
     } else {

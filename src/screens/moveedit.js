@@ -40,7 +40,7 @@ export default class progress extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        this.setState({ data: json, m1: json });
+        this.setState({ data: json });
       });
 
     fetch("http://152.70.233.113/chammotion/cat/근력운동", {
@@ -109,16 +109,6 @@ export default class progress extends Component {
       click3: 0,
       click4: 1,
       click5: 0,
-    });
-  };
-  handleClick5 = () => {
-    this.setState({
-      // data: this.state.m4,
-      click1: 0,
-      click2: 0,
-      click3: 0,
-      click4: 0,
-      click5: 1,
     });
   };
 
@@ -200,11 +190,13 @@ export default class progress extends Component {
         </View>
 
         <FlatList
+
           style={{
             // marginBottom: 80,
             borderWidth: 1,
             backgroundColor: "#F8F8F8",
           }}
+
           data={this.state.data}
           renderItem={({ item }) => {
             return <Movelist name={item.name}></Movelist>;
@@ -223,6 +215,7 @@ const styles = StyleSheet.create({
   listview: {
     flexDirection: "row",
     borderWidth: 0.8,
+
   },
   moveView: {
     borderColor: "#BBBBBB",
