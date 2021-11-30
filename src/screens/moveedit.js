@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Movelist from "./movelist";
-
+import O2_task from "./O2_task";
 export default class progress extends Component {
   constructor(props) {
     super(props);
@@ -40,58 +40,40 @@ export default class progress extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        // Alert.alert("123");
-        this.setState({ m1: json.id });
-        Alert.alert(Array.from(m1));
-        Alert.alert(m1[2]);
+        this.setState({ data: json, m1: json });
       });
-    // fetch(
-    //   "http://152.70.233.113/chamuser/id/" + this.props.route.params.paramName1,
-    //   {
-    //     method: "GET",
-    //     headers: { "Content-Type": "application/json" },
-    //   }
-    // )
-    //   .then((res) => res.json())
-    //   .then((json) => {
-    //     this.setState({
-    //       name: json.info.name,
-    //     });
-    //   });
 
-    // fetch("http://152.70.233.113/chammotion/cat/근력운동", {
-    //   method: "GET",
-    //   headers: { "Content-Type": "application/json" },
-    // })
-    //   .then((res) => res.json())
-    //   .then((json) => {
-    //     console.log("여기 11111잘 들어가나 확인 ~~ 한다~~");
-    //     this.setState({ m2: json.name });
-    //   });
+    fetch("http://152.70.233.113/chammotion/cat/근력운동", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({ m2: json });
+      });
 
-    // fetch("http://152.70.233.113/chammotion/cat/균형 및 협응운동", {
-    //   method: "GET",
-    //   headers: { "Content-Type": "application/json" },
-    // })
-    //   .then((res) => res.json())
-    //   .then((json) => {
-    //     console.log("여기 11111잘 들어가나 확인 ~~ 한다~~");
-    //     this.setState({ m3: json.name });
-    //   });
+    fetch("http://152.70.233.113/chammotion/cat/균형 및 협응 운동", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({ m3: json });
+      });
 
-    // fetch("http://152.70.233.113/chammotion/cat/구강 및 발성 운동", {
-    //   method: "GET",
-    //   headers: { "Content-Type": "application/json" },
-    // })
-    //   .then((res) => res.json())
-    //   .then((json) => {
-    //     console.log("여기 11111잘 들어가나 확인 ~~ 한다~~");
-    //     this.setState({ m4: json.name });
-    //   });
+    fetch("http://152.70.233.113/chammotion/cat/구강 및 발성 운동", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({ m4: json });
+      });
   }
+
   handleClick1 = () => {
     this.setState({
-      data: ["123", "4560", "789"],
+      data: this.state.m1,
       click1: 1,
       click2: 0,
       click3: 0,
@@ -101,7 +83,7 @@ export default class progress extends Component {
   };
   handleClick2 = () => {
     this.setState({
-      data: m2,
+      data: this.state.m2,
       click1: 0,
       click2: 1,
       click3: 0,
@@ -111,7 +93,7 @@ export default class progress extends Component {
   };
   handleClick3 = () => {
     this.setState({
-      data: m3,
+      data: this.state.m3,
       click1: 0,
       click2: 0,
       click3: 1,
@@ -121,7 +103,7 @@ export default class progress extends Component {
   };
   handleClick4 = () => {
     this.setState({
-      data: m4,
+      data: this.state.m4,
       click1: 0,
       click2: 0,
       click3: 0,
@@ -131,7 +113,7 @@ export default class progress extends Component {
   };
   handleClick5 = () => {
     this.setState({
-      // data: m5,
+      // data: this.state.m4,
       click1: 0,
       click2: 0,
       click3: 0,
@@ -139,66 +121,6 @@ export default class progress extends Component {
       click5: 1,
     });
   };
-
-  // user = () => {
-  //   fetch(
-  //     "http://152.70.233.113/chamuser/id/" + this.props.route.params.paramName1,
-  //     {
-  //       method: "GET",
-  //       headers: { "Content-Type": "application/json" },
-  //     }
-  //   )
-  //     .then((res) => res.json())
-  //     .then((json) => {
-  //       this.setState({
-  //         name: json.info.name,
-  //       });
-  //     });
-  // };
-  // m1_get = () => {
-  //   fetch("http://152.70.233.113/chammotion/cat/신장운동", {
-  //     method: "GET",
-  //     headers: { "Content-Type": "application/json" },
-  //   })
-  //     .then((res) => res.json())
-  //     .then((json) => {
-  //       console.log("여기 11111잘 들어가나 확인 ~~ 한다~~");
-  //       this.setState({ m1: json.name });
-  //     });
-  // };
-  // m2_get = () => {
-  //   fetch("http://152.70.233.113/chammotion/cat/근력운동", {
-  //     method: "GET",
-  //     headers: { "Content-Type": "application/json" },
-  //   })
-  //     .then((res) => res.json())
-  //     .then((json) => {
-  //       console.log("여기 11111잘 들어가나 확인 ~~ 한다~~");
-  //       this.setState({ m2: json.name });
-  //     });
-  // };
-  // m3_get = () => {
-  //   fetch("http://152.70.233.113/chammotion/cat/균형 및 협응운동", {
-  //     method: "GET",
-  //     headers: { "Content-Type": "application/json" },
-  //   })
-  //     .then((res) => res.json())
-  //     .then((json) => {
-  //       console.log("여기 11111잘 들어가나 확인 ~~ 한다~~");
-  //       this.setState({ m3: json.name });
-  //     });
-  // };
-  // m4_get = () => {
-  //   fetch("http://152.70.233.113/chammotion/cat/구강 및 발성 운동", {
-  //     method: "GET",
-  //     headers: { "Content-Type": "application/json" },
-  //   })
-  //     .then((res) => res.json())
-  //     .then((json) => {
-  //       console.log("여기 11111잘 들어가나 확인 ~~ 한다~~");
-  //       this.setState({ m4: json.name });
-  //     });
-  // };
 
   render() {
     return (
@@ -213,7 +135,9 @@ export default class progress extends Component {
             }}
           />
           <View style={styles.margin}></View>
-          <Text style={styles.titleText}>'{this.state.name}'님 운동 편집</Text>
+          <Text style={styles.titleText}>
+            '{this.props.route.params.paramName1}'님 운동 편집
+          </Text>
           <View style={styles.margin}></View>
           <AntDesign
             name="check"
@@ -264,7 +188,7 @@ export default class progress extends Component {
               <Text style={styles.movebtn}>구강/발성</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.handleClick5}>
+          <TouchableOpacity onPress={this.props.navigation.navigate("O2_task")}>
             <View
               style={
                 this.state.click5 === 1 ? styles.moveView_on : styles.moveView
@@ -276,10 +200,14 @@ export default class progress extends Component {
         </View>
 
         <FlatList
-          style={{ marginBottom: 80 }}
+          style={{
+            // marginBottom: 80,
+            borderWidth: 1,
+            backgroundColor: "#F8F8F8",
+          }}
           data={this.state.data}
           renderItem={({ item }) => {
-            return <Movelist>name={item.name}</Movelist>;
+            return <Movelist name={item.name}></Movelist>;
           }}
         />
       </View>
@@ -294,6 +222,7 @@ const styles = StyleSheet.create({
   },
   listview: {
     flexDirection: "row",
+    borderWidth: 0.8,
   },
   moveView: {
     borderColor: "#BBBBBB",
@@ -360,7 +289,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   margin: {
-    paddingBottom: 30,
+    // paddingBottom: 30,
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,

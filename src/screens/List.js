@@ -12,6 +12,7 @@ import { Entypo } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import Task from "./task1";
 import SimplePopupMenu from "react-native-simple-popup-menu";
+import { themeTools } from "native-base";
 
 const items = [
   { id: "abc", label: "가나다순" },
@@ -70,7 +71,7 @@ export default class list extends Component {
       return this.state.data;
     } else if (id === "star") {
       // 즐겨찾기순 클릭했을 때
-      fetch("", {
+      fetch("http://152.70.233.113/chamuser?sort=book", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -133,7 +134,7 @@ export default class list extends Component {
                     user={item.name}
                     age={item.birth}
                     sex={item.gender}
-                    book={bookcheck(item.bookmark)}
+                    book={item.bookmark}
                   ></Task>
                 </TouchableOpacity>
               );

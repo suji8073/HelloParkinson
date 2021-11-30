@@ -258,7 +258,7 @@ export default class progress extends Component {
               asset={action_icon}
               onPress={() => {
                 this.props.navigation.navigate("moveedit", {
-                  paramName1: this.props.route.params.paramName1,
+                  paramName1: this.state.name,
                 });
               }}
             />
@@ -350,16 +350,17 @@ const styles = StyleSheet.create({
   numtext: {
     fontSize: 21,
     fontWeight: "bold",
-    alignItems: "flex-end",
+    alignItems: "center",
   },
   gaetext: {
     fontSize: 16,
     marginLeft: "2%",
+    alignItems: "flex-end",
   },
 
   numView: {
     flexDirection: "row",
-    alignItems: "flex-end",
+    alignItems: "center",
     marginTop: "7%",
   },
 });
