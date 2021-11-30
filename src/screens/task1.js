@@ -12,7 +12,7 @@ import { EvilIcons } from "@expo/vector-icons";
 
 import { WithLocalSvg } from "react-native-svg";
 import silverstarsvg from "../icon/silverstar.svg";
-import greenstartsvg from "../icon/greenstar.svg";
+import greenstarsvg from "../icon/greenstar.svg";
 const year = 2021 + 1;
 
 export default class task1 extends Component {
@@ -21,16 +21,18 @@ export default class task1 extends Component {
     this.state = {
       star: silverstarsvg,
       id: 0,
+      bookmark: this.props.bookmark,
     };
   }
   componentDidMount() {
-    this.setState({ id: this.props.id });
+    this.setState({ id: this.props.id, bookmark: this.props.bookmark });
+
     console.log(this.state.id);
   }
   handleClick = () => {
-    // if(this.props.book ===1)
+    // if (this.props.book === 1) {
     if (this.state.star === silverstarsvg) {
-      this.setState({ star: greenstartsvg });
+      this.setState({ star: greenstarsvg, bookmark: 1 });
 
       fetch("http://152.70.233.113/chamuser/bookmark", {
         method: "POST",
@@ -42,7 +44,7 @@ export default class task1 extends Component {
 
       Alert.alert("즐겨찾기에 추가되었습니다.");
     } else {
-      this.setState({ star: silverstarsvg });
+      this.setState({ star: silverstarsvg, bookmark: 0 });
       fetch("http://152.70.233.113/chamuser/bookmark", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -53,7 +55,14 @@ export default class task1 extends Component {
       Alert.alert("즐겨찾기에서 해제되었습니다.");
     }
   };
-
+  bookcheck = () => {
+    if (this.props.bookmark === 1) {
+      Alert.alert("hey~");
+      return greenstarsvg;
+    } else {
+      return silverstarsvg;
+    }
+  };
   render() {
     return (
       <View style={styles.Container}>
@@ -81,7 +90,7 @@ export default class task1 extends Component {
         </View>
         <View style={styles.margin}></View>
         <TouchableOpacity onPress={this.handleClick}>
-          <WithLocalSvg width={30} height={30} asset={this.state.star} />
+          <WithLocalSvg width={30} height={30} asset={this.props.book} />
         </TouchableOpacity>
       </View>
     );

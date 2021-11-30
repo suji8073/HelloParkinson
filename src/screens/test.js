@@ -8,92 +8,134 @@ import {
   TextInput,
   Alert,
 } from "react-native";
+import { WithLocalSvg } from "react-native-svg";
 
+import plus from "../icon/plusbox.svg";
+import minus from "../icon/minusbox.svg";
 import React, { Component } from "react";
 import "react-native-gesture-handler";
-const ee = [];
 export default class test extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      data: [],
-      text: "cogus",
-    };
-  }
-
-  componentDidMount() {
-    fetch("http://152.70.233.113/chamuser?sort=name", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        this.setState({ data: json });
-      });
+    this.state = {};
   }
 
   render() {
     return (
-      <View style={styles.finalView}>
-        <View style={styles.menuView}>
-          <View style={styles.margin}></View>
-          <Text style={styles.titleText}>데이터 불러오기</Text>
-          <View style={styles.margin}></View>
+      <View>
+        <View>
+          <View style={{ margin: "10%" }}></View>
+          {/* 이 아래부터 ~~ */}
+          <View style={styles.borderView}>
+            <View style={styles.textView}>
+              <Text
+                style={{ lineHeight: 30, fontWeight: "bold", fontSize: 17 }}
+              >
+                목 앞 근육 스트레칭
+              </Text>
+              <Text style={{ fontSize: 16 }}>3분 00초</Text>
+            </View>
+            <View style={styles.btnView}>
+              <View
+                style={{
+                  flexDirection: "row",
+                }}
+              >
+                <TouchableOpacity>
+                  <WithLocalSvg width={35} height={35} asset={plus} />
+                </TouchableOpacity>
+                <View style={styles.numView}>
+                  <Text style={styles.numstyle}>5</Text>
+                </View>
+                <TouchableOpacity>
+                  <WithLocalSvg width={35} height={35} asset={minus} />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
         </View>
-        <TouchableOpacity onPress={this.setState({ text: 123 })}>
-          <Text>{this.state.text}</Text>
-        </TouchableOpacity>
+        {/* 이 아래부터 ~ */}
+        {/* <View style */}
+        <View
+          style={{
+            flexDirection: "row",
+            paddingVertical: "4%",
+            paddingHorizontal: "3%",
+            borderBottomWidth: 1,
+            borderColor: "#E4E4E4",
+          }}
+        >
+          <View
+            style={{ flex: 0.4, justifyContent: "center", paddingLeft: "2%" }}
+          >
+            <Text style={{ fontWeight: "bold", fontSize: 18 }}>걷기</Text>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              flex: 0.6,
+              alignItems: "center",
+              justifyContent: "space-evenly",
+            }}
+          >
+            <TextInput
+              style={{
+                borderWidth: 2,
+                borderColor: "#DCDCDC",
+                paddingHorizontal: "10%",
+                paddingVertical: "3%",
+                color: "#000000",
+                fontSize: 16,
+              }}
+              placeholder="0"
+            ></TextInput>
+            <Text style={{ fontSize: 16, color: "#757575" }}>시간</Text>
+
+            <TextInput
+              style={{
+                borderWidth: 2,
+                borderColor: "#DCDCDC",
+                paddingHorizontal: "10%",
+                paddingVertical: "3%",
+                color: "#000000",
+                fontSize: 16,
+              }}
+              placeholder="0"
+            ></TextInput>
+            <Text style={{ fontSize: 16, color: "#757575" }}>분</Text>
+          </View>
+        </View>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  finalView: {
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-  },
-  menuView: {
-    backgroundColor: "#FFFFFF",
-    height: 58,
+  borderView: {
     flexDirection: "row",
-    alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
-    marginTop: "10%",
-    justifyContent: "flex-start",
-    borderBottomWidth: 1.8,
-    borderColor: "#E5E5E5",
+    borderBottomColor: "#E4E4E4",
+    borderBottomWidth: 1,
+    paddingBottom: "4%",
   },
-
-  titleText: {
-    alignItems: "flex-start",
-    fontSize: 21,
-    alignItems: "center",
-    color: "#000000",
-    justifyContent: "center",
-    fontWeight: "bold",
+  textView: {
+    flex: 0.6,
+    paddingHorizontal: "6%",
+    flexDirection: "column",
   },
-
-  firstView: {
-    // padding:30,
+  btnView: {
+    flex: 0.4,
+    alignContent: "center",
     alignItems: "center",
-    justifyContent: "flex-start",
-    marginLeft: 20,
-    marginRight: 20,
     flexDirection: "row",
-    flex: 1,
-    marginTop: 15,
-    marginBottom: 15,
-    backgroundColor: "#FFFFFF",
+    marginRight: "2%",
   },
-  margin: {
-    // padding:30,
-    alignItems: "flex-start",
+  numView: {
+    paddingHorizontal: "15%",
     justifyContent: "center",
-    flex: 1,
+    borderTopColor: "#5CB405",
+    borderBottomColor: "#5CB405",
+    borderTopWidth: 2,
+    borderBottomWidth: 2,
   },
+  numstyle: { alignContent: "stretch", alignItems: "stretch" },
 });

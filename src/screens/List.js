@@ -32,7 +32,7 @@ export default class list extends Component {
       team: "",
       name: "",
       id: "",
-      // bookmark: "",
+      bookmark: 0,
     };
   }
 
@@ -84,7 +84,13 @@ export default class list extends Component {
       return this.state.data;
     }
   };
-
+  bookcheck = (book) => {
+    if (book === 1) {
+      return greenstarsvg;
+    } else {
+      silverstarsvg;
+    }
+  };
   render() {
     return (
       <View style={styles.finalView}>
@@ -127,7 +133,7 @@ export default class list extends Component {
                     user={item.name}
                     age={item.birth}
                     sex={item.gender}
-                    // book={item.bookmark}
+                    book={bookcheck(item.bookmark)}
                   ></Task>
                 </TouchableOpacity>
               );

@@ -267,7 +267,8 @@ export default class user_edit extends Component {
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
-                createTwoButtonAlert();
+                // createTwoButtonAlert(cancelable("취소"));
+                Alert.alert("환자정보가 삭제되었습니다.");
               }}
             >
               <EvilIcons name="trash" size={35} color="#808080" />
