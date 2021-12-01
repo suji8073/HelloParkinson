@@ -110,7 +110,6 @@ export default class siginup4 extends Component {
         } else {
           this.setState({ user_gender: "여" });
         }
-        alert(this.state.user_gender);
         // 모든 정보가 다 기입되면
         fetch(
           "http://152.70.233.113/chamsignup/phone/" + this.state.user_telphone,
