@@ -10,13 +10,14 @@ export default class movelist extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      m_num: 0,
+      m_num: 3,
       check: false,
     };
   }
 
   plus_func = () => {
     Alert.alert("알림을 보냅니다.");
+
     this.setState({ m_num: m_num + 1 });
   };
 

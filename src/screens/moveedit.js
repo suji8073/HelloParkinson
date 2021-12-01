@@ -30,6 +30,7 @@ export default class progress extends Component {
       m3: [],
       m4: [],
       data: [],
+      m_num: 3,
     };
   }
   componentDidMount() {
@@ -113,7 +114,7 @@ export default class progress extends Component {
 
   handleClick5 = () => {
     this.setState({
-      data: <O2_task></O2_task>,
+      data: [{ name: "걷기" }, { name: "자전거 타기" }],
       click1: 0,
       click2: 0,
       click3: 0,
@@ -121,7 +122,16 @@ export default class progress extends Component {
       click5: 1,
     });
   };
+  plus_func = () => {
+    Alert.alert("알림을 보냅니다.");
 
+    this.setState({ m_num: m_num + 1 });
+  };
+
+  minus_func = () => {
+    Alert.alert("알림을 보냅니다.");
+    this.setState({ m_num: m_num - 1 });
+  };
   render() {
     return (
       <View style={styles.finalView}>
@@ -205,7 +215,7 @@ export default class progress extends Component {
             backgroundColor: "#F8F8F8",
           }}
           data={this.state.data}
-          renderItem={({ item }) => {
+          renderItem={({ item, plus_func, minus_func }) => {
             return <Movelist name={item.name}></Movelist>;
           }}
         />

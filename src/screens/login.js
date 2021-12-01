@@ -88,16 +88,10 @@ export default class login extends Component {
             asset={logosvg}
             style={{ margin: "3%" }}
           />
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => {
-              this.props.navigation.navigate("test");
-            }}
-          >
-            <Text style={styles.titleText}>
-              {"안녕하세요.\n헬로우 파킨슨 입니다."}
-            </Text>
-          </TouchableOpacity>
+
+          <Text style={styles.titleText}>
+            {"안녕하세요.\n헬로우 파킨슨 입니다."}
+          </Text>
 
           <Text style={styles.twoText}>
             {"\n회원 서비스 이용을 위해 로그인 해주세요"}
