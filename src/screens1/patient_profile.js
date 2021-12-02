@@ -65,9 +65,7 @@ export default class patient_profile extends Component {
             }}
           />
           <View style={styles.margin}></View>
-          <Text style={styles.titleText}>
-            프로필{this.props.route.params.paramsName}
-          </Text>
+          <Text style={styles.titleText}>프로필</Text>
           <View style={styles.margin}></View>
           <EvilIcons name="star" size={30} color="#ffffff" />
         </View>
@@ -163,7 +161,7 @@ const styles = StyleSheet.create({
   },
 
   menuView: {
-    marginTop: "10%",
+    marginTop: "3%",
     backgroundColor: "#FFFFFF",
     height: 58,
     flexDirection: "row",

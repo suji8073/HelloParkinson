@@ -206,7 +206,7 @@ export default class patient_Home extends Component {
               backgroundColor: "#ffffff",
               margin: "5%",
               borderRadius: 7,
-              marginBottom: 200,
+              marginBottom: 175,
             }}
             data={this.state.data.slice(3)}
             keyExtractor={(item, index) => index.toString()}
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingRight: 20,
     paddingLeft: 20,
-    marginTop: "10%",
+    marginTop: "3%",
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",

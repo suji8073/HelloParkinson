@@ -82,7 +82,8 @@ export default class move_play extends Component {
                   ),
                   paramName2: "신장운동",
                   paramsName: this.props.route.params.paramsName,
-                }, cvxzszxs
+                },
+                cvxzszxs,
               },
             ],
           });

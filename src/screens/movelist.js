@@ -16,14 +16,13 @@ export default class movelist extends Component {
   }
 
   plus_func = () => {
-    Alert.alert("알림을 보냅니다.");
-
-    this.setState({ m_num: m_num + 1 });
+    this.setState({ m_num: this.state.m_num + 1 });
   };
 
   minus_func = () => {
-    Alert.alert("알림을 보냅니다.");
-    this.setState({ m_num: m_num - 1 });
+    if (this.state.m_num > 0) {
+      this.setState({ m_num: this.state.m_num - 1 });
+    }
   };
 
   render() {
@@ -40,7 +39,7 @@ export default class movelist extends Component {
               flexDirection: "row",
             }}
           >
-            <TouchableOpacity onpress={this.minus_func}>
+            <TouchableOpacity onPress={this.minus_func}>
               <WithLocalSvg width={35} height={35} asset={minus} />
             </TouchableOpacity>
 
@@ -48,7 +47,7 @@ export default class movelist extends Component {
               <Text style={styles.numstyle}>{this.state.m_num}</Text>
             </View>
 
-            <TouchableOpacity onpress={this.plus_func}>
+            <TouchableOpacity onPress={this.plus_func}>
               <WithLocalSvg width={35} height={35} asset={plus} />
             </TouchableOpacity>
           </View>

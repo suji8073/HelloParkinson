@@ -85,7 +85,7 @@ export default class progress extends Component {
       <View style={styles.finalView}>
         <View style={styles.menuView}>
           <View style={styles.margin}></View>
-          <Text style={styles.titleText}>환자 목록</Text>
+          <Text style={styles.titleText}>환자 진도율</Text>
           <View style={styles.margin}></View>
         </View>
 
@@ -99,7 +99,7 @@ export default class progress extends Component {
               width={30}
               height={30}
               asset={ddaysvg}
-              style={{ position: "absolute", right: "47%", top: "50%" }}
+              style={{ position: "absolute", right: "47.5%", top: "54%" }}
             />
             <AntDesign name="left" size={30} color="#808080" />
 
@@ -170,6 +170,7 @@ export default class progress extends Component {
 const styles = StyleSheet.create({
   finalView: {
     flex: 1,
+    backgroundColor: "#FFFFFF",
   },
   menuView: {
     backgroundColor: "#FFFFFF",
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingRight: 20,
     paddingLeft: 20,
-    marginTop: "10%",
+    marginTop: "3%",
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
@@ -194,7 +195,7 @@ const styles = StyleSheet.create({
   },
   fouuview: {
     paddingTop: 10,
-    marginBottom: 300,
+    marginBottom: 295,
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
