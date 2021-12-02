@@ -46,7 +46,7 @@ export default class move_4 extends Component {
           />
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>
-            구강 및 발성 운동{this.props.route.params.paramsName}
+            구강 및 발성 운동
           </Text>
           <View style={styles.margin}></View>
           <EvilIcons name="star" size={30} color="#ffffff" />
