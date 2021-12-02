@@ -15,7 +15,7 @@ function profile({ navigation }) {
       <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
       <View style={styles.menu1View}>
         <View style={styles.margin}></View>
-        <Text style={styles.titleText}>프로필</Text>
+        <Text style={styles.titleText}>관리자 프로필</Text>
         <View style={styles.margin}></View>
       </View>
       {/* 아이콘과 관리자 이름 뷰 */}
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
   titleText: {
     alignItems: "flex-start",
     fontSize: 21,
-    fontWeight:"bold",
+    fontWeight: "bold",
     marginBottom: "5%",
     alignItems: "center",
     color: "#000000",
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   },
 
   menu1View: {
-    marginTop: "10%",
+    marginTop: "3%",
     backgroundColor: "#FFFFFF",
     height: 58,
     flexDirection: "row",

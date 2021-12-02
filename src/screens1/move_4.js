@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
   },
 
   menuView: {
-    marginTop: "10%",
+    marginTop: "3%",
     backgroundColor: "#FFFFFF",
     height: 58,
     flexDirection: "row",

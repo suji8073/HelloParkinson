@@ -53,7 +53,6 @@ export default class list extends Component {
       });
   };
 
-
   /*onMenuPress = (id) => {
     if (id === "abc") {
       // 가나다순 클릭했을 때
@@ -83,7 +82,6 @@ export default class list extends Component {
         });
     }
   };*/
-
 
   bookcheck = (book) => {
     if (book === 1) {
@@ -148,7 +146,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingRight: 20,
     paddingLeft: 20,
-    marginTop: "10%",
+    marginTop: "3%",
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
@@ -211,7 +209,7 @@ const styles = StyleSheet.create({
   threeView: {
     // padding:30,
     marginTop: 10,
-    marginBottom: 230,
+    marginBottom: 210,
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",

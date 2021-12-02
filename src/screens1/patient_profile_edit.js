@@ -103,9 +103,7 @@ export default class patient_profile_edit extends Component {
           <EvilIcons name="star" size={30} color="#ffffff" />
 
           <View style={styles.margin}></View>
-          <Text style={styles.titleText}>
-            프로필 편집{this.props.route.params.paramsName}
-          </Text>
+          <Text style={styles.titleText}>프로필 편집</Text>
           <View style={styles.margin}></View>
           <AntDesign
             name="check"
@@ -237,7 +235,7 @@ const styles = StyleSheet.create({
   },
 
   menuView: {
-    marginTop: "10%",
+    marginTop: "3%",
     backgroundColor: "#FFFFFF",
     height: 58,
     flexDirection: "row",

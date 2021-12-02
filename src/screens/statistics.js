@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingRight: 20,
     paddingLeft: 20,
-    marginTop: "10%",
+    marginTop: "3%",
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   threeView: {
     // padding:30,
     marginTop: 10,
-    marginBottom: 240,
+    marginBottom: 215,
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",

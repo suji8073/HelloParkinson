@@ -5,8 +5,8 @@ import { TouchableOpacity, StyleSheet, View, Text, Alert } from "react-native";
 import silverstarsvg from "../icon/silverstar.svg";
 import greenstarsvg from "../icon/greenstar.svg";
 import PercentageBar from "./progressbar";
-import airplane from "../icon/airplane.svg";
-import greenairplane from "../icon/greenairplane.svg";
+import greenairplane from "../icon/airplane.svg";
+import airplane from "../icon/greenairplane.svg";
 
 import { WithLocalSvg } from "react-native-svg";
 const year = 2021 + 1;
