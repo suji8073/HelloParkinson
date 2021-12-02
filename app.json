@@ -20,9 +20,9 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.hcclab.helloparkinson"
     },
     "web": {
       "favicon": "./assets/favicon.png"
