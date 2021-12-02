@@ -112,7 +112,7 @@ export default class list extends Component {
             renderItem={({ item }) => {
               return (
                 <TouchableOpacity
-                  activeOpacity={0.8} //깜빡임을 조절하는 기능
+                  activeOpacity={0.8}
                   onPress={() => {
                     this.props.navigation.navigate("user_setting", {
                       paramName1: item.id,

@@ -20,94 +20,102 @@ let Svg3 = require("../image/3-3.png");
 let Svg4 = require("../image/3-4.png");
 let Svg5 = require("../image/3-5.png");
 
-function move_3({ navigation }) {
-  return (
-    <View style={styles.finalView}>
-      <View style={styles.menuView}>
-        <AntDesign
-          name="left"
-          size={24}
-          color="#808080"
-          onPress={() => {
-            navigation.navigate("TabNavigation1");
-          }}
-        />
-        <View style={styles.margin}></View>
-        <Text style={styles.titleText}>균형 협응 운동</Text>
-        <View style={styles.margin}></View>
-        <EvilIcons name="star" size={30} color="#ffffff" />
+export default class move_3 extends Component {
+  render() {
+    return (
+      <View style={styles.finalView}>
+        <View style={styles.menuView}>
+          <AntDesign
+            name="left"
+            size={24}
+            color="#808080"
+            onPress={() => {
+              this.props.navigation.navigate("TabNavigation1", {
+                paramsName: this.props.route.params.paramsName,
+              });
+            }}
+          />
+          <View style={styles.margin}></View>
+          <Text style={styles.titleText}>균형 협응 운동</Text>
+          <View style={styles.margin}></View>
+          <EvilIcons name="star" size={30} color="#ffffff" />
+        </View>
+
+        <View style={styles.secondView}>
+          <ScrollView
+            contentContainerStyle={{
+              flexGrow: 1,
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.push("move_play", {
+                  paramName1: "3-1",
+                  paramName2: "균형 협응 운동",
+                  paramsName: this.props.route.params.paramsName,
+                });
+              }}
+            >
+              <Task image={Svg1} text1="한발 서기" text2="1 / 5"></Task>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.push("move_play", {
+                  paramName1: "3-2",
+                  paramName2: "균형 협응 운동",
+                  paramsName: this.props.route.params.paramsName,
+                });
+              }}
+            >
+              <Task image={Svg2} text1="버드독 1단계" text2="1 / 5"></Task>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.push("move_play", {
+                  paramName1: "3-3",
+                  paramName2: "균형 협응 운동",
+                  paramsName: this.props.route.params.paramsName,
+                });
+              }}
+            >
+              <Task image={Svg3} text1="버드독 2단계" text2="1 / 5"></Task>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.push("move_play", {
+                  paramName1: "3-4",
+                  paramName2: "균형 협응 운동",
+                  paramsName: this.props.route.params.paramsName,
+                });
+              }}
+            >
+              <Task
+                image={Svg4}
+                text1="앉은 상태에서 제자리 걷기"
+                text2="1 / 5"
+              ></Task>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.push("move_play", {
+                  paramName1: "3-5",
+                  paramName2: "균형 협응 운동",
+                  paramsName: this.props.route.params.paramsName,
+                });
+              }}
+            >
+              <Task image={Svg5} text1="움직이는 런지" text2="1 / 5"></Task>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
       </View>
-
-      <View style={styles.secondView}>
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => {
-              navigation.push("move_play", {
-                paramName1: "3-1",
-                paramName2: "균형 협응 운동",
-              });
-            }}
-          >
-            <Task image={Svg1} text1="한발 서기" text2="1 / 5"></Task>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              navigation.push("move_play", {
-                paramName1: "3-2",
-                paramName2: "균형 협응 운동",
-              });
-            }}
-          >
-            <Task image={Svg2} text1="버드독 1단계" text2="1 / 5"></Task>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.push("move_play", {
-                paramName1: "3-3",
-                paramName2: "균형 협응 운동",
-              });
-            }}
-          >
-            <Task image={Svg3} text1="버드독 2단계" text2="1 / 5"></Task>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              navigation.push("move_play", {
-                paramName1: "3-4",
-                paramName2: "균형 협응 운동",
-              });
-            }}
-          >
-            <Task
-              image={Svg4}
-              text1="앉은 상태에서 제자리 걷기"
-              text2="1 / 5"
-            ></Task>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.push("move_play", {
-                paramName1: "3-5",
-                paramName2: "균형 협응 운동",
-              });
-            }}
-          >
-            <Task image={Svg5} text1="움직이는 런지" text2="1 / 5"></Task>
-          </TouchableOpacity>
-        </ScrollView>
-      </View>
-    </View>
-  );
+    );
+  }
 }
-export default move_3;
 
 const styles = StyleSheet.create({
   finalView: {

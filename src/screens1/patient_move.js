@@ -20,16 +20,16 @@ export default class patient_move extends Component {
       <View style={styles.finalView}>
         <View style={styles.menuView}>
           <View style={styles.margin}></View>
-          <Text style={styles.titleText}>
-            나의 운동 목록
-          </Text>
+          <Text style={styles.titleText}>나의 운동 목록</Text>
           <View style={styles.margin}></View>
         </View>
 
         <ScrollView style={styles.secondView}>
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_1");
+              this.props.navigation.navigate("move_1", {
+                paramsName: this.props.route.params.paramsName,
+              });
             }}
           >
             <View style={styles.moveView}>
@@ -40,7 +40,17 @@ export default class patient_move extends Component {
               <View style={styles.listview}>
                 <Text style={styles.text2}>신장(스트레칭)운동</Text>
                 <View style={styles.progressView}>
-                  <Task allcount="12" done="7" progress="58%" />
+                  <Task
+                    allcount="12"
+                    done={
+                      this.props.route.params.paramsName === "kw1234" ? 7 : 0
+                    }
+                    progress={
+                      this.props.route.params.paramsName === "kw1234"
+                        ? "58%"
+                        : "0%"
+                    }
+                  />
                 </View>
               </View>
             </View>
@@ -48,7 +58,9 @@ export default class patient_move extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_2");
+              this.props.navigation.navigate("move_2", {
+                paramsName: this.props.route.params.paramsName,
+              });
             }}
           >
             <View style={styles.moveView}>
@@ -59,7 +71,17 @@ export default class patient_move extends Component {
               <View style={styles.listview}>
                 <Text style={styles.text2}>근력운동</Text>
                 <View style={styles.progressView}>
-                  <Task allcount="14" done="14" progress="100%" />
+                  <Task
+                    allcount="14"
+                    done={
+                      this.props.route.params.paramsName === "kw1234" ? 14 : 0
+                    }
+                    progress={
+                      this.props.route.params.paramsName === "kw1234"
+                        ? "100%"
+                        : "0%"
+                    }
+                  />
                 </View>
               </View>
             </View>
@@ -67,7 +89,9 @@ export default class patient_move extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_3");
+              this.props.navigation.navigate("move_3", {
+                paramsName: this.props.route.params.paramsName,
+              });
             }}
           >
             <View style={styles.moveView}>
@@ -78,7 +102,17 @@ export default class patient_move extends Component {
               <View style={styles.listview}>
                 <Text style={styles.text2}>균형 및 협응 운동</Text>
                 <View style={styles.progressView}>
-                  <Task allcount="5" done="3" progress="60%" />
+                  <Task
+                    allcount="5"
+                    done={
+                      this.props.route.params.paramsName === "kw1234" ? 3 : 0
+                    }
+                    progress={
+                      this.props.route.params.paramsName === "kw1234"
+                        ? "60%"
+                        : "0%"
+                    }
+                  />
                 </View>
               </View>
             </View>
@@ -86,7 +120,9 @@ export default class patient_move extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_4");
+              this.props.navigation.navigate("move_4", {
+                paramsName: this.props.route.params.paramsName,
+              });
             }}
           >
             <View style={styles.moveView}>
@@ -97,7 +133,17 @@ export default class patient_move extends Component {
               <View style={styles.listview}>
                 <Text style={styles.text2}>구강 및 발성 운동</Text>
                 <View style={styles.progressView}>
-                  <Task allcount="14" done="7" progress="50%" />
+                  <Task
+                    allcount="14"
+                    done={
+                      this.props.route.params.paramsName === "kw1234" ? 7 : 0
+                    }
+                    progress={
+                      this.props.route.params.paramsName === "kw1234"
+                        ? "50%"
+                        : "0%"
+                    }
+                  />
                 </View>
               </View>
             </View>
@@ -116,7 +162,17 @@ export default class patient_move extends Component {
               <View style={styles.listview}>
                 <Text style={styles.text2}>유산소 운동</Text>
                 <View style={styles.progressView}>
-                  <Task allcount="12" done="4" progress="33%" />
+                  <Task
+                    allcount="12"
+                    done={
+                      this.props.route.params.paramsName === "kw1234" ? 4 : 0
+                    }
+                    progress={
+                      this.props.route.params.paramsName === "kw1234"
+                        ? "33%"
+                        : "0%"
+                    }
+                  />
                 </View>
               </View>
             </View>

@@ -71,7 +71,9 @@ export default class patient_profile_edit extends Component {
       Alert.alert("비밀번호가 일치하지 않습니다.");
     } else {
       Alert.alert("저장되었습니다.");
-      this.props.navigation.navigate("patient_profile");
+      this.props.navigation.navigate("patient_profile", {
+        paramsName: this.props.route.params.paramsName,
+      });
     }
   };
 
@@ -101,7 +103,9 @@ export default class patient_profile_edit extends Component {
           <EvilIcons name="star" size={30} color="#ffffff" />
 
           <View style={styles.margin}></View>
-          <Text style={styles.titleText}>프로필</Text>
+          <Text style={styles.titleText}>
+            프로필 편집{this.props.route.params.paramsName}
+          </Text>
           <View style={styles.margin}></View>
           <AntDesign
             name="check"

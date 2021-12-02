@@ -21,7 +21,7 @@ export default class patient_move extends Component {
         <View style={styles.menuView}>
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>
-            나의 운동 목록
+            나의 운동 목록{this.props.route.params.paramsName}
           </Text>
           <View style={styles.margin}></View>
         </View>
@@ -29,7 +29,9 @@ export default class patient_move extends Component {
         <ScrollView style={styles.secondView}>
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_1");
+              this.props.navigation.navigate("move_1", {
+                paramsName: this.props.route.params.paramsName,
+              });
             }}
           >
             <View style={styles.moveView}>
@@ -48,7 +50,9 @@ export default class patient_move extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_2");
+              this.props.navigation.navigate("move_2", {
+                paramsName: this.props.route.params.paramsName,
+              });
             }}
           >
             <View style={styles.moveView}>
@@ -67,7 +71,9 @@ export default class patient_move extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_3");
+              this.props.navigation.navigate("move_3", {
+                paramsName: this.props.route.params.paramsName,
+              });
             }}
           >
             <View style={styles.moveView}>
@@ -86,7 +92,9 @@ export default class patient_move extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_4");
+              this.props.navigation.navigate("move_4", {
+                paramsName: this.props.route.params.paramsName,
+              });
             }}
           >
             <View style={styles.moveView}>

@@ -78,7 +78,7 @@ export default class patient_Home extends Component {
           <TouchableOpacity
             onPress={() => {
               this.props.navigation.navigate("patient_profile", {
-                paramName1: this.props.route.params.paramsName,
+                paramsName: this.props.route.params.paramsName,
               });
             }}
           >

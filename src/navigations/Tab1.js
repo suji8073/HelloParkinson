@@ -56,7 +56,7 @@ export default function TabNavigation1({ route, navigation }) {
 
       <Tab.Screen
         name="운동"
-        component={name_user === "kw1234" ? patient_move : patient_move1}
+        component={patient_move}
         initialParams={{ paramsName: name_user }}
         options={{
           headerShown: false,

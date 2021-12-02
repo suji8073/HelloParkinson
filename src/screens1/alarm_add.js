@@ -54,7 +54,7 @@ export default class alarm_add extends Component {
             size={24}
             color="#808080"
             onPress={() => {
-              navigation.pop();
+              this.props.navigation.pop();
             }}
           />
           <View style={styles.margin}></View>

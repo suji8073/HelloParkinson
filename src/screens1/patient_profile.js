@@ -31,7 +31,7 @@ export default class patient_profile extends Component {
   componentDidMount() {
     fetch(
       "http://152.70.233.113/chamuser/uid/" +
-        this.props.route.params.paramName1,
+        this.props.route.params.paramsName,
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -59,11 +59,15 @@ export default class patient_profile extends Component {
             size={24}
             color="#808080"
             onPress={() => {
-              this.props.navigation.navigate("TabNavigation1");
+              this.props.navigation.navigate("TabNavigation1", {
+                paramsName: this.props.route.params.paramsName,
+              });
             }}
           />
           <View style={styles.margin}></View>
-          <Text style={styles.titleText}>프로필</Text>
+          <Text style={styles.titleText}>
+            프로필{this.props.route.params.paramsName}
+          </Text>
           <View style={styles.margin}></View>
           <EvilIcons name="star" size={30} color="#ffffff" />
         </View>
@@ -133,6 +137,7 @@ export default class patient_profile extends Component {
             onPress={() => {
               this.props.navigation.navigate("patient_profile_edit", {
                 paramName1: this.state.UID,
+                paramsName: this.props.route.params.paramsName,
               });
             }}
           >
