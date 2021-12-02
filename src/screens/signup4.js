@@ -339,13 +339,13 @@ const styles = StyleSheet.create({
     flex: 3,
     justifyContent: "center",
     alignItems: "flex-start",
-    marginBottom: "5%",
-    marginTop: "10%",
+    marginBottom: "3%",
+    marginTop: "3%",
   },
 
   firstView: {
     width: "100%",
-    flex: 25,
+    flex: 24,
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
@@ -353,7 +353,7 @@ const styles = StyleSheet.create({
 
   secondView: {
     alignItems: "flex-start",
-    marginBottom: "10%",
+    marginBottom: "8%",
   },
 
   checkView: {

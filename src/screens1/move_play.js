@@ -193,10 +193,12 @@ export default class move_play extends Component {
             source={{
               uri: this.state.link,
             }}
-            useWebKit={true} // ios 필수
+            scalesPageToFit={true}
             scrollEnabled={false}
-            //domStorageEnabled={true}
+            domStorageEnabled={true}
+            allowsFullscreenVideo={true}
             javaScriptEnabled={true}
+            allowFullScreen={true}
           />
         </View>
 

@@ -5,7 +5,6 @@ import patient_Home from "../screens1/patient_Home";
 import patient_alarm from "../screens1/patient_alarm";
 import patient_record from "../screens1/patient_record";
 import patient_move from "../screens1/patient_move";
-import patient_move1 from "../screens1/patient_move1";
 import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 

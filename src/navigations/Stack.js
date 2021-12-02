@@ -19,7 +19,6 @@ import TabNavigation1 from "./Tab1";
 import patient_record from "../screens1/patient_record";
 import patient_alarm from "../screens1/patient_alarm";
 import patient_move from "../screens1/patient_move";
-import patient_move1 from "../screens1/patient_move1";
 import patient_Home from "../screens1/patient_Home";
 import patient_profile from "../screens1/patient_profile";
 import patient_profile_edit from "../screens1/patient_profile_edit";
@@ -61,7 +60,6 @@ const StackNavigation = () => {
 
       <Stack.Screen name="patient_Home" component={patient_Home} />
       <Stack.Screen name="patient_move" component={patient_move} />
-      <Stack.Screen name="patient_move1" component={patient_move1} />
       <Stack.Screen name="patient_record" component={patient_record} />
       <Stack.Screen name="patient_alarm" component={patient_alarm} />
       <Stack.Screen name="patient_profile" component={patient_profile} />
