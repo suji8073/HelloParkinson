@@ -13,6 +13,7 @@ import { WithLocalSvg } from "react-native-svg";
 import silverstarsvg from "../icon/silverstar.svg";
 import greenstarsvg from "../icon/greenstar.svg";
 const year = 2021 + 1;
+import { AntDesign } from "@expo/vector-icons";
 
 export default class task1 extends Component {
   constructor(props) {
@@ -24,12 +25,8 @@ export default class task1 extends Component {
   }
   componentDidMount() {
     this.setState({ id: this.props.id });
-    if (this.props.book === 1) {
-      this.setState({ star: greenstarsvg });
-    } else {
-      this.setState({ star: silverstarsvg });
-    }
   }
+
   handleClick = () => {
     if (this.state.star === silverstarsvg) {
       this.setState({ star: greenstarsvg });
@@ -54,6 +51,7 @@ export default class task1 extends Component {
       Alert.alert("즐겨찾기에서 해제되었습니다.");
     }
   };
+
   render() {
     return (
       <View style={styles.Container}>
@@ -81,7 +79,11 @@ export default class task1 extends Component {
         </View>
         <View style={styles.margin}></View>
         <TouchableOpacity onPress={this.handleClick}>
-          <WithLocalSvg width={30} height={30} asset={this.state.star} />
+          <WithLocalSvg
+            width={30}
+            height={30}
+            asset={this.props.book == 1 ? greenstarsvg : silverstarsvg}
+          />
         </TouchableOpacity>
       </View>
     );

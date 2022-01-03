@@ -27,6 +27,7 @@ export default class patient_record extends Component {
   }
 
   componentDidMount() {
+    // 일별 총 진도율
     fetch(
       "http://152.70.233.113/chamuser/uid/" +
         this.props.route.params.paramsName,
@@ -47,7 +48,7 @@ export default class patient_record extends Component {
           sun: json.info.sun * 0.8,
         });
       });
-
+    // 일별, 카테고리별 진도율
     console.log(this.props.text);
     fetch(
       "http://152.70.233.113/chamuser/day/" +

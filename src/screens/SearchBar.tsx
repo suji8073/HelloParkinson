@@ -20,7 +20,12 @@ const SearchInput = styled.TextInput`
 `;
 
 export default function SearchBar() {
+  let search = null;
   const [value, setValue] = useState("");
+  const searchSpace = (event) => {
+    let keyword = event.target.value;
+    this.setState({ search: keyword });
+  };
 
   const onKeyPress = (props) => {
     if (props.key == "Enter") {

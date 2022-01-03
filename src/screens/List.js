@@ -12,13 +12,11 @@ import { Entypo } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import Task from "./task1";
 import SimplePopupMenu from "react-native-simple-popup-menu";
-import { themeTools } from "native-base";
 
 const items = [
   { id: "abc", label: "가나다순" },
   { id: "star", label: "즐겨찾기순" },
 ];
-// sorting필요함 !!
 const today = new Date();
 
 export default class list extends Component {
@@ -53,7 +51,7 @@ export default class list extends Component {
       });
   };
 
-  /*onMenuPress = (id) => {
+  onMenuPress = (id) => {
     if (id === "abc") {
       // 가나다순 클릭했을 때
       fetch("http://152.70.233.113/chamuser?sort=name", {
@@ -65,7 +63,8 @@ export default class list extends Component {
       })
         .then((res) => res.json())
         .then((json) => {
-          this.setState({ first: json }, this.showMsg());
+          this.setState({ data: json });
+          return this.state.data;
         });
     } else if (id === "star") {
       // 즐겨찾기순 클릭했을 때
@@ -78,25 +77,29 @@ export default class list extends Component {
       })
         .then((res) => res.json())
         .then((json) => {
-          this.setState({ second: json }, this.showMs1g());
+          this.setState({ data: json });
+          return this.state.data;
         });
     }
-  };*/
-
-  bookcheck = (book) => {
-    if (book === 1) {
-      return greenstarsvg;
-    } else {
-      silverstarsvg;
-    }
   };
+
   render() {
     return (
       <View style={styles.finalView}>
         <View style={styles.menuView}>
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>환자 목록</Text>
-          <View style={styles.margin}></View>
+          <SimplePopupMenu
+            style={styles.margin}
+            items={items}
+            cancelLabel={"취소"}
+            onSelect={(items) => {
+              this.onMenuPress(items.id);
+            }}
+            onCancel={() => console.log("onCancel")}
+          >
+            <Entypo name="dots-three-vertical" size={24} color="#595959" />
+          </SimplePopupMenu>
         </View>
 
         <View style={styles.secondView}>
@@ -104,9 +107,11 @@ export default class list extends Component {
         </View>
 
         <View style={styles.threeView}>
+          <Text>{this.state.data.bookmark}</Text>
           <FlatList
             keyExtractor={(item, index) => index}
             data={this.state.data}
+            extraData={this.state.data}
             renderItem={({ item }) => {
               return (
                 <TouchableOpacity
@@ -146,7 +151,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingRight: 20,
     paddingLeft: 20,
-    marginTop: "3%",
+    marginTop: "10%",
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
@@ -209,7 +214,7 @@ const styles = StyleSheet.create({
   threeView: {
     // padding:30,
     marginTop: 10,
-    marginBottom: 210,
+    marginBottom: 230,
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
