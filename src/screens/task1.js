@@ -28,8 +28,8 @@ export default class task1 extends Component {
   }
 
   handleClick = () => {
-    if (this.state.star === silverstarsvg) {
-      this.setState({ star: greenstarsvg });
+    if (this.props.book === 0) {
+      // 아이콘 asset값 변경 greenstarsvg 으로
 
       fetch("http://152.70.233.113/chamuser/bookmark", {
         method: "POST",
@@ -40,7 +40,7 @@ export default class task1 extends Component {
       });
       Alert.alert("즐겨찾기에 추가되었습니다.");
     } else {
-      this.setState({ star: silverstarsvg });
+      // 아이콘 asset값 변경 silverstarsvg 으로
       fetch("http://152.70.233.113/chamuser/bookmark", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -80,6 +80,7 @@ export default class task1 extends Component {
         <View style={styles.margin}></View>
         <TouchableOpacity onPress={this.handleClick}>
           <WithLocalSvg
+            id="svgs"
             width={30}
             height={30}
             asset={this.props.book == 1 ? greenstarsvg : silverstarsvg}
