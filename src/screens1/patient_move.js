@@ -195,7 +195,9 @@ export default class patient_move extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              //navigation.navigate("");
+              this.props.navigation.navigate("move_5", {
+                paramsName: this.props.route.params.paramsName,
+              });
             }}
           >
             <View style={styles.moveView}>
