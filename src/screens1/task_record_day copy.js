@@ -2,13 +2,8 @@ import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 
-function* yLabel() {
-  yield* ["0%", "", "50%", "", "100%"];
-}
-
 export default class task_patient extends Component {
   render() {
-    const yLabelIterator = yLabel();
     return (
       //  전체 뷰
       <View
@@ -55,19 +50,23 @@ export default class task_patient extends Component {
                   ],
                   color: (opacity = 0) => `rgba(101, 203, 0, ${opacity})`, // optional
                   strokeWidth: 1.5,
+                  plugins: {
+                    legend: {
+                      display: false,
+                    },
+                  },
                 },
               ],
             }}
-            width={350}
+            width={300}
             height={100}
-            formatYLabel={() => [yLabelIterator.next().value]}
             chartConfig={{
               backgroundColor: "#FFFFFF",
               backgroundGradientFrom: "#FFFFFF",
               backgroundGradientTo: "#FFFFFF",
               decimalPlaces: 0,
               color: (opacity = 1) => `rgba(198, 198, 198, ${opacity})`,
-              labelColor: (opacity = 1) => `rgba(198, 198, 198, ${opacity})`,
+              labelColor: (opacity = 1) => `rgba(72, 72, 72, ${opacity})`,
               propsForDots: {
                 r: "4",
               },
@@ -134,6 +133,9 @@ const styles = StyleSheet.create({
   chart: {
     alignItems: "center",
     justifyContent: "center",
+    paddingRight: 10,
+    marginLeft: 50,
+    paddingLeft: 20,
   },
   textView: {
     flexDirection: "row",
