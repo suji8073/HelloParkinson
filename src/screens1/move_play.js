@@ -14,6 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { WebView } from "react-native-webview";
+import Video from "react-native-video";
 
 export default class move_play extends Component {
   constructor(props) {
@@ -180,25 +181,21 @@ export default class move_play extends Component {
           />
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>
-            {this.props.route.params.paramName2}
+            {this.props.route.params.paramName2}야
           </Text>
           <View style={styles.margin}></View>
           <EvilIcons name="star" size={30} color="#ffffff" />
         </View>
 
         <View style={styles.secondView}>
-          <WebView
-            style={{ width: "100%", height: "100%" }}
-            mixedContentMode="always"
-            source={{
-              uri: this.state.link,
-            }}
-            scalesPageToFit={true}
-            scrollEnabled={false}
-            domStorageEnabled={true}
-            allowsFullscreenVideo={true}
-            javaScriptEnabled={true}
-            allowFullScreen={true}
+          <Video
+            source={{ uri: 'ai_low.1.mp4' }} // Can be a URL or a local file.
+            ref={(ref) => {
+              this.player = ref;
+            }} // Store reference
+            onBuffer={this.onBuffer} // Callback when remote video is buffering
+            onError={this.videoError} // Callback when video cannot be loaded
+            style={styles.backgroundVideo}
           />
         </View>
 
@@ -274,6 +271,13 @@ const styles = StyleSheet.create({
     flex: 2,
     margin: 15,
     backgroundColor: "#FFFFFF",
+  },
+  backgroundVideo: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
   },
 
   secondView: {

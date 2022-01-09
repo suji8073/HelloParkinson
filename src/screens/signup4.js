@@ -216,6 +216,7 @@ export default class siginup4 extends Component {
                   onChangeText={(name) => {
                     this.setState({ user_name: name });
                   }}
+                  maxLength={4}
                 />
               </View>
 
@@ -231,6 +232,8 @@ export default class siginup4 extends Component {
                     onChangeText={(tel) => {
                       this.setState({ user_telphone: tel });
                     }}
+                    keyboardType="number-pad"
+                    maxLength={8}
                   />
                 </View>
               </View>
@@ -245,10 +248,12 @@ export default class siginup4 extends Component {
                 <TextInput
                   style={styles.textInput}
                   secureTextEntry={false}
-                  placeholder="'-' 제외 8자리를 입력해주세요"
+                  placeholder="'-' 제외 8자리를 입력해주세요 ex) 19001010"
                   onChangeText={(age) => {
                     this.setState({ user_age: age });
                   }}
+                  keyboardType="number-pad"
+                  maxLength={8}
                 />
               </View>
             </View>
