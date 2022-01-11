@@ -13,8 +13,68 @@ import TestSvg4 from "../icon/Frame4.svg";
 import TestSvg5 from "../icon/Frame5.svg";
 import Task from "./task_patient";
 
-import { WithLocalSvg } from "react-native-svg";
+import { parse, WithLocalSvg } from "react-native-svg";
+
+const data = {
+  setcnt1: 3,
+  setcnt2: 5,
+  setcnt3: 7,
+  setcnt4: 0,
+  setcnt5: 12,
+  donecnt1: 12,
+  donecnt2: 12,
+  donecnt3: 12,
+  donecnt4: 12,
+  donecnt5: 12,
+};
+
 export default class patient_move extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      setcnt1: 0,
+      setcnt2: 0,
+      setcnt3: 0,
+      setcnt4: 0,
+      setcnt5: 0,
+      donecnt1: 0,
+      donecnt2: 0,
+      donecnt3: 0,
+      donecnt4: 0,
+      donecnt5: 0,
+      cat1: 0,
+      cat2: 0,
+      cat3: 0,
+      cat4: 0,
+      cat5: 0,
+    };
+  }
+
+  componentDidMount() {
+    // 일별 총 진도율
+    /*fetch(
+      "http://152.70.233.113/chamuser/uid/" +
+        this.props.route.params.paramsName,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({
+          progress: json.info.progress,
+          mon: json.info.mon * 0.8,
+          tus: json.info.tus * 0.8,
+          wed: json.info.wed * 0.8,
+          thr: json.info.thr * 0.8,
+          fri: json.info.fri * 0.8,
+          sun: json.info.sun * 0.8,
+        });
+      });
+      */
+  }
+
   render() {
     return (
       <View style={styles.finalView}>
@@ -41,14 +101,10 @@ export default class patient_move extends Component {
                 <Text style={styles.text2}>신장(스트레칭)운동</Text>
                 <View style={styles.progressView}>
                   <Task
-                    allcount="12"
-                    done={
-                      this.props.route.params.paramsName === "kw1234" ? 7 : 0
-                    }
+                    allcount={data.donecnt1}
+                    done={data.setcnt1}
                     progress={
-                      this.props.route.params.paramsName === "kw1234"
-                        ? "58%"
-                        : "0%"
+                      String((data.setcnt1 / data.donecnt1) * 100) + "%"
                     }
                   />
                 </View>
@@ -72,14 +128,10 @@ export default class patient_move extends Component {
                 <Text style={styles.text2}>근력운동</Text>
                 <View style={styles.progressView}>
                   <Task
-                    allcount="14"
-                    done={
-                      this.props.route.params.paramsName === "kw1234" ? 14 : 0
-                    }
+                    allcount={data.donecnt2}
+                    done={data.setcnt2}
                     progress={
-                      this.props.route.params.paramsName === "kw1234"
-                        ? "100%"
-                        : "0%"
+                      String((data.setcnt2 / data.donecnt2) * 100) + "%"
                     }
                   />
                 </View>
@@ -103,14 +155,10 @@ export default class patient_move extends Component {
                 <Text style={styles.text2}>균형 및 협응 운동</Text>
                 <View style={styles.progressView}>
                   <Task
-                    allcount="5"
-                    done={
-                      this.props.route.params.paramsName === "kw1234" ? 3 : 0
-                    }
+                    allcount={data.donecnt3}
+                    done={data.setcnt3}
                     progress={
-                      this.props.route.params.paramsName === "kw1234"
-                        ? "60%"
-                        : "0%"
+                      String((data.setcnt3 / data.donecnt3) * 100) + "%"
                     }
                   />
                 </View>
@@ -134,14 +182,10 @@ export default class patient_move extends Component {
                 <Text style={styles.text2}>구강 및 발성 운동</Text>
                 <View style={styles.progressView}>
                   <Task
-                    allcount="14"
-                    done={
-                      this.props.route.params.paramsName === "kw1234" ? 7 : 0
-                    }
+                    allcount={data.donecnt4}
+                    done={data.setcnt4}
                     progress={
-                      this.props.route.params.paramsName === "kw1234"
-                        ? "50%"
-                        : "0%"
+                      String((data.setcnt4 / data.donecnt4) * 100) + "%"
                     }
                   />
                 </View>
@@ -151,7 +195,9 @@ export default class patient_move extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              //navigation.navigate("");
+              this.props.navigation.navigate("move_5", {
+                paramsName: this.props.route.params.paramsName,
+              });
             }}
           >
             <View style={styles.moveView}>
@@ -163,14 +209,10 @@ export default class patient_move extends Component {
                 <Text style={styles.text2}>유산소 운동</Text>
                 <View style={styles.progressView}>
                   <Task
-                    allcount="12"
-                    done={
-                      this.props.route.params.paramsName === "kw1234" ? 4 : 0
-                    }
+                    allcount={data.donecnt5}
+                    done={data.setcnt5}
                     progress={
-                      this.props.route.params.paramsName === "kw1234"
-                        ? "33%"
-                        : "0%"
+                      String((data.setcnt5 / data.donecnt5) * 100) + "%"
                     }
                   />
                 </View>
