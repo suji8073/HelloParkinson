@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  Image,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
@@ -19,6 +20,7 @@ export default class passwchange extends Component {
     };
   }
   render() {
+    let profile_svg = require("../icon/snuh.png");
     return (
       <View style={styles.finalView}>
         <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
@@ -50,7 +52,10 @@ export default class passwchange extends Component {
             marginTop: "8%",
           }}
         >
-          <Ionicons name="person-circle-sharp" size={120} color="lightblue" />
+          <Image
+            style={{ height: 105, width: 110, marginBottom: "3%" }}
+            source={profile_svg}
+          />
           <Text style={styles.titleText}>관리자</Text>
         </View>
 
@@ -178,7 +183,7 @@ const styles = StyleSheet.create({
   },
 
   menu1View: {
-    marginTop: "3%",
+    marginTop: "10%",
     backgroundColor: "#FFFFFF",
     height: 58,
     flexDirection: "row",

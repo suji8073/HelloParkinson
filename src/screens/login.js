@@ -13,6 +13,7 @@ import "react-native-gesture-handler";
 import { WithLocalSvg } from "react-native-svg";
 
 import logosvg from "../icon/logo.svg";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default class login extends Component {
   constructor(props) {
@@ -22,6 +23,12 @@ export default class login extends Component {
       pw: "",
     };
   }
+  // componentDidMount() {
+  // userName, userId, userPw 불러오기
+  //   const userData = await AsyncStorage.getItem("userData");
+  //   this.setState({ id: userData.userId, pw: userData.userPw });
+  //   login_check();
+  // }
   login_check = () => {
     console.log("아이디: " + this.state.id);
     console.log("비밀번호: " + this.state.pw);

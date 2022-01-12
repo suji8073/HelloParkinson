@@ -5,6 +5,7 @@ import {
   View,
   Text,
   FlatList,
+  Alert,
 } from "react-native";
 import { WithLocalSvg } from "react-native-svg";
 
@@ -15,14 +16,21 @@ import { AntDesign } from "@expo/vector-icons";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 
 const items = [
-  { id: "abc", label: "가나다순" },
+  { id: "alarm", label: "최근알림순" },
   { id: "progress", label: "진도율순" },
 ];
-
+var now = new Date();
 export default class progress extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      daytext: ["일", "월", "화", "수", "목", "금", "토"],
+      year: 0,
+      month: 0,
+      day: 0,
+      lastdate: 0,
+      thisdate: 0,
+      yoil: 0, //(0:일요일 ~ 6: 토요일)
       data: [],
       alarmtime: [],
       user_progress: 0,
@@ -33,7 +41,109 @@ export default class progress extends Component {
 
   componentDidMount() {
     this.userfunc();
+    this.setState({ year: parseInt(now.getFullYear()) });
+    this.setState({ month: parseInt(now.getMonth() + 1) });
+    this.setState({ day: parseInt(now.getDate()) });
+    this.setState({ yoil: parseInt(now.getDay()) });
+    this.setState({
+      lastdate: new Date(this.state.year, this.state.month - 1, 0).getDate(),
+    });
+    this.setState({
+      thisdate: new Date(this.state.year, this.state.month, 0).getDate(),
+    });
   }
+  minus = () => {
+    this.setState({ yoil: this.state.yoil - 1 });
+    this.setState({ day: this.state.day - 1 });
+    // this.userfunc() 특정 날짜의 환자 전체 진도율
+  };
+  plus = () => {
+    this.setState({ yoil: this.state.yoil + 1 });
+    this.setState({ day: this.state.day + 1 });
+    // this.userfunc() 특정 날짜의 환자 전체 진도율
+  };
+  dayy = (num) => {
+    while (num < 0) {
+      num += 7;
+    }
+    while (num > 6) {
+      num -= 7;
+    }
+    switch (num) {
+      case 0:
+        return "일";
+        break;
+      case 1:
+        return "월";
+        break;
+      case 2:
+        return "화";
+        break;
+      case 3:
+        return "수";
+        break;
+      case 4:
+        return "목";
+        break;
+      case 5:
+        return "금";
+        break;
+      case 6:
+        return "토";
+        break;
+    }
+  };
+  daynum = (num) => {
+    if (num < 1) {
+      return this.state.lastdate + num + 1;
+    } else if (num > this.state.lastdate) {
+      return num - this.state.lastdate;
+    } else {
+      return num;
+    }
+  };
+  todaynum = (num) => {
+    // 이전달로 넘어갈 경우
+    if (num == 0) {
+      // 이전 해로 넘어갈 경우
+      if (this.state.month == 1) {
+        this.setState({ month: 12 });
+      }
+      // 같은해에서 이동할 경우
+      else {
+        this.setState({ month: this.state.month - 1 });
+      }
+      this.setState({ thisdate: this.state.lastdate });
+      this.setState({
+        lastdate: new Date(this.state.year, this.state.month - 1, 0).getDate(),
+      });
+      this.setState({ day: this.state.thisdate });
+
+      return this.state.day;
+    }
+
+    // 다음달로 넘어갈 경우
+    // else if (num == this.state.thisdate + 1) {
+    //   // 다음 해로 넘어갈 경우
+    //   if (this.state.month == 12) {
+    //     this.setState({ month: 1 });
+    //   }
+    //   // 같은 해에서 이동할 경우
+    //   else {
+    //     this.setState({ month: this.state.month + 1 });
+    //   }
+    //   this.setState({ lastdate: this.state.thisdate });
+    //   this.setState({
+    //     thisdate: new Date(this.state.year, this.state.month, 0).getDate(),
+    //   });
+    //   // this.setState({ day: 1 });
+    //   return this.state.day;
+    // }
+    // 현재 달에서 이동할 경우
+    else {
+      return num;
+    }
+  };
 
   userfunc = () => {
     fetch("http://152.70.233.113/chamuser?sort=name", {
@@ -48,11 +158,10 @@ export default class progress extends Component {
         this.setState({ data: json });
       });
   };
-
-  /*onMenuPress = (id) => {
-    if (id === "abc") {
-
-      // 가나다순 클릭했을 때
+  onMenuPress = (id) => {
+    if (id === "alarm") {
+      // 최근알림순 클릭했을 때
+      // 주소 변경필요
       fetch("http://152.70.233.113/chamuser?sort=name", {
         method: "GET",
         headers: {
@@ -62,10 +171,12 @@ export default class progress extends Component {
       })
         .then((res) => res.json())
         .then((json) => {
-          this.setState({ first: json }, this.showMsg());
+          this.setState({ data: json });
+          return this.state.data;
         });
     } else if (id === "progress") {
-      // 즐겨찾기순 클릭했을 때
+      // 진도율 낮은 순
+
       fetch("http://152.70.233.113/chamuser?sort=prog", {
         method: "GET",
         headers: {
@@ -75,10 +186,11 @@ export default class progress extends Component {
       })
         .then((res) => res.json())
         .then((json) => {
-          this.setState({ second: json }, this.showMs1g());
+          this.setState({ data: json });
+          return this.state.data;
         });
     }
-  };*/
+  };
 
   render() {
     return (
@@ -86,53 +198,86 @@ export default class progress extends Component {
         <View style={styles.menuView}>
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>환자 진도율</Text>
-          <View style={styles.margin}></View>
+          <SimplePopupMenu
+            style={styles.margin}
+            items={items}
+            cancelLabel={"취소"}
+            onSelect={(items) => {
+              this.onMenuPress(items.id);
+            }}
+            onCancel={() => console.log("onCancel")}
+          >
+            <Entypo name="dots-three-vertical" size={24} color="#595959" />
+          </SimplePopupMenu>
         </View>
 
         <View style={styles.twoView}>
-          <Text style={{ fontSize: 21 }}>12월</Text>
+          {/* <Text style={{ fontSize: 21 }}>12월</Text> */}
+          <Text style={{ fontSize: 21 }}>{this.state.month} 월</Text>
         </View>
 
         <View style={styles.threeView}>
           <View style={styles.fourView}>
-            <WithLocalSvg
-              width={30}
-              height={30}
-              asset={ddaysvg}
-              style={{ position: "absolute", right: "47.5%", top: "54%" }}
-            />
-            <AntDesign name="left" size={30} color="#808080" />
-
+            <TouchableOpacity onPress={() => this.minus()}>
+              <AntDesign name="left" size={30} color="#808080" />
+            </TouchableOpacity>
             <View style={styles.dayview}>
-              <Text style={styles.lasttext}>화</Text>
-              <Text style={styles.lasttext}>30</Text>
+              <Text style={styles.lasttext1}>
+                {this.dayy(this.state.yoil - 3)}
+              </Text>
+              <Text style={styles.lasttext}>
+                {this.daynum(this.state.day - 3)}
+              </Text>
             </View>
             <View style={styles.dayview}>
-              <Text style={styles.lasttext}>수</Text>
-              <Text style={styles.lasttext}>1</Text>
+              <Text style={styles.lasttext1}>
+                {this.dayy(this.state.yoil - 2)}
+              </Text>
+              <Text style={styles.lasttext}>
+                {this.daynum(this.state.day - 2)}
+              </Text>
             </View>
             <View style={styles.dayview}>
-              <Text style={styles.lasttext}>목</Text>
-              <Text style={styles.lasttext}>2</Text>
+              <Text style={styles.lasttext1}>
+                {this.dayy(this.state.yoil - 1)}
+              </Text>
+              <Text style={styles.lasttext}>
+                {this.daynum(this.state.day - 1)}
+              </Text>
+            </View>
+            <View style={styles.todayview}>
+              <Text style={styles.ddaytext1}>{this.dayy(this.state.yoil)}</Text>
+              <Text style={styles.ddaytext}>
+                {this.todaynum(this.state.day)}
+              </Text>
             </View>
             <View style={styles.dayview}>
-              <Text style={styles.lasttext}>금</Text>
-              <Text style={styles.ddaytext}>3</Text>
+              <Text style={styles.nexttext1}>
+                {this.dayy(this.state.yoil + 1)}
+              </Text>
+              <Text style={styles.nexttext}>
+                {this.daynum(this.state.day + 1)}
+              </Text>
             </View>
             <View style={styles.dayview}>
-              <Text style={styles.nexttext}>토</Text>
-              <Text style={styles.nexttext}>4</Text>
+              <Text style={styles.nexttext1}>
+                {this.dayy(this.state.yoil + 2)}
+              </Text>
+              <Text style={styles.nexttext}>
+                {this.daynum(this.state.day + 2)}
+              </Text>
             </View>
             <View style={styles.dayview}>
-              <Text style={styles.nexttext}>일</Text>
-              <Text style={styles.nexttext}>5</Text>
+              <Text style={styles.nexttext1}>
+                {this.dayy(this.state.yoil + 3)}
+              </Text>
+              <Text style={styles.nexttext}>
+                {this.daynum(this.state.day + 3)}
+              </Text>
             </View>
-            <View style={styles.dayview}>
-              <Text style={styles.nexttext}>월</Text>
-              <Text style={styles.nexttext}>6</Text>
-            </View>
-
-            <AntDesign name="right" size={30} color="#808080" />
+            <TouchableOpacity onPress={() => this.plus()}>
+              <AntDesign name="right" size={30} color="#808080" />
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -179,7 +324,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingRight: 20,
     paddingLeft: 20,
-    marginTop: "3%",
+    marginTop: "10%",
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
@@ -220,24 +365,55 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
   },
-  lasttext: {
-    fontWeight: "bold",
-    fontSize: 15,
-    color: "#484848",
-    paddingBottom: "2%",
-  },
-  dayview: { alignItems: "center", marginHorizontal: "3%" },
-  nexttext: {
+  nexttext1: {
     fontWeight: "bold",
     fontSize: 15,
     color: "#B5B5B5",
     paddingBottom: "2%",
   },
+  ddaytext1: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "#FFFFFF",
+    paddingBottom: "2%",
+  },
+  lasttext1: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "#484848",
+    paddingBottom: "2%",
+  },
+  lasttext: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "#484848",
+    // paddingBottom: "2%",
+  },
+  dayview: {
+    alignItems: "center",
+    marginHorizontal: "3%",
+  },
+  todayview: {
+    alignItems: "center",
+    backgroundColor: "#7AC819",
+    marginHorizontal: "3%",
+    paddingHorizontal: "1.5%",
+    paddingVertical: "0.5%",
+    borderWidth: 2,
+    borderRadius: 10,
+    borderColor: "#7AC819",
+  },
+  nexttext: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "#B5B5B5",
+    // paddingBottom: "2%",
+  },
   ddaytext: {
     fontWeight: "bold",
     fontSize: 15,
-    color: "#ffffff",
-    paddingBottom: "2%",
+    color: "#FFFFFF",
+    // borderRadius: 19,
   },
   twoView: {
     width: "100%",

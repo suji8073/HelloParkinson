@@ -9,6 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+// import AsyncStorage from "@react-native-community/async-storage";
 
 export default class siginup4 extends Component {
   constructor(props) {
@@ -90,6 +91,17 @@ export default class siginup4 extends Component {
       .then((res) => res.json())
       .then((json) => {
         console.log("회원가입 성공!");
+        // tokenId, userId 저장
+        // AsyncStorage.setItem(
+        //   "userData",
+        //   JSON.stringify({
+        //     userName: this.state.user_name,
+        //     userId: this.state.user_id,
+        //     userPw: this.state.user_pw,
+        //   })
+        // );
+        // const userData = AsyncStorage.getItem("userData");
+        // Alert.alert(userData.userId);
         Alert.alert("회원가입이 정상적으로 완료되었습니다.");
         this.props.navigation.navigate("login");
       });

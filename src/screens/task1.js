@@ -28,7 +28,7 @@ export default class task1 extends Component {
   }
 
   handleClick = () => {
-    if (this.props.book === 0) {
+    if (this.props.star === silverstarsvg) {
       // 아이콘 asset값 변경 greenstarsvg 으로
 
       fetch("http://152.70.233.113/chamuser/bookmark", {
