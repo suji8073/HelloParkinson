@@ -6,33 +6,38 @@ import {
   View,
   Text,
   ScrollView,
+  Alert,
 } from "react-native";
 import Task from "./task_record_day";
-import Task1 from "./task_week";
 
 const data = [
-  { date: "20220108", progress: 100 },
   { date: "20220109", progress: 40 },
   { date: "20220110", progress: 30 },
   { date: "20220111", progress: 50 },
   { date: "20220112", progress: 56 },
   { date: "20220113", progress: 80 },
   { date: "20220114", progress: 90 },
+  { date: "20220115", progress: 100 },
 ];
 
 export default class patient_record extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      all_progress: 0,
+      progress: 0,
+      mon: 0,
+      tus: 0,
+      wed: 0,
+      thr: 0,
+      fri: 0,
+      sat: 0,
+      sun: 0,
       data: [],
     };
   }
 
   componentDidMount() {
     // 일별 총 진도율
-    {
-      /*
     fetch(
       "http://152.70.233.113/chamuser/uid/" +
         this.props.route.params.paramsName,
@@ -67,8 +72,6 @@ export default class patient_record extends Component {
       .then((json) => {
         this.setState({ data: json });
       });
-    */
-    }
   }
 
   render() {
@@ -94,22 +97,43 @@ export default class patient_record extends Component {
                 <Text style={styles.text2}>주 평균 {this.state.progress}%</Text>
               </View>
 
-              <SafeAreaView style={{ flex: 2 }}>
-                <FlatList
-                  keyExtractor={(item, index) => index}
-                  data={data}
-                  renderItem={({ item, index }) => {
-                    return (
-                      <Task1
-                        id={index}
-                        put_date={item.date}
-                        progress={item.progress}
-                      ></Task1>
-                    );
-                  }}
-                  horizontal={true}
-                ></FlatList>
-              </SafeAreaView>
+              <View style={styles.graphview}>
+                <View style={styles.graphView}>
+                  <View style={styles.margin1}></View>
+                  <View style={styles.chart} height={this.state.sun}></View>
+                  <View style={styles.margin3}></View>
+                  <View style={styles.chart} height={this.state.tus}></View>
+                  <View style={styles.margin3}></View>
+                  <View style={styles.chart} height={this.state.mon}></View>
+                  <View style={styles.margin3}></View>
+                  <View style={styles.chart} height={this.state.wed}></View>
+                  <View style={styles.margin3}></View>
+                  <View style={styles.chart} height={this.state.thr}></View>
+                  <View style={styles.margin3}></View>
+                  <View style={styles.chart1} height={this.state.fri}></View>
+                  <View style={styles.margin3}></View>
+                  <View style={styles.chart} height={this.state.sat}></View>
+                  <View style={styles.margin3}></View>
+                </View>
+
+                <View style={styles.textView}>
+                  <View style={styles.margin2}></View>
+                  <Text style={styles.text11}>일</Text>
+                  <View style={styles.margin4}></View>
+                  <Text style={styles.text11}>월</Text>
+                  <View style={styles.margin4}></View>
+                  <Text style={styles.text11}>화</Text>
+                  <View style={styles.margin4}></View>
+                  <Text style={styles.text11}>수</Text>
+                  <View style={styles.margin4}></View>
+                  <Text style={styles.text11}>목</Text>
+                  <View style={styles.margin4}></View>
+                  <Text style={styles.text11}>금</Text>
+                  <View style={styles.margin4}></View>
+                  <Text style={styles.text11}>토</Text>
+                  <View style={styles.margin5}></View>
+                </View>
+              </View>
             </View>
 
             <View style={styles.threeView}>
@@ -143,7 +167,31 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFFFFF",
   },
-
+  graphView: {
+    flexDirection: "row",
+    flex: 2,
+    alignItems: "flex-end",
+    justifyContent: "center",
+  },
+  margin3: {
+    flex: 0.5,
+  },
+  chart1: {
+    flex: 0.8,
+    backgroundColor: "#316200",
+  },
+  margin1: {
+    flex: 0.3,
+  },
+  margin2: {
+    flex: 0.09,
+  },
+  margin4: {
+    flex: 0.19,
+  },
+  margin5: {
+    flex: 0.11,
+  },
   textView: {
     flexDirection: "row",
     flex: 1,
