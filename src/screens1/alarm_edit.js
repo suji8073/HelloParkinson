@@ -57,7 +57,7 @@ export default class alarm_edit extends Component {
           />
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>
-            나의 운동 알림{this.props.route.params.apm}
+            나의 운동 알림
           </Text>
           <View style={styles.margin}></View>
           <AntDesign name="left" size={24} color="#FFFFFF" />
