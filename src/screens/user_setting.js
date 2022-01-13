@@ -4,7 +4,7 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Left,
+  Alert,
   Body,
   Title,
 } from "react-native";
@@ -16,6 +16,9 @@ import { EvilIcons } from "@expo/vector-icons";
 import Svg1 from "../icon/pencil.svg";
 import Svg2 from "../icon/piechart.svg";
 import Svg3 from "../icon/graph.svg";
+
+import silverstarsvg from "../icon/silverstar.svg";
+import greenstarsvg from "../icon/greenstar.svg";
 
 import { WithLocalSvg } from "react-native-svg";
 const year = 2021 + 1;
@@ -31,6 +34,7 @@ export default class user_setting extends Component {
       name: "",
       id: 0,
       UID: "",
+      bookmark: 0,
     };
   }
 
@@ -52,9 +56,38 @@ export default class user_setting extends Component {
           name: json.info.name,
           id: json.info.id,
           UID: json.info.UID,
+          bookmark: json.info.bookmark,
         });
       });
   }
+
+  starclick = () => {
+    if (this.state.bookmark === 0) {
+      // 아이콘 asset값 변경 greenstarsvg 으로
+
+      fetch("http://152.70.233.113/chamuser/bookmark", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user: String(this.props.route.params.paramName1),
+        }),
+      });
+      this.setState({ bookmark: 1 });
+      Alert.alert("즐겨찾기에 추가되었습니다.");
+    } else {
+      // 아이콘 asset값 변경 silverstarsvg 으로
+      fetch("http://152.70.233.113/chamuser/bookmark", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user: String(this.props.route.params.paramName1),
+        }),
+      });
+      this.setState({ bookmark: 0 });
+      Alert.alert("즐겨찾기에서 해제되었습니다.");
+    }
+  };
+
   render() {
     return (
       <View style={styles.finalView}>
@@ -70,7 +103,14 @@ export default class user_setting extends Component {
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>환자 정보</Text>
           <View style={styles.margin}></View>
-          <EvilIcons name="star" size={30} color="white" />
+
+          <TouchableOpacity onPress={this.starclick}>
+            <WithLocalSvg
+              width={30}
+              height={40}
+              asset={this.state.bookmark === 0 ? silverstarsvg : greenstarsvg}
+            />
+          </TouchableOpacity>
         </View>
 
         <View style={styles.firstView}>

@@ -32,8 +32,7 @@ export default class user_edit extends Component {
       user_memo: "",
       age1: on,
       age2: off,
-
-      birth: 19431218,
+      birth: 19550515,
       gender: "",
       memo: "",
       team: "",
@@ -64,7 +63,15 @@ export default class user_edit extends Component {
           progress: json.info.progress,
         });
       });
-    console.log(2020 - parseInt(this.state.birth / 10000));
+    console.log(String(this.state.birth));
+    console.log(
+      String(this.state.birth).substring(0, 4) +
+        " - " +
+        String(this.state.birth).substring(4, 6) +
+        " - " +
+        String(this.state.birth).substring(6, 8)
+    );
+
     if (this.state.gender === "M") {
       this.setState({ age1: on, age2: off });
     } else {
@@ -203,15 +210,15 @@ export default class user_edit extends Component {
 
           <View style={styles.secondView}>
             <View style={styles.memoView}>
-              <Text style={styles.text1}>나이</Text>
+              <Text style={styles.text1}>생년월일</Text>
             </View>
             <View style={styles.textView}>
               <TextInput
                 style={styles.text2}
-                onChangeText={(text) => {
-                  this.setState({ user_age: text });
+                onChangeText={(age) => {
+                  this.setState({ user_age: age });
                 }}
-                placeholder="30"
+                placeholder={String(this.state.birth)}
               />
             </View>
           </View>
