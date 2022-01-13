@@ -55,7 +55,7 @@
     "react-native-youtube-iframe": "^2.2.1",
     "react-native-yt-player": "^1.1.0",
     "react-youtube": "^7.13.1",
-    "searchable-flatlist": "^0.0.4",
+    "searchable-flatlist": "0.0.4",
     "simple-circle-timer": "^0.2.1",
     "styled-components": "^5.3.3"
   },
