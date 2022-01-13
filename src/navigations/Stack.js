@@ -32,6 +32,8 @@ import move_2 from "../screens1/move_2";
 import move_3 from "../screens1/move_3";
 import move_4 from "../screens1/move_4";
 import move_5 from "../screens1/move_5";
+import yusanso_1 from "../screens1/yusanso_1";
+import yusanso_2 from "../screens1/yusanso_2";
 import move_play from "../screens1/move_play";
 
 const Stack = createStackNavigator();
@@ -74,6 +76,9 @@ const StackNavigation = () => {
       <Stack.Screen name="move_3" component={move_3} />
       <Stack.Screen name="move_4" component={move_4} />
       <Stack.Screen name="move_5" component={move_5} />
+      <Stack.Screen name="yusanso_1" component={yusanso_1} />
+      <Stack.Screen name="yusanso_2" component={yusanso_2} />
+
       <Stack.Screen name="move_play" component={move_play} />
       <Stack.Screen
         name="patient_profile_edit"

@@ -181,15 +181,16 @@ export default class move_play extends Component {
           />
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>
-            {this.props.route.params.paramName2}야
+            {this.props.route.params.paramName2}{this.props.route.params.paramName1}
           </Text>
           <View style={styles.margin}></View>
           <EvilIcons name="star" size={30} color="#ffffff" />
         </View>
 
         <View style={styles.secondView}>
+          {/*
           <Video
-            source={{ uri: 'ai_low.1.mp4' }} // Can be a URL or a local file.
+            source={{ uri: "ai_low.1.mp4" }} // Can be a URL or a local file.
             ref={(ref) => {
               this.player = ref;
             }} // Store reference
@@ -197,6 +198,7 @@ export default class move_play extends Component {
             onError={this.videoError} // Callback when video cannot be loaded
             style={styles.backgroundVideo}
           />
+          */}
         </View>
 
         <View style={styles.chatControl}>
@@ -273,7 +275,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   backgroundVideo: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     bottom: 0,

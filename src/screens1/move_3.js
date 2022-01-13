@@ -5,20 +5,20 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  Body,
-  TextInput,
+  FlatList,
 } from "react-native";
 import Task from "./task_move";
 
-import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 
-let Svg1 = require("../image/3-1.png");
-let Svg2 = require("../image/3-2.png");
-let Svg3 = require("../image/3-3.png");
-let Svg4 = require("../image/3-4.png");
-let Svg5 = require("../image/3-5.png");
+const data = [
+  { name: "한발 서기", category: "2-1", a: 1, b: 2 },
+  { name: "버드독 1단계", category: "2-2", a: 2, b: 6 },
+  { name: "버드독 2단계", category: "2-3", a: 0, b: 5 },
+  { name: "앉은 상태에서 제자리 걷기", category: "2-4", a: 4, b: 4 },
+  { name: "움직이는 런지", category: "2-5", a: 1, b: 3 },
+];
 
 export default class move_3 extends Component {
   render() {
@@ -49,67 +49,31 @@ export default class move_3 extends Component {
               justifyContent: "space-between",
             }}
           >
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.push("move_play", {
-                  paramName1: "3-1",
-                  paramName2: "균형 협응 운동",
-                  paramsName: this.props.route.params.paramsName,
-                });
+            <FlatList
+              keyExtractor={(item, index) => index}
+              data={data}
+              renderItem={({ item }) => {
+                return (
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => {
+                      this.props.navigation.push("move_play", {
+                        paramName1: item.category,
+                        paramName2: "균형 협응 운동",
+                        paramsName: this.props.route.params.paramsName,
+                      });
+                    }}
+                  >
+                    <Task
+                      image={item.category}
+                      text1={item.name}
+                      text2={item.a}
+                      text3={item.b}
+                    ></Task>
+                  </TouchableOpacity>
+                );
               }}
-            >
-              <Task image={Svg1} text1="한발 서기" text2="1 / 5"></Task>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.push("move_play", {
-                  paramName1: "3-2",
-                  paramName2: "균형 협응 운동",
-                  paramsName: this.props.route.params.paramsName,
-                });
-              }}
-            >
-              <Task image={Svg2} text1="버드독 1단계" text2="1 / 5"></Task>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.push("move_play", {
-                  paramName1: "3-3",
-                  paramName2: "균형 협응 운동",
-                  paramsName: this.props.route.params.paramsName,
-                });
-              }}
-            >
-              <Task image={Svg3} text1="버드독 2단계" text2="1 / 5"></Task>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.push("move_play", {
-                  paramName1: "3-4",
-                  paramName2: "균형 협응 운동",
-                  paramsName: this.props.route.params.paramsName,
-                });
-              }}
-            >
-              <Task
-                image={Svg4}
-                text1="앉은 상태에서 제자리 걷기"
-                text2="1 / 5"
-              ></Task>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.push("move_play", {
-                  paramName1: "3-5",
-                  paramName2: "균형 협응 운동",
-                  paramsName: this.props.route.params.paramsName,
-                });
-              }}
-            >
-              <Task image={Svg5} text1="움직이는 런지" text2="1 / 5"></Task>
-            </TouchableOpacity>
+            />
           </ScrollView>
         </View>
       </View>
