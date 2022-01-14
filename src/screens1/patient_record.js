@@ -105,11 +105,47 @@ export default class patient_record extends Component {
         <View style={styles.mainView}>
           <ScrollView
             contentContainerStyle={{
-              flexGrow: 1,
               flexDirection: "column",
               justifyContent: "space-between",
             }}
           >
+            <View style={styles.secondView}>
+              <View style={styles.textview}>
+                <Text style={styles.text1}>
+                  {String(this.state.first_date).substring(0, 4) +
+                    "년 " +
+                    String(this.state.first_date).substring(4, 6) +
+                    "월 " +
+                    +String(this.state.first_date).substring(6, 8) +
+                    "일 ~ " +
+                    String(this.state.late_date).substring(4, 6) +
+                    "월 " +
+                    +String(this.state.late_date).substring(6, 8) +
+                    "일"}
+                </Text>
+                <Text style={styles.text2}>
+                  주 평균 {this.state.sum_p.toFixed(1)}%
+                </Text>
+              </View>
+
+              <SafeAreaView style={{ flex: 2, width: "100%" }}>
+                <FlatList
+                  keyExtractor={(item, index) => index}
+                  data={data}
+                  renderItem={({ item, index }) => {
+                    return (
+                      <Task1
+                        id={index}
+                        put_date={item.date}
+                        progress={item.progress}
+                      ></Task1>
+                    );
+                  }}
+                  horizontal={true}
+                ></FlatList>
+              </SafeAreaView>
+            </View>
+
             <View style={styles.secondView}>
               <View style={styles.textview}>
                 <Text style={styles.text1}>
@@ -248,12 +284,12 @@ const styles = StyleSheet.create({
     margin: "5%",
     paddingLeft: "5%",
     paddingRight: "5%",
-    width: "90%",
     height: 200,
     backgroundColor: "#FFFFFF",
     borderWidth: 1,
     borderColor: "#E0E0E0",
   },
+  s_view: {},
   threeView: {
     marginLeft: "5%",
     marginRight: "5%",

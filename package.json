@@ -25,7 +25,7 @@
     "prop-types": "^15.7.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-native": "^0.63.2",
+    "react-native": "^0.63.4",
     "react-native-action-button": "^2.8.5",
     "react-native-atoz-listview": "^0.0.7",
     "react-native-chart-kit": "^6.11.0",
