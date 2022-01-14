@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { WithLocalSvg } from "react-native-svg";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import on from "../icon/move_play_on.svg";
 import off from "../icon/move_play_off.svg";
@@ -13,6 +15,16 @@ import walk_play from "../icon/walk_play.svg";
 import walk_stop from "../icon/walk_stop.svg";
 
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
+
+const storeData = async (value1, value2) => {
+  try {
+    await AsyncStorage.setItem("@walk_minutes", value1);
+    await AsyncStorage.setItem("@walk_seconds", value2);
+  } catch (e) {
+    // saving error
+    console.log("error");
+  }
+};
 
 export default class yusanso_1 extends Component {
   constructor(props) {
@@ -27,10 +39,22 @@ export default class yusanso_1 extends Component {
     };
   }
 
+  async componentDidMount() {
+    try {
+      const value1 = await AsyncStorage.getItem("@walk_minutes");
+      const value2 = await AsyncStorage.getItem("@walk_seconds");
+
+      if (value1 !== null) {
+        this.setState({ minutes_Counter: value1, seconds_Counter: value2 });
+      }
+    } catch (e) {
+      this.setState({ minutes_Counter: "00", seconds_Counter: "00" });
+    }
+  }
+
   onButtonStart = () => {
     if (this.state.play === false) {
       this.setState({ play: true });
-      console.log(this.state.user_sex);
       let timer = setInterval(() => {
         var num = (Number(this.state.seconds_Counter) + 1).toString(),
           count = this.state.minutes_Counter;
@@ -52,10 +76,9 @@ export default class yusanso_1 extends Component {
       clearInterval(this.state.timer);
       this.setState({ startDisable: false });
       this.setState({ play: false });
+      storeData(this.state.minutes_Counter, this.state.seconds_Counter);
     }
   };
-
-  onButtonStop = () => {};
 
   onButtonClear = () => {
     this.setState({
@@ -64,8 +87,6 @@ export default class yusanso_1 extends Component {
       seconds_Counter: "00",
     });
   };
-
-  onPress_timer = () => {};
 
   render() {
     return (

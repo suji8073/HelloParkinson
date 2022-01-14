@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-  ScrollView,
+  TextInput,
   StatusBar,
   Text,
   View,
@@ -9,10 +9,8 @@ import {
   StyleSheet,
 } from "react-native";
 
-import SearchBar from "./SearchBar";
-import OptionsMenu from "react-native-option-menu";
-
 import { Entypo } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import Task from "./task2";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 
@@ -20,12 +18,15 @@ const items = [
   { id: "abc", label: "가나다순" },
   { id: "age", label: "나이순" },
 ];
+
 export default class statistics extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data: [],
+      text: "",
     };
+    this.arrayholder = [];
   }
 
   componentDidMount() {
@@ -41,27 +42,29 @@ export default class statistics extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        this.setState({ data: json });
+        this.setState({ data: json }, () => {
+          this.arrayholder = json;
+        });
       });
   };
 
+  //https://reactnativecode.com/search-bar-filter-on-flatlist-json-data/
+  searchData(text) {
+    const newData = this.arrayholder.filter((item) => {
+      const itemData = item.name.toUpperCase();
+      const textData = text.toUpperCase();
+      return itemData.indexOf(textData) > -1;
+    });
+
+    this.setState({
+      data: newData,
+      text: text,
+    });
+  }
+
   onMenuPress = (id) => {
+    console.log(id);
     if (id === "age") {
-      // 진도율순 "http://152.70.233.113/chamuser?sort=age",
-      fetch({
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((json) => {
-          this.setState({ data: json });
-        });
-      return this.state.data;
-    } else if (id === "abc") {
-      // 가나다순
       fetch("http://152.70.233.113/chamuser?sort=name", {
         method: "GET",
         headers: {
@@ -72,8 +75,23 @@ export default class statistics extends Component {
         .then((res) => res.json())
         .then((json) => {
           this.setState({ data: json });
+          return this.state.data;
         });
       return this.state.data;
+    } else if (id === "abc") {
+      // 가나다순
+      fetch("http://152.70.233.113/chamuser?sort=prog", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          this.setState({ data: json });
+          return this.state.data;
+        });
     }
   };
 
@@ -83,16 +101,33 @@ export default class statistics extends Component {
         <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
 
         <View style={styles.menuView}>
-          <Entypo name="dots-three-vertical" size={24} color="#ffffff" />
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>환자 통계 관리</Text>
-          <View style={styles.margin}></View>
 
-          <Entypo name="dots-three-vertical" size={24} color="#ffffff" />
+          <SimplePopupMenu
+            style={styles.margin}
+            items={items}
+            cancelLabel={"취소"}
+            onSelect={(items) => {
+              this.onMenuPress(items.id);
+            }}
+            onCancel={() => console.log("onCancel")}
+          >
+            <Entypo name="dots-three-vertical" size={24} color="#595959" />
+          </SimplePopupMenu>
         </View>
 
         <View style={styles.secondView}>
-          <SearchBar />
+          <View style={styles.SearchBarWrapper}>
+            <TextInput
+              style={styles.SearchInput}
+              onChangeText={(text) => this.searchData(text)}
+              value={this.state.text}
+              underlineColorAndroid="transparent"
+              placeholder="환자 이름을 입력하세요."
+            />
+            <Ionicons name="search" size={20} color="#595959" />
+          </View>
         </View>
 
         <View style={styles.threeView}>
@@ -127,6 +162,21 @@ const styles = StyleSheet.create({
   finalView: {
     flex: 1,
     backgroundColor: "#FFFFFF",
+  },
+  sTextItem: {
+    height: 50,
+    width: "100%",
+    textAlign: "center",
+    textAlignVertical: "center",
+    fontSize: 18,
+  },
+  sSearchBar: {
+    paddingHorizontal: 10,
+    margin: 10,
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 1,
+    fontSize: 18,
   },
   menuView: {
     backgroundColor: "#FFFFFF",
@@ -163,8 +213,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   margin: {
-    // padding:30,
-    alignItems: "flex-start",
+    height: 300,
+    alignItems: "flex-end",
     justifyContent: "center",
     flex: 1,
   },
@@ -184,5 +234,19 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
+  },
+
+  SearchBarWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f2f2f2",
+    padding: 10,
+    width: "92%",
+    borderRadius: 10,
+  },
+
+  SearchInput: {
+    marginLeft: 10,
+    flex: 3,
   },
 });

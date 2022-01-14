@@ -5,6 +5,8 @@ import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { WithLocalSvg } from "react-native-svg";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import on from "../icon/move_play_on.svg";
 import off from "../icon/move_play_off.svg";
 import stop from "../icon/move_play_stop.svg";
@@ -13,6 +15,16 @@ import ride_play from "../icon/ride_play.svg";
 import ride_stop from "../icon/ride_stop.svg";
 
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
+
+const storeData = async (value1, value2) => {
+  try {
+    await AsyncStorage.setItem("@ride_minutes", value1);
+    await AsyncStorage.setItem("@ride_seconds", value2);
+  } catch (e) {
+    // saving error
+    console.log("error");
+  }
+};
 
 export default class yusanso_2 extends Component {
   constructor(props) {
@@ -25,6 +37,19 @@ export default class yusanso_2 extends Component {
       seconds_Counter: "00",
       startDisable: false,
     };
+  }
+
+  async componentDidMount() {
+    try {
+      const value1 = await AsyncStorage.getItem("@ride_minutes");
+      const value2 = await AsyncStorage.getItem("@ride_seconds");
+
+      if (value1 !== null) {
+        this.setState({ minutes_Counter: value1, seconds_Counter: value2 });
+      }
+    } catch (e) {
+      this.setState({ minutes_Counter: "00", seconds_Counter: "00" });
+    }
   }
 
   onButtonStart = () => {
@@ -52,10 +77,9 @@ export default class yusanso_2 extends Component {
       clearInterval(this.state.timer);
       this.setState({ startDisable: false });
       this.setState({ play: false });
+      storeData(this.state.minutes_Counter, this.state.seconds_Counter);
     }
   };
-
-  onButtonStop = () => {};
 
   onButtonClear = () => {
     this.setState({
@@ -64,8 +88,6 @@ export default class yusanso_2 extends Component {
       seconds_Counter: "00",
     });
   };
-
-  onPress_timer = () => {};
 
   render() {
     return (

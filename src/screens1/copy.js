@@ -6,55 +6,38 @@ import {
   View,
   Text,
   ScrollView,
+  Alert,
 } from "react-native";
 import Task from "./task_record_day";
-import Task1 from "./task_week";
 
 const data = [
-  { date: "20220108", progress: 80 },
-  { date: "20220109", progress: 90 },
-  { date: "20220110", progress: 80 },
-  { date: "20220111", progress: 90 },
-  { date: "20220112", progress: 90 },
-  { date: "20220113", progress: 90 },
-  { date: "20220114", progress: 60 },
+  { date: "20220109", progress: 40 },
+  { date: "20220110", progress: 30 },
+  { date: "20220111", progress: 50 },
+  { date: "20220112", progress: 56 },
+  { date: "20220113", progress: 80 },
+  { date: "20220114", progress: 90 },
+  { date: "20220115", progress: 100 },
 ];
-
-var sum_progress = 0;
 
 export default class patient_record extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      all_progress: 0,
+      progress: 0,
+      mon: 0,
+      tus: 0,
+      wed: 0,
+      thr: 0,
+      fri: 0,
+      sat: 0,
+      sun: 0,
       data: [],
-      first_date: "",
-      late_date: "",
-      sum_p: 0,
     };
   }
 
-  handleCreate = (data) => {
-    const { information } = this.state;
-    this.setState({
-      information: information.concat({ id: this.id++, ...data }),
-    });
-  };
-
   componentDidMount() {
-    data.map((x) => {
-      sum_progress += x.progress;
-      this.setState({ sum_p: sum_progress / 7 });
-    });
-
-    data.filter((x, y) => {
-      if (y === 0) this.setState({ first_date: x.date });
-      if (y === 6) this.setState({ late_date: x.date });
-    });
-
     // 일별 총 진도율
-    {
-      /*
     fetch(
       "http://152.70.233.113/chamuser/uid/" +
         this.props.route.params.paramsName,
@@ -89,8 +72,6 @@ export default class patient_record extends Component {
       .then((json) => {
         this.setState({ data: json });
       });
-    */
-    }
   }
 
   render() {
@@ -98,89 +79,61 @@ export default class patient_record extends Component {
       <View style={styles.finalView}>
         <View style={styles.menuView}>
           <View style={styles.margin}></View>
-          <Text style={styles.titleText}>나의 운동 기록{data.date}</Text>
+          <Text style={styles.titleText}>나의 운동 기록</Text>
           <View style={styles.margin}></View>
         </View>
 
         <View style={styles.mainView}>
           <ScrollView
             contentContainerStyle={{
+              flexGrow: 1,
               flexDirection: "column",
               justifyContent: "space-between",
             }}
           >
             <View style={styles.secondView}>
               <View style={styles.textview}>
-                <Text style={styles.text1}>
-                  {String(this.state.first_date).substring(0, 4) +
-                    "년 " +
-                    String(this.state.first_date).substring(4, 6) +
-                    "월 " +
-                    +String(this.state.first_date).substring(6, 8) +
-                    "일 ~ " +
-                    String(this.state.late_date).substring(4, 6) +
-                    "월 " +
-                    +String(this.state.late_date).substring(6, 8) +
-                    "일"}
-                </Text>
-                <Text style={styles.text2}>
-                  주 평균 {this.state.sum_p.toFixed(1)}%
-                </Text>
+                <Text style={styles.text1}>2021년 12월 02일 ~ 12월 03일</Text>
+                <Text style={styles.text2}>주 평균 {this.state.progress}%</Text>
               </View>
 
-              <SafeAreaView style={{ flex: 2, width: "100%" }}>
-                <FlatList
-                  keyExtractor={(item, index) => index}
-                  data={data}
-                  renderItem={({ item, index }) => {
-                    return (
-                      <Task1
-                        id={index}
-                        put_date={item.date}
-                        progress={item.progress}
-                      ></Task1>
-                    );
-                  }}
-                  horizontal={true}
-                ></FlatList>
-              </SafeAreaView>
-            </View>
+              <View style={styles.graphview}>
+                <View style={styles.graphView}>
+                  <View style={styles.margin1}></View>
+                  <View style={styles.chart} height={this.state.sun}></View>
+                  <View style={styles.margin3}></View>
+                  <View style={styles.chart} height={this.state.tus}></View>
+                  <View style={styles.margin3}></View>
+                  <View style={styles.chart} height={this.state.mon}></View>
+                  <View style={styles.margin3}></View>
+                  <View style={styles.chart} height={this.state.wed}></View>
+                  <View style={styles.margin3}></View>
+                  <View style={styles.chart} height={this.state.thr}></View>
+                  <View style={styles.margin3}></View>
+                  <View style={styles.chart1} height={this.state.fri}></View>
+                  <View style={styles.margin3}></View>
+                  <View style={styles.chart} height={this.state.sat}></View>
+                  <View style={styles.margin3}></View>
+                </View>
 
-            <View style={styles.secondView}>
-              <View style={styles.textview}>
-                <Text style={styles.text1}>
-                  {String(this.state.first_date).substring(0, 4) +
-                    "년 " +
-                    String(this.state.first_date).substring(4, 6) +
-                    "월 " +
-                    +String(this.state.first_date).substring(6, 8) +
-                    "일 ~ " +
-                    String(this.state.late_date).substring(4, 6) +
-                    "월 " +
-                    +String(this.state.late_date).substring(6, 8) +
-                    "일"}
-                </Text>
-                <Text style={styles.text2}>
-                  주 평균 {this.state.sum_p.toFixed(1)}%
-                </Text>
+                <View style={styles.textView}>
+                  <View style={styles.margin2}></View>
+                  <Text style={styles.text11}>일</Text>
+                  <View style={styles.margin4}></View>
+                  <Text style={styles.text11}>월</Text>
+                  <View style={styles.margin4}></View>
+                  <Text style={styles.text11}>화</Text>
+                  <View style={styles.margin4}></View>
+                  <Text style={styles.text11}>수</Text>
+                  <View style={styles.margin4}></View>
+                  <Text style={styles.text11}>목</Text>
+                  <View style={styles.margin4}></View>
+                  <Text style={styles.text11}>금</Text>
+                  <View style={styles.margin4}></View>
+                  <Text style={styles.text11}>토</Text>
+                  <View style={styles.margin5}></View>
+                </View>
               </View>
-
-              <SafeAreaView style={{ flex: 2, width: "100%" }}>
-                <FlatList
-                  keyExtractor={(item, index) => index}
-                  data={data}
-                  renderItem={({ item, index }) => {
-                    return (
-                      <Task1
-                        id={index}
-                        put_date={item.date}
-                        progress={item.progress}
-                      ></Task1>
-                    );
-                  }}
-                  horizontal={true}
-                ></FlatList>
-              </SafeAreaView>
             </View>
 
             <View style={styles.threeView}>
@@ -214,7 +167,31 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFFFFF",
   },
-
+  graphView: {
+    flexDirection: "row",
+    flex: 2,
+    alignItems: "flex-end",
+    justifyContent: "center",
+  },
+  margin3: {
+    flex: 0.5,
+  },
+  chart1: {
+    flex: 0.8,
+    backgroundColor: "#316200",
+  },
+  margin1: {
+    flex: 0.3,
+  },
+  margin2: {
+    flex: 0.09,
+  },
+  margin4: {
+    flex: 0.19,
+  },
+  margin5: {
+    flex: 0.11,
+  },
   textView: {
     flexDirection: "row",
     flex: 1,
@@ -284,12 +261,12 @@ const styles = StyleSheet.create({
     margin: "5%",
     paddingLeft: "5%",
     paddingRight: "5%",
+    width: "90%",
     height: 200,
     backgroundColor: "#FFFFFF",
     borderWidth: 1,
     borderColor: "#E0E0E0",
   },
-  s_view: {},
   threeView: {
     marginLeft: "5%",
     marginRight: "5%",
@@ -313,7 +290,12 @@ const styles = StyleSheet.create({
     borderColor: "#E0E0E0",
     borderRadius: 5,
   },
-
+  textview: {
+    flex: 1,
+    marginTop: "5%",
+    marginBottom: "3%",
+    justifyContent: "center",
+  },
   graphview: {
     flex: 3,
     alignItems: "center",
@@ -325,21 +307,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
+    fontWeight: "bold",
   },
   text2: {
     alignItems: "flex-start",
+    marginTop: 8,
     fontSize: 21,
+    alignItems: "center",
     color: "#000000",
-    fontWeight: "bold",
-  },
-  textview: {
-    flex: 1,
-    marginTop: 10,
-    marginBottom: 3,
     justifyContent: "center",
-  },
-  oneview: {
-    flex: 1,
-    marginBottom: 5,
+    fontWeight: "bold",
   },
 });
