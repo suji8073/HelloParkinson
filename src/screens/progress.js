@@ -218,7 +218,7 @@ export default class progress extends Component {
       <View style={styles.finalView}>
         <View style={styles.menuView}>
           <View style={styles.margin}></View>
-          {/* <Text style={styles.titleText}>환자 진도율</Text> */}
+          <Text style={styles.titleText}>환자 진도율</Text>
           <SimplePopupMenu
             style={styles.margin}
             items={items}
