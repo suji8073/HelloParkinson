@@ -18,7 +18,6 @@ export default class task_patient extends Component {
           height: 200,
           width: 300,
           justifyContent: "center",
-          marginTop: 5,
         }}
       >
         <Text style={styles.text1}>
@@ -95,14 +94,13 @@ export default class task_patient extends Component {
 const styles = StyleSheet.create({
   text1: {
     alignItems: "flex-start",
-    fontSize: 21,
-    alignItems: "center",
+    fontSize: 19,
     color: "#000000",
     justifyContent: "center",
     fontWeight: "bold",
   },
   text2: {
-    fontSize: 17,
+    fontSize: 14,
     color: "#484848",
     alignItems: "center",
     justifyContent: "center",

@@ -7,8 +7,14 @@ import {
   Text,
   ScrollView,
 } from "react-native";
+import { Dimensions } from "react-native";
 import Task from "./task_record_day";
 import Task1 from "./task_week";
+
+import { WithLocalSvg } from "react-native-svg";
+
+import page_here from "../icon/page_here.svg";
+import page_no from "../icon/page_no.svg";
 
 const data = [
   { date: "20220108", progress: 80 },
@@ -21,6 +27,7 @@ const data = [
 ];
 
 var sum_progress = 0;
+const { width, height } = Dimensions.get("screen");
 
 export default class patient_record extends Component {
   constructor(props) {
@@ -31,14 +38,19 @@ export default class patient_record extends Component {
       first_date: "",
       late_date: "",
       sum_p: 0,
+      page_l: true,
     };
   }
 
-  handleCreate = (data) => {
-    const { information } = this.state;
-    this.setState({
-      information: information.concat({ id: this.id++, ...data }),
-    });
+  handleScroll = (e) => {
+    if (e.nativeEvent.contentOffset.x < 130) {
+      console.log("1");
+      this.setState({ page_l: true });
+    } else if (e.nativeEvent.contentOffset.x > 130) {
+      console.log("2");
+      this.setState({ page_l: false });
+    }
+    console.log("현재 : " + this.state.page_l);
   };
 
   componentDidMount() {
@@ -75,8 +87,9 @@ export default class patient_record extends Component {
           sun: json.info.sun * 0.8,
         });
       });
+      */
+    }
     // 일별, 카테고리별 진도율
-    console.log(this.props.text);
     fetch(
       "http://152.70.233.113/chamuser/day/" +
         this.props.route.params.paramsName,
@@ -89,8 +102,6 @@ export default class patient_record extends Component {
       .then((json) => {
         this.setState({ data: json });
       });
-    */
-    }
   }
 
   render() {
@@ -98,89 +109,106 @@ export default class patient_record extends Component {
       <View style={styles.finalView}>
         <View style={styles.menuView}>
           <View style={styles.margin}></View>
-          <Text style={styles.titleText}>나의 운동 기록{data.date}</Text>
+          <Text style={styles.titleText}>나의 운동 기록</Text>
           <View style={styles.margin}></View>
         </View>
 
         <View style={styles.mainView}>
           <ScrollView
             contentContainerStyle={{
-              flexDirection: "column",
               justifyContent: "space-between",
             }}
           >
-            <View style={styles.secondView}>
-              <View style={styles.textview}>
-                <Text style={styles.text1}>
-                  {String(this.state.first_date).substring(0, 4) +
-                    "년 " +
-                    String(this.state.first_date).substring(4, 6) +
-                    "월 " +
-                    +String(this.state.first_date).substring(6, 8) +
-                    "일 ~ " +
-                    String(this.state.late_date).substring(4, 6) +
-                    "월 " +
-                    +String(this.state.late_date).substring(6, 8) +
-                    "일"}
-                </Text>
-                <Text style={styles.text2}>
-                  주 평균 {this.state.sum_p.toFixed(1)}%
-                </Text>
+            <ScrollView
+              horizontal
+              contentContainerStyle={{ width: width * 2 }}
+              showsHorizontalScrollIndicator={false}
+              pagingEnabled={true}
+              onScroll={this.handleScroll}
+            >
+              <View style={styles.secondView}>
+                <View style={styles.textview}>
+                  <Text style={styles.text1}>
+                    {String(this.state.first_date).substring(0, 4) +
+                      "년 " +
+                      String(this.state.first_date).substring(4, 6) +
+                      "월 " +
+                      +String(this.state.first_date).substring(6, 8) +
+                      "일 ~ " +
+                      String(this.state.late_date).substring(4, 6) +
+                      "월 " +
+                      +String(this.state.late_date).substring(6, 8) +
+                      "일"}
+                  </Text>
+                  <Text style={styles.text2}>
+                    주 평균 {this.state.sum_p.toFixed(1)}%
+                  </Text>
+                </View>
+
+                <SafeAreaView style={{ flex: 2, width: "100%" }}>
+                  <FlatList
+                    keyExtractor={(item, index) => index}
+                    data={data}
+                    renderItem={({ item, index }) => {
+                      return (
+                        <Task1
+                          id={index}
+                          put_date={item.date}
+                          progress={item.progress}
+                        ></Task1>
+                      );
+                    }}
+                    horizontal={true}
+                  ></FlatList>
+                </SafeAreaView>
               </View>
+              <View style={styles.secondView}>
+                <View style={styles.textview}>
+                  <Text style={styles.text1}>
+                    {String(this.state.first_date).substring(0, 4) +
+                      "년 " +
+                      String(this.state.first_date).substring(4, 6) +
+                      "월 ~ " +
+                      String(this.state.late_date).substring(4, 6) +
+                      "월 "}
+                  </Text>
+                  <Text style={styles.text2}>
+                    월 평균 {this.state.sum_p.toFixed(1)}%
+                  </Text>
+                </View>
 
-              <SafeAreaView style={{ flex: 2, width: "100%" }}>
-                <FlatList
-                  keyExtractor={(item, index) => index}
-                  data={data}
-                  renderItem={({ item, index }) => {
-                    return (
-                      <Task1
-                        id={index}
-                        put_date={item.date}
-                        progress={item.progress}
-                      ></Task1>
-                    );
-                  }}
-                  horizontal={true}
-                ></FlatList>
-              </SafeAreaView>
-            </View>
-
-            <View style={styles.secondView}>
-              <View style={styles.textview}>
-                <Text style={styles.text1}>
-                  {String(this.state.first_date).substring(0, 4) +
-                    "년 " +
-                    String(this.state.first_date).substring(4, 6) +
-                    "월 " +
-                    +String(this.state.first_date).substring(6, 8) +
-                    "일 ~ " +
-                    String(this.state.late_date).substring(4, 6) +
-                    "월 " +
-                    +String(this.state.late_date).substring(6, 8) +
-                    "일"}
-                </Text>
-                <Text style={styles.text2}>
-                  주 평균 {this.state.sum_p.toFixed(1)}%
-                </Text>
+                <SafeAreaView style={{ flex: 2, width: "100%" }}>
+                  <FlatList
+                    keyExtractor={(item, index) => index}
+                    data={data}
+                    renderItem={({ item, index }) => {
+                      return (
+                        <Task1
+                          id={index}
+                          put_date={item.date}
+                          progress={item.progress}
+                        ></Task1>
+                      );
+                    }}
+                    horizontal={true}
+                  ></FlatList>
+                </SafeAreaView>
               </View>
-
-              <SafeAreaView style={{ flex: 2, width: "100%" }}>
-                <FlatList
-                  keyExtractor={(item, index) => index}
-                  data={data}
-                  renderItem={({ item, index }) => {
-                    return (
-                      <Task1
-                        id={index}
-                        put_date={item.date}
-                        progress={item.progress}
-                      ></Task1>
-                    );
-                  }}
-                  horizontal={true}
-                ></FlatList>
-              </SafeAreaView>
+            </ScrollView>
+            <View style={styles.page_location}>
+              <View style={styles.p_margin}></View>
+              <WithLocalSvg
+                width={10}
+                height={10}
+                asset={this.state.page_l == true ? page_here : page_no}
+              />
+              <View style={styles.pp_margin}></View>
+              <WithLocalSvg
+                width={10}
+                height={10}
+                asset={this.state.page_l == false ? page_here : page_no}
+              />
+              <View style={styles.p_margin}></View>
             </View>
 
             <View style={styles.threeView}>
@@ -221,6 +249,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+
+  page_location: { flexDirection: "row" },
   chart: {
     flex: 0.8,
     backgroundColor: "#5CB405",
@@ -237,6 +267,12 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,
+  },
+  p_margin: {
+    flex: 5,
+  },
+  pp_margin: {
+    flex: 0.5,
   },
   menuView: {
     backgroundColor: "#FFFFFF",
@@ -277,25 +313,26 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    flexDirection: "row",
     marginBottom: 180,
   },
   secondView: {
-    margin: "5%",
-    paddingLeft: "5%",
-    paddingRight: "5%",
+    marginTop: "3%",
+    marginLeft: "3%",
+    marginRight: "3%",
+    marginBottom: "1%",
+    paddingLeft: "2%",
+    paddingRight: "2%",
     height: 200,
     backgroundColor: "#FFFFFF",
     borderWidth: 1,
     borderColor: "#E0E0E0",
   },
-  s_view: {},
   threeView: {
+    marginTop: "3%",
     marginLeft: "5%",
     marginRight: "5%",
     marginBottom: "5%",
     padding: "5%",
-    width: "90%",
     backgroundColor: "#FFFFFF",
     borderWidth: 1,
     borderColor: "#E0E0E0",
