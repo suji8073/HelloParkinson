@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
 
-let now = new Date();
-
 const task_week = ({ id, put_date, progress }) => {
   const dateToStr = (date) => {
     var week = new Array("일", "월", "화", "수", "목", "금", "토");
@@ -34,12 +32,13 @@ const task_week = ({ id, put_date, progress }) => {
         width: 28,
         marginRight: 8,
         marginLeft: 8,
+        marginBottom: 2,
       }}
     >
       <View style={styles.graphView}>
         <View
           style={id === 6 ? styles.chart1 : styles.chart}
-          height={progress * 0.9}
+          height={progress}
         ></View>
       </View>
       <View style={styles.textView}>

@@ -11,14 +11,16 @@ import Task from "./task_record_day";
 import Task1 from "./task_week";
 
 const data = [
-  { date: "20220108", progress: 100 },
-  { date: "20220109", progress: 40 },
-  { date: "20220110", progress: 30 },
-  { date: "20220111", progress: 50 },
-  { date: "20220112", progress: 56 },
-  { date: "20220113", progress: 80 },
-  { date: "20220114", progress: 90 },
+  { date: "20220108", progress: 80 },
+  { date: "20220109", progress: 90 },
+  { date: "20220110", progress: 80 },
+  { date: "20220111", progress: 90 },
+  { date: "20220112", progress: 90 },
+  { date: "20220113", progress: 90 },
+  { date: "20220114", progress: 60 },
 ];
+
+var sum_progress = 0;
 
 export default class patient_record extends Component {
   constructor(props) {
@@ -26,10 +28,30 @@ export default class patient_record extends Component {
     this.state = {
       all_progress: 0,
       data: [],
+      first_date: "",
+      late_date: "",
+      sum_p: 0,
     };
   }
 
+  handleCreate = (data) => {
+    const { information } = this.state;
+    this.setState({
+      information: information.concat({ id: this.id++, ...data }),
+    });
+  };
+
   componentDidMount() {
+    data.map((x) => {
+      sum_progress += x.progress;
+      this.setState({ sum_p: sum_progress / 7 });
+    });
+
+    data.filter((x, y) => {
+      if (y === 0) this.setState({ first_date: x.date });
+      if (y === 6) this.setState({ late_date: x.date });
+    });
+
     // 일별 총 진도율
     {
       /*
@@ -76,7 +98,7 @@ export default class patient_record extends Component {
       <View style={styles.finalView}>
         <View style={styles.menuView}>
           <View style={styles.margin}></View>
-          <Text style={styles.titleText}>나의 운동 기록</Text>
+          <Text style={styles.titleText}>나의 운동 기록{data.date}</Text>
           <View style={styles.margin}></View>
         </View>
 
@@ -90,11 +112,24 @@ export default class patient_record extends Component {
           >
             <View style={styles.secondView}>
               <View style={styles.textview}>
-                <Text style={styles.text1}>2021년 12월 02일 ~ 12월 03일</Text>
-                <Text style={styles.text2}>주 평균 {this.state.progress}%</Text>
+                <Text style={styles.text1}>
+                  {String(this.state.first_date).substring(0, 4) +
+                    "년 " +
+                    String(this.state.first_date).substring(4, 6) +
+                    "월 " +
+                    +String(this.state.first_date).substring(6, 8) +
+                    "일 ~ " +
+                    String(this.state.late_date).substring(4, 6) +
+                    "월 " +
+                    +String(this.state.late_date).substring(6, 8) +
+                    "일"}
+                </Text>
+                <Text style={styles.text2}>
+                  주 평균 {this.state.sum_p.toFixed(1)}%
+                </Text>
               </View>
 
-              <SafeAreaView style={{ flex: 2 }}>
+              <SafeAreaView style={{ flex: 2, width: "100%" }}>
                 <FlatList
                   keyExtractor={(item, index) => index}
                   data={data}
@@ -242,12 +277,7 @@ const styles = StyleSheet.create({
     borderColor: "#E0E0E0",
     borderRadius: 5,
   },
-  textview: {
-    flex: 1,
-    marginTop: "5%",
-    marginBottom: "3%",
-    justifyContent: "center",
-  },
+
   graphview: {
     flex: 3,
     alignItems: "center",
@@ -259,15 +289,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
-    fontWeight: "bold",
   },
   text2: {
     alignItems: "flex-start",
-    marginTop: 8,
     fontSize: 21,
-    alignItems: "center",
     color: "#000000",
-    justifyContent: "center",
     fontWeight: "bold",
+  },
+  textview: {
+    flex: 1,
+    marginTop: 10,
+    marginBottom: 3,
+    justifyContent: "center",
+  },
+  oneview: {
+    flex: 1,
+    marginBottom: 5,
   },
 });
