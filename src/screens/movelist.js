@@ -5,12 +5,13 @@ import { WithLocalSvg } from "react-native-svg";
 
 import plus from "../icon/plusbox.svg";
 import minus from "../icon/minusbox.svg";
-
+import plussilver from "../icon/plussilverbox.svg";
+import minussilver from "../icon/minussilverbox.svg";
 export default class movelist extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      m_num: 3,
+      m_num: this.props.m_num,
       check: false,
     };
   }
@@ -40,15 +41,27 @@ export default class movelist extends Component {
             }}
           >
             <TouchableOpacity onPress={this.minus_func}>
-              <WithLocalSvg width={35} height={35} asset={minus} />
+              <WithLocalSvg
+                width={35}
+                height={35}
+                asset={this.state.m_num == 0 ? minussilver : minus}
+              />
             </TouchableOpacity>
 
-            <View style={styles.numView}>
+            <View
+              style={
+                this.state.m_num == 0 ? styles.numViewsilver : styles.numView
+              }
+            >
               <Text style={styles.numstyle}>{this.state.m_num}</Text>
             </View>
 
             <TouchableOpacity onPress={this.plus_func}>
-              <WithLocalSvg width={35} height={35} asset={plus} />
+              <WithLocalSvg
+                width={35}
+                height={35}
+                asset={this.state.m_num == 0 ? plussilver : plus}
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -69,6 +82,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: "6%",
     flexDirection: "column",
     justifyContent: "center",
+    alignContent: "center",
   },
   btnView: {
     flex: 0.4,
@@ -78,10 +92,20 @@ const styles = StyleSheet.create({
     marginRight: "2%",
   },
   numView: {
-    paddingHorizontal: "15%",
+    width: "35%",
+    alignItems: "center",
     justifyContent: "center",
     borderTopColor: "#5CB405",
     borderBottomColor: "#5CB405",
+    borderTopWidth: 2,
+    borderBottomWidth: 2,
+  },
+  numViewsilver: {
+    width: "35%",
+    alignItems: "center",
+    justifyContent: "center",
+    borderTopColor: "#BBBBBB",
+    borderBottomColor: "#BBBBBB",
     borderTopWidth: 2,
     borderBottomWidth: 2,
   },

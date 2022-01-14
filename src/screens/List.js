@@ -5,11 +5,11 @@ import {
   StyleSheet,
   View,
   Text,
+  TextInput,
   FlatList,
 } from "react-native";
-import SearchBar from "./SearchBar";
 import { Entypo } from "@expo/vector-icons";
-import { ScrollView } from "react-native-gesture-handler";
+import { Ionicons } from "@expo/vector-icons";
 import Task from "./task1";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 
@@ -30,8 +30,10 @@ export default class list extends Component {
       team: "",
       name: "",
       id: "",
+      text: "",
       bookmark: 0,
     };
+    this.arrayholder = [];
   }
 
   componentDidMount() {
@@ -47,9 +49,25 @@ export default class list extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        this.setState({ data: json });
+        this.setState({ data: json }, () => {
+          this.arrayholder = json;
+        });
       });
   };
+
+  //https://reactnativecode.com/search-bar-filter-on-flatlist-json-data/
+  searchData(text) {
+    const newData = this.arrayholder.filter((item) => {
+      const itemData = item.name.toUpperCase();
+      const textData = text.toUpperCase();
+      return itemData.indexOf(textData) > -1;
+    });
+
+    this.setState({
+      data: newData,
+      text: text,
+    });
+  }
 
   onMenuPress = (id) => {
     if (id === "abc") {
@@ -103,7 +121,16 @@ export default class list extends Component {
         </View>
 
         <View style={styles.secondView}>
-          <SearchBar />
+          <View style={styles.SearchBarWrapper}>
+            <TextInput
+              style={styles.SearchInput}
+              onChangeText={(text) => this.searchData(text)}
+              value={this.state.text}
+              underlineColorAndroid="transparent"
+              placeholder="환자 이름을 입력하세요."
+            />
+            <Ionicons name="search" size={20} color="#595959" />
+          </View>
         </View>
 
         <View style={styles.threeView}>
@@ -218,5 +245,17 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
+  },
+  SearchBarWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f2f2f2",
+    padding: 10,
+    width: "92%",
+    borderRadius: 10,
+  },
+  SearchInput: {
+    marginLeft: 10,
+    flex: 3,
   },
 });
