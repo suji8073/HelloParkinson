@@ -145,6 +145,27 @@ export default class progress extends Component {
     }
   };
 
+  pressday = (yoilnum, daynum) => {
+    if (daynum <= 0) {
+      // 이전 해로 넘어갈 경우
+      if (this.state.month == 1) {
+        this.setState({ month: 12 });
+      }
+      // 같은해에서 이동할 경우
+      else {
+        this.setState({ month: this.state.month - 1 });
+      }
+      this.setState({ thisdate: this.state.lastdate });
+      this.setState({
+        lastdate: new Date(this.state.year, this.state.month - 1, 0).getDate(),
+      });
+      this.setState({ day: this.state.thisdate + daynum });
+    } else {
+      this.setState({ day: daynum });
+    }
+    this.setState({ yoil: yoilnum });
+  };
+
   userfunc = () => {
     fetch("http://152.70.233.113/chamuser?sort=name", {
       method: "GET",
@@ -213,7 +234,7 @@ export default class progress extends Component {
 
         <View style={styles.twoView}>
           {/* <Text style={{ fontSize: 21 }}>12월</Text> */}
-          <Text style={{ fontSize: 21 }}>{this.state.month} 월</Text>
+          <Text style={{ fontSize: 21 }}>{this.state.thisdate} 월</Text>
         </View>
 
         <View style={styles.threeView}>
@@ -221,60 +242,102 @@ export default class progress extends Component {
             <TouchableOpacity onPress={() => this.minus()}>
               <AntDesign name="left" size={30} color="#808080" />
             </TouchableOpacity>
-            <View style={styles.dayview}>
-              <Text style={styles.lasttext1}>
-                {this.dayy(this.state.yoil - 3)}
-              </Text>
-              <Text style={styles.lasttext}>
-                {this.daynum(this.state.day - 3)}
-              </Text>
-            </View>
-            <View style={styles.dayview}>
-              <Text style={styles.lasttext1}>
-                {this.dayy(this.state.yoil - 2)}
-              </Text>
-              <Text style={styles.lasttext}>
-                {this.daynum(this.state.day - 2)}
-              </Text>
-            </View>
-            <View style={styles.dayview}>
-              <Text style={styles.lasttext1}>
-                {this.dayy(this.state.yoil - 1)}
-              </Text>
-              <Text style={styles.lasttext}>
-                {this.daynum(this.state.day - 1)}
-              </Text>
-            </View>
-            <View style={styles.todayview}>
-              <Text style={styles.ddaytext1}>{this.dayy(this.state.yoil)}</Text>
-              <Text style={styles.ddaytext}>
-                {this.todaynum(this.state.day)}
-              </Text>
-            </View>
-            <View style={styles.dayview}>
-              <Text style={styles.nexttext1}>
-                {this.dayy(this.state.yoil + 1)}
-              </Text>
-              <Text style={styles.nexttext}>
-                {this.daynum(this.state.day + 1)}
-              </Text>
-            </View>
-            <View style={styles.dayview}>
-              <Text style={styles.nexttext1}>
-                {this.dayy(this.state.yoil + 2)}
-              </Text>
-              <Text style={styles.nexttext}>
-                {this.daynum(this.state.day + 2)}
-              </Text>
-            </View>
-            <View style={styles.dayview}>
-              <Text style={styles.nexttext1}>
-                {this.dayy(this.state.yoil + 3)}
-              </Text>
-              <Text style={styles.nexttext}>
-                {this.daynum(this.state.day + 3)}
-              </Text>
-            </View>
+            <TouchableOpacity
+              onPress={() =>
+                this.pressday(this.state.yoil - 3, this.state.day - 3)
+              }
+            >
+              <View style={styles.dayview}>
+                <Text style={styles.lasttext1}>
+                  {this.dayy(this.state.yoil - 3)}
+                </Text>
+                <Text style={styles.lasttext}>
+                  {this.daynum(this.state.day - 3)}
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                this.pressday(this.state.yoil - 2, this.state.day - 2)
+              }
+            >
+              <View style={styles.dayview}>
+                <Text style={styles.lasttext1}>
+                  {this.dayy(this.state.yoil - 2)}
+                </Text>
+                <Text style={styles.lasttext}>
+                  {this.daynum(this.state.day - 2)}
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                this.pressday(this.state.yoil - 1, this.state.day - 1)
+              }
+            >
+              <View style={styles.dayview}>
+                <Text style={styles.lasttext1}>
+                  {this.dayy(this.state.yoil - 1)}
+                </Text>
+                <Text style={styles.lasttext}>
+                  {this.daynum(this.state.day - 1)}
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.pressday(this.state.yoil, this.state.day)}
+            >
+              <View style={styles.todayview}>
+                <Text style={styles.ddaytext1}>
+                  {this.dayy(this.state.yoil)}
+                </Text>
+                <Text style={styles.ddaytext}>
+                  {this.todaynum(this.state.day)}
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                this.pressday(this.state.yoil + 1, this.state.day + 1)
+              }
+            >
+              <View style={styles.dayview}>
+                <Text style={styles.lasttext1}>
+                  {this.dayy(this.state.yoil + 1)}
+                </Text>
+                <Text style={styles.lasttext}>
+                  {this.daynum(this.state.day + 1)}
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                this.pressday(this.state.yoil + 2, this.state.day + 2)
+              }
+            >
+              <View style={styles.dayview}>
+                <Text style={styles.lasttext1}>
+                  {this.dayy(this.state.yoil + 2)}
+                </Text>
+                <Text style={styles.lasttext}>
+                  {this.daynum(this.state.day + 2)}
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                this.pressday(this.state.yoil + 3, this.state.day + 3)
+              }
+            >
+              <View style={styles.dayview}>
+                <Text style={styles.lasttext1}>
+                  {this.dayy(this.state.yoil + 3)}
+                </Text>
+                <Text style={styles.lasttext}>
+                  {this.daynum(this.state.day + 3)}
+                </Text>
+              </View>
+            </TouchableOpacity>
             <TouchableOpacity onPress={() => this.plus()}>
               <AntDesign name="right" size={30} color="#808080" />
             </TouchableOpacity>
@@ -391,14 +454,14 @@ const styles = StyleSheet.create({
   },
   dayview: {
     alignItems: "center",
-    marginHorizontal: "3%",
+    marginHorizontal: "2%",
   },
   todayview: {
     alignItems: "center",
     backgroundColor: "#7AC819",
     marginHorizontal: "3%",
-    paddingHorizontal: "1.5%",
-    paddingVertical: "0.5%",
+    // paddingHorizontal: "%",
+    paddingVertical: "5%",
     borderWidth: 2,
     borderRadius: 10,
     borderColor: "#7AC819",
