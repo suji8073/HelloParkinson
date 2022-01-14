@@ -104,7 +104,7 @@ export default class progress extends Component {
             <AntDesign name="left" size={30} color="#808080" />
 
             <View style={styles.dayview}>
-              <Text style={styles.lasttext}>화</Text>
+              {/* <Text style={styles.lasttext}>화</Text> */}
               <Text style={styles.lasttext}>30</Text>
             </View>
             <View style={styles.dayview}>
