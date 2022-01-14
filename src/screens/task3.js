@@ -16,6 +16,7 @@ export default class task3 extends Component {
     super(props);
     this.state = {
       alarm: airplane,
+      nowtime: new Date(),
     };
   }
 
@@ -96,7 +97,21 @@ export default class task3 extends Component {
           </View>
         </View>
         <TouchableOpacity onPress={this.handleClick} activeOpacity={1}>
-          <WithLocalSvg width={40} height={40} asset={this.state.alarm} />
+          <WithLocalSvg
+            style={{ marginTop: "20%" }}
+            width={40}
+            height={40}
+            asset={this.state.alarm}
+          />
+          <Text
+            style={
+              this.state.alarm == greenairplane
+                ? styles.timetextgreen
+                : styles.timetextsilver
+            }
+          >
+            {this.props.time}분전
+          </Text>
         </TouchableOpacity>
       </View>
     );
@@ -162,5 +177,13 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,
+  },
+  timetextgreen: {
+    color: "#000000",
+    paddingTop: "1%",
+  },
+  timetextsilver: {
+    color: "#FFFFFF",
+    paddingTop: "1%",
   },
 });

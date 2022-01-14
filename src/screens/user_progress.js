@@ -15,10 +15,18 @@ import { Ionicons } from "@expo/vector-icons";
 import action_icon from "../icon/action_icon.svg";
 import { WithLocalSvg } from "react-native-svg";
 
+import SimplePopupMenu from "react-native-simple-popup-menu";
 import { Entypo } from "@expo/vector-icons";
 import PercentageBar from "../screens/progressbar";
-const year = 2021 + 1;
+const year = new Date().getFullYear();
 
+const items = [
+  { id: "1", label: "신장 운동" },
+  { id: "2", label: "근력 운동" },
+  { id: "3", label: "균형 및 협응 운동" },
+  { id: "4", label: "구강 및 발성 운동" },
+  { id: "5", label: "유산소 운동" },
+];
 export default class progress extends Component {
   constructor(props) {
     super(props);
@@ -167,21 +175,27 @@ export default class progress extends Component {
                 </Text>
               </View>
               {/* 햄버거 아이콘 */}
-              <View
+              {/* <View
                 style={{
                   flex: 1,
                   alignItems: "flex-end",
                   justifyContent: "flex-start",
                 }}
               >
-                <TouchableOpacity onPress={this.dots}>
-                  <Entypo
-                    name="dots-three-vertical"
-                    size={20}
-                    color="#595959"
-                  />
-                </TouchableOpacity>
-              </View>
+                <TouchableOpacity onPress={this.dots}> */}
+              <SimplePopupMenu
+                style={styles.margin}
+                items={items}
+                cancelLabel={"취소"}
+                onSelect={(items) => {
+                  this.onMenuPress(items.id);
+                }}
+                onCancel={() => console.log("onCancel")}
+              >
+                <Entypo name="dots-three-vertical" size={24} color="#595959" />
+              </SimplePopupMenu>
+              {/* </TouchableOpacity>
+              </View> */}
             </View>
             {/* 여기부터 아래 */}
             <View style={{ flexDirection: "row", paddingBottom: "5%" }}>
@@ -229,9 +243,7 @@ export default class progress extends Component {
               }}
             >
               <View style={{ marginBottom: "3%" }}>
-                <Text style={styles.movetitletext}>
-                  진행 중
-                </Text>
+                <Text style={styles.movetitletext}>진행 중</Text>
                 <Text style={styles.movetext}>날개뼈 모으기</Text>
               </View>
               <View>

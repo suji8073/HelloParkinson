@@ -6,10 +6,11 @@ import {
   StatusBar,
   StyleSheet,
   TouchableOpacity,
+  Image,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 
 function profile({ navigation }) {
+  let profile_svg = require("../icon/snuh.png");
   return (
     <View style={styles.finalView}>
       <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
@@ -26,7 +27,10 @@ function profile({ navigation }) {
           marginTop: "8%",
         }}
       >
-        <Ionicons name="person-circle-sharp" size={120} color="lightblue" />
+        <Image
+          style={{ height: 105, width: 112, marginBottom: "3%" }}
+          source={profile_svg}
+        />
         <Text style={styles.titleText}>관리자</Text>
       </View>
 
@@ -103,15 +107,12 @@ function profile({ navigation }) {
     </View>
   );
 }
-
 export default profile;
-
 const styles = StyleSheet.create({
   finalView: {
     flex: 1,
     backgroundColor: "#FFFFFF",
   },
-
   menuText: {
     color: "#484848",
     justifyContent: "flex-start",
@@ -152,7 +153,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
   },
-
   titleText: {
     alignItems: "flex-start",
     fontSize: 21,
@@ -175,7 +175,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
   },
-
   titleText: {
     alignItems: "flex-start",
     fontSize: 20,
@@ -184,7 +183,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     fontWeight: "bold",
   },
-
   firstView: {
     // padding:30,
     alignItems: "center",
