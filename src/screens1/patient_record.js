@@ -17,13 +17,13 @@ import page_here from "../icon/page_here.svg";
 import page_no from "../icon/page_no.svg";
 
 const data = [
-  { date: "20220108", progress: 80 },
-  { date: "20220109", progress: 90 },
-  { date: "20220110", progress: 80 },
-  { date: "20220111", progress: 90 },
+  { date: "20220111", progress: 80 },
   { date: "20220112", progress: 90 },
-  { date: "20220113", progress: 90 },
-  { date: "20220114", progress: 60 },
+  { date: "20220113", progress: 80 },
+  { date: "20220114", progress: 90 },
+  { date: "20220115", progress: 90 },
+  { date: "20220116", progress: 90 },
+  { date: "20220117", progress: 60 },
 ];
 
 var sum_progress = 0;
