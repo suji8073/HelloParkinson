@@ -94,7 +94,8 @@ export default class task_patient extends Component {
 const styles = StyleSheet.create({
   text1: {
     alignItems: "flex-start",
-    fontSize: 19,
+    fontSize: 17,
+    marginBottom: 5,
     color: "#000000",
     justifyContent: "center",
     fontWeight: "bold",
