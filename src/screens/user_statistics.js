@@ -20,7 +20,7 @@ import { AntDesign } from "@expo/vector-icons";
 import page_here from "../icon/page_here.svg";
 import page_no from "../icon/page_no.svg";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import MonthPicker from 'react-native-month-year-picker';
+import RNPickerSelect from 'react-native-picker-select';
 
 const data = [
   { date: "20220111", progress: 80 },
