@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
-"noImplicitAny": false},
-
+    "typeRoots": ["./node_modules/@types", "./types"],
+    "declaration": true,
+    "declarationDir": "./types"
+  },
+  "typeRoots": ["./node_modules/@types", "./types"],
+  "include": ["src"],
   "extends": "expo/tsconfig.base"
 }

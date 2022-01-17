@@ -29,7 +29,6 @@ const alarm_task = ({ navigation, apm, hour, minute, cycle }) => {
         >
           {apm} {hour} : {minute}
         </Text>
-        <Text style={{ fontSize: 17 }}>{cycle}</Text>
       </View>
 
       <View
