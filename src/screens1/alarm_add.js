@@ -7,8 +7,7 @@ import {
   Text,
   TextInput,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import plussvg from "../icon/plus.svg";
 import nosvg from "../icon/no.svg";
 import { WithLocalSvg } from "react-native-svg";
@@ -21,7 +20,6 @@ export default class alarm_add extends Component {
       apm: "",
       hour: "",
       minute: "",
-      cycle: "",
     };
   }
 
@@ -31,18 +29,6 @@ export default class alarm_add extends Component {
 
   onPress_apm2 = () => {
     this.setState({ apm: "오후" });
-  };
-
-  onPress_cycle1 = () => {
-    this.setState({ cycle: "오늘 하루만 알림" });
-  };
-
-  onPress_cycle2 = () => {
-    this.setState({ cycle: "일주일마다 반복하기" });
-  };
-
-  onPress_cycle3 = () => {
-    this.setState({ cycle: "매일 반복하기" });
   };
 
   render() {
@@ -62,7 +48,9 @@ export default class alarm_add extends Component {
           <View style={styles.margin}></View>
           <AntDesign name="left" size={24} color="#FFFFFF" />
         </View>
+
         <View style={styles.secondView}>
+          <View style={{ flex: 0.1 }}></View>
           <View style={{ margin: "5%" }}>
             <View style={styles.firstView}>
               <View
@@ -110,14 +98,16 @@ export default class alarm_add extends Component {
                 borderColor: "#E0E0E0",
                 borderRadius: 6,
                 borderWidth: 2,
-                marginBottom: "4%",
+                marginBottom: "5%",
+                marginTop: "5%",
                 backgroundColor: "#ffffff",
-                height: "15%",
+                height: "20%",
               }}
             >
               <View>
                 <TextInput
                   style={styles.time1}
+                  keyboardType="numeric"
                   onChangeText={(text) => {
                     this.setState({ user_age: text });
                   }}
@@ -139,62 +129,8 @@ export default class alarm_add extends Component {
                 />
               </View>
             </View>
-            <View style={styles.selectView}>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={this.onPress_cycle1}
-              >
-                <View style={styles.text1View}>
-                  <Text
-                    style={
-                      this.state.cycle === "오늘 하루만 알림"
-                        ? styles.text2_on
-                        : styles.text2
-                    }
-                  >
-                    오늘 하루만 알림
-                  </Text>
-                </View>
-              </TouchableOpacity>
 
-              <View style={styles.margin1}></View>
-
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={this.onPress_cycle2}
-              >
-                <View style={styles.text1View}>
-                  <Text
-                    style={
-                      this.state.cycle === "일주일마다 반복하기"
-                        ? styles.text2_on
-                        : styles.text2
-                    }
-                  >
-                    일주일마다 반복하기
-                  </Text>
-                </View>
-              </TouchableOpacity>
-
-              <View style={styles.margin1}></View>
-
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={this.onPress_cycle3}
-              >
-                <View style={styles.text1View}>
-                  <Text
-                    style={
-                      this.state.cycle === "매일 반복하기"
-                        ? styles.text2_on
-                        : styles.text2
-                    }
-                  >
-                    매일 반복하기
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </View>
+            <View style={{ flex: 1 }}></View>
 
             <View style={styles.threeview}>
               <TouchableOpacity
@@ -225,6 +161,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFFFFF",
   },
+  marginView: {
+    flex: 1,
+  },
   apm1: {
     fontSize: 23,
     fontWeight: "bold",
@@ -254,16 +193,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "flex-start",
   },
-  selectView: {
-    backgroundColor: "#ffffff",
-    flexDirection: "column",
-    borderColor: "#E0E0E0",
-    borderRadius: 6,
-    borderWidth: 2,
-    height: "28%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
+
   menuView: {
     backgroundColor: "#FFFFFF",
     height: 58,
@@ -302,7 +232,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     marginBottom: "4%",
     backgroundColor: "#ffffff",
-    height: "13%",
+    height: "15%",
   },
   secondView: {
     backgroundColor: "#F8F8F8",

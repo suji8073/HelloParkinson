@@ -1,26 +1,14 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, SafeAreaView } from "react-native";
 
 const task_week = ({ id, put_date, progress }) => {
-  const dateToStr = (date) => {
-    var week = new Array("일", "월", "화", "수", "목", "금", "토");
-
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-
-    var today =
-      year +
-      ("00" + month.toString()).slice(-2) +
-      ("00" + day.toString()).slice(-2);
-
-    var daycount = date.getDay() - (parseInt(today) - parseInt(put_date));
-
-    if (daycount < 0) {
-      return week[daycount + 7];
-    } else {
-      return week[daycount];
-    }
+  const dateToStr = () => {
+    var day = String(put_date).substring(6, 8);
+    if (parseInt(day) === 5) return "5";
+    else if (parseInt(day) === 10) return day;
+    else if (parseInt(day) === 15) return day;
+    else if (parseInt(day) === 20) return day;
+    else if (parseInt(day) === 25) return day;
   };
   return (
     //  전체 뷰
@@ -29,21 +17,23 @@ const task_week = ({ id, put_date, progress }) => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "flex-start",
-        width: 28,
-        marginRight: 8,
-        marginLeft: 8,
+        width: 10,
+        marginRight: 3,
+        marginLeft: 3,
         marginBottom: 2,
       }}
     >
-      <View style={styles.graphView}>
-        <View
-          style={id === 6 ? styles.chart1 : styles.chart}
-          height={progress}
-        ></View>
-      </View>
-      <View style={styles.textView}>
-        <Text style={styles.text11}>{dateToStr(new Date())}</Text>
-      </View>
+      <SafeAreaView style={{ flex: 2, width: "100%" }}>
+        <View style={styles.graphView}>
+          <View
+            style={progress <= 40 ? styles.chart1 : styles.chart}
+            height={progress}
+          ></View>
+        </View>
+        <View style={styles.textView}>
+          <Text style={styles.text11}>{dateToStr()}</Text>
+        </View>
+      </SafeAreaView>
     </View>
   );
 };
@@ -52,7 +42,7 @@ export default task_week;
 const styles = StyleSheet.create({
   graphView: {
     flexDirection: "row",
-    flex: 3,
+    flex: 2.6,
     alignItems: "flex-end",
     justifyContent: "center",
   },
@@ -69,12 +59,12 @@ const styles = StyleSheet.create({
   },
   chart1: {
     flex: 1,
-    backgroundColor: "#316200",
+    backgroundColor: "#C4C4C4",
   },
 
   text11: {
-    fontSize: 14,
-    fontWeight: "bold",
+    fontSize: 10,
+    width: 20,
     color: "#484848",
   },
 });

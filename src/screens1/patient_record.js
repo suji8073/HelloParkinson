@@ -1,20 +1,25 @@
 import React, { Component } from "react";
 import {
-  SafeAreaView,
   FlatList,
   StyleSheet,
   View,
   Text,
   ScrollView,
+  TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
 import { Dimensions } from "react-native";
 import Task from "./task_record_day";
 import Task1 from "./task_week";
+import Taskm from "../screens1/task_week_m";
 
 import { WithLocalSvg } from "react-native-svg";
 
 import page_here from "../icon/page_here.svg";
 import page_no from "../icon/page_no.svg";
+
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import MonthPicker from "react-native-month-year-picker";
 
 const data = [
   { date: "20220111", progress: 80 },
@@ -26,7 +31,28 @@ const data = [
   { date: "20220117", progress: 60 },
 ];
 
+const data1 = [
+  { date: "20220101", progress: 30 },
+  { date: "20220102", progress: 40 },
+  { date: "20220103", progress: 50 },
+  { date: "20220104", progress: 30 },
+  { date: "20220105", progress: 50 },
+  { date: "20220106", progress: 60 },
+  { date: "20220107", progress: 10 },
+  { date: "20220108", progress: 70 },
+  { date: "20220109", progress: 90 },
+  { date: "20220110", progress: 80 },
+  { date: "20220111", progress: 80 },
+  { date: "20220112", progress: 90 },
+  { date: "20220113", progress: 80 },
+  { date: "20220114", progress: 90 },
+  { date: "20220115", progress: 90 },
+  { date: "20220116", progress: 90 },
+  { date: "20220117", progress: 60 },
+];
+
 var sum_progress = 0;
+var sum_progress_m = 0;
 const { width, height } = Dimensions.get("screen");
 
 export default class patient_record extends Component {
@@ -39,6 +65,11 @@ export default class patient_record extends Component {
       late_date: "",
       sum_p: 0,
       page_l: true,
+      isDatePickerVisible: false,
+      setDatePickerVisibility: false,
+      date: new Date(),
+      show: false,
+      setShow: false,
     };
   }
 
@@ -54,6 +85,7 @@ export default class patient_record extends Component {
   };
 
   componentDidMount() {
+    this.setState({ sum_p: 0, sum_m: 0 });
     data.map((x) => {
       sum_progress += x.progress;
       this.setState({ sum_p: sum_progress / 7 });
@@ -62,6 +94,11 @@ export default class patient_record extends Component {
     data.filter((x, y) => {
       if (y === 0) this.setState({ first_date: x.date });
       if (y === 6) this.setState({ late_date: x.date });
+    });
+
+    data1.map((x) => {
+      sum_progress_m += x.progress;
+      this.setState({ sum_m: sum_progress_m / data1.length });
     });
 
     // 일별 총 진도율
@@ -104,6 +141,46 @@ export default class patient_record extends Component {
       });
   }
 
+  showDatePicker = () => {
+    this.setState({ setDatePickerVisibility: true, isDatePickerVisible: true });
+  };
+
+  hideDatePicker = () => {
+    this.setState({
+      setDatePickerVisibility: false,
+      isDatePickerVisible: false,
+    });
+  };
+
+  handleConfirm = (date) => {
+    console.warn("A date has been picked: ", date);
+    this.dateToStr(date);
+    this.hideDatePicker();
+  };
+
+  dateToStr = (date) => {
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var daycount = date.getDay();
+
+    var today =
+      year +
+      ("00" + month.toString()).slice(-2) +
+      ("00" + day.toString()).slice(-2);
+
+    this.setState({
+      first_date: parseInt(today) - parseInt(daycount),
+      late_date: parseInt(today) - parseInt(daycount) + 6,
+    });
+  };
+
+  onValueChange = () => {
+    var newDate = new Date();
+    const selectedDate = newDate || date;
+    this.setState({ setDate: selectedDate, setShow: false });
+  };
+
   render() {
     return (
       <View style={styles.finalView}>
@@ -119,6 +196,12 @@ export default class patient_record extends Component {
               justifyContent: "space-between",
             }}
           >
+            <DateTimePickerModal
+              isVisible={this.state.isDatePickerVisible}
+              mode="date"
+              onConfirm={this.handleConfirm}
+              onCancel={this.hideDatePicker}
+            />
             <ScrollView
               horizontal
               contentContainerStyle={{ width: width * 2 }}
@@ -128,18 +211,23 @@ export default class patient_record extends Component {
             >
               <View style={styles.secondView}>
                 <View style={styles.textview}>
-                  <Text style={styles.text1}>
-                    {String(this.state.first_date).substring(0, 4) +
-                      "년 " +
-                      String(this.state.first_date).substring(4, 6) +
-                      "월 " +
-                      +String(this.state.first_date).substring(6, 8) +
-                      "일 ~ " +
-                      String(this.state.late_date).substring(4, 6) +
-                      "월 " +
-                      +String(this.state.late_date).substring(6, 8) +
-                      "일"}
-                  </Text>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={this.showDatePicker}
+                  >
+                    <Text style={styles.text1}>
+                      {String(this.state.first_date).substring(0, 4) +
+                        "년 " +
+                        String(this.state.first_date).substring(4, 6) +
+                        "월 " +
+                        +String(this.state.first_date).substring(6, 8) +
+                        "일 ~ " +
+                        String(this.state.late_date).substring(4, 6) +
+                        "월 " +
+                        +String(this.state.late_date).substring(6, 8) +
+                        "일"}
+                    </Text>
+                  </TouchableOpacity>
                   <Text style={styles.text2}>
                     주 평균 {this.state.sum_p.toFixed(1)}%
                   </Text>
@@ -164,14 +252,25 @@ export default class patient_record extends Component {
               </View>
               <View style={styles.secondView}>
                 <View style={styles.textview}>
-                  <Text style={styles.text1}>
-                    {String(this.state.first_date).substring(0, 4) +
-                      "년 " +
-                      String(this.state.first_date).substring(4, 6) +
-                      "월 ~ " +
-                      String(this.state.late_date).substring(4, 6) +
-                      "월 "}
-                  </Text>
+                  <TouchableOpacity
+                    onPress={() => this.setState({ setShow: true })}
+                  >
+                    <Text style={styles.text1}>
+                      {String(this.state.first_date).substring(0, 4) +
+                        "년 " +
+                        String(this.state.first_date).substring(4, 6) +
+                        "월" }
+                    </Text>
+                  </TouchableOpacity>
+                  {this.state.show === true && (
+                    <MonthPicker
+                      onChange={this.onValueChange}
+                      value={this.state.date}
+                      minimumDate={new Date()}
+                      maximumDate={new Date(2025, 5)}
+                      locale="ko"
+                    />
+                  )}
                   <Text style={styles.text2}>
                     월 평균 {this.state.sum_p.toFixed(1)}%
                   </Text>
@@ -180,14 +279,14 @@ export default class patient_record extends Component {
                 <SafeAreaView style={{ flex: 2, width: "100%" }}>
                   <FlatList
                     keyExtractor={(item, index) => index}
-                    data={data}
+                    data={data1}
                     renderItem={({ item, index }) => {
                       return (
-                        <Task1
+                        <Taskm
                           id={index}
                           put_date={item.date}
                           progress={item.progress}
-                        ></Task1>
+                        ></Taskm>
                       );
                     }}
                     horizontal={true}
@@ -326,6 +425,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     borderWidth: 1,
     borderColor: "#E0E0E0",
+    width: width - 40,
   },
   threeView: {
     marginTop: "3%",
