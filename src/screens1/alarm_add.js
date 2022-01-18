@@ -16,6 +16,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
+const storeData = async (array) => {
+  try {
+    await AsyncStorage.setItem("@alarm", JSON.stringify(array));
+    console.log("clear");
+  } catch (e) {
+    // saving error
+    console.log("error");
+  }
+};
+
 export default class alarm_add extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +36,21 @@ export default class alarm_add extends Component {
       isDatePickerVisible: false,
       setDatePickerVisibility: false,
       pickdate: new Date(),
+      alarm_array: [],
     };
+  }
+
+  async componentDidMount() {
+    try {
+      const alarm_array = await AsyncStorage.getItem("@alarm");
+      console.log(alarm_array);
+
+      if (alarm_array !== null) {
+        this.setState({ alarm_array: alarm_array });
+      }
+    } catch (e) {
+      console.log("불러와지는 error");
+    }
   }
 
   onPress_apm1 = () => {
@@ -60,13 +84,46 @@ export default class alarm_add extends Component {
     var p_minute = date.getMinutes();
 
     console.log(p_hours + ":" + p_minute);
-    if (p_hours === 24)
-      this.setState({ apm: "오전", hour: 12, minute: p_minute });
-    else if (p_hours > 12)
-      this.setState({ apm: "오후", hour: p_hours - 12, minute: p_minute });
-    else if (p_hours === 12)
-      this.setState({ apm: "오후", hour: p_hours, minute: p_minute });
-    else this.setState({ apm: "오전", hour: p_hours, minute: p_minute });
+
+    if (p_minute === 0) this.setState({ minute: "00" });
+    else this.setState({ minute: p_minute });
+    if (p_hours === 24) this.setState({ apm: "오전", hour: 12 });
+    else if (p_hours > 12) this.setState({ apm: "오후", hour: p_hours - 12 });
+    else if (p_hours === 12) this.setState({ apm: "오후", hour: p_hours });
+    else this.setState({ apm: "오전", hour: p_hours });
+  };
+  addalarm = () => {
+    Alert.alert("알림창", "알림을 추가하시겠어요?", [
+      {
+        text: "취 소",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "추 가",
+        onPress: () => {
+          console.log("OK Pressed");
+          if (this.state.apm === "" || this.state.hour == "00")
+            Alert.alert("시간을 입력해주세요.");
+          else {
+            var add_clock = {
+              apm: this.state.apm,
+              hour: this.state.hour,
+              minute: this.state.minute,
+              click: 1,
+            };
+            var change_clock = JSON.parse(this.state.alarm_array);
+            console.log("?" + change_clock);
+            console.log("?" + change_clock);
+            change_clock.push(add_clock);
+            console.log("!" + JSON.stringify(change_clock));
+            //storeData(change_clock);
+
+            this.props.navigation.pop();
+          }
+        },
+      },
+    ]);
   };
 
   render() {
@@ -88,7 +145,7 @@ export default class alarm_add extends Component {
         </View>
 
         <View style={styles.secondView}>
-          <View style={{ flex: 0.1 }}></View>
+          <View style={{ flex: 0.3 }}></View>
           <View style={{ margin: "5%" }}>
             <View style={styles.firstView}>
               <View
@@ -127,6 +184,7 @@ export default class alarm_add extends Component {
                 </TouchableOpacity>
               </View>
             </View>
+            <View style={{ flex: 0.2 }}></View>
             <DateTimePickerModal
               isVisible={this.state.isDatePickerVisible}
               mode="time"
@@ -170,7 +228,7 @@ export default class alarm_add extends Component {
               </View>
             </View>
 
-            <View style={{ flex: 1 }}></View>
+            <View style={{ flex: 2 }}></View>
 
             <View style={styles.threeview}>
               <TouchableOpacity
@@ -180,12 +238,7 @@ export default class alarm_add extends Component {
               >
                 <WithLocalSvg width={90} height={90} asset={nosvg} />
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  Alert.alert("추가되었습니다.");
-                  this.props.navigation.pop();
-                }}
-              >
+              <TouchableOpacity onPress={this.addalarm}>
                 <WithLocalSvg width={90} height={90} asset={plussvg} />
               </TouchableOpacity>
             </View>
