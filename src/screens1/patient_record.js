@@ -259,7 +259,7 @@ export default class patient_record extends Component {
                       {String(this.state.first_date).substring(0, 4) +
                         "년 " +
                         String(this.state.first_date).substring(4, 6) +
-                        "월" }
+                        "월"}
                     </Text>
                   </TouchableOpacity>
                   {this.state.show === true && (

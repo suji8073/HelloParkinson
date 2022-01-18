@@ -8,11 +8,23 @@ import {
   ScrollView,
 } from "react-native";
 import Task from "./task_alarm";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { WithLocalSvg } from "react-native-svg";
 
 import plussvg from "../icon/plus.svg";
 import ActionButton from "react-native-action-button";
+
+const storeData = async (value1, value2) => {
+  try {
+    await AsyncStorage.setItem("@minutes", value1);
+    await AsyncStorage.setItem("@walk_seconds", value2);
+  } catch (e) {
+    // saving error
+    console.log("error");
+  }
+};
+
 
 export default class patient_alarm extends Component {
   constructor(props) {

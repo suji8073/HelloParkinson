@@ -13,6 +13,10 @@ import checksvg from "../icon/check.svg";
 import { WithLocalSvg } from "react-native-svg";
 import { AntDesign } from "@expo/vector-icons";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+
 export default class alarm_edit extends Component {
   constructor(props) {
     super(props);
@@ -20,6 +24,9 @@ export default class alarm_edit extends Component {
       apm: this.props.route.params.apm,
       hour: this.props.route.params.hour,
       minute: this.props.route.params.minute,
+      isDatePickerVisible: false,
+      setDatePickerVisibility: false,
+      pickdate: new Date(),
     };
   }
 
@@ -29,6 +36,38 @@ export default class alarm_edit extends Component {
 
   onPress_apm2 = () => {
     this.setState({ apm: "오후" });
+  };
+
+  showDatePicker = () => {
+    this.setState({ setDatePickerVisibility: true, isDatePickerVisible: true });
+  };
+
+  hideDatePicker = () => {
+    this.setState({
+      setDatePickerVisibility: false,
+      isDatePickerVisible: false,
+    });
+  };
+
+  handleConfirm = (date) => {
+    console.warn("A date has been picked: ", date);
+    this.dateToStr(date);
+    this.hideDatePicker();
+  };
+
+  dateToStr = (date) => {
+    this.setState({ pickdate: date });
+    var p_hours = date.getHours();
+    var p_minute = date.getMinutes();
+
+    console.log(p_hours + ":" + p_minute);
+    if (p_hours === 24)
+      this.setState({ apm: "오전", hour: 12, minute: p_minute });
+    else if (p_hours > 12)
+      this.setState({ apm: "오후", hour: p_hours - 12, minute: p_minute });
+    else if (p_hours === 12)
+      this.setState({ apm: "오후", hour: p_hours, minute: p_minute });
+    else this.setState({ apm: "오전", hour: p_hours, minute: p_minute });
   };
 
   render() {
@@ -105,28 +144,31 @@ export default class alarm_edit extends Component {
               }}
             >
               <View>
-                <TextInput
-                  style={styles.time1}
-                  keyboardType="numeric"
-                  onChangeText={(text) => {
-                    this.setState({ user_age: text });
-                  }}
-                  placeholder={this.state.hour}
-                  placeholderTextColor="#000"
+                <DateTimePickerModal
+                  isVisible={this.state.isDatePickerVisible}
+                  mode="time"
+                  date={this.state.pickdate}
+                  onConfirm={this.handleConfirm}
+                  onCancel={this.hideDatePicker}
                 />
+
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={this.showDatePicker}
+                >
+                  <Text style={styles.time1}>{this.state.hour}</Text>
+                </TouchableOpacity>
               </View>
               <View>
                 <Text style={styles.time1}>:</Text>
               </View>
               <View>
-                <TextInput
-                  style={styles.time1}
-                  onChangeText={(text) => {
-                    this.setState({ user_age: text });
-                  }}
-                  placeholder={this.state.minute}
-                  placeholderTextColor="#000"
-                />
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={this.showDatePicker}
+                >
+                  <Text style={styles.time1}>{this.state.minute}</Text>
+                </TouchableOpacity>
               </View>
             </View>
             <View style={{ flex: 1 }}></View>

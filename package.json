@@ -46,6 +46,7 @@
     "react-native-screens": "~3.4.0",
     "react-native-search-box": "^0.0.20",
     "react-native-search-input": "^0.0.6",
+    "react-native-simple-alarm": "^1.0.4",
     "react-native-simple-popup-menu": "^1.0.3",
     "react-native-splash-screen": "^3.2.0",
     "react-native-svg": "^12.1.1",
