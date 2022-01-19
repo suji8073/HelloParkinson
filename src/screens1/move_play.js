@@ -50,8 +50,6 @@ export default class move_play extends Component {
         done_num: this.props.route.params.done_num + 1,
       });
     }, 10000); // 10초
-    console.log("timer");
-    console.log(this.state.done_num);
   };
 
   userfunc = () => {
@@ -197,7 +195,7 @@ export default class move_play extends Component {
         <View style={styles.secondView}>
           <Video
             //source={{uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"}}
-            source={require("../screens1/Water.mp4")}
+            source={require("../screens1/1-1_move.mp4")}
             rate={1.0}
             volume={1.0}
             isMuted={false}
