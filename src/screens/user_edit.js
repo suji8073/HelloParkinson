@@ -63,14 +63,6 @@ export default class user_edit extends Component {
           progress: json.info.progress,
         });
       });
-    console.log(String(this.state.birth));
-    console.log(
-      String(this.state.birth).substring(0, 4) +
-        " - " +
-        String(this.state.birth).substring(4, 6) +
-        " - " +
-        String(this.state.birth).substring(6, 8)
-    );
 
     if (this.state.gender === "M") {
       this.setState({ age1: on, age2: off });

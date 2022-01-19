@@ -21,6 +21,22 @@ import page_here from "../icon/page_here.svg";
 import page_no from "../icon/page_no.svg";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import MonthPicker from "react-native-month-year-picker";
+import SimplePopupMenu from "react-native-simple-popup-menu";
+
+const items = [
+  { id: "1", label: "1월" },
+  { id: "2", label: "2월" },
+  { id: "3", label: "3월" },
+  { id: "4", label: "4월" },
+  { id: "5", label: "5월" },
+  { id: "6", label: "6월" },
+  { id: "7", label: "7월" },
+  { id: "8", label: "8월" },
+  { id: "9", label: "9월" },
+  { id: "10", label: "10월" },
+  { id: "11", label: "11월" },
+  { id: "12", label: "12월" },
+];
 
 const data = [
   { date: "20220111", progress: 80 },
@@ -79,6 +95,7 @@ export default class user_statistics extends Component {
       date: new Date(),
       show: false,
       setShow: false,
+      data2: [],
     };
   }
 
@@ -95,6 +112,8 @@ export default class user_statistics extends Component {
 
   componentDidMount() {
     this.setState({ sum_p: 0, sum_m: 0 });
+    sum_progress = 0;
+    sum_progress_m = 0;
     this.function1();
     this.function2();
     data.map((x) => {
@@ -160,7 +179,7 @@ export default class user_statistics extends Component {
     )
       .then((res) => res.json())
       .then((json) => {
-        this.setState({ data: json });
+        this.setState({ data2: json });
       });
   };
 
@@ -304,8 +323,14 @@ export default class user_statistics extends Component {
                     {this.state.sum_m.toFixed(1)}%
                   </Text>
                   <View style={styles.margin}></View>
-                  <TouchableOpacity
-                    onPress={() => this.setState({ setShow: true })}
+                  <SimplePopupMenu
+                    style={styles.margin}
+                    items={items}
+                    cancelLabel={"취소"}
+                    onSelect={(items) => {
+                      this.onMenuPress(items.id);
+                    }}
+                    onCancel={() => console.log("onCancel")}
                   >
                     <Text style={styles.text1}>
                       {"~ " +
@@ -314,16 +339,7 @@ export default class user_statistics extends Component {
                         String(this.state.late_date).substring(4, 6) +
                         "월"}
                     </Text>
-                  </TouchableOpacity>
-                  {this.state.show === true && (
-                    <MonthPicker
-                      onChange={this.onValueChange}
-                      value={this.state.date}
-                      minimumDate={new Date()}
-                      maximumDate={new Date(2025, 5)}
-                      locale="ko"
-                    />
-                  )}
+                  </SimplePopupMenu>
                 </View>
 
                 <SafeAreaView style={{ flex: 2, width: "100%" }}>
@@ -364,7 +380,7 @@ export default class user_statistics extends Component {
               <SafeAreaView style={{ flex: 1 }}>
                 <FlatList
                   keyExtractor={(item, index) => index}
-                  data={this.state.data}
+                  data={this.state.data2}
                   renderItem={({ item }) => {
                     return (
                       <Task

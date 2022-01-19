@@ -112,12 +112,18 @@ export default class alarm_add extends Component {
               minute: this.state.minute,
               click: 1,
             };
-            var change_clock = JSON.parse(this.state.alarm_array);
-            console.log("?" + change_clock);
-            console.log("?" + change_clock);
-            change_clock.push(add_clock);
+
+            if (this.state.alarm_array.length === 0) {
+              var change_clock = [];
+              change_clock.push(add_clock);
+            } else {
+              var change_clock = JSON.parse(this.state.alarm_array);
+              console.log("?" + change_clock);
+              console.log("?" + change_clock);
+              change_clock.push(add_clock);
+            }
             console.log("!" + JSON.stringify(change_clock));
-            //storeData(change_clock);
+            storeData(change_clock);
 
             this.props.navigation.pop();
           }
