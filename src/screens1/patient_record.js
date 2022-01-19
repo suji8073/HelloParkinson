@@ -19,7 +19,22 @@ import page_here from "../icon/page_here.svg";
 import page_no from "../icon/page_no.svg";
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import MonthPicker from "react-native-month-year-picker";
+import SimplePopupMenu from "react-native-simple-popup-menu";
+
+const items = [
+  { id: "1", label: "1월" },
+  { id: "2", label: "2월" },
+  { id: "3", label: "3월" },
+  { id: "4", label: "4월" },
+  { id: "5", label: "5월" },
+  { id: "6", label: "6월" },
+  { id: "7", label: "7월" },
+  { id: "8", label: "8월" },
+  { id: "9", label: "9월" },
+  { id: "10", label: "10월" },
+  { id: "11", label: "11월" },
+  { id: "12", label: "12월" },
+];
 
 const data = [
   { date: "20220111", progress: 80 },
@@ -51,6 +66,39 @@ const data1 = [
   { date: "20220117", progress: 60 },
 ];
 
+const data2 = [
+  {
+    day: "20220115",
+    progress: [
+      { day: "20220115", cat: "1", percent: 90 },
+      { day: "20220115", cat: "2", percent: 60 },
+      { day: "20220115", cat: "3", percent: 50 },
+      { day: "20220115", cat: "4", percent: 70 },
+      { day: "20220115", cat: "5", percent: 20 },
+    ],
+  },
+  {
+    day: "20220116",
+    progress: [
+      { day: "20220116", cat: "1", percent: 10 },
+      { day: "20220116", cat: "2", percent: 60 },
+      { day: "20220116", cat: "3", percent: 50 },
+      { day: "20220116", cat: "4", percent: 70 },
+      { day: "20220116", cat: "5", percent: 20 },
+    ],
+  },
+  {
+    day: "20220117",
+    progress: [
+      { day: "20220117", cat: "1", percent: 20 },
+      { day: "20220117", cat: "2", percent: 60 },
+      { day: "20220117", cat: "3", percent: 50 },
+      { day: "20220117", cat: "4", percent: 70 },
+      { day: "20220117", cat: "5", percent: 20 },
+    ],
+  },
+];
+
 var sum_progress = 0;
 var sum_progress_m = 0;
 const { width, height } = Dimensions.get("screen");
@@ -70,6 +118,7 @@ export default class patient_record extends Component {
       date: new Date(),
       show: false,
       setShow: false,
+      data2: [],
     };
   }
 
@@ -100,6 +149,36 @@ export default class patient_record extends Component {
       sum_progress_m += x.progress;
       this.setState({ sum_m: sum_progress_m / data1.length });
     });
+
+    var replace_array = [];
+    var one_percnet = {};
+    var one_pair = {};
+
+    //console.log(data2);
+    data2.map((x, y) => {
+      console.log("**");
+      //console.log(x.day);
+      one_percnet = [];
+      one_pair = {};
+
+      x.progress.map((x, y) => {
+        console.log("*");
+        one_pair.percent = x.percent;
+        console.log(one_pair);
+        one_percnet.push(JSON.stringify(one_pair));
+        console.log(JSON.stringify(one_percnet));
+        //console.log(typeof one_percnet);
+      });
+
+      //one_percnet.push(one_pair);
+      //console.log(one_percnet);
+
+      replace_array.push(one_percnet);
+      console.log("**!!**");
+    });
+
+    console.log(replace_array);
+    //this.setState({ data2: replace_array });
 
     // 일별 총 진도율
     {
@@ -137,7 +216,12 @@ export default class patient_record extends Component {
     )
       .then((res) => res.json())
       .then((json) => {
-        this.setState({ data: json });
+        this.setState({ data2: json });
+        //console.log(this.state.data2);
+        //this.state.data2.map((x) => {
+        //console.log(x);
+        //console.log(typeof x);
+        //});
       });
   }
 
@@ -179,6 +263,13 @@ export default class patient_record extends Component {
     var newDate = new Date();
     const selectedDate = newDate || date;
     this.setState({ setDate: selectedDate, setShow: false });
+  };
+
+  onMenuPress = (id) => {
+    console.log(id.length);
+    if (id.length === 1) var click_date = "20220" + id + "00";
+    else var click_date = "2022" + id + "00";
+    this.setState({ late_date: click_date });
   };
 
   render() {
@@ -252,25 +343,23 @@ export default class patient_record extends Component {
               </View>
               <View style={styles.secondView}>
                 <View style={styles.textview}>
-                  <TouchableOpacity
-                    onPress={() => this.setState({ setShow: true })}
+                  <SimplePopupMenu
+                    style={styles.margin}
+                    items={items}
+                    cancelLabel={"취소"}
+                    onSelect={(items) => {
+                      this.onMenuPress(items.id);
+                    }}
+                    onCancel={() => console.log("onCancel")}
                   >
                     <Text style={styles.text1}>
-                      {String(this.state.first_date).substring(0, 4) +
+                      {String(this.state.late_date).substring(0, 4) +
                         "년 " +
-                        String(this.state.first_date).substring(4, 6) +
-                        "월" }
+                        String(this.state.late_date).substring(4, 6) +
+                        "월"}
                     </Text>
-                  </TouchableOpacity>
-                  {this.state.show === true && (
-                    <MonthPicker
-                      onChange={this.onValueChange}
-                      value={this.state.date}
-                      minimumDate={new Date()}
-                      maximumDate={new Date(2025, 5)}
-                      locale="ko"
-                    />
-                  )}
+                  </SimplePopupMenu>
+
                   <Text style={styles.text2}>
                     월 평균 {this.state.sum_p.toFixed(1)}%
                   </Text>
@@ -314,7 +403,7 @@ export default class patient_record extends Component {
               <SafeAreaView style={{ flex: 1 }}>
                 <FlatList
                   keyExtractor={(item, index) => index}
-                  data={this.state.data}
+                  data={this.state.data2}
                   renderItem={({ item }) => {
                     return (
                       <Task
