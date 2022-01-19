@@ -12,7 +12,6 @@ import Task from "./task_move";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 
-
 const data = [
   { name: "목 앞 근육 스트레칭", category: "1-1", a: 1, b: 2 },
   { name: "목 좌우 근육 스트레칭", category: "1-2", a: 2, b: 6 },
@@ -66,6 +65,8 @@ export default class move_1 extends Component {
                         paramName1: item.category,
                         paramName2: "신장운동",
                         paramsName: this.props.route.params.paramsName,
+                        done_num: item.a,
+                        assign_num: item.b,
                       });
                     }}
                   >

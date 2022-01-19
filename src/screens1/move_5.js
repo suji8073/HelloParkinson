@@ -58,8 +58,14 @@ export default class move_5 extends Component {
                     activeOpacity={0.8}
                     onPress={() => {
                       item.name === "걷기"
-                        ? this.props.navigation.push("yusanso_1")
-                        : this.props.navigation.push("yusanso_2");
+                        ? this.props.navigation.push("yusanso_1", {
+                            done_num: item.a,
+                            assign_num: item.b,
+                          })
+                        : this.props.navigation.push("yusanso_2", {
+                            done_num: item.a,
+                            assign_num: item.b,
+                          });
                     }}
                   >
                     <Task

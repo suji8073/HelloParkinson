@@ -25,6 +25,8 @@ export default class move_play extends Component {
       cat1: "",
       cat2: "",
       nowpage: "",
+      done_num: 0,
+      assign_num: 0,
     };
   }
 
@@ -33,6 +35,8 @@ export default class move_play extends Component {
     this.setState({
       cat1: String(this.props.route.params.paramName1).substring(0, 1),
       cat2: String(this.props.route.params.paramName1).substring(2, 4),
+      done_num: this.props.route.params.done_num,
+      assign_num: this.props.route.params.assign_num,
     });
 
     this.Time();
@@ -41,8 +45,13 @@ export default class move_play extends Component {
   Time = () => {
     // 1,000가 1초
     setTimeout(() => {
-      this.setState({ isLoading: false });
+      this.setState({
+        isLoading: false,
+        done_num: this.props.route.params.done_num + 1,
+      });
     }, 10000); // 10초
+    console.log("timer");
+    console.log(this.state.done_num);
   };
 
   userfunc = () => {
@@ -215,11 +224,24 @@ export default class move_play extends Component {
             <View style={styles.margin}></View>
             <Text
               style={
-                this.state.isLoading === false ? styles.white : styles.white1
+                this.state.isLoading === false ? styles.white : styles.green1
               }
             >
-              {" "}
-              다 음{" "}
+              {this.state.isLoading === false
+                ? this.state.done_num < this.state.assign_num
+                  ? "다 음  세 트  ( " +
+                    this.state.done_num +
+                    " / " +
+                    this.state.assign_num +
+                    " )"
+                  : "다 음  운 동"
+                : this.state.done_num !== this.state.assign_num
+                ? "다 음  세 트 ( " +
+                  this.state.done_num +
+                  " / " +
+                  this.state.assign_num +
+                  " )"
+                : "다 음  운 동"}
             </Text>
             <View style={styles.margin}></View>
             <View style={styles.margin}>
@@ -305,7 +327,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  white1: {
+  green1: {
     fontSize: 17,
     fontWeight: "bold",
     color: "#AFAFAF",

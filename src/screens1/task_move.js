@@ -76,8 +76,8 @@ const task_move = ({ image, text1, text2, text3 }) => {
 
       <View style={styles.textView}>
         <Text style={styles.text1}>{text1}</Text>
-        <Text style={styles.text2}>
-          {text2} / {text3}
+        <Text style={text2 != text3 ? styles.text2 : styles.text22}>
+          {text2 != text3 ? text2 + " / " + text3 : "완 료"}
         </Text>
       </View>
     </View>
@@ -100,6 +100,14 @@ const styles = StyleSheet.create({
     color: "#000000",
     justifyContent: "center",
     marginTop: 10,
+  },
+  text22: {
+    fontSize: 16,
+    alignItems: "center",
+    color: "#C20000",
+    justifyContent: "center",
+    marginTop: 10,
+    fontWeight: "bold",
   },
   imageView: {
     flex: 2.5,
