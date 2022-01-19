@@ -13,19 +13,19 @@ import TestSvg4 from "../icon/Frame4.svg";
 import TestSvg5 from "../icon/Frame5.svg";
 import Task from "./task_patient";
 
-import { parse, WithLocalSvg } from "react-native-svg";
+import { WithLocalSvg } from "react-native-svg";
 
 const data = {
   setcnt1: 3,
   setcnt2: 5,
   setcnt3: 7,
   setcnt4: 0,
-  setcnt5: 12,
+  setcnt5: 1,
   donecnt1: 12,
   donecnt2: 12,
   donecnt3: 12,
   donecnt4: 12,
-  donecnt5: 12,
+  donecnt5: 2,
 };
 
 export default class patient_move extends Component {
