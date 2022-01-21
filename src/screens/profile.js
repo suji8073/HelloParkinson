@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   View,
   Text,
@@ -8,106 +8,117 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+import Context from "../Context/context";
 
-function profile({ navigation }) {
-  let profile_svg = require("../icon/snuh.png");
-  return (
-    <View style={styles.finalView}>
-      <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
-      <View style={styles.menu1View}>
-        <View style={styles.margin}></View>
-        <Text style={styles.titleText}>관리자 프로필</Text>
-        <View style={styles.margin}></View>
-      </View>
-      {/* 아이콘과 관리자 이름 뷰 */}
-      <View
-        style={{
-          flexDirection: "column",
-          alignItems: "center",
-          marginTop: "8%",
-        }}
-      >
-        <Image
-          style={{ height: 105, width: 112, marginBottom: "3%" }}
-          source={profile_svg}
-        />
-        <Text style={styles.titleText}>관리자</Text>
-      </View>
-
-      <View
-        style={{
-          borderTopWidth: 0.3,
-          borderTopColor: "#DCDCDC",
-          marginTop: "15%",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          justifyContent: "center",
-        }}
-      >
-        {/* 한줄씩 뷰 */}
-        <View style={styles.menuanswerView}>
-          {/* 메뉴 뷰 */}
-          <View style={styles.menuView}>
-            <Text style={styles.menuText}>계정 이름</Text>
-          </View>
-          {/* 답 뷰 */}
-          <View style={styles.answerView}>
-            <Text style={styles.answerText}>서울대학교 의료진</Text>
-          </View>
+export default class profile extends Component {
+  static contextType = Context;
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: "",
+      pw: "",
+      name: "",
+    };
+  }
+  render() {
+    let profile_svg = require("../icon/snuh.png");
+    return (
+      <View style={styles.finalView}>
+        <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
+        <View style={styles.menu1View}>
+          <View style={styles.margin}></View>
+          <Text style={styles.titleText}>관리자 프로필</Text>
+          <View style={styles.margin}></View>
         </View>
-        {/* 한줄 끝 */}
-        {/* 두번째줄 뷰 */}
-        <View style={styles.menuanswerView}>
-          <View style={styles.menuView}>
-            <Text style={styles.menuText}>아이디</Text>
-          </View>
-          <View style={styles.answerView}>
-            <Text style={styles.answerText}>seoul1234</Text>
-          </View>
-        </View>
-        {/* 두번째줄 끝 */}
-        {/* 세번째줄 뷰 */}
-        <View style={styles.menuanswerView}>
-          <View style={styles.menuView}>
-            <Text style={styles.menuText}>비밀번호</Text>
-          </View>
-          <View style={styles.answerView}>
-            <Text style={styles.answerText1}>*********</Text>
-          </View>
-        </View>
-        {/* 세번째줄 끝 */}
-      </View>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("passwchange");
-        }}
-      >
+        {/* 아이콘과 관리자 이름 뷰 */}
         <View
           style={{
-            height: "20%",
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop: "8%",
+          }}
+        >
+          <Image
+            style={{ height: 105, width: 112, marginBottom: "3%" }}
+            source={profile_svg}
+          />
+          <Text style={styles.titleText}>관리자</Text>
+        </View>
+
+        <View
+          style={{
+            borderTopWidth: 0.3,
+            borderTopColor: "#DCDCDC",
             marginTop: "15%",
-            borderWidth: 0.3,
-            borderColor: "#DCDCDC",
+            flexDirection: "column",
+            alignItems: "flex-start",
             justifyContent: "center",
+          }}
+        >
+          {/* 한줄씩 뷰 */}
+          <View style={styles.menuanswerView}>
+            {/* 메뉴 뷰 */}
+            <View style={styles.menuView}>
+              <Text style={styles.menuText}>계정 이름</Text>
+            </View>
+            {/* 답 뷰 */}
+            <View style={styles.answerView}>
+              <Text style={styles.answerText}>{this.context.user_name}</Text>
+            </View>
+          </View>
+          {/* 한줄 끝 */}
+          {/* 두번째줄 뷰 */}
+          <View style={styles.menuanswerView}>
+            <View style={styles.menuView}>
+              <Text style={styles.menuText}>아이디</Text>
+            </View>
+            <View style={styles.answerView}>
+              <Text style={styles.answerText}>{this.context.user_id}</Text>
+            </View>
+          </View>
+          {/* 두번째줄 끝 */}
+          {/* 세번째줄 뷰 */}
+          <View style={styles.menuanswerView}>
+            <View style={styles.menuView}>
+              <Text style={styles.menuText}>비밀번호</Text>
+            </View>
+            <View style={styles.answerView}>
+              <Text style={styles.answerText1}>{this.context.user_pw}</Text>
+            </View>
+          </View>
+          {/* 세번째줄 끝 */}
+        </View>
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.navigate("passwchange");
           }}
         >
           <View
             style={{
-              marginLeft: "6%",
+              height: "20%",
+              marginTop: "15%",
+              borderWidth: 0.3,
+              borderColor: "#DCDCDC",
+              justifyContent: "center",
             }}
           >
-            <Text
-              style={{ color: "#59A60B", fontSize: 17, fontWeight: "bold" }}
+            <View
+              style={{
+                marginLeft: "6%",
+              }}
             >
-              비밀번호 변경하기
-            </Text>
+              <Text
+                style={{ color: "#59A60B", fontSize: 17, fontWeight: "bold" }}
+              >
+                비밀번호 변경하기
+              </Text>
+            </View>
           </View>
-        </View>
-      </TouchableOpacity>
-    </View>
-  );
+        </TouchableOpacity>
+      </View>
+    );
+  }
 }
-export default profile;
 const styles = StyleSheet.create({
   finalView: {
     flex: 1,

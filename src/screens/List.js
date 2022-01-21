@@ -12,7 +12,7 @@ import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import Task from "./task1";
 import SimplePopupMenu from "react-native-simple-popup-menu";
-
+import Context from "../Context/context";
 const items = [
   { id: "abc", label: "가나다순" },
   { id: "star", label: "즐겨찾기순" },
@@ -20,6 +20,7 @@ const items = [
 const today = new Date();
 
 export default class list extends Component {
+  static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {
@@ -136,7 +137,7 @@ export default class list extends Component {
         <View style={styles.threeView}>
           <Text>{this.state.data.bookmark}</Text>
           <FlatList
-            keyExtractor={(item, index) => index}
+            keyExtractor={(item, index) => index.toString()}
             data={this.state.data}
             extraData={this.state.data}
             renderItem={({ item }) => {

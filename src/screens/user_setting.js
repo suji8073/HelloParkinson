@@ -8,7 +8,7 @@ import {
   Body,
   Title,
 } from "react-native";
-
+import Context from "../Context/context";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
@@ -24,6 +24,7 @@ import { WithLocalSvg } from "react-native-svg";
 const year = 2021 + 1;
 
 export default class user_setting extends Component {
+  static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {

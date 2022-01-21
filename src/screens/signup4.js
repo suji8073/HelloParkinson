@@ -9,8 +9,9 @@ import {
   ScrollView,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-
+import Context from "../Context/context";
 export default class siginup4 extends Component {
+  static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {
@@ -21,6 +22,7 @@ export default class siginup4 extends Component {
       user_name: "",
       user_telphone: "",
       user_age: "",
+      user_rank: 1,
       text: "",
       empty_check_id: 0,
       user_gender: "여",
@@ -38,6 +40,19 @@ export default class siginup4 extends Component {
     if (this.state.user_sex !== 2) {
       this.setState({ user_sex: 2 });
       console.log(this.state.user_sex);
+    }
+  };
+  onPress_rank1 = () => {
+    if (this.state.user_rank !== 1) {
+      this.setState({ user_rank: 1 });
+      console.log(this.state.user_rank);
+    }
+  };
+
+  onPress_rank2 = () => {
+    if (this.state.user_rank !== 0) {
+      this.setState({ user_rank: 0 });
+      console.log(this.state.user_rank);
     }
   };
   // 1이면 여자, 2면 남자
@@ -83,6 +98,7 @@ export default class siginup4 extends Component {
         UID: this.state.user_id,
         gender: this.state.user_gender,
         birth: this.state.user_age,
+        ranking: this.state.user_rank,
         password: this.state.user_pw,
         phone_number: "010" + this.state.user_telphone,
       }),
@@ -110,6 +126,7 @@ export default class siginup4 extends Component {
         } else {
           this.setState({ user_gender: "여" });
         }
+
         // 모든 정보가 다 기입되면
         fetch(
           "http://152.70.233.113/chamsignup/phone/" + this.state.user_telphone,
@@ -308,6 +325,55 @@ export default class siginup4 extends Component {
                 </TouchableOpacity>
               </View>
             </View>
+            <View style={styles.secondView}>
+              <View style={styles.checkView}>
+                <Text style={styles.titleText}>랭킹참여</Text>
+                <Text style={styles.check}>*</Text>
+              </View>
+              <View style={{ marginBottom: 3 }}></View>
+              <View style={styles.numberbutton}>
+                <TouchableOpacity
+                  style={
+                    this.state.user_rank === 1
+                      ? styles.genderB2 //클릭됨
+                      : styles.genderB1
+                  }
+                  activeOpacity={0.8}
+                  onPress={this.onPress_rank1}
+                >
+                  <Text
+                    style={
+                      this.state.user_rank === 1
+                        ? styles.gendertext1
+                        : styles.gendertext
+                    }
+                  >
+                    한다
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={
+                    this.state.user_rank === 0
+                      ? styles.genderB2
+                      : styles.genderB11
+                  }
+                  activeOpacity={0.8}
+                  onPress={this.onPress_rank2}
+                  onChangeText={this.onPress_rank2}
+                >
+                  <Text
+                    style={
+                      this.state.user_rank === 0
+                        ? styles.gendertext1
+                        : styles.gendertext
+                    }
+                  >
+                    안한다
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </ScrollView>
         </View>
 
@@ -358,7 +424,7 @@ const styles = StyleSheet.create({
 
   secondView: {
     alignItems: "flex-start",
-    marginBottom: "8%",
+    marginBottom: "5%",
   },
 
   checkView: {

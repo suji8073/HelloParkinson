@@ -17,12 +17,14 @@ import secondsvg from "../icon/second.svg";
 import thirdsvg from "../icon/third.svg";
 import crownsvg from "../icon/crown.svg";
 
+import Context from "../Context/context";
 export default class patient_Home extends Component {
+  static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {
       data: [],
-      User_name: "김연자",
+      User_name: "",
     };
   }
 
@@ -40,29 +42,33 @@ export default class patient_Home extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        this.setState({
-          data: json,
-        });
+        this.setState(
+          {
+            data: json,
+          }
+          // 랭킹 참여하는 사람만 필터링
+          // ,() => {
+          //   let res = this.state.data.filter((it) => it.ranking === 1);
+          //   this.setState({ data: res });
+          // }
+        );
       });
   };
 
   findname = () => {
-    fetch(
-      "http://152.70.233.113/chamuser/uid/" +
-        this.props.route.params.paramsName,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    fetch("http://152.70.233.113/chamuser/uid/" + this.context.user_id, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((json) => {
         this.setState({
           User_name: json.info.name,
         });
+        this.context.changeNAME(json.info.name);
       });
   };
 
@@ -77,9 +83,7 @@ export default class patient_Home extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("patient_profile", {
-                paramsName: this.props.route.params.paramsName,
-              });
+              this.props.navigation.navigate("patient_profile");
             }}
           >
             <Ionicons name="person-circle-sharp" size={35} color="#5CB405" />

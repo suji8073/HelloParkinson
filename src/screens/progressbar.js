@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-
+import Context from "../Context/context";
+// static contextType = Context;
 const PercentageBar = ({
   navigation,
   percentage,
@@ -29,7 +30,7 @@ const PercentageBar = ({
         />
         <View
           style={{
-            width: getPercentage* 1.8 ? getPercentage* 1.8 : 0,
+            width: getPercentage * 1.8 ? getPercentage * 1.8 : 0,
             height: getheight,
             marginVertical: 5,
             borderRadius: 7,

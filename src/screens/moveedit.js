@@ -1,6 +1,7 @@
 // 운동 편집 화면
 // 운동카테고리 스크롤뷰와 운동 리스트뷰
 import React, { Component } from "react";
+import Context from "../Context/context";
 import {
   View,
   FlatList,
@@ -13,6 +14,7 @@ import { AntDesign } from "@expo/vector-icons";
 import Movelist from "./movelist";
 import O2_task from "./O2_task";
 export default class progress extends Component {
+  static contextType = Context;
   constructor(props) {
     super(props);
 

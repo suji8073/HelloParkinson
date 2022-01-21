@@ -12,6 +12,9 @@ import plussvg from "../icon/plus.svg";
 import nosvg from "../icon/no.svg";
 import { WithLocalSvg } from "react-native-svg";
 import { AntDesign } from "@expo/vector-icons";
+
+import Context from "../Context/context";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";

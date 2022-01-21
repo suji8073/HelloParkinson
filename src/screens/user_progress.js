@@ -4,22 +4,26 @@ import {
   StatusBar,
   TouchableOpacity,
   Text,
+  FlatList,
   View,
   StyleSheet,
   Touchable,
 } from "react-native";
+import Context from "../Context/context";
 import { ScrollView } from "react-native-gesture-handler";
 import ActionButton from "react-native-action-button";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import action_icon from "../icon/action_icon.svg";
 import { WithLocalSvg } from "react-native-svg";
-
+import Task from "./task_progress";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 import { Entypo } from "@expo/vector-icons";
 import PercentageBar from "../screens/progressbar";
-const year = new Date().getFullYear();
-
+const date = new Date();
+const year = date.getFullYear();
+const today =
+  year + "년 " + date.getMonth() + 1 + "월 " + date.getDate() + "일";
 const items = [
   { id: "1", label: "신장 운동" },
   { id: "2", label: "근력 운동" },
@@ -28,6 +32,7 @@ const items = [
   { id: "5", label: "유산소 운동" },
 ];
 export default class progress extends Component {
+  static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {
@@ -37,8 +42,68 @@ export default class progress extends Component {
       team: "",
       name: "",
       progress: 0,
+      data: [],
+      done: [],
+      ing: [
+        { ename: "목 앞 근육 스트레칭", setcnt: 0, donecnt: 2 },
+        { ename: "날개뼈 모으기", setcnt: 21, donecnt: 22 },
+        { ename: "손목 및 팔꿈치 주변 근육 스트레칭", setcnt: 3, donecnt: 2 },
+      ],
+      no: [
+        { ename: "엉덩이 들기", setcnt: 2, donecnt: 2 },
+        { ename: "엎드려 누운 상태에서 다리들기", setcnt: 2, donecnt: 0 },
+        { ename: "엉덩이 옆 근육 운동", setcnt: 2, donecnt: 0 },
+        { ename: "무릎 벌리기", setcnt: 23, donecnt: 0 },
+        { ename: "무릎 펴기", setcnt: 22, donecnt: 2 },
+      ],
+      ename: "신장 운동",
+      m1: [
+        { ename: "목 앞 근육 스트레칭", setcnt: 0, donecnt: 2 },
+        { ename: "날개뼈 모으기", setcnt: 0, donecnt: 22 },
+        { ename: "손목 및 팔꿈치 주변 근육 스트레칭", setcnt: 3, donecnt: 2 },
+      ],
+      m2: [
+        { ename: "엉덩이 들기", setcnt: 2, donecnt: 2 },
+        { ename: "엎드려 누운 상태에서 다리들기", setcnt: 2, donecnt: 0 },
+        { ename: "엉덩이 옆 근육 운동", setcnt: 2, donecnt: 0 },
+        { ename: "무릎 벌리기", setcnt: 23, donecnt: 0 },
+        { ename: "무릎 펴기", setcnt: 22, donecnt: 2 },
+      ],
+      m3: [
+        { ename: "한발 서기", setcnt: 5, donecnt: 2 },
+        { ename: "버드독 1단계", setcnt: 20, donecnt: 2 },
+        { ename: "버드독 2단계", setcnt: 21, donecnt: 2 },
+        { ename: "앉은 상태에서 제자리 걷기", setcnt: 0, donecnt: 0 },
+        { ename: "움직이는 런지", setcnt: 0, donecnt: 2 },
+      ],
+      m4: [
+        { ename: "아에이오우 소리내기", setcnt: 2, donecnt: 2 },
+        { ename: "파파파파파 소리내기", setcnt: 2, donecnt: 0 },
+        { ename: "쪽 소리내기", setcnt: 2, donecnt: 0 },
+        { ename: "혀로 볼 밀기", setcnt: 2, donecnt: 0 },
+        { ename: "혀로 입천장 밀기", setcnt: 2, donecnt: 0 },
+        { ename: "똑딱 소리내기", setcnt: 2, donecnt: 21 },
+        { ename: "혀 물고 침 삼키기", setcnt: 2, donecnt: 20 },
+        { ename: "아 짧게 소리내기", setcnt: 2, donecnt: 4 },
+        { ename: "아 길게 소리내기", setcnt: 2, donecnt: 5 },
+        { ename: "고음 가성으로 소리내기", setcnt: 2, donecnt: 6 },
+        { ename: "도레미파솔라시도", setcnt: 2, donecnt: 20 },
+        { ename: "큰 소리로 음절 읽기", setcnt: 2, donecnt: 21 },
+      ],
+      m5: [
+        { ename: "걷기", setcnt: 70, donecnt: 40 },
+        { ename: "자전거 타기", setcnt: 100, donecnt: 200 },
+      ],
     };
   }
+
+  // 기본조건: setcnt !=0
+  // 1. if donecnt==0: 미실시
+
+  // 2.elif setcnt>donecnt: 진행중
+  // 3. elif setcnt<=donecnt : 완료
+
+  // }}
 
   componentDidMount() {
     fetch(
@@ -60,8 +125,6 @@ export default class progress extends Component {
         });
       });
   }
-
-  dots = () => {}; // 햄버거 버튼을 클릭하였을 때 실행될 코드
 
   render() {
     return (
@@ -107,8 +170,8 @@ export default class progress extends Component {
               <Text
                 style={{ marginBottom: 10, fontSize: 23, fontWeight: "bold" }}
               >
-                {this.state.name} / {year - parseInt(this.state.birth / 10000)}{" "}
-                / {this.state.gender}
+                {this.state.name} / {year - parseInt(this.state.birth / 10000)}/{" "}
+                {this.state.gender}
               </Text>
               <View style={{ flexDirection: "row" }}>
                 <Text style={{ marginBottom: "1%", fontSize: 15 }}>
@@ -167,11 +230,11 @@ export default class progress extends Component {
             <View style={{ flexDirection: "row", padding: "5%" }}>
               {/* 햄버거아이콘 빼고*/}
               <View style={{ flex: 9, flexDirection: "column" }}>
-                <Text>2021년 2월 5일</Text>
+                <Text>{today}</Text>
                 <Text
                   style={{ fontSize: 19, fontWeight: "bold", paddingTop: "1%" }}
                 >
-                  신장운동
+                  {this.state.ename}
                 </Text>
               </View>
               {/* 햄버거 아이콘 */}
@@ -188,7 +251,12 @@ export default class progress extends Component {
                 items={items}
                 cancelLabel={"취소"}
                 onSelect={(items) => {
-                  this.onMenuPress(items.id);
+                  this.setState({
+                    ename: items.label,
+                  });
+
+                  let res = this.state.m1.filter((it) => it.setcnt != 0);
+                  this.setState({ ing: res });
                 }}
                 onCancel={() => console.log("onCancel")}
               >
@@ -243,19 +311,22 @@ export default class progress extends Component {
               }}
             >
               <View style={{ marginBottom: "3%" }}>
-                <Text style={styles.movetitletext}>진행 중</Text>
-                <Text style={styles.movetext}>날개뼈 모으기</Text>
+                <Text style={styles.movetitletext}>진행중</Text>
+                <FlatList
+                  data={this.state.ing}
+                  renderItem={({ item }) => {
+                    return <Task ename={item.ename}></Task>;
+                  }}
+                />
               </View>
               <View>
                 <Text style={styles.movetitletext}>미실시 운동</Text>
-                <Text style={styles.movetext}>몸쪽 앞쪽 근육</Text>
-                <Text style={styles.movetext}>운동회전 근육 스트레칭</Text>
-                <Text style={styles.movetext}>몸통 스트레칭 1단계</Text>
-                <Text style={styles.movetext}>몸통 스트레칭 2단계</Text>
-                <Text style={styles.movetext}>몸쪽 앞쪽 근육</Text>
-                <Text style={styles.movetext}>운동회전 근육 스트레칭</Text>
-                <Text style={styles.movetext}>몸통 스트레칭 1단계</Text>
-                <Text style={styles.movetext}>몸통 스트레칭 2단계</Text>
+                <FlatList
+                  data={this.state.no}
+                  renderItem={({ item }) => {
+                    return <Task ename={item.ename}></Task>;
+                  }}
+                />
               </View>
             </ScrollView>
           </View>

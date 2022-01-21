@@ -2,12 +2,13 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, TouchableOpacity } from "react-native";
 import { WithLocalSvg } from "react-native-svg";
-
+import Context from "../Context/context";
 import plus from "../icon/plusbox.svg";
 import minus from "../icon/minusbox.svg";
 import plussilver from "../icon/plussilverbox.svg";
 import minussilver from "../icon/minussilverbox.svg";
 export default class movelist extends Component {
+  static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {

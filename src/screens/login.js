@@ -13,14 +13,30 @@ import "react-native-gesture-handler";
 import { WithLocalSvg } from "react-native-svg";
 
 import logosvg from "../icon/logo.svg";
-
+import Context from "../Context/context";
 export default class login extends Component {
+  static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {
       id: "",
       pw: "",
+      name: "",
     };
+  }
+
+  componentDidMount() {
+    this.setState(
+      // 디바이스에서 값을 가져오는걸로 변경해야함
+      // context값도 디바이스 값으로 변경하는 것으로
+      { id: this.context.user_id, pw: this.context.user_pw },
+      () => {
+        this.login_check();
+      }
+    );
+
+    // this.setState 적욕이 느림
+    // this.login_check();
   }
   login_check = () => {
     console.log("아이디: " + this.state.id);
@@ -49,13 +65,27 @@ export default class login extends Component {
           .then((json) => {
             console.log("로그인 통신 확인");
             if (json.admin == 0) {
+              // if(json.ranking==1){
+
+              // this.props.navigation.navigate("TabNavigation1");
+
+              // }
+              // else{
+              // this.props.navigation.navigate("TabNavigation2");
+
+              // }
+
               // 환자
+              // 아이디, 비밀번호 context변경 기능 필요
+              // this.context.changeID(this.state.id);
+              // this.context.changePW(this.state.pw);
+              // Alert.alert(this.context.user_id);
               console.log("로그인 통신 확인");
-              this.props.navigation.navigate("TabNavigation1", {
-                paramName1: this.state.id,
-              });
+              this.props.navigation.navigate("TabNavigation1", {});
             } else if (json.admin == 1) {
               // 관리자
+
+              // this.context.changeNAME(this.state.name)
               this.props.navigation.navigate("TabNavigation", {
                 paramName1: "name",
               });
@@ -104,6 +134,7 @@ export default class login extends Component {
               placeholder="아이디"
               secureTextEntry={false}
               style={styles.textInput}
+              value={this.state.id}
               onChangeText={(text) => {
                 this.setState({ id: text });
               }}
@@ -114,6 +145,7 @@ export default class login extends Component {
               secureTextEntry={true}
               style={styles.textInput}
               placeholder="비밀번호"
+              value={this.state.pw}
               onChangeText={(text) => {
                 this.setState({ pw: text });
               }}

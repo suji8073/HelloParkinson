@@ -14,13 +14,14 @@ import { Entypo } from "@expo/vector-icons";
 import ddaysvg from "../icon/dday.svg";
 import { AntDesign } from "@expo/vector-icons";
 import SimplePopupMenu from "react-native-simple-popup-menu";
-
+import Context from "../Context/context";
 const items = [
   { id: "alarm", label: "최근알림순" },
   { id: "progress", label: "진도율순" },
 ];
 var now = new Date();
 export default class progress extends Component {
+  static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {
@@ -365,7 +366,7 @@ export default class progress extends Component {
 
         <View style={styles.fouuview}>
           <FlatList
-            keyExtractor={(item, index) => index}
+            keyExtractor={(item, index) => index.toString()}
             data={this.state.data}
             renderItem={({ item }) => {
               return (

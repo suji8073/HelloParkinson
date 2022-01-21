@@ -9,12 +9,14 @@ import {
   TextInput,
 } from "react-native";
 
+import Context from "../Context/context";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 
 export default class patient_profile extends Component {
+  static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {
@@ -29,14 +31,10 @@ export default class patient_profile extends Component {
   }
 
   componentDidMount() {
-    fetch(
-      "http://152.70.233.113/chamuser/uid/" +
-        this.props.route.params.paramsName,
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    )
+    fetch("http://152.70.233.113/chamuser/uid/" + this.context.user_id, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
       .then((res) => res.json())
       .then((json) => {
         this.setState({
@@ -59,9 +57,7 @@ export default class patient_profile extends Component {
             size={24}
             color="#808080"
             onPress={() => {
-              this.props.navigation.navigate("TabNavigation1", {
-                paramsName: this.props.route.params.paramsName,
-              });
+              this.props.navigation.navigate("TabNavigation1");
             }}
           />
           <View style={styles.margin}></View>
@@ -103,7 +99,7 @@ export default class patient_profile extends Component {
             <Text style={styles.text1}>비밀번호</Text>
           </View>
           <View style={styles.textView}>
-            <Text style={styles.text2}>***********</Text>
+            <Text style={styles.text2}>{this.context.user_pw}</Text>
           </View>
         </View>
 
@@ -133,13 +129,10 @@ export default class patient_profile extends Component {
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => {
-              this.props.navigation.navigate("patient_profile_edit", {
-                paramName1: this.state.UID,
-                paramsName: this.props.route.params.paramsName,
-              });
+              this.props.navigation.navigate("patient_profile_edit");
             }}
           >
-            <Text style={styles.user_name}>비밀번호 변경하기</Text>
+            <Text style={styles.user_name}>정보 수정하기</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.marginView}></View>

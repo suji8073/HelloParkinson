@@ -9,12 +9,18 @@ import {
   TextInput,
   Image,
 } from "react-native";
+import Context from "../Context/context";
 import { AntDesign } from "@expo/vector-icons";
 export default class passwchange extends Component {
+  static contextType = Context;
+
   constructor(props) {
     super(props);
     this.state = {
-      user_pw: "",
+      changepw: "",
+      id: "",
+      pw: "",
+      name: "",
     };
   }
   render() {
@@ -24,6 +30,8 @@ export default class passwchange extends Component {
         <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
         <View style={styles.menu1View}>
           <TouchableOpacity
+            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+            activeOpacity={0.8}
             onPress={() => {
               this.props.navigation.navigate("TabNavigation");
             }}
@@ -34,8 +42,18 @@ export default class passwchange extends Component {
           <Text style={styles.titleText}>프로필 편집</Text>
           <View style={styles.margin}></View>
           <TouchableOpacity
+            activeOpacity={0.8}
+            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }} //터치영역을 확장
             onPress={() => {
-              Alert.alert("비밀번호가 정상적으로 변경되었습니다.");
+              this.setState({
+                changepw: this.state.changepw.replace(/\s/gi, ""),
+              });
+              if (this.state.changepw == "") {
+                Alert.alert("기존 비밀번호를 유지합니다.");
+              } else {
+                // 변경된 비밀번호 전달할 API
+                Alert.alert("비밀번호가 정상적으로 변경되었습니다.");
+              }
               this.props.navigation.navigate("TabNavigation");
             }}
           >
@@ -75,7 +93,7 @@ export default class passwchange extends Component {
             </View>
             {/* 답 뷰 */}
             <View style={styles.answerView}>
-              <Text style={styles.answerText}>서울대학교 의료진</Text>
+              <Text style={styles.answerText}>{this.context.user_name}</Text>
             </View>
           </View>
           {/* 한줄 끝 */}
@@ -85,7 +103,7 @@ export default class passwchange extends Component {
               <Text style={styles.menuText}>아이디</Text>
             </View>
             <View style={styles.answerView}>
-              <Text style={styles.answerText}>seoul1234</Text>
+              <Text style={styles.answerText}>{this.context.user_id}</Text>
             </View>
           </View>
           {/* 두번째줄 끝 */}
@@ -95,7 +113,7 @@ export default class passwchange extends Component {
               <Text style={styles.menuText}>기존 비밀번호</Text>
             </View>
             <View style={styles.answerView}>
-              <Text style={styles.answerText1}>*********</Text>
+              <Text style={styles.answerText1}>{this.context.user_pw}</Text>
             </View>
           </View>
           {/* 세번째줄 끝 */}
@@ -108,7 +126,7 @@ export default class passwchange extends Component {
               <TextInput
                 style={styles.textInput}
                 onChangeText={(text) => {
-                  this.setState({ user_pw: text });
+                  this.setState({ changepw: text });
                 }}
                 placeholder="(미 입력시 기존 비밀번호 유지)"
               />
@@ -178,7 +196,7 @@ const styles = StyleSheet.create({
   },
 
   menu1View: {
-    marginTop: "3%",
+    marginTop: "10%",
     backgroundColor: "#FFFFFF",
     height: 58,
     flexDirection: "row",
