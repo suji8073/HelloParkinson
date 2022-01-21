@@ -13,13 +13,14 @@ import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import Task from "./task2";
 import SimplePopupMenu from "react-native-simple-popup-menu";
-
+import Context from "../Context/context";
 const items = [
   { id: "abc", label: "가나다순" },
   { id: "age", label: "나이순" },
 ];
 
 export default class statistics extends Component {
+  static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {

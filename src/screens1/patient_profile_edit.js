@@ -10,12 +10,16 @@ import nocheck from "../icon/radio_btn_nocheck.svg";
 import check from "../icon/radio_button_check.svg";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+import Context from "../Context/context";
 export default class patient_profile_edit extends Component {
+  static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {
       onname1: check,
       onname2: nocheck,
+      rank1: check,
+      rank2: nocheck,
       user_pw: "",
       user_pww: "",
       birth: 20001010,
@@ -24,6 +28,7 @@ export default class patient_profile_edit extends Component {
       team: "",
       name: "",
       UID: "",
+      rank: 1,
       progress: "",
       M: "남",
       F: "여",
@@ -31,19 +36,37 @@ export default class patient_profile_edit extends Component {
   }
 
   componentDidMount() {
-    this.userfunc();
-    this.change_gender();
+    // this.userfunc();
+    fetch("http://152.70.233.113/chamuser/uid/" + this.context.user_id, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState(
+          {
+            birth: json.info.birth,
+            gender: json.info.gender,
+            memo: json.info.memo,
+            team: json.info.team,
+            name: json.info.name,
+            UID: json.info.UID,
+            progress: json.info.progress,
+            rank: json.info.ranking,
+          },
+          () => {
+            this.change_gender();
+            this.change_rank();
+          }
+        );
+      });
   }
 
   userfunc() {
-    fetch(
-      "http://152.70.233.113/chamuser/uid/" +
-        this.props.route.params.paramName1,
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    )
+    fetch("http://152.70.233.113/chamuser/uid/" + this.context.user_id, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
       .then((res) => res.json())
       .then((json) => {
         this.setState({
@@ -54,10 +77,18 @@ export default class patient_profile_edit extends Component {
           name: json.info.name,
           UID: json.info.UID,
           progress: json.info.progress,
+          rank: json.info.ranking,
         });
       });
   }
 
+  change_rank = () => {
+    if (this.state.rank === 1) {
+      this.setState({ rank1: check, rank2: nocheck });
+    } else if (this.state.rank === 0) {
+      this.setState({ rank1: nocheck, rank2: check });
+    }
+  };
   change_gender = () => {
     if (this.state.gender === this.state.M) {
       this.setState({ onname1: check, onname2: nocheck });
@@ -70,10 +101,13 @@ export default class patient_profile_edit extends Component {
     if (this.state.user_pw !== this.state.user_pww) {
       Alert.alert("비밀번호가 일치하지 않습니다.");
     } else {
-      Alert.alert("저장되었습니다.");
-      this.props.navigation.navigate("patient_profile", {
-        paramsName: this.props.route.params.paramsName,
-      });
+      Alert.alert("비밀번호가 변경되었습니다..");
+
+      // this.context.changePW(this.state.user_pw);
+
+      // db비밀번호 변경, context비밀번호 변경
+
+      this.props.navigation.navigate("patient_profile");
     }
   };
 
@@ -93,6 +127,24 @@ export default class patient_profile_edit extends Component {
       this.setState({ onname2: check });
     } else {
       this.setState({ onname2: nocheck });
+    }
+  };
+  rankClick1 = () => {
+    if (this.state.rank1 === nocheck && this.state.rank2 === check) {
+      this.setState({ rank1: check, rank2: nocheck });
+    } else if (this.state.rank1 === nocheck) {
+      this.setState({ rank1: check });
+    } else {
+      this.setState({ rank1: nocheck });
+    }
+  };
+  rankClick2 = () => {
+    if (this.state.rank2 === nocheck && this.state.rank1 === check) {
+      this.setState({ rank2: check, rank1: nocheck });
+    } else if (this.state.rank2 === nocheck) {
+      this.setState({ rank2: check });
+    } else {
+      this.setState({ rank2: nocheck });
     }
   };
 
@@ -182,7 +234,7 @@ export default class patient_profile_edit extends Component {
           </View>
         </View>
 
-        <View style={styles.secondView1}>
+        <View style={styles.secondView}>
           <View style={styles.memoView}>
             <Text style={styles.text1}>성별</Text>
           </View>
@@ -204,6 +256,32 @@ export default class patient_profile_edit extends Component {
               <WithLocalSvg width={24} height={24} asset={this.state.onname2} />
             </TouchableOpacity>
             <Text style={styles.text2}> 여</Text>
+
+            <View style={styles.margin}></View>
+          </View>
+        </View>
+        <View style={styles.secondView1}>
+          <View style={styles.memoView}>
+            <Text style={styles.text1}>랭킹참가</Text>
+          </View>
+          <View style={styles.ageview}>
+            <TouchableOpacity
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              onPress={this.rankClick1}
+            >
+              <WithLocalSvg width={24} height={24} asset={this.state.rank1} />
+            </TouchableOpacity>
+
+            <Text style={styles.text2}> 한다</Text>
+
+            <View style={styles.margin}></View>
+            <TouchableOpacity
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              onPress={this.rankClick2}
+            >
+              <WithLocalSvg width={24} height={24} asset={this.state.rank2} />
+            </TouchableOpacity>
+            <Text style={styles.text2}> 안한다</Text>
 
             <View style={styles.margin}></View>
           </View>

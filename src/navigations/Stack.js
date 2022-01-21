@@ -16,10 +16,13 @@ import user_statistics from "../screens/user_statistics";
 import profile from "../screens/profile";
 import TabNavigation from "./Tab";
 import TabNavigation1 from "./Tab1";
+import TabNavigation2 from "./Tab2";
 import patient_record from "../screens1/patient_record";
 import patient_alarm from "../screens1/patient_alarm";
 import patient_move from "../screens1/patient_move";
 import patient_Home from "../screens1/patient_Home";
+
+import norank_patient_Home from "../screens1/norank_patient_Home";
 import patient_profile from "../screens1/patient_profile";
 import patient_profile_edit from "../screens1/patient_profile_edit";
 
@@ -60,7 +63,12 @@ const StackNavigation = () => {
 
       <Stack.Screen name="progress" component={progress} />
       <Stack.Screen name="TabNavigation1" component={TabNavigation1} />
+      <Stack.Screen name="TabNavigation2" component={TabNavigation2} />
 
+      <Stack.Screen
+        name="norank_patient_Home"
+        component={norank_patient_Home}
+      />
       <Stack.Screen name="patient_Home" component={patient_Home} />
       <Stack.Screen name="patient_move" component={patient_move} />
       <Stack.Screen name="patient_record" component={patient_record} />

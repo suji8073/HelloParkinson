@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import Context from "../Context/context";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 const PercentageBar = ({

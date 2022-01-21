@@ -3,8 +3,9 @@ import { View, Text, StyleSheet, TextInput } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { WithLocalSvg } from "react-native-svg";
-
+import Context from "../Context/context";
 export default class O2_task extends Component {
+  static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {};
