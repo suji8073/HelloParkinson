@@ -20,7 +20,9 @@ import { AntDesign } from "@expo/vector-icons";
 import page_here from "../icon/page_here.svg";
 import page_no from "../icon/page_no.svg";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import RNPickerSelect from "react-native-picker-select";
+
+import MonthPicker from "react-native-month-year-picker";
+
 
 const data = [
   { date: "20220111", progress: 80 },
@@ -74,9 +76,12 @@ export default class user_statistics extends Component {
       name: "",
       UID: "",
       progress: 0,
-      data: [],
+      data1: [],
       isDatePickerVisible: false,
       setDatePickerVisibility: false,
+      date: new Date(),
+      show: false,
+      setShow: false,
     };
   }
 
@@ -196,6 +201,12 @@ export default class user_statistics extends Component {
     });
   };
 
+  onValueChange = () => {
+    var newDate = new Date();
+    const selectedDate = newDate || date;
+    this.setState({ setDate: selectedDate, setShow: false });
+  };
+
   render() {
     return (
       <View style={styles.finalView}>
@@ -297,8 +308,7 @@ export default class user_statistics extends Component {
                   </Text>
                   <View style={styles.margin}></View>
                   <TouchableOpacity
-                    activeOpacity={0.8}
-                    onPress={this.showDatePicker}
+                    onPress={() => this.setState({ setShow: true })}
                   >
                     <Text style={styles.text1}>
                       {"~ " +
@@ -308,6 +318,15 @@ export default class user_statistics extends Component {
                         "월"}
                     </Text>
                   </TouchableOpacity>
+                  {this.state.show === true && (
+                    <MonthPicker
+                      onChange={this.onValueChange}
+                      value={this.state.date}
+                      minimumDate={new Date()}
+                      maximumDate={new Date(2025, 5)}
+                      locale="ko"
+                    />
+                  )}
                 </View>
 
                 <SafeAreaView style={{ flex: 2, width: "100%" }}>

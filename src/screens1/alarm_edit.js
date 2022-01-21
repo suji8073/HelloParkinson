@@ -7,10 +7,25 @@ import {
   Alert,
   TextInput,
 } from "react-native";
+
 import trashsvg from "../icon/trashcan.svg";
 import checksvg from "../icon/check.svg";
 import { WithLocalSvg } from "react-native-svg";
 import { AntDesign } from "@expo/vector-icons";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+
+const storeData = async (array) => {
+  try {
+    await AsyncStorage.setItem("@alarm", JSON.stringify(array));
+    console.log("clear");
+  } catch (e) {
+    // saving error
+    console.log("error");
+  }
+};
 
 export default class alarm_edit extends Component {
   constructor(props) {
@@ -19,8 +34,25 @@ export default class alarm_edit extends Component {
       apm: this.props.route.params.apm,
       hour: this.props.route.params.hour,
       minute: this.props.route.params.minute,
-      cycle: this.props.route.params.cycle,
+      index: this.props.route.params.key,
+      isDatePickerVisible: false,
+      setDatePickerVisibility: false,
+      pickdate: new Date(),
+      alarm_array: [],
     };
+  }
+
+  async componentDidMount() {
+    try {
+      const alarm_array = await AsyncStorage.getItem("@alarm");
+      console.log(alarm_array);
+
+      if (alarm_array !== null) {
+        this.setState({ alarm_array: alarm_array });
+      }
+    } catch (e) {
+      console.log("불러와지는 error");
+    }
   }
 
   onPress_apm1 = () => {
@@ -31,16 +63,81 @@ export default class alarm_edit extends Component {
     this.setState({ apm: "오후" });
   };
 
-  onPress_cycle1 = () => {
-    this.setState({ cycle: "오늘 하루만 알림" });
+  showDatePicker = () => {
+    this.setState({ setDatePickerVisibility: true, isDatePickerVisible: true });
   };
 
-  onPress_cycle2 = () => {
-    this.setState({ cycle: "일주일마다 반복하기" });
+  hideDatePicker = () => {
+    this.setState({
+      setDatePickerVisibility: false,
+      isDatePickerVisible: false,
+    });
   };
 
-  onPress_cycle3 = () => {
-    this.setState({ cycle: "매일 반복하기" });
+  handleConfirm = (date) => {
+    console.warn("A date has been picked: ", date);
+    this.dateToStr(date);
+    this.hideDatePicker();
+  };
+
+  dateToStr = (date) => {
+    this.setState({ pickdate: date });
+    var p_hours = date.getHours();
+    var p_minute = date.getMinutes();
+
+    if (p_minute === 0) this.setState({ minute: "00" });
+    else this.setState({ minute: p_minute });
+    if (p_hours === 24) this.setState({ apm: "오전", hour: 12 });
+    else if (p_hours > 12) this.setState({ apm: "오후", hour: p_hours - 12 });
+    else if (p_hours === 12) this.setState({ apm: "오후", hour: p_hours });
+    else this.setState({ apm: "오전", hour: p_hours });
+  };
+
+  alarm_delect = () => {
+    Alert.alert("알림창", "알림을 삭제하시겠어요?", [
+      {
+        text: "취 소",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "삭 제",
+        onPress: () => {
+          Alert.alert("삭제되었습니다.");
+          this.props.navigation.pop();
+        },
+      },
+    ]);
+  };
+
+  alarm_edit_ = () => {
+    Alert.alert("알림창", "알림을 수정하시겠어요?", [
+      {
+        text: "취 소",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "수 정",
+        onPress: () => {
+          Alert.alert("수정되었습니다.");
+          console.log(this.state.alarm_array);
+          var change_clock = JSON.parse(this.state.alarm_array);
+          console.log(change_clock);
+
+          change_clock.filter((x, y) => {
+            if (x.key === this.state.index) {
+              x.apm = this.state.apm;
+              x.hour = this.state.hour;
+              x.minute = this.state.minute;
+            }
+          });
+          console.log(change_clock);
+          storeData(change_clock);
+          this.props.navigation.pop();
+        },
+      },
+    ]);
   };
 
   render() {
@@ -56,13 +153,13 @@ export default class alarm_edit extends Component {
             }}
           />
           <View style={styles.margin}></View>
-          <Text style={styles.titleText}>
-            나의 운동 알림
-          </Text>
+          <Text style={styles.titleText}>나의 운동 알림</Text>
           <View style={styles.margin}></View>
           <AntDesign name="left" size={24} color="#FFFFFF" />
         </View>
+
         <View style={styles.secondView}>
+          <View style={{ flex: 0.3 }}></View>
           <View style={{ margin: "5%" }}>
             <View style={styles.firstView}>
               <View
@@ -101,6 +198,7 @@ export default class alarm_edit extends Component {
                 </TouchableOpacity>
               </View>
             </View>
+            <View style={{ flex: 0.2 }}></View>
             <View
               style={{
                 flexDirection: "row",
@@ -110,107 +208,46 @@ export default class alarm_edit extends Component {
                 borderColor: "#E0E0E0",
                 borderRadius: 6,
                 borderWidth: 2,
-                marginBottom: "4%",
+                marginBottom: "5%",
+                marginTop: "5%",
                 backgroundColor: "#ffffff",
-                height: "15%",
+                height: "20%",
               }}
             >
               <View>
-                <TextInput
-                  style={styles.time1}
-                  onChangeText={(text) => {
-                    this.setState({ user_age: text });
-                  }}
-                  placeholder={this.state.hour}
-                  placeholderTextColor="#000"
+                <DateTimePickerModal
+                  isVisible={this.state.isDatePickerVisible}
+                  mode="time"
+                  date={this.state.pickdate}
+                  onConfirm={this.handleConfirm}
+                  onCancel={this.hideDatePicker}
                 />
+
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={this.showDatePicker}
+                >
+                  <Text style={styles.time1}>{this.state.hour}</Text>
+                </TouchableOpacity>
               </View>
               <View>
                 <Text style={styles.time1}>:</Text>
               </View>
               <View>
-                <TextInput
-                  style={styles.time1}
-                  onChangeText={(text) => {
-                    this.setState({ user_age: text });
-                  }}
-                  placeholder={this.state.minute}
-                  placeholderTextColor="#000"
-                />
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={this.showDatePicker}
+                >
+                  <Text style={styles.time1}>{this.state.minute}</Text>
+                </TouchableOpacity>
               </View>
             </View>
-            <View style={styles.selectView}>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={this.onPress_cycle1}
-              >
-                <View style={styles.text1View}>
-                  <Text
-                    style={
-                      this.state.cycle === "오늘 하루만 알림"
-                        ? styles.text2_on
-                        : styles.text2
-                    }
-                  >
-                    오늘 하루만 알림
-                  </Text>
-                </View>
-              </TouchableOpacity>
-
-              <View style={styles.margin1}></View>
-
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={this.onPress_cycle2}
-              >
-                <View style={styles.text1View}>
-                  <Text
-                    style={
-                      this.state.cycle === "일주일마다 반복하기"
-                        ? styles.text2_on
-                        : styles.text2
-                    }
-                  >
-                    일주일마다 반복하기
-                  </Text>
-                </View>
-              </TouchableOpacity>
-
-              <View style={styles.margin1}></View>
-
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={this.onPress_cycle3}
-              >
-                <View style={styles.text1View}>
-                  <Text
-                    style={
-                      this.state.cycle === "매일 반복하기"
-                        ? styles.text2_on
-                        : styles.text2
-                    }
-                  >
-                    매일 반복하기
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-
+            <View style={{ flex: 2 }}></View>
             <View style={styles.threeview}>
-              <TouchableOpacity
-                onPress={() => {
-                  Alert.alert("삭제되었습니다.");
-                  this.props.navigation.pop();
-                }}
-              >
+              <TouchableOpacity onPress={this.alarm_delect}>
                 <WithLocalSvg width={90} height={90} asset={trashsvg} />
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  Alert.alert("수정되었습니다.");
-                  this.props.navigation.pop();
-                }}
-              >
+              <TouchableOpacity onPress={this.alarm_edit_}>
                 <WithLocalSvg width={90} height={90} asset={checksvg} />
               </TouchableOpacity>
             </View>
@@ -245,21 +282,12 @@ const styles = StyleSheet.create({
 
   threeview: {
     padding: "3%",
-    marginTop: "3%",
+    marginTop: "5%",
     flexDirection: "row",
     justifyContent: "space-around",
-    alignItems: "flex-start",
-  },
-  selectView: {
-    backgroundColor: "#ffffff",
-    flexDirection: "column",
-    borderColor: "#E0E0E0",
-    borderRadius: 6,
-    borderWidth: 2,
-    height: "28%",
     alignItems: "center",
-    justifyContent: "center",
   },
+
   menuView: {
     backgroundColor: "#FFFFFF",
     height: 58,
@@ -298,7 +326,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     marginBottom: "4%",
     backgroundColor: "#ffffff",
-    height: "13%",
+    height: "15%",
   },
   secondView: {
     backgroundColor: "#F8F8F8",

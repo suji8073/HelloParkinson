@@ -1,40 +1,57 @@
 import React, { Component } from "react";
 import {
   TouchableOpacity,
-  StatusBar,
   StyleSheet,
   View,
   Text,
-  ScrollView,
+  FlatList,
 } from "react-native";
 import Task from "./task_alarm";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { WithLocalSvg } from "react-native-svg";
 
 import plussvg from "../icon/plus.svg";
 import ActionButton from "react-native-action-button";
 
+var alarm = [
+  { key: 1, apm: "오전", hour: "10", minute: "00", check: 1 },
+  { key: 2, apm: "오후", hour: "4", minute: "00", check: 1 },
+];
+
+const storeData = async (value1, value2) => {
+  try {
+    await AsyncStorage.setItem("@alarm", JSON.stringify(alarm));
+  } catch (e) {
+    // saving error
+    console.log("error");
+  }
+};
+
 export default class patient_alarm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data: [],
+      alarm_array: [],
     };
   }
-  userfunc = () => {
-    fetch("http://152.70.233.113/user", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        this.setState({ data: json });
-      });
-    return this.state.data;
-  };
+
+  async componentDidMount() {
+    try {
+      //await AsyncStorage.clear();
+      //await AsyncStorage.setItem("@alarm", JSON.stringify(alarm));
+      const alarm_array = await AsyncStorage.getItem("@alarm");
+
+      if (alarm_array !== null) {
+        this.setState({ alarm_array: JSON.parse(alarm_array) });
+      }
+    } catch (e) {
+      console.log("error");
+    }
+  }
+
   render() {
     return (
       <View style={styles.finalView}>
@@ -45,63 +62,39 @@ export default class patient_alarm extends Component {
         </View>
 
         <View
-          style={{ padding: "5%", backgroundColor: "#F8F8F8", height: "100%" }}
+          style={{
+            paddingLeft: "5%",
+            paddingRight: "5%",
+            backgroundColor: "#F8F8F8",
+            height: "100%",
+          }}
         >
-          <ScrollView>
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate("alarm_edit", {
-                  apm: "오전",
-                  hour: "10",
-                  minute: "00",
-                  cycle: "매일 반복하기",
-                });
-              }}
-            >
-              <Task
-                apm="오전"
-                hour="10"
-                minute="00"
-                cycle="매일 반복하기"
-              ></Task>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate("alarm_edit", {
-                  apm: "오후",
-                  hour: "12",
-                  minute: "30",
-                  cycle: "일주일마다 반복하기",
-                });
-              }}
-            >
-              <Task
-                apm="오후"
-                hour="12"
-                minute="30"
-                cycle="일주일마다 반복하기"
-              ></Task>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate("alarm_edit", {
-                  apm: "오후",
-                  hour: "3",
-                  minute: "30",
-                  cycle: "오늘 하루만 알림",
-                });
-              }}
-            >
-              <Task
-                apm="오후"
-                hour="3"
-                minute="30"
-                cycle="오늘 하루만 알림"
-              ></Task>
-            </TouchableOpacity>
-          </ScrollView>
+          <FlatList
+            keyExtractor={(item, index) => index}
+            data={this.state.alarm_array}
+            renderItem={({ item, index }) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.navigation.navigate("alarm_edit", {
+                      apm: item.apm,
+                      hour: item.hour,
+                      minute: item.minute,
+                      key: item.key,
+                    });
+                  }}
+                >
+                  <Task
+                    index={index}
+                    apm={item.apm}
+                    hour={item.hour}
+                    minute={item.minute}
+                    check={item.check}
+                  ></Task>
+                </TouchableOpacity>
+              );
+            }}
+          />
 
           <ActionButton
             buttonColor="#577F67"

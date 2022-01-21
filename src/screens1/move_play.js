@@ -10,11 +10,9 @@ import {
 } from "react-native";
 import Task from "./task_move";
 
-import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
-import { WebView } from "react-native-webview";
-import Video from "react-native-video";
+import { Video } from "expo-av";
 
 export default class move_play extends Component {
   constructor(props) {
@@ -44,7 +42,7 @@ export default class move_play extends Component {
     // 1,000가 1초
     setTimeout(() => {
       this.setState({ isLoading: false });
-    }, 10000);
+    }, 10000); // 10초
   };
 
   userfunc = () => {
@@ -181,24 +179,25 @@ export default class move_play extends Component {
           />
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>
-            {this.props.route.params.paramName2}{this.props.route.params.paramName1}
+            {this.props.route.params.paramName2}
           </Text>
           <View style={styles.margin}></View>
           <EvilIcons name="star" size={30} color="#ffffff" />
         </View>
 
         <View style={styles.secondView}>
-          {/*
           <Video
-            source={{ uri: "ai_low.1.mp4" }} // Can be a URL or a local file.
-            ref={(ref) => {
-              this.player = ref;
-            }} // Store reference
-            onBuffer={this.onBuffer} // Callback when remote video is buffering
-            onError={this.videoError} // Callback when video cannot be loaded
-            style={styles.backgroundVideo}
+            //source={{uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"}}
+            source={require("../screens1/Water.mp4")}
+            rate={1.0}
+            volume={1.0}
+            isMuted={false}
+            resizeMode="cover"
+            shouldPlay
+            isLooping
+            useNativeControls
+            style={styles.fullScreen}
           />
-          */}
         </View>
 
         <View style={styles.chatControl}>
@@ -242,6 +241,13 @@ const styles = StyleSheet.create({
   finalView: {
     flex: 1,
     backgroundColor: "#FFFFFF",
+  },
+  fullScreen: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
   },
 
   menuView: {
