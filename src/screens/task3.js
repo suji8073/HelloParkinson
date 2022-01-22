@@ -5,8 +5,8 @@ import { TouchableOpacity, StyleSheet, View, Text, Alert } from "react-native";
 import silverstarsvg from "../icon/silverstar.svg";
 import greenstarsvg from "../icon/greenstar.svg";
 import PercentageBar from "./progressbar";
-import greenairplane from "../icon/airplane.svg";
-import airplane from "../icon/greenairplane.svg";
+import airplane from "../icon/airplane.svg";
+import greenairplane from "../icon/greenairplane.svg";
 
 import { WithLocalSvg } from "react-native-svg";
 const year = 2021 + 1;
@@ -15,18 +15,57 @@ export default class task3 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      alarm: airplane,
-      nowtime: new Date(),
+      alarm: greenairplane,
+      date: new Date(),
+      nowdate: 0,
+      sendtime: 0,
+      time: 0,
     };
   }
 
   handleClick = () => {
-    if (this.state.alarm === airplane) {
-      Alert.alert("알림을 보냅니다.");
-      this.setState({ alarm: greenairplane });
+    if (this.state.alarm === greenairplane) {
+      // Alert.alert("알림을 보냅니다.");
+      // Alert.alert(String(this.state.nowtime));
+
+      this.setState({
+        alarm: airplane,
+        sendtime:
+          new Date().getFullYear() * 100000000 +
+          (new Date().getMonth() + 1) * 1000000 +
+          new Date().getDate() * 10000 +
+          new Date().getHours() * 100 +
+          new Date().getMinutes(),
+      });
+      this.setState({ date: new Date() }, () => {
+        setInterval(function () {
+          this.setState(
+            {
+              nowdate:
+                this.state.date.getFullYear() * 100000000 +
+                (this.state.date.getMonth() + 1) * 1000000 +
+                this.state.date.getDate() * 10000 +
+                this.state.date.getHours() * 100 +
+                this.state.date.getMinutes(),
+            },
+            () => {
+              if (this.state.nowdate - this.state.sendtime < 15) {
+                this.setState({
+                  time: this.state.nowdate - this.state.sendtime,
+                });
+              } else if (this.state.nowdate - this.state.sendtime >= 15) {
+                this.setState({ alarm: greenairplane });
+              }
+            }
+          );
+        }, 60000);
+      });
+      // 알림 누른 시각과 환자 db로 보냄
     }
   };
-
+  // componentDidMount() {
+  //   this.setState({nowdate: this.set.date.ge})
+  // }
   render() {
     return (
       //  전체 뷰
@@ -56,7 +95,7 @@ export default class task3 extends Component {
           }}
         >
           <Text style={{ fontSize: 17 }}>
-            {this.props.user} / {year - parseInt(this.props.age / 10000)} /{" "}
+            {this.props.user} / {year - parseInt(this.props.age / 10000)} /
             {this.props.sex}
           </Text>
 
@@ -105,12 +144,12 @@ export default class task3 extends Component {
           />
           <Text
             style={
-              this.state.alarm == greenairplane
+              this.state.alarm == airplane
                 ? styles.timetextgreen
                 : styles.timetextsilver
             }
           >
-            {this.props.time}분전
+            {this.state.time}분전
           </Text>
         </TouchableOpacity>
       </View>

@@ -13,13 +13,14 @@ import Task from "../screens1/task_record_day";
 import Task1 from "../screens1/task_week1";
 import Taskm from "../screens1/task_week1_m";
 const year = 2022 + 1;
-
+import Context from "../Context/context";
 import { WithLocalSvg } from "react-native-svg";
 import { AntDesign } from "@expo/vector-icons";
 
 import page_here from "../icon/page_here.svg";
 import page_no from "../icon/page_no.svg";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+
 import MonthPicker from "react-native-month-year-picker";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 
@@ -37,6 +38,7 @@ const items = [
   { id: "11", label: "11월" },
   { id: "12", label: "12월" },
 ];
+
 
 const data = [
   { date: "20220111", progress: 80 },
@@ -72,6 +74,7 @@ var sum_progress_m = 0;
 const { width, height } = Dimensions.get("screen");
 
 export default class user_statistics extends Component {
+  static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {

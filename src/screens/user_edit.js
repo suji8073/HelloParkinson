@@ -8,7 +8,7 @@ import {
   ScrollView,
   TextInput,
 } from "react-native";
-
+import Context from "../Context/context";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
@@ -21,6 +21,7 @@ const year = 2021 + 1;
 import { WithLocalSvg } from "react-native-svg";
 
 export default class user_edit extends Component {
+  static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {
@@ -32,12 +33,16 @@ export default class user_edit extends Component {
       user_memo: "",
       age1: on,
       age2: off,
+      rank1: on,
+      rank2: off,
       birth: 19550515,
       gender: "",
       memo: "",
       team: "",
       name: "",
       UID: "",
+
+      rank: 1,
       progress: 0,
     };
   }
@@ -60,6 +65,7 @@ export default class user_edit extends Component {
           team: json.info.team,
           name: json.info.name,
           UID: json.info.UID,
+          rank: json.info.ranking,
           progress: json.info.progress,
         });
       });
@@ -67,8 +73,13 @@ export default class user_edit extends Component {
     if (this.state.gender === "M") {
       this.setState({ age1: on, age2: off });
     } else {
+      this.setState({ age1: off, age2: on });
     }
-    this.setState({ age1: off, age2: on });
+    if (this.state.rank === 1) {
+      this.setState({ rank1: on, rank2: off });
+    } else {
+      this.setState({ rank1: off, rank2: on });
+    }
   }
 
   sex_click1 = () => {
@@ -86,6 +97,23 @@ export default class user_edit extends Component {
     } else if (this.state.age2 === on) {
     } else {
       this.setState({ age2: off });
+    }
+  };
+  rank_click1 = () => {
+    if (this.state.rank1 === off) {
+      this.setState({ rank1: on, rank2: off });
+    } else if (this.state.rank1 === on) {
+    } else {
+      this.setState({ rank1: off });
+    }
+  };
+
+  rank_click2 = () => {
+    if (this.state.rank2 === off) {
+      this.setState({ rank2: on, rank1: off });
+    } else if (this.state.rank2 === on) {
+    } else {
+      this.setState({ rank2: off });
     }
   };
 
@@ -115,6 +143,11 @@ export default class user_edit extends Component {
       this.setState({ user_sex: 1 }); // 남자
     } else {
       this.setState({ user_sex: 2 }); // 여자
+    }
+    if (this.state.rank1 === on) {
+      this.setState({ user_rank: 1 }); // 남자
+    } else {
+      this.setState({ user_rank: 0 }); // 여자
     }
     Alert.alert("저장되었습니다.");
     this.props.navigation.navigate("user_setting");
@@ -240,6 +273,31 @@ export default class user_edit extends Component {
               <View style={styles.margin}></View>
             </View>
           </View>
+          <View style={styles.secondView}>
+            <View style={styles.memoView}>
+              <Text style={styles.text1}>랭킹참가</Text>
+            </View>
+
+            <View style={styles.ageview}>
+              <TouchableOpacity
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                onPress={this.rank_click1}
+              >
+                <WithLocalSvg width={20} height={20} asset={this.state.rank1} />
+              </TouchableOpacity>
+              <Text style={styles.text2}> YES</Text>
+
+              <View style={styles.margin}></View>
+              <TouchableOpacity
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                onPress={this.rank_click2}
+              >
+                <WithLocalSvg width={20} height={20} asset={this.state.rank2} />
+              </TouchableOpacity>
+              <Text style={styles.text2}> NO</Text>
+              <View style={styles.margin}></View>
+            </View>
+          </View>
 
           <View style={styles.secondView}>
             <View style={styles.memoView}>
@@ -323,7 +381,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    height: 40,
+    height: 45,
     paddingLeft: 20,
     paddingRight: 10,
     backgroundColor: "#FFFFFF",

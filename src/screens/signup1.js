@@ -12,7 +12,6 @@ import { AntDesign } from "@expo/vector-icons";
 
 import nocheck from "../icon/silver.svg";
 import check from "../icon/checkgreen.svg";
-
 import { WithLocalSvg } from "react-native-svg";
 
 export default class siginup1 extends Component {
