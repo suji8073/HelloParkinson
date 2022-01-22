@@ -14,6 +14,58 @@ import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { Video } from "expo-av";
 
+// require("../screens1/1-1_move.mp4")
+let data = {
+  "1-1": require("../video/1-1.mp4"),
+  "1-2": require("../video/1-2.mp4"),
+  "1-3": require("../video/1-3.mp4"),
+  "1-4": require("../video/1-4.mp4"),
+  "1-5": require("../video/1-5.mp4"),
+  "1-6": require("../video/1-6.mp4"),
+  "1-7": require("../video/1-7.mp4"),
+  "1-8": require("../video/1-8.mp4"),
+  "1-9": require("../video/1-9.mp4"),
+  "1-10": require("../video/1-10.mp4"),
+  "1-11": require("../video/1-11.mp4"),
+  "1-12": require("../video/1-12.mp4"),
+
+  "2-1": require("../video/2-1.mp4"),
+  "2-2": require("../video/2-2.mp4"),
+  "2-3": require("../video/2-3.mp4"),
+  "2-4": require("../video/2-4.mp4"),
+  "2-5": require("../video/2-5.mp4"),
+  "2-6": require("../video/2-6.mp4"),
+  "2-7": require("../video/2-7.mp4"),
+  "2-8": require("../video/2-8.mp4"),
+  "2-9": require("../video/2-9.mp4"),
+  "2-10": require("../video/2-10.mp4"),
+  "2-11": require("../video/2-11.mp4"),
+  "2-12": require("../video/2-12.mp4"),
+  "2-13": require("../video/2-13.mp4"),
+  "2-14": require("../video/2-14.mp4"),
+
+  "3-1": require("../video/3-1.mp4"),
+  "3-2": require("../video/3-2.mp4"),
+  "3-3": require("../video/3-3.mp4"),
+  "3-4": require("../video/3-4.mp4"),
+  "3-5": require("../video/3-5.mp4"),
+
+  "4-1": require("../video/4-1.mp4"),
+  "4-2": require("../video/4-2.mp4"),
+  "4-3": require("../video/4-3.mp4"),
+  "4-4": require("../video/4-4.mp4"),
+  "4-5": require("../video/4-5.mp4"),
+  "4-6": require("../video/4-6.mp4"),
+  "4-7": require("../video/4-7.mp4"),
+  "4-8": require("../video/4-8.mp4"),
+  "4-9": require("../video/4-9.mp4"),
+  "4-10": require("../video/4-10.mp4"),
+  "4-11": require("../video/4-11.mp4"),
+  "4-12": require("../video/4-12.mp4"),
+  "4-13": require("../video/4-13.mp4"),
+  "4-14": require("../video/4-14.mp4"),
+};
+
 export default class move_play extends Component {
   constructor(props) {
     super(props);
@@ -89,7 +141,6 @@ export default class move_play extends Component {
                   paramName2: "신장운동",
                   paramsName: this.props.route.params.paramsName,
                 },
-                cvxzszxs,
               },
             ],
           });
@@ -195,13 +246,11 @@ export default class move_play extends Component {
         <View style={styles.secondView}>
           <Video
             //source={{uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"}}
-            source={require("../screens1/1-1_move.mp4")}
+            source={data[this.props.route.params.paramName1]}
             rate={1.0}
             volume={1.0}
-            isMuted={false}
             resizeMode="cover"
             shouldPlay
-            isLooping
             useNativeControls
             style={styles.fullScreen}
           />
