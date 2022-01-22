@@ -125,7 +125,10 @@ export default class alarm_add extends Component {
             console.log("!" + JSON.stringify(change_clock));
             storeData(change_clock);
 
-            this.props.navigation.pop();
+            //this.props.navigation.pop();
+            this.props.navigation.push("TabNavigation1", {
+              paramsName: this.props.route.params.paramsName,
+            });
           }
         },
       },

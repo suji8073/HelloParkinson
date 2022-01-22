@@ -81,6 +81,7 @@ export default class patient_alarm extends Component {
                       hour: item.hour,
                       minute: item.minute,
                       key: item.key,
+                      paramsName: this.props.route.params.paramsName,
                     });
                   }}
                 >
@@ -105,7 +106,9 @@ export default class patient_alarm extends Component {
                 height={90}
                 asset={plussvg}
                 onPress={() => {
-                  this.props.navigation.navigate("alarm_add");
+                  this.props.navigation.navigate("alarm_add", {
+                    paramsName: this.props.route.params.paramsName,
+                  });
                 }}
               />
             )}
