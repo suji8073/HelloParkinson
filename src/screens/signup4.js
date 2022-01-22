@@ -201,7 +201,7 @@ export default class siginup4 extends Component {
                   >
                     <View style={styles.margin}></View>
                     <View style={styles.user_id_click}>
-                      <Text style={styles.ttext}>중복확인</Text>
+                      <Text style={styles.ttext}>중복 확인</Text>
                     </View>
                     <View style={styles.margin}></View>
                   </TouchableOpacity>
@@ -600,7 +600,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   ttext: {
-    fontSize: 15,
+    fontSize: 13,
     color: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",

@@ -9,7 +9,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import on from "../icon/move_play_on.svg";
 import off from "../icon/move_play_off.svg";
-import stop from "../icon/move_play_stop.svg";
+import stop from "../icon/back.svg";
 
 import ride_play from "../icon/ride_play.svg";
 import ride_stop from "../icon/ride_stop.svg";
@@ -150,7 +150,7 @@ export default class yusanso_2 extends Component {
                   asset={this.state.play === false ? off : on}
                 />
               </TouchableOpacity>
-              <Text style={styles.tttext}>일시 정지</Text>
+              <Text style={styles.tttext}>일시중지</Text>
             </View>
 
             <View style={styles.margin1}></View>
@@ -158,11 +158,13 @@ export default class yusanso_2 extends Component {
             <View style={styles.textView}>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={this.onButtonClear}
+                onPress={() => {
+                  this.props.navigation.navigate("move_5");
+                }}
               >
-                <WithLocalSvg width={60} height={60} asset={stop} />
+                <WithLocalSvg width={90} height={90} asset={stop} />
               </TouchableOpacity>
-              <Text style={styles.tttext}>리셋</Text>
+              <Text style={styles.tttext}>나가기</Text>
             </View>
 
             <View style={styles.margin}></View>
@@ -210,7 +212,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     color: "#666666",
     justifyContent: "center",
-    marginTop: 5,
+    marginTop: 20,
+    fontWeight: "bold",
   },
 
   titleText: {

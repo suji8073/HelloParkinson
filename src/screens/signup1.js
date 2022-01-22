@@ -90,13 +90,12 @@ export default class siginup1 extends Component {
         <View style={styles.marginView}></View>
         <View style={styles.groupa}>
           <View style={styles.group}>
-            <TouchableOpacity
-              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-              onPress={this.handleClick1}
-            >
+            <TouchableOpacity onPress={this.handleClick1}>
               <WithLocalSvg width={30} height={30} asset={this.state.onname1} />
             </TouchableOpacity>
-            <Text style={styles.MText}> 약관 전체 동의 </Text>
+            <TouchableOpacity onPress={this.handleClick1}>
+              <Text style={styles.MText}> 약관 전체 동의 </Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.line}></View>
 
@@ -104,18 +103,16 @@ export default class siginup1 extends Component {
 
           <View style={styles.MainView}>
             <View style={styles.group}>
-              <TouchableOpacity
-                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                onPress={this.handleClick2}
-              >
+              <TouchableOpacity onPress={this.handleClick2}>
                 <WithLocalSvg
                   width={30}
                   height={30}
                   asset={this.state.onname2}
                 />
               </TouchableOpacity>
-
-              <Text style={styles.SText}> 이용약관 동의 (필수) </Text>
+              <TouchableOpacity onPress={this.handleClick2}>
+                <Text style={styles.SText}> 이용약관 동의 (필수) </Text>
+              </TouchableOpacity>
             </View>
 
             <TouchableOpacity
@@ -130,19 +127,18 @@ export default class siginup1 extends Component {
 
           <View style={styles.MainView}>
             <View style={styles.group}>
-              <TouchableOpacity
-                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                onPress={this.handleClick3}
-              >
+              <TouchableOpacity onPress={this.handleClick3}>
                 <WithLocalSvg
                   width={30}
                   height={30}
                   asset={this.state.onname3}
                 />
               </TouchableOpacity>
-              <Text style={styles.SText}>
-                개인정보 수집 및 이용 동의 (필수)
-              </Text>
+              <TouchableOpacity onPress={this.handleClick3}>
+                <Text style={styles.SText}>
+                  개인정보 수집 및 이용 동의 (필수)
+                </Text>
+              </TouchableOpacity>
             </View>
             <TouchableOpacity
               hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
@@ -225,7 +221,7 @@ const styles = StyleSheet.create({
     marginLeft: "3%",
   },
   SText: {
-    fontSize: 20,
+    fontSize: 19,
     justifyContent: "flex-start",
     color: "#1E1E1E",
     marginLeft: "3%",

@@ -5,14 +5,12 @@ import {
   Text,
   TouchableOpacity,
   Alert,
-  Body,
-  Title,
 } from "react-native";
+
 import Context from "../Context/context";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { EvilIcons } from "@expo/vector-icons";
 import Svg1 from "../icon/pencil.svg";
 import Svg2 from "../icon/piechart.svg";
 import Svg3 from "../icon/graph.svg";

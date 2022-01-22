@@ -61,6 +61,8 @@ export default class move_4 extends Component {
                         paramName1: item.category,
                         paramName2: "구강 및 발성 운동",
                         paramsName: this.props.route.params.paramsName,
+                        done_num: item.a,
+                        assign_num: item.b,
                       });
                     }}
                   >

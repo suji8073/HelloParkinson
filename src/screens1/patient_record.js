@@ -135,6 +135,8 @@ export default class patient_record extends Component {
 
   componentDidMount() {
     this.setState({ sum_p: 0, sum_m: 0 });
+    sum_progress = 0;
+    sum_progress_m = 0;
     data.map((x) => {
       sum_progress += x.progress;
       this.setState({ sum_p: sum_progress / 7 });
@@ -551,6 +553,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
+    borderBottomWidth: 0.5,
+    borderColor: "#0F9D58",
   },
   text2: {
     alignItems: "flex-start",
