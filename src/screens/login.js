@@ -81,7 +81,7 @@ export default class login extends Component {
               // this.context.changePW(this.state.pw);
               // Alert.alert(this.context.user_id);
               console.log("로그인 통신 확인");
-              this.props.navigation.navigate("TabNavigation1", {});
+              this.props.navigation.navigate("TabNavigation2", {});
             } else if (json.admin == 1) {
               // 관리자
 

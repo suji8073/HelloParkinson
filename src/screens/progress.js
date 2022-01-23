@@ -20,6 +20,12 @@ const items = [
   { id: "progress", label: "진도율순" },
 ];
 var now = new Date();
+var thisdate2 = new Date(
+  now.getFullYear(),
+  now.getMonth() + 1,
+  now.getDate()
+).getDate();
+
 export default class progress extends Component {
   static contextType = Context;
   constructor(props) {
@@ -31,7 +37,7 @@ export default class progress extends Component {
       day: parseInt(now.getDate()),
       yoil: parseInt(now.getDay()), //(0:일요일 ~ 6: 토요일)
       lastdate: 0,
-      thisdate: 0,
+      thisdate: thisdate2,
       lastdate2: 0,
       thisdate2: 0,
       // yoil: 0,
@@ -53,14 +59,12 @@ export default class progress extends Component {
     });
   }
   minus = () => {
-    this.setState({ yoil: this.state.yoil - 1 });
-    this.setState({ day: this.state.day - 1 });
-    // this.userfunc() 특정 날짜의 환자 전체 진도율
+    this.setState({ yoil: this.state.yoil - 7 });
+    this.setState({ day: this.state.day - 7 });
   };
   plus = () => {
-    this.setState({ yoil: this.state.yoil + 1 });
-    this.setState({ day: this.state.day + 1 });
-    // this.userfunc() 특정 날짜의 환자 전체 진도율
+    this.setState({ yoil: this.state.yoil + 7 });
+    this.setState({ day: this.state.day + 7 });
   };
   dayy = (num) => {
     while (num < 0) {
@@ -103,8 +107,31 @@ export default class progress extends Component {
     }
   };
   todaynum = (num) => {
+    // 다음달로 넘어갈 경우
+    if (num >= this.state.thisdate + 1) {
+      // 다음 해로 넘어갈 경우
+      if (this.state.month == 12) {
+        this.setState({ year: this.state.year + 1 });
+        this.setState({ month: 1 });
+      }
+      // 같은 해에서 이동할 경우
+      else {
+        this.setState({ month: this.state.month + 1 });
+      }
+
+      this.setState({ day: num - this.state.thisdate });
+      this.setState({
+        lastdate: this.state.thisdate,
+        thisdate: new Date(this.state.year, this.state.month + 1, 0).getDate(),
+      });
+
+      // this.userfunc() 특정 날짜의 환자 전체 진도율
+      return this.state.day;
+    }
     // 이전달로 넘어갈 경우
-    if (num == 0) {
+    else if (num <= 0) {
+      //하루씩 : (num == 0)
+
       // 이전 해로 넘어갈 경우
       if (this.state.month == 1) {
         this.setState({ year: this.state.year - 1 });
@@ -114,74 +141,25 @@ export default class progress extends Component {
       else {
         this.setState({ month: this.state.month - 1 });
       }
-      this.setState({ day: this.state.lastdate });
+      this.setState({ day: this.state.lastdate + num });
       this.setState({
-        thisdate: new Date(this.state.year, this.state.month, 0).getDate(),
-        lastdate: new Date(this.state.year, this.state.month - 1, 0).getDate(),
+        thisdate: new Date(this.state.year, this.state.month - 1, 0).getDate(),
+        lastdate: new Date(this.state.year, this.state.month - 2, 0).getDate(),
       });
 
+      // this.userfunc() 특정 날짜의 환자 전체 진도율
       return this.state.day;
     }
 
-    // 다음달로 넘어갈 경우
-    // else if (num == this.state.thisdate + 1) {
-    //   // 다음 해로 넘어갈 경우
-    //   if (this.state.month == 12) {
-    //     this.setState({ month: 1 });
-    //   }
-    //   // 같은 해에서 이동할 경우
-    //   else {
-    //     this.setState({ month: this.state.month + 1 });
-    //   }
-    //   this.setState({ lastdate: this.state.thisdate });
-    //   this.setState({
-    //     thisdate: new Date(this.state.year, this.state.month, 0).getDate(),
-    //   });
-    //   // this.setState({ day: 1 });
-    //   return this.state.day;
-    // }
     // 현재 달에서 이동할 경우
     else {
       return num;
     }
   };
 
-  // pressday = (yoilnum, daynum) => {
-  //   // 이전 달로 넘어갈 경우
-  //   if (daynum <= 0) {
-  //     // 이전 해로 넘어갈 경우
-  //     if (this.state.month == 1) {
-  //       this.setState({ year: this.state.year - 1 });
-  //       this.setState({ month: 12 });
-
-  //       this.setState({
-  //         thisdate: new Date(this.state.year, this.state.month, 0).getDate(),
-  //       });
-  //       this.setState({
-  //         lastdate: new Date(
-  //           this.state.year,
-  //           this.state.month - 1,
-  //           0
-  //         ).getDate(),
-  //       });
-  //     }
-  //     // 같은해에서 이동할 경우
-  //     else {
-  //       this.setState({ month: this.state.month - 1 });
-  //     }
-  //     this.setState({ thisdate: this.state.lastdate });
-  //     this.setState({
-  //       lastdate: new Date(this.state.year, this.state.month - 1, 0).getDate(),
-  //     });
-  //     this.setState({ day: this.state.thisdate + daynum });
-  //   }
-  //   // 같은 달에서 이동할 경우
-  //   else {
-  //     this.setState({ day: daynum });
-  //   }
-  //   this.setState({ yoil: yoilnum });
-  // };
-
+  pressday = (yoilnum, daynum) => {
+    this.setState({ yoil: yoilnum, day: daynum });
+  };
   userfunc = () => {
     fetch("http://152.70.233.113/chamuser?sort=name", {
       method: "GET",
@@ -250,11 +228,7 @@ export default class progress extends Component {
         </View>
 
         <View style={styles.twoView}>
-          <Text style={{ fontSize: 21 }}>
-            {this.state.month - 1}
-            {this.state.lastdate}/{this.state.month}
-            {this.state.thisdate} 월
-          </Text>
+          <Text style={{ fontSize: 21 }}>{this.state.month} 월</Text>
         </View>
 
         <View style={styles.threeView}>
@@ -358,7 +332,7 @@ export default class progress extends Component {
                 </Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.plus()}>
+            <TouchableOpacity onPress={this.plus}>
               <AntDesign name="right" size={30} color="#808080" />
             </TouchableOpacity>
           </View>
