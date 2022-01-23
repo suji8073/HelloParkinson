@@ -37,6 +37,7 @@ export default class norank_patient_Home extends Component {
   }
 
   componentDidMount() {
+    // 환자 총 진도율 가져오는 API
     this.userfunc();
     this.findname();
   }
@@ -99,7 +100,7 @@ export default class norank_patient_Home extends Component {
             height={"120%"}
             asset={backgroud_image}
           />
-          <View style={{ paddingTop: "10%" }}>
+          <View style={{ paddingTop: "10%", paddingHorizontal: "5%" }}>
             <Text style={styles.nametext}>
               {this.context.user_name}님{"  "}
               <Text
@@ -128,8 +129,14 @@ export default class norank_patient_Home extends Component {
             </Text>
           </View>
           {/* 환자 1~3 */}
-          <View style={{ alignItems: "flex-end", padding: "2%" }}>
-            <WithLocalSvg width={130} height={130} asset={fignthingsvg} />
+          <View
+            style={{
+              alignItems: "flex-end",
+              paddingRight: "4%",
+              paddingTop: "3%",
+            }}
+          >
+            <WithLocalSvg width={100} height={100} asset={fignthingsvg} />
           </View>
           <View
             style={{
@@ -138,21 +145,55 @@ export default class norank_patient_Home extends Component {
               padding: "1%",
             }}
           >
-            <View style={{ padding: "6%" }}>
-              <Text style={styles.whitetext}>몇월 몇째주 운동 기록</Text>
-              <Text style={styles.whitesmalltext}>
-                더 자세한 기록은 나의 운동 기록을 확인하세요!
-              </Text>
-            </View>
-            <FlatList
-              style={{ height: "15%" }}
-              numColumns={7}
-              keyExtractor={(item, index) => index.toString()}
-              data={this.state.week_prog}
-              renderItem={({ item }) => {
-                return <Task day={item.day} day_prog={item.day_prog}></Task>;
+            <View
+              style={{
+                paddingTop: "7%",
+                paddingBottom: "5%",
+                paddingHorizontal: "3%",
               }}
-            />
+            >
+              <View
+                style={{
+                  borderBottomColor: "#FFFFFF",
+                  borderBottomWidth: 1,
+                  justifyContent: "center",
+                  alignContent: "center",
+                  alignItems: "center",
+                  paddingBottom: "3%",
+                  marginBottom: "4%",
+                }}
+              >
+                <Text style={styles.whitetext}>
+                  파킨슨병 환자의{" "}
+                  <Text
+                    style={{
+                      fontSize: 17,
+                    }}
+                  >
+                    건강한 일상생활
+                  </Text>
+                  을 위한 주의사항
+                </Text>
+              </View>
+
+              <View>
+                <Text style={styles.whitesmalltext}>
+                  ▶ 지금까지 해왔던 일상생활과 일을 계속해서 이어간다.
+                </Text>
+
+                <Text style={styles.whitesmalltext}>
+                  ▶ 편하고 즐거운 마음가짐을 갖도록 노력한다.
+                </Text>
+
+                <Text style={styles.whitesmalltext}>
+                  ▶ 가족 혹은 친구들과 어울리는 사회활동을 지속한다.
+                </Text>
+
+                <Text style={styles.whitesmalltext}>
+                  ▶ 운동을 규칙적으로 꾸준히 한다.
+                </Text>
+              </View>
+            </View>
           </View>
         </View>
       </View>
@@ -206,7 +247,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   secondView: {
-    padding: "6%",
+    padding: "3%",
+    paddingTop: "6%",
     backgroundColor: "#F8F8F8",
     height: "100%",
   },
@@ -234,14 +276,15 @@ const styles = StyleSheet.create({
   menttext: { marginBottom: "5%", fontSize: 16, fontWeight: "600" },
   whitetext: {
     color: "#FFFFFF",
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: "500",
-    marginBottom: "2%",
+    marginBottom: "3%",
   },
   whitesmalltext: {
     color: "#FFFFFF",
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: "400",
-    marginBottom: "5%",
+    marginVertical: "3%",
+    paddingLeft: "3%",
   },
 });

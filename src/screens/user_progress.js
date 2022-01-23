@@ -20,16 +20,17 @@ import Task from "./task_progress";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 import { Entypo } from "@expo/vector-icons";
 import PercentageBar from "../screens/progressbar";
+import movelist from "./movelist";
 const date = new Date();
 const year = date.getFullYear();
 const today =
   year + "년 " + date.getMonth() + 1 + "월 " + date.getDate() + "일";
 const items = [
-  { id: "1", label: "신장 운동" },
-  { id: "2", label: "근력 운동" },
-  { id: "3", label: "균형 및 협응 운동" },
-  { id: "4", label: "구강 및 발성 운동" },
-  { id: "5", label: "유산소 운동" },
+  { id: 1, label: "신장 운동" },
+  { id: 2, label: "근력 운동" },
+  { id: 3, label: "균형 및 협응 운동" },
+  { id: 4, label: "구강 및 발성 운동" },
+  { id: 5, label: "유산소 운동" },
 ];
 export default class progress extends Component {
   static contextType = Context;
@@ -42,21 +43,10 @@ export default class progress extends Component {
       team: "",
       name: "",
       progress: 0,
-      data: [],
       done: [],
-      ing: [
-        { ename: "목 앞 근육 스트레칭", setcnt: 0, donecnt: 2 },
-        { ename: "날개뼈 모으기", setcnt: 21, donecnt: 22 },
-        { ename: "손목 및 팔꿈치 주변 근육 스트레칭", setcnt: 3, donecnt: 2 },
-      ],
-      no: [
-        { ename: "엉덩이 들기", setcnt: 2, donecnt: 2 },
-        { ename: "엎드려 누운 상태에서 다리들기", setcnt: 2, donecnt: 0 },
-        { ename: "엉덩이 옆 근육 운동", setcnt: 2, donecnt: 0 },
-        { ename: "무릎 벌리기", setcnt: 23, donecnt: 0 },
-        { ename: "무릎 펴기", setcnt: 22, donecnt: 2 },
-      ],
-      ename: "신장 운동",
+      ing: [],
+      no: [],
+      enamenow: "신장 운동",
       m1: [
         { ename: "목 앞 근육 스트레칭", setcnt: 0, donecnt: 2 },
         { ename: "날개뼈 모으기", setcnt: 0, donecnt: 22 },
@@ -94,18 +84,26 @@ export default class progress extends Component {
         { ename: "걷기", setcnt: 70, donecnt: 40 },
         { ename: "자전거 타기", setcnt: 100, donecnt: 200 },
       ],
+
+      data: [],
     };
   }
 
-  // 기본조건: setcnt !=0
-  // 1. if donecnt==0: 미실시
-
-  // 2.elif setcnt>donecnt: 진행중
-  // 3. elif setcnt<=donecnt : 완료
-
-  // }}
-
   componentDidMount() {
+    this.setState({ data: this.state.m1 }, () => {
+      let base = this.state.data.filter((it) => it.setcnt !== 0);
+      // 진행중
+      let ing1 = base.filter((it) => it.donecnt !== 0);
+      let ing2 = ing1.filter((it) => it.setcnt > it.donecnt);
+      // 기준 다시!!
+      this.setState({ ing: ing2 });
+      // 미실시
+      let no1 = base.filter((it) => it.donecnt == 0);
+      this.setState({ no: no1 });
+      // 완료
+      let doen1 = base.filter((it) => it.setcnt <= it.donecnt);
+      this.setState({ done: doen1 });
+    });
     fetch(
       "http://152.70.233.113/chamuser/id/" + this.props.route.params.paramName1,
       {
@@ -125,6 +123,19 @@ export default class progress extends Component {
         });
       });
   }
+  movecheck = (id) => {
+    if (id === 1) {
+      this.setState({ data: this.state.m1 });
+    } else if (id == 2) {
+      this.setState({ data: this.state.m2 });
+    } else if (id === 3) {
+      this.setState({ data: this.state.m3 });
+    } else if (id === 4) {
+      this.setState({ data: this.state.m4 });
+    } else if (id === 5) {
+      this.setState({ data: this.state.m5 });
+    }
+  };
 
   render() {
     return (
@@ -234,29 +245,32 @@ export default class progress extends Component {
                 <Text
                   style={{ fontSize: 19, fontWeight: "bold", paddingTop: "1%" }}
                 >
-                  {this.state.ename}
+                  {this.state.enamenow}
                 </Text>
               </View>
-              {/* 햄버거 아이콘 */}
-              {/* <View
-                style={{
-                  flex: 1,
-                  alignItems: "flex-end",
-                  justifyContent: "flex-start",
-                }}
-              >
-                <TouchableOpacity onPress={this.dots}> */}
               <SimplePopupMenu
                 style={styles.margin}
                 items={items}
                 cancelLabel={"취소"}
                 onSelect={(items) => {
                   this.setState({
-                    ename: items.label,
+                    enamenow: items.label,
                   });
+                  this.movecheck(items.id);
+                  // 할당된거만 추출
+                  let base = this.state.data.filter((it) => it.setcnt !== 0);
+                  // 진행중
 
-                  let res = this.state.m1.filter((it) => it.setcnt != 0);
-                  this.setState({ ing: res });
+                  let ing1 = base.filter((it) => it.donecnt !== 0);
+                  let ing2 = ing1.filter((it) => it.setcnt > it.donecnt);
+                  // 기준 다시!!
+                  this.setState({ ing: ing2 });
+                  // 미실시
+                  let no1 = base.filter((it) => it.donecnt == 0);
+                  this.setState({ no: no1 });
+                  // 완료
+                  let doen1 = base.filter((it) => it.setcnt <= it.donecnt);
+                  this.setState({ done: doen1 });
                 }}
                 onCancel={() => console.log("onCancel")}
               >
@@ -270,14 +284,14 @@ export default class progress extends Component {
               <View style={styles.bordertext}>
                 <Text style={styles.successtext}>완료</Text>
                 <View style={styles.numView}>
-                  <Text style={styles.numtext}>0</Text>
+                  <Text style={styles.numtext}>{this.state.done.length}</Text>
                   <Text style={styles.gaetext}>개</Text>
                 </View>
               </View>
               <View style={styles.bordertext}>
                 <Text style={styles.successtext}>진행 중</Text>
                 <View style={styles.numView}>
-                  <Text style={styles.numtext}>1</Text>
+                  <Text style={styles.numtext}>{this.state.ing.length}</Text>
                   <Text style={styles.gaetext}>개</Text>
                 </View>
               </View>
@@ -290,7 +304,7 @@ export default class progress extends Component {
               >
                 <Text style={styles.successtext}>미실시</Text>
                 <View style={styles.numView}>
-                  <Text style={styles.numtext}>6</Text>
+                  <Text style={styles.numtext}>{this.state.no.length}</Text>
                   <Text style={styles.gaetext}>개</Text>
                 </View>
               </View>

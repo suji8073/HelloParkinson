@@ -71,6 +71,8 @@ export default class progress extends Component {
     };
   }
   componentDidMount() {
+    // this.State((this.context.change_exercise[0].id = "2"));
+    // console.log(this.context.change_exercise[0].id);
     // 신장운동이 기본클릭 값
     this.setState({ data: this.state.m1 });
     // fetch("http://152.70.233.113/chammotion/cat/신장운동", {

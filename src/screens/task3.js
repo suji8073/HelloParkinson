@@ -17,54 +17,81 @@ export default class task3 extends Component {
     this.state = {
       alarm: greenairplane,
       date: new Date(),
-      nowdate: 0,
-      sendtime: 0,
-      time: 0,
+      nowtimestamp: 0,
+      sendtimestamp: 0,
     };
   }
 
+  sendtimes = () => {
+    this.setState(
+      {
+        sendtimestamp:
+          this.state.date.getFullYear() * 100000000 +
+          (this.state.date.getMonth() + 1) * 1000000 +
+          this.state.date.getDate() * 10000 +
+          (this.state.date.getHours() + 9) * 100 +
+          this.state.date.getMinutes(),
+      },
+      () => {
+        console.log(this.state.sendtimestamp);
+        console.log(typeof this.state.sendtimestamp);
+      }
+    );
+  };
+  nowtimes = () => {
+    this.setState(
+      {
+        nowtimestamp:
+          this.state.date.getFullYear() * 100000000 +
+          (this.state.date.getMonth() + 1) * 1000000 +
+          this.state.date.getDate() * 10000 +
+          (this.state.date.getHours() + 9) * 100 +
+          this.state.date.getMinutes(),
+      },
+      () => {
+        console.log(this.state.nowtimestamp);
+        console.log(typeof this.state.nowtimestamp);
+      }
+    );
+  };
   handleClick = () => {
     if (this.state.alarm === greenairplane) {
-      // Alert.alert("알림을 보냅니다.");
-      // Alert.alert(String(this.state.nowtime));
+      Alert.alert("알림을 전송합니다.");
 
       this.setState({
         alarm: airplane,
-        sendtime:
-          new Date().getFullYear() * 100000000 +
-          (new Date().getMonth() + 1) * 1000000 +
-          new Date().getDate() * 10000 +
-          new Date().getHours() * 100 +
-          new Date().getMinutes(),
+        // 보낸시각
       });
+
       this.setState({ date: new Date() }, () => {
-        setInterval(function () {
-          this.setState(
-            {
-              nowdate:
-                this.state.date.getFullYear() * 100000000 +
-                (this.state.date.getMonth() + 1) * 1000000 +
-                this.state.date.getDate() * 10000 +
-                this.state.date.getHours() * 100 +
-                this.state.date.getMinutes(),
-            },
-            () => {
-              if (this.state.nowdate - this.state.sendtime < 15) {
-                this.setState({
-                  time: this.state.nowdate - this.state.sendtime,
-                });
-              } else if (this.state.nowdate - this.state.sendtime >= 15) {
-                this.setState({ alarm: greenairplane });
-              }
-            }
-          );
-        }, 60000);
+        this.nowtimes();
+        this.sendtimes();
       });
+      var refreshIntervalId = setInterval(() => {
+        this.setState({ date: new Date() }, () => {
+          this.nowtimes();
+        });
+
+        if (
+          this.state.sendtimestamp !== 0 &&
+          this.state.nowtimestamp - this.state.sendtimestamp >= 15
+        ) {
+          this.setState({
+            alarm: greenairplane,
+            sendtimestamp: 0,
+            nowtimestamp: 0,
+          });
+          clearInterval(refreshIntervalId);
+        }
+      }, 60000);
+
+      // refreshIntervalId;
+
       // 알림 누른 시각과 환자 db로 보냄
     }
   };
   // componentDidMount() {
-  //   this.setState({nowdate: this.set.date.ge})
+  //   this.setState({nowtimestamp: this.set.date.ge})
   // }
   render() {
     return (
@@ -149,7 +176,7 @@ export default class task3 extends Component {
                 : styles.timetextsilver
             }
           >
-            {this.state.time}분전
+            {this.state.nowtimestamp - this.state.sendtimestamp}분 전
           </Text>
         </TouchableOpacity>
       </View>
@@ -219,10 +246,10 @@ const styles = StyleSheet.create({
   },
   timetextgreen: {
     color: "#000000",
-    paddingTop: "1%",
+    marginTop: "2%",
   },
   timetextsilver: {
     color: "#FFFFFF",
-    paddingTop: "1%",
+    marginTop: "2%",
   },
 });

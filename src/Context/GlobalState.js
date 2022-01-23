@@ -6,6 +6,7 @@ export default class GlobalState extends React.Component {
     user_id: "",
     user_pw: "",
     user_name: "",
+    user_exercise: [],
   };
   changePW = (pw) => {
     this.setState({ user_pw: pw });
@@ -16,6 +17,13 @@ export default class GlobalState extends React.Component {
   changeNAME = (name) => {
     this.setState({ user_name: name });
   };
+  changeEXCERCISE = (index, task) => {
+    // const list = [, task];
+    // this.setState({ this.state.user_exercise[{index}].set : list });
+  };
+  deleteEXCERCISE = () => {
+    this.setState({ user_exercise: [] });
+  };
   render() {
     return (
       <Context.Provider
@@ -23,6 +31,8 @@ export default class GlobalState extends React.Component {
           changePW: this.changePW,
           changeID: this.changeID,
           changeNAME: this.changeNAME,
+          changeEXCERCISE: this.changeEXCERCISE,
+          deleteEXCERCISE: this.deleteEXCERCISE,
         }}
       >
         {this.props.children}

@@ -25,10 +25,16 @@ export default class task1 extends Component {
   }
   componentDidMount() {
     this.setState({ id: this.props.id });
+    if (this.props.book === 1) {
+      this.setState({ star: greenstarsvg });
+    } else {
+      this.setState({ star: silverstarsvg });
+    }
   }
 
   handleClick = () => {
     if (this.props.book === 0) {
+      this.setState({ star: greenstarsvg });
       // 아이콘 asset값 변경 greenstarsvg 으로
 
       fetch("http://152.70.233.113/chamuser/bookmark", {
@@ -40,6 +46,7 @@ export default class task1 extends Component {
       });
       Alert.alert("즐겨찾기에 추가되었습니다.");
     } else {
+      this.setState({ star: silverstarsvg });
       // 아이콘 asset값 변경 silverstarsvg 으로
       fetch("http://152.70.233.113/chamuser/bookmark", {
         method: "POST",
@@ -83,7 +90,8 @@ export default class task1 extends Component {
             id="svgs"
             width={30}
             height={30}
-            asset={this.props.book == 1 ? greenstarsvg : silverstarsvg}
+            // asset={this.props.book == 1 ? greenstarsvg : silverstarsvg}
+            asset={this.state.star}
           />
         </TouchableOpacity>
       </View>
