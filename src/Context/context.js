@@ -1,8 +1,8 @@
 import React from "react";
 
 export default React.createContext({
-  user_id: "q",
-  user_pw: "q",
+  user_id: "kw1234",
+  user_pw: "kw1004",
   user_name: "관리자",
   change_exercise: [
     { id: "4-1", name: "아에이오우 소리내기", set: 10 },

@@ -96,7 +96,7 @@ export default class alarm_add extends Component {
     else this.setState({ apm: "오전", hour: p_hours });
   };
   addalarm = () => {
-    Alert.alert("알림창", "알림을 추가하시겠어요?", [
+    Alert.alert("알림을 추가하시겠어요?", "", [
       {
         text: "취 소",
         onPress: () => console.log("Cancel Pressed"),
@@ -113,7 +113,7 @@ export default class alarm_add extends Component {
               apm: this.state.apm,
               hour: this.state.hour,
               minute: this.state.minute,
-              click: 1,
+              check: 1,
             };
 
             if (this.state.alarm_array.length === 0) {
@@ -121,8 +121,6 @@ export default class alarm_add extends Component {
               change_clock.push(add_clock);
             } else {
               var change_clock = JSON.parse(this.state.alarm_array);
-              console.log("?" + change_clock);
-              console.log("?" + change_clock);
               change_clock.push(add_clock);
             }
             console.log("!" + JSON.stringify(change_clock));

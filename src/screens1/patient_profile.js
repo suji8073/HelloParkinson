@@ -73,9 +73,8 @@ export default class patient_profile extends Component {
             color="lightblue"
             alignItems="center"
           />
-          <Text style={styles.user_name}>프로필 사진 변경</Text>
         </View>
-
+        <View style={{ borderTopWidth: 0.5, borderColor: "#E5E5E5" }}></View>
         <View style={styles.secondView}>
           <View style={styles.memoView}>
             <Text style={styles.text1}>이름</Text>
@@ -200,19 +199,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     flexDirection: "row",
-    height: 50,
+    height: 60,
     backgroundColor: "#FFFFFF",
     borderTopWidth: 0.5,
-    borderBottomWidth: 0.5,
     borderColor: "#E5E5E5",
-    paddingLeft: 20,
+    paddingLeft: 30,
   },
 
   marginView: {
     // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
-    flex: 2,
+    flex: 1.5,
     backgroundColor: "#FFFFFF",
   },
 
