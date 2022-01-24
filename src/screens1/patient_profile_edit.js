@@ -10,6 +10,31 @@ import nocheck from "../icon/radio_btn_nocheck.svg";
 import check from "../icon/radio_button_check.svg";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+//////카메라 권한
+import { PermissionsAndroid, Platform } from "react-native";
+import CameraRoll from "@react-native-community/cameraroll";
+
+async function hasAndroidPermission() {
+  const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
+
+  const hasPermission = await PermissionsAndroid.check(permission);
+  if (hasPermission) {
+    return true;
+  }
+
+  const status = await PermissionsAndroid.request(permission);
+  return status === "granted";
+}
+
+async function savePicture() {
+  if (Platform.OS === "android" && !(await hasAndroidPermission())) {
+    return;
+  }
+  CameraRoll.save(tag, { type, album });
+}
+
+///////////
+
 import Context from "../Context/context";
 export default class patient_profile_edit extends Component {
   static contextType = Context;
@@ -148,6 +173,19 @@ export default class patient_profile_edit extends Component {
     }
   };
 
+  _handleButtonPress = () => {
+    CameraRoll.getPhotos({
+      first: 20,
+      assetType: "Photos",
+    })
+      .then((r) => {
+        this.setState({ photos: r.edges });
+      })
+      .catch((err) => {
+        //Error Loading Images
+      });
+  };
+
   render() {
     return (
       <View style={styles.finalView}>
@@ -172,7 +210,12 @@ export default class patient_profile_edit extends Component {
             color="lightblue"
             alignItems="center"
           />
-          <Text style={styles.user_name}>프로필 사진 변경</Text>
+
+          <TouchableOpacity
+            onPress={CameraRoll.getAlbums({ assetType: "All" })}
+          >
+            <Text style={styles.user_name}>프로필 사진 변경</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.secondView}>
           <View style={styles.memoView}>
