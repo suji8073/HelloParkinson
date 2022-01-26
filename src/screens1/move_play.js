@@ -126,9 +126,7 @@ export default class move_play extends Component {
     if (this.state.isLoading === false) {
       if (this.state.cat1 == 1) {
         if (this.state.cat2 == 12) {
-          this.props.navigation.navigate("TabNavigation1", {
-            paramsName: this.props.route.params.paramsName,
-          });
+          this.props.navigation.navigate("TabNavigation1");
         } else {
           this.props.navigation.reset({
             routes: [
@@ -139,7 +137,6 @@ export default class move_play extends Component {
                     this.state.cat1 + "-" + (parseInt(this.state.cat2) + 1)
                   ),
                   paramName2: "신장운동",
-                  paramsName: this.props.route.params.paramsName,
                 },
               },
             ],
@@ -158,7 +155,6 @@ export default class move_play extends Component {
                     this.state.cat1 + "-" + (parseInt(this.state.cat2) + 1)
                   ),
                   paramName2: "근력운동",
-                  paramsName: this.props.route.params.paramsName,
                 },
               },
             ],
@@ -177,7 +173,6 @@ export default class move_play extends Component {
                     this.state.cat1 + "-" + (parseInt(this.state.cat2) + 1)
                   ),
                   paramName2: "균형 및 협응 운동",
-                  paramsName: this.props.route.params.paramsName,
                 },
               },
             ],
@@ -196,7 +191,6 @@ export default class move_play extends Component {
                     this.state.cat1 + "-" + (parseInt(this.state.cat2) + 1)
                   ),
                   paramName2: "구강 및 발성 운동",
-                  paramsName: this.props.route.params.paramsName,
                 },
               },
             ],
@@ -207,21 +201,13 @@ export default class move_play extends Component {
   };
   where_page = () => {
     if (this.state.cat1 == 1) {
-      this.props.navigation.navigate("move_1", {
-        paramsName: this.props.route.params.paramsName,
-      });
+      this.props.navigation.navigate("move_1");
     } else if (this.state.cat1 == 2) {
-      this.props.navigation.navigate("move_2", {
-        paramsName: this.props.route.params.paramsName,
-      });
+      this.props.navigation.navigate("move_2");
     } else if (this.state.cat1 == 3) {
-      this.props.navigation.navigate("move_3", {
-        paramsName: this.props.route.params.paramsName,
-      });
+      this.props.navigation.navigate("move_3");
     } else if (this.state.cat1 == 4) {
-      this.props.navigation.navigate("move_4", {
-        paramsName: this.props.route.params.paramsName,
-      });
+      this.props.navigation.navigate("move_4");
     }
   };
 

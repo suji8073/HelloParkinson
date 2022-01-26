@@ -87,9 +87,7 @@ export default class patient_move extends Component {
         <ScrollView style={styles.secondView}>
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_1", {
-                paramsName: this.props.route.params.paramsName,
-              });
+              this.props.navigation.navigate("move_1");
             }}
           >
             <View style={styles.moveView}>
@@ -114,9 +112,7 @@ export default class patient_move extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_2", {
-                paramsName: this.props.route.params.paramsName,
-              });
+              this.props.navigation.navigate("move_2");
             }}
           >
             <View style={styles.moveView}>
@@ -141,9 +137,7 @@ export default class patient_move extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_3", {
-                paramsName: this.props.route.params.paramsName,
-              });
+              this.props.navigation.navigate("move_3");
             }}
           >
             <View style={styles.moveView}>
@@ -168,9 +162,7 @@ export default class patient_move extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_4", {
-                paramsName: this.props.route.params.paramsName,
-              });
+              this.props.navigation.navigate("move_4");
             }}
           >
             <View style={styles.moveView}>
@@ -195,9 +187,7 @@ export default class patient_move extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_5", {
-                paramsName: this.props.route.params.paramsName,
-              });
+              this.props.navigation.navigate("move_5");
             }}
           >
             <View style={styles.moveView}>

@@ -30,9 +30,7 @@ export default class move_5 extends Component {
             size={24}
             color="#808080"
             onPress={() => {
-              this.props.navigation.navigate("TabNavigation1", {
-                paramsName: this.props.route.params.paramsName,
-              });
+              this.props.navigation.navigate("TabNavigation1");
             }}
           />
           <View style={styles.margin}></View>

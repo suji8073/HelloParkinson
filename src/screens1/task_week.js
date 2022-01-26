@@ -14,7 +14,12 @@ const task_week = ({ id, put_date, progress }) => {
       ("00" + month.toString()).slice(-2) +
       ("00" + day.toString()).slice(-2);
 
-    var daycount = date.getDay() - (parseInt(today) - parseInt(put_date));
+    var change_date =
+      String(put_date).substring(0, 4) +
+      String(put_date).substring(5, 7) +
+      String(put_date).substring(8, 10);
+
+    var daycount = date.getDay() - (parseInt(today) - parseInt(change_date));
 
     if (daycount < 0) {
       return week[daycount + 7];
@@ -38,7 +43,7 @@ const task_week = ({ id, put_date, progress }) => {
       <View style={styles.graphView}>
         <View
           style={id === 6 ? styles.chart1 : styles.chart}
-          height={progress}
+          height={progress * 100}
         ></View>
       </View>
       <View style={styles.textView}>
