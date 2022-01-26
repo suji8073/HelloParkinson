@@ -15,12 +15,38 @@ import { EvilIcons } from "@expo/vector-icons";
 import walk_play from "../icon/walk_play.svg";
 import ride_play from "../icon/ride_play.svg";
 
-const data = [
-  { name: "걷기", a: "10:00", b: "50:00" },
-  { name: "자전거 타기", a: "15:00", b: "50:00" },
-];
+var myHeaders = new Headers();
+myHeaders.append(
+  "Authorization",
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMxODQ0MTAsImV4cCI6MTY0Mzc4OTIxMH0.7_etGVJgCXvuZHSHGqf6S0nuRl9eO7bYgZ_M64sLiS5-XG5dM5_MMlu7YczT8P0IBEn83Z5V4UFrZO43m4eebw"
+);
 
 export default class move_5 extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      data_length: 0,
+    };
+  }
+  componentDidMount() {
+    this.cat_list();
+  }
+
+  cat_list = () => {
+    fetch(
+      "http://hccparkinson.duckdns.org:19737/progress/personal/exercise?cat=4",
+      {
+        method: "GET",
+        headers: myHeaders,
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json.data.length);
+        this.setState({ data: json.data, data_length: json.data.length });
+      });
+  };
   render() {
     return (
       <View style={styles.finalView}>
@@ -49,28 +75,30 @@ export default class move_5 extends Component {
           >
             <FlatList
               keyExtractor={(item, index) => index}
-              data={data}
+              data={this.state.data}
               renderItem={({ item }) => {
                 return (
                   <TouchableOpacity
                     activeOpacity={0.8}
                     onPress={() => {
-                      item.name === "걷기"
+                      item.ename === "걷기"
                         ? this.props.navigation.push("yusanso_1", {
-                            done_num: item.a,
-                            assign_num: item.b,
+                            eid: item.eid,
+                            done_num: item.donecnt,
+                            assign_num: item.setcnt,
                           })
                         : this.props.navigation.push("yusanso_2", {
-                            done_num: item.a,
-                            assign_num: item.b,
+                            eid: item.eid,
+                            done_num: item.donecnt,
+                            assign_num: item.setcnt,
                           });
                     }}
                   >
                     <Task
-                      image={item.name === "걷기" ? walk_play : ride_play}
-                      text1={item.name}
-                      text2={item.a}
-                      text3={item.b}
+                      image={item.ename === "걷기" ? walk_play : ride_play}
+                      text1={item.ename}
+                      text2={item.donecnt}
+                      text3={item.setcnt}
                     ></Task>
                   </TouchableOpacity>
                 );

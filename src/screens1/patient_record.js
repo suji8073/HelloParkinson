@@ -42,26 +42,6 @@ const items = [
   { id: "12", label: "12월" },
 ];
 
-const data1 = [
-  { date: "20220101", progress: 30 },
-  { date: "20220102", progress: 40 },
-  { date: "20220103", progress: 50 },
-  { date: "20220104", progress: 30 },
-  { date: "20220105", progress: 50 },
-  { date: "20220106", progress: 60 },
-  { date: "20220107", progress: 10 },
-  { date: "20220108", progress: 70 },
-  { date: "20220109", progress: 90 },
-  { date: "20220110", progress: 80 },
-  { date: "20220111", progress: 80 },
-  { date: "20220112", progress: 90 },
-  { date: "20220113", progress: 80 },
-  { date: "20220114", progress: 90 },
-  { date: "20220115", progress: 90 },
-  { date: "20220116", progress: 90 },
-  { date: "20220117", progress: 60 },
-];
-
 var sum_progress = 0;
 var sum_progress_m = 0;
 const { width, height } = Dimensions.get("screen");
@@ -70,7 +50,6 @@ export default class patient_record extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      all_progress: 0,
       data: [], // 일주일치 막대그래프
       first_date: "",
       late_date: "",
@@ -79,8 +58,6 @@ export default class patient_record extends Component {
       page_l: true,
       isDatePickerVisible: false,
       setDatePickerVisibility: false,
-      date: new Date(),
-      show: false,
       setShow: false,
       data2: [], // 하루 당 꺾은선 그래프
       data_: [], // 한달치 막대그래프

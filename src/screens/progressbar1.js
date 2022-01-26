@@ -3,13 +3,11 @@ import Context from "../Context/context";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 const PercentageBar = ({
-  navigation,
   percentage,
   height,
   backgroundColor,
   completedColor,
 }) => {
-  const [getPercentage, setPercentage] = useState(percentage);
   const [getheight, setHeight] = useState(height);
   const [getBackgroundColor, setBackgroundColor] = useState(backgroundColor);
   const [getCompletedColor, setCompletedColor] = useState(completedColor);
@@ -29,7 +27,7 @@ const PercentageBar = ({
         />
         <View
           style={{
-            width: getPercentage ? getPercentage : 0,
+            width: percentage ? percentage : 0,
             height: getheight,
             marginVertical: 5,
             borderRadius: 7,

@@ -12,18 +12,38 @@ import Task from "./task_move";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 
-const data = [
-  { name: "목 앞 근육 스트레칭", category: "1-1", a: 1, b: 2 },
-  { name: "목 좌우 근육 스트레칭", category: "1-2", a: 2, b: 6 },
-  { name: "몸통 앞쪽 근육 스트레칭", category: "1-3", a: 0, b: 5 },
-  { name: "몸통 옆쪽 근육 스트레칭", category: "1-4", a: 4, b: 4 },
-  { name: "몸통 스트레칭 1단계", category: "1-6", a: 1, b: 3 },
-];
+var myHeaders = new Headers();
+myHeaders.append(
+  "Authorization",
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMxODQ0MTAsImV4cCI6MTY0Mzc4OTIxMH0.7_etGVJgCXvuZHSHGqf6S0nuRl9eO7bYgZ_M64sLiS5-XG5dM5_MMlu7YczT8P0IBEn83Z5V4UFrZO43m4eebw"
+);
 
 export default class move_1 extends Component {
-  componentDidMount() {
-    console.log(data);
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      data_length: 0,
+    };
   }
+  componentDidMount() {
+    this.cat_list();
+  }
+
+  cat_list = () => {
+    fetch(
+      "http://hccparkinson.duckdns.org:19737/progress/personal/exercise?cat=0",
+      {
+        method: "GET",
+        headers: myHeaders,
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json.data);
+        this.setState({ data: json.data, data_length: json.data.length });
+      });
+  };
 
   render() {
     return (
@@ -53,25 +73,26 @@ export default class move_1 extends Component {
           >
             <FlatList
               keyExtractor={(item, index) => index}
-              data={data}
-              renderItem={({ item }) => {
+              data={this.state.data}
+              renderItem={({ item, index }) => {
                 return (
                   <TouchableOpacity
                     activeOpacity={0.8}
                     onPress={() => {
                       this.props.navigation.push("move_play", {
-                        paramName1: item.category,
-                        paramName2: "신장운동",
-                        done_num: item.a,
-                        assign_num: item.b,
+                        eid: item.eid,
+                        ename: item.ename,
+                        cat_name: 1,
+                        done_num: item.donecnt,
+                        assign_num: item.setcnt,
                       });
                     }}
                   >
                     <Task
-                      image={item.category}
-                      text1={item.name}
-                      text2={item.a}
-                      text3={item.b}
+                      image={item.eid}
+                      text1={item.ename}
+                      text2={item.donecnt}
+                      text3={item.setcnt}
                     ></Task>
                   </TouchableOpacity>
                 );
