@@ -42,10 +42,7 @@ const storeData = async (value1, value2) => {
 export default class yusanso_1 extends Component {
   constructor(props) {
     super(props);
-    this.backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      this.handleBackPress
-    );
+
     this.state = {
       play: false,
       walk_time: 100,
@@ -60,11 +57,6 @@ export default class yusanso_1 extends Component {
       startDisable: false,
     };
   }
-
-  handleBackPress = () => {
-    alert("뒤로가기 안됩니당 나가기 누르세ㅕㅇ");
-    return true;
-  };
 
   async componentDidMount() {
     try {
