@@ -79,8 +79,20 @@ const task_move = ({ image, text1, text2, text3 }) => {
 
       <View style={styles.textView}>
         <Text style={styles.text1}>{text1}</Text>
-        <Text style={text2 != text3 ? styles.text2 : styles.text22}>
-          {text2 != text3 ? text2 + " / " + text3 : "완 료"}
+        <Text
+          style={
+            text2 != text3
+              ? text2 >= text3
+                ? styles.text22
+                : styles.text2
+              : styles.text22
+          }
+        >
+          {text2 != text3
+            ? text2 >= text3
+              ? "완 료"
+              : text2 + " / " + text3
+            : "완 료"}
         </Text>
       </View>
     </View>
