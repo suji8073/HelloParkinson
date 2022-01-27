@@ -174,6 +174,23 @@ export default class progress extends Component {
     });
   };
 
+  moveadd = () => {
+    Alert.alert("운동 편집을 완료하시겠어요?", "", [
+      {
+        text: "취 소",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "완 료",
+        onPress: () => {
+          Alert.alert("저장되었습니다.");
+          this.props.navigation.pop();
+        },
+      },
+    ]);
+  };
+
   render() {
     return (
       <View style={styles.finalView}>
@@ -195,10 +212,7 @@ export default class progress extends Component {
             name="check"
             size={24}
             color="#5CB405"
-            onPress={() => {
-              Alert.alert("저장되었습니다.");
-              this.props.navigation.pop();
-            }}
+            onPress={this.moveadd}
           />
         </View>
         {/* 운동카테고리 목록 뷰 */}

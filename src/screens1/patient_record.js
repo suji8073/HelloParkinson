@@ -119,6 +119,7 @@ export default class patient_record extends Component {
       show: false,
       setShow: false,
       data2: [],
+      data2_: [],
     };
   }
 
@@ -208,22 +209,13 @@ export default class patient_record extends Component {
       */
     }
     // 일별, 카테고리별 진도율
-    fetch(
-      "http://152.70.233.113/chamuser/day/" +
-        this.props.route.params.paramsName,
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    )
+    fetch("http://152.70.233.113/chamuser/day/kw1234", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
       .then((res) => res.json())
       .then((json) => {
-        this.setState({ data2: json });
-        //console.log(this.state.data2);
-        //this.state.data2.map((x) => {
-        //console.log(x);
-        //console.log(typeof x);
-        //});
+        this.setState({ data2_: json });
       });
   }
 
@@ -267,7 +259,7 @@ export default class patient_record extends Component {
     this.setState({ setDate: selectedDate, setShow: false });
   };
 
-  onMenuPress = (id) => {
+  onmonthPress = (id) => {
     console.log(id.length);
     if (id.length === 1) var click_date = "20220" + id + "00";
     else var click_date = "2022" + id + "00";
@@ -305,6 +297,7 @@ export default class patient_record extends Component {
               <View style={styles.secondView}>
                 <View style={styles.textview}>
                   <TouchableOpacity
+                    style={styles.margin}
                     activeOpacity={0.8}
                     onPress={this.showDatePicker}
                   >
@@ -405,7 +398,7 @@ export default class patient_record extends Component {
               <SafeAreaView style={{ flex: 1 }}>
                 <FlatList
                   keyExtractor={(item, index) => index}
-                  data={this.state.data2}
+                  data={this.state.data2_}
                   renderItem={({ item }) => {
                     return (
                       <Task

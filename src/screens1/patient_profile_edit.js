@@ -47,6 +47,7 @@ export default class patient_profile_edit extends Component {
       rank2: nocheck,
       user_pw: "",
       user_pww: "",
+      user_age: "",
       birth: 20001010,
       gender: "",
       memo: "",
@@ -123,17 +124,36 @@ export default class patient_profile_edit extends Component {
   };
 
   edit_finish = () => {
-    if (this.state.user_pw !== this.state.user_pww) {
-      Alert.alert("비밀번호가 일치하지 않습니다.");
-    } else {
-      Alert.alert("비밀번호가 변경되었습니다..");
+    Alert.alert("프로필을 수정할까요?", "", [
+      {
+        text: "취 소",
+        style: "cancel",
+        onPress: () => {
+          //navigation.navigate("user_setting")
+        },
+      },
+      {
+        cancelable: true,
+        text: "수 정",
+        onPress: () => {
+          if (
+            this.state.user_age.length != 8 &&
+            this.state.user_age.length != 0
+          ) {
+            Alert.alert("생년월일 8자리를 정확하게 입력해주세요.");
+          } else if (this.state.user_pw !== this.state.user_pww) {
+            Alert.alert("비밀번호가 일치하지 않습니다.");
+          } else {
+            Alert.alert("수정되었습니다.");
 
-      // this.context.changePW(this.state.user_pw);
+            // this.context.changePW(this.state.user_pw);
+            // db비밀번호 변경, context비밀번호 변경
 
-      // db비밀번호 변경, context비밀번호 변경
-
-      this.props.navigation.navigate("patient_profile");
-    }
+            this.props.navigation.navigate("patient_profile");
+          }
+        },
+      },
+    ]);
   };
 
   handleClick1 = () => {
@@ -212,7 +232,7 @@ export default class patient_profile_edit extends Component {
           />
 
           <TouchableOpacity
-            onPress={CameraRoll.getAlbums({ assetType: "All" })}
+          //onPress={CameraRoll.getAlbums({ assetType: "All" })}
           >
             <Text style={styles.user_name}>프로필 사진 변경</Text>
           </TouchableOpacity>
@@ -269,11 +289,15 @@ export default class patient_profile_edit extends Component {
             <Text style={styles.text1}>생년월일</Text>
           </View>
           <View style={styles.textView}>
-            <Text style={styles.text2}>
-              {parseInt(this.state.birth / 10000)}-
-              {String(this.state.birth).substring(4, 6)}-
-              {String(this.state.birth).substring(6, 8)}
-            </Text>
+            <TextInput
+              style={styles.text2}
+              onChangeText={(age) => {
+                this.setState({ user_age: age });
+              }}
+              keyboardType="number-pad"
+              placeholder={String(this.state.birth)}
+              maxLength={8}
+            />
           </View>
         </View>
 
@@ -412,7 +436,7 @@ const styles = StyleSheet.create({
     // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
-    flex: 2,
+    flex: 1.3,
     backgroundColor: "#FFFFFF",
   },
 
