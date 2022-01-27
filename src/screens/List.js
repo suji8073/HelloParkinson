@@ -1,3 +1,4 @@
+// API연결완료
 import React, { Component } from "react";
 import {
   TouchableOpacity,
@@ -18,6 +19,11 @@ const items = [
   { id: "star", label: "즐겨찾기순" },
 ];
 const today = new Date();
+var myHeaders = new Headers();
+myHeaders.append(
+  "Authorization",
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyOTEwOTIsImV4cCI6MTY0Mzg5NTg5Mn0.AVyd0JcjLrPVeqfXUsBcOxkvxvgQOkWz4DHl-BCwzOgE5m2UqW31c7l8XiXLVTJo58YthtQ07BAl_zD465KVAQ"
+);
 
 export default class list extends Component {
   static contextType = Context;
@@ -41,17 +47,14 @@ export default class list extends Component {
     this.userfunc();
   }
   userfunc = () => {
-    fetch("http://152.70.233.113/chamuser?sort=name", {
+    fetch("http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=0", {
       method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+      headers: myHeaders,
     })
       .then((res) => res.json())
       .then((json) => {
-        this.setState({ data: json }, () => {
-          this.arrayholder = json;
+        this.setState({ data: json.data }, () => {
+          this.arrayholder = json.data;
         });
       });
   };
@@ -59,7 +62,7 @@ export default class list extends Component {
   //https://reactnativecode.com/search-bar-filter-on-flatlist-json-data/
   searchData(text) {
     const newData = this.arrayholder.filter((item) => {
-      const itemData = item.name.toUpperCase();
+      const itemData = item.uname.toUpperCase();
       const textData = text.toUpperCase();
       return itemData.indexOf(textData) > -1;
     });
@@ -73,31 +76,37 @@ export default class list extends Component {
   onMenuPress = (id) => {
     if (id === "abc") {
       // 가나다순 클릭했을 때
-      fetch("http://152.70.233.113/chamuser?sort=name", {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      })
+      fetch(
+        "http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=0",
+        {
+          method: "GET",
+          headers: myHeaders,
+        }
+      )
         .then((res) => res.json())
         .then((json) => {
-          this.setState({ data: json });
-          return this.state.data;
+          this.setState({ data: json.data, text: "" }, () => {
+            this.arrayholder = json.data;
+
+            return this.state.data;
+          });
         });
     } else if (id === "star") {
       // 즐겨찾기순 클릭했을 때
-      fetch("http://152.70.233.113/chamuser?sort=book", {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      })
+      fetch(
+        "http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=6",
+        {
+          method: "GET",
+          headers: myHeaders,
+        }
+      )
         .then((res) => res.json())
         .then((json) => {
-          this.setState({ data: json });
-          return this.state.data;
+          this.setState({ data: json.data, test: "" }, () => {
+            this.arrayholder = json.data;
+
+            return this.state.data;
+          });
         });
     }
   };
@@ -146,14 +155,14 @@ export default class list extends Component {
                   activeOpacity={0.8}
                   onPress={() => {
                     this.props.navigation.navigate("user_setting", {
-                      paramName1: item.id,
+                      paramName1: item.uid,
                     });
                   }}
                 >
                   <Task
-                    id={item.id}
-                    user={item.name}
-                    age={item.birth}
+                    id={item.uid}
+                    user={item.uname}
+                    age={item.birthday}
                     sex={item.gender}
                     book={item.bookmark}
                   ></Task>

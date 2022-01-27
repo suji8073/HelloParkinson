@@ -14,6 +14,9 @@ import { WithLocalSvg } from "react-native-svg";
 
 import logosvg from "../icon/logo.svg";
 import Context from "../Context/context";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 export default class login extends Component {
   static contextType = Context;
   constructor(props) {
@@ -41,6 +44,17 @@ export default class login extends Component {
   login_check = () => {
     console.log("아이디: " + this.state.id);
     console.log("비밀번호: " + this.state.pw);
+    AsyncStorage.getItem("user_info", (err, result) => {
+      if (result == null) {
+        console.log("비어있음");
+      } else {
+        const UserInfo = JSON.parse(result);
+
+        console.log("아이디 : " + UserInfo.u_id);
+        console.log("비밀번호 : " + UserInfo.u_pw);
+        console.log("이름 : " + UserInfo.u_name);
+      }
+    });
 
     if (this.state.id !== "" || this.state.pw !== "") {
       console.log("들어갔는지 확인!");
