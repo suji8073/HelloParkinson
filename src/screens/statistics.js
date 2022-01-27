@@ -14,11 +14,17 @@ import { Ionicons } from "@expo/vector-icons";
 import Task from "./task2";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 import Context from "../Context/context";
+
 const items = [
   { id: "abc", label: "가나다순" },
   { id: "age", label: "나이순" },
 ];
 
+var myHeaders = new Headers();
+myHeaders.append(
+  "Authorization",
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyODk0MzAsImV4cCI6MTY0Mzg5NDIzMH0.XJFkawo8_s4okjavnlT1zVzs9nep6rqlMOCAVqmbloNqyf6BzLYen_Mk4JLhSY3jEP-ogqqIxD6CQO1FAFd-zg"
+);
 
 export default class statistics extends Component {
   static contextType = Context;
@@ -34,18 +40,17 @@ export default class statistics extends Component {
   componentDidMount() {
     this.userfunc();
   }
+
   userfunc = () => {
-    fetch("http://hccparkinson.duckdns.org:19737/chamuser", {
+    fetch("http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=0", {
       method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+      headers: myHeaders,
     })
       .then((res) => res.json())
       .then((json) => {
-        this.setState({ data: json }, () => {
-          this.arrayholder = json;
+        console.log(json);
+        this.setState({ data: json.data }, () => {
+          this.arrayholder = json.data;
         });
       });
   };
@@ -53,7 +58,7 @@ export default class statistics extends Component {
   //https://reactnativecode.com/search-bar-filter-on-flatlist-json-data/
   searchData(text) {
     const newData = this.arrayholder.filter((item) => {
-      const itemData = item.name.toUpperCase();
+      const itemData = item.uname.toUpperCase();
       const textData = text.toUpperCase();
       return itemData.indexOf(textData) > -1;
     });
@@ -67,32 +72,35 @@ export default class statistics extends Component {
   onMenuPress = (id) => {
     console.log(id);
     if (id === "age") {
-      fetch("http://152.70.233.113/chamuser?sort=name", {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      })
+      fetch(
+        "http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=4",
+        {
+          method: "GET",
+          headers: myHeaders,
+        }
+      )
         .then((res) => res.json())
         .then((json) => {
-          this.setState({ data: json });
-          return this.state.data;
+          console.log(json);
+          this.setState({ data: json.data }, () => {
+            this.arrayholder = json.data;
+          });
         });
-      return this.state.data;
     } else if (id === "abc") {
       // 가나다순
-      fetch("http://152.70.233.113/chamuser?sort=prog", {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      })
+      fetch(
+        "http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=0",
+        {
+          method: "GET",
+          headers: myHeaders,
+        }
+      )
         .then((res) => res.json())
         .then((json) => {
-          this.setState({ data: json });
-          return this.state.data;
+          console.log(json);
+          this.setState({ data: json.data }, () => {
+            this.arrayholder = json.data;
+          });
         });
     }
   };
@@ -140,14 +148,13 @@ export default class statistics extends Component {
                 <TouchableOpacity
                   onPress={() => {
                     this.props.navigation.navigate("user_statistics", {
-                      paramName1: item.id,
-                      paramName2: item.UID,
+                      id: item.uid,
                     });
                   }}
                 >
                   <Task
-                    user={item.name}
-                    age={item.birth}
+                    user={item.uname}
+                    birthday={item.birthday}
                     sex={item.gender}
                   ></Task>
                 </TouchableOpacity>

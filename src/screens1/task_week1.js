@@ -14,7 +14,12 @@ const task_week1 = ({ id, put_date, progress }) => {
       ("00" + month.toString()).slice(-2) +
       ("00" + day.toString()).slice(-2);
 
-    var daycount = date.getDay() - (parseInt(today) - parseInt(put_date));
+    var change_date =
+      String(put_date).substring(0, 4) +
+      String(put_date).substring(5, 7) +
+      String(put_date).substring(8, 10);
+
+    var daycount = date.getDay() - (parseInt(today) - parseInt(change_date));
 
     if (daycount < 0) {
       return week[daycount + 7];
@@ -36,16 +41,18 @@ const task_week1 = ({ id, put_date, progress }) => {
       }}
     >
       <View style={styles.textView}>
-        <Text style={styles.text1}>{progress}</Text>
+        <Text style={styles.text1}>{(progress * 100).toFixed(0)}</Text>
       </View>
       <View style={styles.graphView}>
         <View
           style={id === 6 ? styles.chart1 : styles.chart}
-          height={progress}
+          height={progress * 100}
         ></View>
       </View>
       <View style={styles.textView}>
-        <Text style={styles.text11}>{dateToStr(new Date())}</Text>
+        <Text style={id === 6 ? styles.text11 : styles.text1_}>
+          {dateToStr(new Date())}
+        </Text>
       </View>
     </View>
   );
@@ -78,6 +85,11 @@ const styles = StyleSheet.create({
   text11: {
     fontSize: 13,
     fontWeight: "bold",
+    color: "#484848",
+  },
+
+  text1_: {
+    fontSize: 13,
     color: "#484848",
   },
   text1: {

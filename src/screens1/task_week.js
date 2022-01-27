@@ -47,7 +47,9 @@ const task_week = ({ id, put_date, progress }) => {
         ></View>
       </View>
       <View style={styles.textView}>
-        <Text style={styles.text11}>{dateToStr(new Date())}</Text>
+        <Text style={id === 6 ? styles.text11 : styles.text1_}>
+          {dateToStr(new Date())}
+        </Text>
       </View>
     </View>
   );
@@ -80,6 +82,11 @@ const styles = StyleSheet.create({
   text11: {
     fontSize: 14,
     fontWeight: "bold",
+    color: "#484848",
+  },
+
+  text1_: {
+    fontSize: 13,
     color: "#484848",
   },
 });

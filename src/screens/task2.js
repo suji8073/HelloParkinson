@@ -1,34 +1,36 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
-import PropTypes from "prop-types";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-const year = 2021 + 1;
-function Task({ user, age, sex }) {
-  return (
-    <View style={styles.Container}>
-      <Ionicons name="person-circle-sharp" size={45} color="lightblue" />
-      <View style={styles.textgroup}>
-        <Text style={styles.titleText}> {user} </Text>
-        <Text style={styles.titleText}> / </Text>
-        <Text style={styles.titleText}> {year - parseInt(age / 10000)} </Text>
-        <Text style={styles.titleText}> / </Text>
-        <Text style={styles.titleText}> {sex} </Text>
+
+export default class task2 extends Component {
+  dateToStr = () => {
+    var today_year = new Date().getFullYear();
+    var birth_year = String(this.props.birthday).substring(0, 4);
+    return today_year - birth_year + 1;
+  };
+
+  age_change = () => {
+    return this.props.sex === "F" ? "여" : "남";
+  };
+
+  render() {
+    return (
+      <View style={styles.Container}>
+        <Ionicons name="person-circle-sharp" size={45} color="lightblue" />
+        <View style={styles.textgroup}>
+          <Text style={styles.titleText}> {this.props.user} </Text>
+          <Text style={styles.titleText}> / </Text>
+          <Text style={styles.titleText}>{this.dateToStr()}</Text>
+          <Text style={styles.titleText}> / </Text>
+          <Text style={styles.titleText}> {this.age_change()} </Text>
+        </View>
+        <View style={styles.margin}></View>
+        <AntDesign name="right" size={24} color="#808080" />
       </View>
-      <View style={styles.margin}></View>
-      <AntDesign name="right" size={24} color="#808080" />
-    </View>
-  );
+    );
+  }
 }
-
-// Task.propTypes = {
-//   user: PropTypes.string.isRequired,
-//   age: PropTypes.string.isRequired,
-//   sex: PropTypes.string.isRequired,
-// };
-
-export default Task;
-
 const styles = StyleSheet.create({
   Container: {
     flex: 1,

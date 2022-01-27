@@ -22,6 +22,7 @@ export default React.createContext({
     { id: "3-4", name: "앉은 상태에서 제자리 걷기", set: 10 },
     { id: "3-5", name: "움직이는 런지", set: 10 },
     { id: "4-1", name: "아에이오우 소리내기", set: 10 },
+
     { id: "4-2", name: "파파파파파 소리내기", set: 12 },
     { id: "4-3", name: "쪽 소리내기", set: 5 },
     { id: "4-4", name: "혀로 볼 밀기", set: 5 },
