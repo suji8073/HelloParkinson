@@ -84,9 +84,6 @@ export default class task3 extends Component {
           clearInterval(refreshIntervalId);
         }
       }, 60000);
-
-      // refreshIntervalId;
-
       // 알림 누른 시각과 환자 db로 보냄
     }
   };
@@ -122,7 +119,7 @@ export default class task3 extends Component {
           }}
         >
           <Text style={{ fontSize: 17 }}>
-            {this.props.user} / {year - parseInt(this.props.age / 10000)} /
+            {this.props.user} / {year - parseInt(this.props.age / 10000)} /{" "}
             {this.props.sex}
           </Text>
 

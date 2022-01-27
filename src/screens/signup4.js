@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Context from "../Context/context";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default class siginup4 extends Component {
   static contextType = Context;
   constructor(props) {
@@ -114,8 +116,21 @@ export default class siginup4 extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
+        AsyncStorage.setItem(
+          "user_info",
+          JSON.stringify({
+            u_id: this.state.user_id,
+            u_pw: this.state.user_pw,
+            u_name: this.state.user_name,
+          }),
+          () => {
+            console.log("유저정보 저장 완료");
+          }
+        );
+
         console.log("회원가입 성공!");
         Alert.alert("회원가입이 정상적으로 완료되었습니다.");
+
         this.props.navigation.navigate("login");
       });
   };

@@ -25,7 +25,7 @@ export default class task1 extends Component {
   }
   componentDidMount() {
     this.setState({ id: this.props.id });
-    if (this.props.book === 1) {
+    if (this.props.book === true) {
       this.setState({ star: greenstarsvg });
     } else {
       this.setState({ star: silverstarsvg });
@@ -33,26 +33,26 @@ export default class task1 extends Component {
   }
 
   handleClick = () => {
-    if (this.props.book === 0) {
+    if (this.props.book === true) {
       this.setState({ star: greenstarsvg });
       // 아이콘 asset값 변경 greenstarsvg 으로
 
-      fetch("http://152.70.233.113/chamuser/bookmark", {
+      fetch("http://hccparkinson.duckdns.org:19737/onlymanager/bookmark", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          user: String(this.props.id),
+          uid: String(this.props.id),
         }),
       });
       Alert.alert("즐겨찾기에 추가되었습니다.");
     } else {
       this.setState({ star: silverstarsvg });
       // 아이콘 asset값 변경 silverstarsvg 으로
-      fetch("http://152.70.233.113/chamuser/bookmark", {
+      fetch("http://hccparkinson.duckdns.org:19737/onlymanager/bookmark", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          user: String(this.props.id),
+          uid: String(this.props.id),
         }),
       });
       Alert.alert("즐겨찾기에서 해제되었습니다.");
@@ -79,7 +79,10 @@ export default class task1 extends Component {
                 <Text style={styles.subtext}>
                   {year - parseInt(this.props.age / 10000)}세 /
                 </Text>
-                <Text style={styles.subtext}> {this.props.sex}성</Text>
+                <Text style={styles.subtext}>
+                  {" "}
+                  {this.props.sex == "M" ? "남" : "여"}성
+                </Text>
               </View>
             </View>
           </View>

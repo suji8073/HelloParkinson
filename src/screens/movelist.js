@@ -19,6 +19,7 @@ export default class movelist extends Component {
 
   plus_func = () => {
     this.setState({ m_num: this.state.m_num + 1 });
+    this.context.changeEXERCISE(0, 1);
   };
 
   minus_func = () => {

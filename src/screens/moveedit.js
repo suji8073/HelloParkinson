@@ -1,6 +1,7 @@
 // 운동 편집 화면
 // 운동카테고리 스크롤뷰와 운동 리스트뷰
 import React, { Component } from "react";
+import GlobalState from "../Context/GlobalState";
 import Context from "../Context/context";
 import {
   View,
@@ -193,93 +194,99 @@ export default class progress extends Component {
 
   render() {
     return (
-      <View style={styles.finalView}>
-        <View style={styles.menuView}>
-          <AntDesign
-            name="left"
-            size={24}
-            color="#808080"
-            onPress={() => {
-              this.props.navigation.pop();
-            }}
-          />
-          <View style={styles.margin}></View>
-          <Text style={styles.titleText}>
-            '{this.props.route.params.paramName1}'님 운동 편집
-          </Text>
-          <View style={styles.margin}></View>
-          <AntDesign
-            name="check"
-            size={24}
-            color="#5CB405"
-            onPress={this.moveadd}
-          />
-        </View>
-        {/* 운동카테고리 목록 뷰 */}
-        <View style={styles.listview}>
-          <View style={styles.margin}></View>
-          <TouchableOpacity onPress={this.handleClick1}>
-            <View
-              style={
-                this.state.click1 === 1 ? styles.moveView_on : styles.moveView
-              }
-            >
-              <Text style={styles.movebtn}>신장</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.handleClick2}>
-            <View
-              style={
-                this.state.click2 === 1 ? styles.moveView_on : styles.moveView
-              }
-            >
-              <Text style={styles.movebtn}>근력</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.handleClick3}>
-            <View
-              style={
-                this.state.click3 === 1 ? styles.moveView_on : styles.moveView
-              }
-            >
-              <Text style={styles.movebtn}>균형 / 협응</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.handleClick4}>
-            <View
-              style={
-                this.state.click4 === 1 ? styles.moveView_on : styles.moveView
-              }
-            >
-              <Text style={styles.movebtn}>구강 / 발성</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.handleClick5}>
-            <View
-              style={
-                this.state.click5 === 1 ? styles.moveView_on : styles.moveView
-              }
-            >
-              <Text style={styles.movebtn}>유산소</Text>
-            </View>
-          </TouchableOpacity>
-          <View style={styles.margin}></View>
-        </View>
+      <GlobalState>
+        <View style={styles.finalView}>
+          <View style={styles.menuView}>
+            <AntDesign
+              name="left"
+              size={24}
+              color="#808080"
+              onPress={() => {
+                this.props.navigation.pop();
+              }}
+            />
+            <View style={styles.margin}></View>
+            <Text style={styles.titleText}>
+              '{this.props.route.params.paramName1}'님 운동 편집
+            </Text>
+            <View style={styles.margin}></View>
+            <AntDesign
+              name="check"
+              size={24}
+              color="#5CB405"
+              onPress={() => {
+                Alert.alert("저장되었습니다.");
+                this.props.navigation.pop();
+              }}
+            />
+          </View>
+          {/* 운동카테고리 목록 뷰 */}
+          <View style={styles.listview}>
+            <View style={styles.margin}></View>
+            <TouchableOpacity onPress={this.handleClick1}>
+              <View
+                style={
+                  this.state.click1 === 1 ? styles.moveView_on : styles.moveView
+                }
+              >
+                <Text style={styles.movebtn}>신장</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.handleClick2}>
+              <View
+                style={
+                  this.state.click2 === 1 ? styles.moveView_on : styles.moveView
+                }
+              >
+                <Text style={styles.movebtn}>근력</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.handleClick3}>
+              <View
+                style={
+                  this.state.click3 === 1 ? styles.moveView_on : styles.moveView
+                }
+              >
+                <Text style={styles.movebtn}>균형 / 협응</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.handleClick4}>
+              <View
+                style={
+                  this.state.click4 === 1 ? styles.moveView_on : styles.moveView
+                }
+              >
+                <Text style={styles.movebtn}>구강 / 발성</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.handleClick5}>
+              <View
+                style={
+                  this.state.click5 === 1 ? styles.moveView_on : styles.moveView
+                }
+              >
+                <Text style={styles.movebtn}>유산소</Text>
+              </View>
+            </TouchableOpacity>
+            <View style={styles.margin}></View>
+          </View>
 
-        <FlatList
-          style={{
-            backgroundColor: "#F8F8F8",
-          }}
-          data={this.state.data}
-          renderItem={({ item }) => {
-            if (this.state.task == 0) {
-              return <Movelist name={item.name} m_num={item.set}></Movelist>;
-            } else {
-              return <O2_task name={item.name} m_num={item.set}></O2_task>;
-            }
-          }}
-        />
-      </View>
+          <FlatList
+            style={{
+              backgroundColor: "#F8F8F8",
+            }}
+            data={this.state.data}
+            renderItem={({ item }) => {
+              if (this.state.task == 0) {
+                return <Movelist name={item.name} m_num={item.set}></Movelist>;
+              } else {
+                return <O2_task name={item.name} m_num={item.set}></O2_task>;
+              }
+            }}
+
+          />
+        </View>
+      </GlobalState>
     );
   }
 }
