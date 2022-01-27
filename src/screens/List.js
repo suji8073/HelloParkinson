@@ -2,7 +2,6 @@
 import React, { Component } from "react";
 import {
   TouchableOpacity,
-  Alert,
   StyleSheet,
   View,
   Text,
@@ -155,7 +154,7 @@ export default class list extends Component {
                   activeOpacity={0.8}
                   onPress={() => {
                     this.props.navigation.navigate("user_setting", {
-                      paramName1: item.uid,
+                      id: item.uid,
                     });
                   }}
                 >

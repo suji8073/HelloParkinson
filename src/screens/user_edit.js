@@ -16,9 +16,14 @@ import { Feather } from "@expo/vector-icons";
 
 import on from "../icon/r_btn_on.svg";
 import off from "../icon/r_btn_off.svg";
-const year = 2021 + 1;
 
 import { WithLocalSvg } from "react-native-svg";
+
+var myHeaders = new Headers();
+myHeaders.append(
+  "Authorization",
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyODk0MzAsImV4cCI6MTY0Mzg5NDIzMH0.XJFkawo8_s4okjavnlT1zVzs9nep6rqlMOCAVqmbloNqyf6BzLYen_Mk4JLhSY3jEP-ogqqIxD6CQO1FAFd-zg"
+);
 
 export default class user_edit extends Component {
   static contextType = Context;
@@ -31,9 +36,9 @@ export default class user_edit extends Component {
       user_sex: 1,
       user_group: "",
       user_memo: "",
-      age1: on,
+      age1: off,
       age2: off,
-      rank1: on,
+      rank1: off,
       rank2: off,
       birth: 19550515,
       gender: "",
@@ -41,45 +46,43 @@ export default class user_edit extends Component {
       team: "",
       name: "",
       UID: "",
-
-      rank: 1,
+      rank: true,
       progress: 0,
     };
   }
 
   componentDidMount() {
-    console.log(this.props.route.params.paramName1);
     fetch(
-      "http://152.70.233.113/chamuser/id/" + this.props.route.params.paramName1,
+      "http://hccparkinson.duckdns.org:19737/onlymanager/uid/" +
+        this.props.route.params.id,
       {
         method: "GET",
-        headers: { "Content-Type": "application/json" },
+        headers: myHeaders,
       }
     )
       .then((res) => res.json())
       .then((json) => {
         this.setState({
-          birth: json.info.birth,
-          gender: json.info.gender,
-          memo: json.info.memo,
-          team: json.info.team,
-          name: json.info.name,
-          UID: json.info.UID,
-          rank: json.info.ranking,
-          progress: json.info.progress,
+          birth: json.data[0].birthday,
+          gender: json.data[0].gender,
+          name: json.data[0].uname,
+          memo: json.data[0].memo,
+          team: json.data[0].team,
+          UID: json.data[0].uid,
+          rank: json.data[0].ranking,
         });
+        if (this.state.gender === "M") {
+          this.setState({ age1: on, age2: off });
+        } else {
+          this.setState({ age1: off, age2: on });
+        }
+        if (this.state.rank === true) {
+          this.setState({ rank1: on, rank2: off });
+        } else {
+          this.setState({ rank1: off, rank2: on });
+        }
       });
-
-    if (this.state.gender === "M") {
-      this.setState({ age1: on, age2: off });
-    } else {
-      this.setState({ age1: off, age2: on });
-    }
-    if (this.state.rank === 1) {
-      this.setState({ rank1: on, rank2: off });
-    } else {
-      this.setState({ rank1: off, rank2: on });
-    }
+    console.log(this.state.gender);
   }
 
   sex_click1 = () => {
@@ -135,8 +138,6 @@ export default class user_edit extends Component {
         },
       },
     ]);
-
-  check_click = () => {};
 
   edit_finish = () => {
     Alert.alert("프로필을 수정할까요?", "", [
@@ -317,7 +318,7 @@ export default class user_edit extends Component {
                   this.setState({ user_group: text });
                 }}
                 keyboardType="number-pad"
-                placeholder={this.state.team}
+                placeholder={this.state.team != "" ? "없음" : this.state.team}
                 maxLength={1}
               />
             </View>
@@ -333,7 +334,7 @@ export default class user_edit extends Component {
                 onChangeText={(text) => {
                   this.setState({ user_memo: text });
                 }}
-                placeholder={this.state.memo}
+                placeholder={this.state.memo != "" ? "없음" : this.state.memo}
               />
             </View>
           </View>
