@@ -175,6 +175,23 @@ export default class progress extends Component {
     });
   };
 
+  moveadd = () => {
+    Alert.alert("운동 편집을 완료하시겠어요?", "", [
+      {
+        text: "취 소",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "완 료",
+        onPress: () => {
+          Alert.alert("저장되었습니다.");
+          this.props.navigation.pop();
+        },
+      },
+    ]);
+  };
+
   render() {
     return (
       <GlobalState>
@@ -266,6 +283,7 @@ export default class progress extends Component {
                 return <O2_task name={item.name} m_num={item.set}></O2_task>;
               }
             }}
+
           />
         </View>
       </GlobalState>

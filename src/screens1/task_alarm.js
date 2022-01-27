@@ -5,9 +5,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 //const alarm_task = ({ navigation, apm, hour, minute, check }) => {
 
 const storeData = async (array) => {
-  console.log(array);
   try {
     await AsyncStorage.mergeItem("@alarm", JSON.stringify(array));
+    console.log(array);
   } catch (e) {
     // saving error
     console.log(e);
@@ -18,17 +18,15 @@ export default class alarm_task extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      alarm_check: 0,
+      alarm_check: 1,
       alarm_array: [],
     };
   }
 
   async componentDidMount() {
     this.setState({ alarm_check: this.props.check });
-    console.log("check" + this.props.check);
     try {
       const alarm_array = await AsyncStorage.getItem("@alarm");
-
       if (alarm_array !== null) {
         this.setState({ alarm_array: JSON.parse(alarm_array) });
       }
@@ -38,12 +36,9 @@ export default class alarm_task extends Component {
   }
 
   handleClick = () => {
-    console.log(this.props.index);
-    console.log(this.state.alarm_check);
-    console.log("-----------------");
+    console.log(this.props.check);
     if (this.state.alarm_check === 0) {
       // 비활성화에서 활성화로
-      console.log("여기냐!");
       var change_array = this.state.alarm_array;
       change_array.filter((x, y) => {
         if (y === this.props.index) x.check = 1;
@@ -55,15 +50,27 @@ export default class alarm_task extends Component {
       storeData(change_array);
     } else {
       // 활성화에서 비활성화로
-      var change_array = this.state.alarm_array;
-      change_array.filter((x, y) => {
-        if (y === this.props.index) x.check = 0;
-      });
+      console.log(this.state.alarm_array);
+      console.log(this.props.index);
+
+      var add_clock = {
+        apm: this.props.apm,
+        hour: this.props.hour,
+        minute: this.props.minute,
+        check: 0,
+      };
+      add_clock = JSON.stringify(add_clock);
+
       this.setState({
+        alarm_array: this.state.alarm_array.map((x) =>
+          x.key === this.props.index + 1 ? { ...x, check: 0 } : x
+        ),
         alarm_check: 0,
-        alarm_array: change_array,
       });
-      storeData(change_array);
+
+      console.log(this.state.alarm_array);
+
+      storeData(this.state.alarm_array);
     }
   };
 

@@ -131,7 +131,7 @@ export default class user_edit extends Component {
         text: "삭제",
         onPress: () => {
           Alert.alert("삭제되었습니다.");
-          navigation.navigate("TabNavigation");
+          this.props.navigation.navigate("TabNavigation");
         },
       },
     ]);
@@ -139,35 +139,40 @@ export default class user_edit extends Component {
   check_click = () => {};
 
   edit_finish = () => {
-    if (this.state.age1 === on) {
-      this.setState({ user_sex: 1 }); // 남자
-    } else {
-      this.setState({ user_sex: 2 }); // 여자
-    }
-    if (this.state.rank1 === on) {
-      this.setState({ user_rank: 1 }); // 남자
-    } else {
-      this.setState({ user_rank: 0 }); // 여자
-    }
-    Alert.alert("저장되었습니다.");
-    this.props.navigation.navigate("user_setting");
-
-    // fetch("http://152.70.233.113/", {
-    //   method: "GET",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(),
-    // })
-    //   .then((res) => res.json())
-    //   .then((json) => {
-    //     console.log("통신 확인");
-    //     if (json.dup === 0) {
-    //       Alert.alert("저장되었습니다.");
-    //       this.props.navigation.navigate("user_setting");
-    //     } else {
-    //       // 1이면 중복
-    //       alert("존재하는 사용자입니다.");
-    //     }
-    //   });
+    Alert.alert("프로필을 수정할까요?", "", [
+      {
+        text: "취소",
+        style: "cancel",
+        onPress: () => {
+          //navigation.navigate("user_setting")
+        },
+      },
+      {
+        cancelable: true,
+        text: "수정",
+        onPress: () => {
+          if (
+            this.state.user_age.length != 8 &&
+            this.state.user_age.length != 0
+          ) {
+            Alert.alert("생년월일을 정확하게 입력해주세요.");
+          } else {
+            Alert.alert("수정되었습니다.");
+            if (this.state.age1 === on) {
+              this.setState({ user_sex: 1 }); // 남자
+            } else {
+              this.setState({ user_sex: 2 }); // 여자
+            }
+            if (this.state.rank1 === on) {
+              this.setState({ user_rank: 1 }); // 남자
+            } else {
+              this.setState({ user_rank: 0 }); // 여자
+            }
+            this.props.navigation.navigate("user_setting");
+          }
+        },
+      },
+    ]);
   };
 
   render() {
@@ -243,7 +248,9 @@ export default class user_edit extends Component {
                 onChangeText={(age) => {
                   this.setState({ user_age: age });
                 }}
+                keyboardType="number-pad"
                 placeholder={String(this.state.birth)}
+                maxLength={8}
               />
             </View>
           </View>
@@ -304,7 +311,15 @@ export default class user_edit extends Component {
               <Text style={styles.text1}>조</Text>
             </View>
             <View style={styles.textView}>
-              <Text style={styles.textg}> 3</Text>
+              <TextInput
+                style={styles.textg}
+                onChangeText={(text) => {
+                  this.setState({ user_group: text });
+                }}
+                keyboardType="number-pad"
+                placeholder={this.state.team}
+                maxLength={1}
+              />
             </View>
           </View>
 
@@ -326,8 +341,7 @@ export default class user_edit extends Component {
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
-                // createTwoButtonAlert(cancelable("취소"));
-                Alert.alert("환자정보가 삭제되었습니다.");
+                this.createTwoButtonAlert();
               }}
             >
               <EvilIcons name="trash" size={35} color="#808080" />

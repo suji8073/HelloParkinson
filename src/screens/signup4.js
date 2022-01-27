@@ -57,24 +57,33 @@ export default class siginup4 extends Component {
       console.log(this.state.user_rank);
     }
   };
-  // 1이면 여자, 2면 남자
+
   login_input = () => {
-    fetch("http://152.70.233.113/chamsignup/id/" + this.state.user_id, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        console.log("통신 확인");
-        if (json.dup === 0) {
+    fetch(
+      "http://hccparkinson.duckdns.org:19737/chamsignup/id/" +
+        this.state.user_id,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((response) => {
+        console.log(response.status);
+        if (response.status === 400) {
+          console.log("로그인 불가능");
+          Alert.alert("존재하는 아이디입니다.\n다른 아이디를 입력하세요.");
+        } else if (response.status === 200) {
+          console.log("로그인 가능");
           Alert.alert("사용 가능한 아이디입니다."); //알람!
           this.setState({
             usingid: true,
           });
         } else {
-          // 1이면 중복
-          Alert.alert("존재하는 아이디입니다.\n다른 아이디를 입력하세요.");
+          throw new Error("Unexpected Http Status Code");
         }
+      })
+      .catch((error) => {
+        console.error(error);
       });
   };
 
@@ -92,17 +101,17 @@ export default class siginup4 extends Component {
   };
 
   signup = () => {
-    fetch("http://152.70.233.113/chamsignup", {
+    fetch("http://hccparkinson.duckdns.org:19737/chamsignup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        name: this.state.user_name,
-        UID: this.state.user_id,
-        gender: this.state.user_gender,
-        birth: this.state.user_age,
-        ranking: this.state.user_rank,
+        uid: this.state.user_id,
         password: this.state.user_pw,
-        phone_number: "010" + this.state.user_telphone,
+        uname: this.state.user_name,
+        gender: this.state.user_gender,
+        phone: "010" + this.state.user_telphone,
+        birthday: this.state.user_age,
+        ranking: this.state.user_rank,
       }),
     })
       .then((res) => res.json())
@@ -137,28 +146,34 @@ export default class siginup4 extends Component {
         this.state.user_age !== ""
       ) {
         if (this.state.user_sex === 1) {
-          this.setState({ user_gender: "남" });
+          this.setState({ user_gender: "M" });
         } else {
-          this.setState({ user_gender: "여" });
+          this.setState({ user_gender: "F" });
         }
 
         // 모든 정보가 다 기입되면
         fetch(
-          "http://152.70.233.113/chamsignup/phone/" + this.state.user_telphone,
+          "http://hccparkinson.duckdns.org:19737/chamsignup/phone/010" +
+            this.state.user_telphone,
           {
             method: "GET",
             headers: { "Content-Type": "application/json" },
           }
         )
-          .then((res) => res.json())
-          .then((json) => {
-            console.log("얍통신 확인");
-            if (json.dup === 0) {
+          .then((response) => {
+            console.log(response.status);
+            if (response.status === 200) {
+              console.log("사용 가능");
               this.signup();
-            } else {
-              // 1이면 중복
+            } else if (response.status === 400) {
+              console.log("사용 불가능");
               Alert.alert("존재하는 사용자입니다.");
+            } else {
+              throw new Error("Unexpected Http Status Code");
             }
+          })
+          .catch((error) => {
+            console.error(error);
           });
       } else {
         Alert.alert(

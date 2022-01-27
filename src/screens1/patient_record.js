@@ -21,6 +21,12 @@ import page_no from "../icon/page_no.svg";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 
+var myHeaders = new Headers();
+myHeaders.append(
+  "Authorization",
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMxODQ0MTAsImV4cCI6MTY0Mzc4OTIxMH0.7_etGVJgCXvuZHSHGqf6S0nuRl9eO7bYgZ_M64sLiS5-XG5dM5_MMlu7YczT8P0IBEn83Z5V4UFrZO43m4eebw"
+);
+
 const items = [
   { id: "1", label: "1월" },
   { id: "2", label: "2월" },
@@ -36,69 +42,6 @@ const items = [
   { id: "12", label: "12월" },
 ];
 
-const data = [
-  { date: "20220111", progress: 80 },
-  { date: "20220112", progress: 90 },
-  { date: "20220113", progress: 80 },
-  { date: "20220114", progress: 90 },
-  { date: "20220115", progress: 90 },
-  { date: "20220116", progress: 90 },
-  { date: "20220117", progress: 60 },
-];
-
-const data1 = [
-  { date: "20220101", progress: 30 },
-  { date: "20220102", progress: 40 },
-  { date: "20220103", progress: 50 },
-  { date: "20220104", progress: 30 },
-  { date: "20220105", progress: 50 },
-  { date: "20220106", progress: 60 },
-  { date: "20220107", progress: 10 },
-  { date: "20220108", progress: 70 },
-  { date: "20220109", progress: 90 },
-  { date: "20220110", progress: 80 },
-  { date: "20220111", progress: 80 },
-  { date: "20220112", progress: 90 },
-  { date: "20220113", progress: 80 },
-  { date: "20220114", progress: 90 },
-  { date: "20220115", progress: 90 },
-  { date: "20220116", progress: 90 },
-  { date: "20220117", progress: 60 },
-];
-
-const data2 = [
-  {
-    day: "20220115",
-    progress: [
-      { day: "20220115", cat: "1", percent: 90 },
-      { day: "20220115", cat: "2", percent: 60 },
-      { day: "20220115", cat: "3", percent: 50 },
-      { day: "20220115", cat: "4", percent: 70 },
-      { day: "20220115", cat: "5", percent: 20 },
-    ],
-  },
-  {
-    day: "20220116",
-    progress: [
-      { day: "20220116", cat: "1", percent: 10 },
-      { day: "20220116", cat: "2", percent: 60 },
-      { day: "20220116", cat: "3", percent: 50 },
-      { day: "20220116", cat: "4", percent: 70 },
-      { day: "20220116", cat: "5", percent: 20 },
-    ],
-  },
-  {
-    day: "20220117",
-    progress: [
-      { day: "20220117", cat: "1", percent: 20 },
-      { day: "20220117", cat: "2", percent: 60 },
-      { day: "20220117", cat: "3", percent: 50 },
-      { day: "20220117", cat: "4", percent: 70 },
-      { day: "20220117", cat: "5", percent: 20 },
-    ],
-  },
-];
-
 var sum_progress = 0;
 var sum_progress_m = 0;
 const { width, height } = Dimensions.get("screen");
@@ -107,18 +50,17 @@ export default class patient_record extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      all_progress: 0,
-      data: [],
+      data: [], // 일주일치 막대그래프
       first_date: "",
       late_date: "",
       sum_p: 0,
+      sum_m: 0,
       page_l: true,
       isDatePickerVisible: false,
       setDatePickerVisibility: false,
-      date: new Date(),
-      show: false,
       setShow: false,
-      data2: [],
+      data2: [], // 하루 당 꺾은선 그래프
+      data_: [], // 한달치 막대그래프
     };
   }
 
@@ -130,101 +72,137 @@ export default class patient_record extends Component {
       console.log("2");
       this.setState({ page_l: false });
     }
-    console.log("현재 : " + this.state.page_l);
+  };
+
+  user_cat_day = () => {
+    fetch("http://hccparkinson.duckdns.org:19737/progress/personal/cat/week", {
+      method: "GET",
+      headers: myHeaders,
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        var cat_change_array = json.data;
+        var cat_put_array = {};
+        var change_put_array = [];
+
+        cat_change_array.map((x) => {
+          cat_put_array = {};
+          for (let i = 0; i < x.progress.length; i++) {
+            var cat_name = "CAT" + (i + 1);
+            var cat_day = x.progress[i].day;
+            cat_put_array[cat_name] = x.progress[i].percent * 100;
+          }
+          cat_put_array["R_date"] =
+            String(cat_day).substring(5, 7) + String(cat_day).substring(8, 10);
+          change_put_array.push(cat_put_array);
+        });
+        this.setState({ data2: change_put_array });
+      });
+  };
+
+  user_week_day = () => {
+    var data_array = [];
+    fetch("http://hccparkinson.duckdns.org:19737/progress/personal", {
+      method: "GET",
+      headers: myHeaders,
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        for (let i = 0; i < json.data.length; i++) {
+          data_array.push(json.data[i]);
+        }
+
+        for (let j = 0; j < 7 - json.data.length; j++) {
+          var now = new Date(data_array[json.data.length - 1].day);
+          var yesterday = new Date(now.setDate(now.getDate() - (j + 1))); // 어제
+          var date2 = this.date_change(yesterday);
+
+          var add_data = {
+            day: date2,
+            cat: "null",
+            percent: 0,
+          };
+          data_array.push(add_data);
+        }
+
+        this.setState({ data: data_array.reverse() });
+
+        this.setState({ sum_p: 0 });
+        sum_progress = 0;
+
+        var day_count_progress = this.state.data;
+
+        day_count_progress.map((x) => {
+          sum_progress += x.percent * 100;
+          this.setState({ sum_p: sum_progress / 7 });
+        });
+
+        day_count_progress.filter((x, y) => {
+          if (y === 0)
+            this.setState({
+              first_date:
+                String(x.day).substring(0, 4) +
+                String(x.day).substring(5, 7) +
+                String(x.day).substring(8, 10),
+            });
+          if (y === 6)
+            this.setState({
+              late_date:
+                String(x.day).substring(0, 4) +
+                String(x.day).substring(5, 7) +
+                String(x.day).substring(8, 10),
+            });
+        });
+      });
+  };
+
+  user_month = () => {
+    var data_array = [];
+    fetch("http://hccparkinson.duckdns.org:19737/progress/personal/month", {
+      method: "GET",
+      headers: myHeaders,
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        for (let i = 0; i < json.data.length; i++) {
+          data_array.push(json.data[i]);
+        }
+        var last_date = String(data_array[json.data.length - 1].day).substring(
+          8,
+          10
+        );
+
+        for (let j = 0; j < last_date - 1; j++) {
+          var now = new Date(data_array[json.data.length - 1].day);
+          var yesterday = new Date(now.setDate(now.getDate() - (j + 1))); // 어제
+          var date2 = this.date_change(yesterday);
+
+          var add_data = {
+            day: date2,
+            cat: "null",
+            percent: 0,
+          };
+          data_array.push(add_data);
+        }
+
+        this.setState({ data_: data_array.reverse() });
+
+        this.setState({ sum_m: 0 });
+        sum_progress_m = 0;
+
+        var day_count_progress = this.state.data_;
+
+        day_count_progress.map((x) => {
+          sum_progress_m += x.percent * 100;
+          this.setState({ sum_m: sum_progress_m / day_count_progress.length });
+        });
+      });
   };
 
   componentDidMount() {
-    this.setState({ sum_p: 0, sum_m: 0 });
-    sum_progress = 0;
-    sum_progress_m = 0;
-    data.map((x) => {
-      sum_progress += x.progress;
-      this.setState({ sum_p: sum_progress / 7 });
-    });
-
-    data.filter((x, y) => {
-      if (y === 0) this.setState({ first_date: x.date });
-      if (y === 6) this.setState({ late_date: x.date });
-    });
-
-    data1.map((x) => {
-      sum_progress_m += x.progress;
-      this.setState({ sum_m: sum_progress_m / data1.length });
-    });
-
-    var replace_array = [];
-    var one_percnet = {};
-    var one_pair = {};
-
-    //console.log(data2);
-    data2.map((x, y) => {
-      console.log("**");
-      //console.log(x.day);
-      one_percnet = [];
-      one_pair = {};
-
-      x.progress.map((x, y) => {
-        console.log("*");
-        one_pair.percent = x.percent;
-        console.log(one_pair);
-        one_percnet.push(JSON.stringify(one_pair));
-        console.log(JSON.stringify(one_percnet));
-        //console.log(typeof one_percnet);
-      });
-
-      //one_percnet.push(one_pair);
-      //console.log(one_percnet);
-
-      replace_array.push(one_percnet);
-      console.log("**!!**");
-    });
-
-    console.log(replace_array);
-    //this.setState({ data2: replace_array });
-
-    // 일별 총 진도율
-    {
-      /*
-    fetch(
-      "http://152.70.233.113/chamuser/uid/" +
-        this.props.route.params.paramsName,
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    )
-      .then((res) => res.json())
-      .then((json) => {
-        this.setState({
-          progress: json.info.progress,
-          mon: json.info.mon * 0.8,
-          tus: json.info.tus * 0.8,
-          wed: json.info.wed * 0.8,
-          thr: json.info.thr * 0.8,
-          fri: json.info.fri * 0.8,
-          sun: json.info.sun * 0.8,
-        });
-      });
-      */
-    }
-    // 일별, 카테고리별 진도율
-    fetch(
-      "http://152.70.233.113/chamuser/day/" +
-        this.props.route.params.paramsName,
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    )
-      .then((res) => res.json())
-      .then((json) => {
-        this.setState({ data2: json });
-        //console.log(this.state.data2);
-        //this.state.data2.map((x) => {
-        //console.log(x);
-        //console.log(typeof x);
-        //});
-      });
+    this.user_week_day();
+    this.user_cat_day();
+    this.user_month();
   }
 
   showDatePicker = () => {
@@ -242,6 +220,21 @@ export default class patient_record extends Component {
     console.warn("A date has been picked: ", date);
     this.dateToStr(date);
     this.hideDatePicker();
+  };
+
+  date_change = (date) => {
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+
+    var today =
+      year +
+      "-" +
+      ("00" + month.toString()).slice(-2) +
+      "-" +
+      ("00" + day.toString()).slice(-2);
+
+    return today;
   };
 
   dateToStr = (date) => {
@@ -265,6 +258,12 @@ export default class patient_record extends Component {
     var newDate = new Date();
     const selectedDate = newDate || date;
     this.setState({ setDate: selectedDate, setShow: false });
+  };
+
+  onmonthPress = (id) => {
+    if (id.length === 1) var click_date = "20220" + id + "00";
+    else var click_date = "2022" + id + "00";
+    this.setState({ late_date: click_date });
   };
 
   onMenuPress = (id) => {
@@ -305,6 +304,7 @@ export default class patient_record extends Component {
               <View style={styles.secondView}>
                 <View style={styles.textview}>
                   <TouchableOpacity
+                    style={styles.margin}
                     activeOpacity={0.8}
                     onPress={this.showDatePicker}
                   >
@@ -329,13 +329,13 @@ export default class patient_record extends Component {
                 <SafeAreaView style={{ flex: 2, width: "100%" }}>
                   <FlatList
                     keyExtractor={(item, index) => index}
-                    data={data}
+                    data={this.state.data}
                     renderItem={({ item, index }) => {
                       return (
                         <Task1
                           id={index}
-                          put_date={item.date}
-                          progress={item.progress}
+                          put_date={item.day}
+                          progress={item.percent}
                         ></Task1>
                       );
                     }}
@@ -363,20 +363,20 @@ export default class patient_record extends Component {
                   </SimplePopupMenu>
 
                   <Text style={styles.text2}>
-                    월 평균 {this.state.sum_p.toFixed(1)}%
+                    월 평균 {this.state.sum_m.toFixed(1)}%
                   </Text>
                 </View>
 
                 <SafeAreaView style={{ flex: 2, width: "100%" }}>
                   <FlatList
                     keyExtractor={(item, index) => index}
-                    data={data1}
+                    data={this.state.data_}
                     renderItem={({ item, index }) => {
                       return (
                         <Taskm
                           id={index}
-                          put_date={item.date}
-                          progress={item.progress}
+                          put_date={item.day}
+                          progress={item.percent}
                         ></Taskm>
                       );
                     }}

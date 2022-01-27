@@ -10,6 +10,35 @@ import nocheck from "../icon/radio_btn_nocheck.svg";
 import check from "../icon/radio_button_check.svg";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+//////카메라 권한
+import { PermissionsAndroid, Platform } from "react-native";
+import CameraRoll from "@react-native-community/cameraroll";
+
+async function hasAndroidPermission() {
+  const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
+
+  const hasPermission = await PermissionsAndroid.check(permission);
+  if (hasPermission) {
+    return true;
+  }
+
+  const status = await PermissionsAndroid.request(permission);
+  return status === "granted";
+}
+
+async function savePicture() {
+  if (Platform.OS === "android" && !(await hasAndroidPermission())) {
+    return;
+  }
+  CameraRoll.save(tag, { type, album });
+}
+
+var myHeaders = new Headers();
+myHeaders.append(
+  "Authorization",
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdWppIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMxNzkwMDIsImV4cCI6MTY0Mzc4MzgwMn0.mRzdnAN4fibi22ao3-YzNI-lnm5t64IDc1gSx3w4ix1GrwkVrn6LZ6RCqK-Zx3hx3CFtidCo3EifVFcJeCmnAg"
+);
+
 import Context from "../Context/context";
 export default class patient_profile_edit extends Component {
   static contextType = Context;
@@ -22,7 +51,8 @@ export default class patient_profile_edit extends Component {
       rank2: nocheck,
       user_pw: "",
       user_pww: "",
-      birth: 20001010,
+      user_age: "",
+      birth: 0,
       gender: "",
       memo: "",
       team: "",
@@ -37,48 +67,28 @@ export default class patient_profile_edit extends Component {
 
   componentDidMount() {
     // this.userfunc();
-    fetch("http://152.70.233.113/chamuser/uid/" + this.context.user_id, {
+
+    fetch("http://hccparkinson.duckdns.org:19737/chamuser", {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: myHeaders,
     })
       .then((res) => res.json())
       .then((json) => {
         this.setState(
           {
-            birth: json.info.birth,
-            gender: json.info.gender,
-            memo: json.info.memo,
-            team: json.info.team,
-            name: json.info.name,
-            UID: json.info.UID,
-            progress: json.info.progress,
-            rank: json.info.ranking,
+            birth: json.data[0].birthday,
+            gender: json.data[0].gender == "F" ? "여" : "남",
+            memo: json.data[0].memo,
+            team: json.data[0].team,
+            name: json.data[0].uname,
+            UID: json.data[0].uid,
+            rank: json.data[0].ranking,
           },
           () => {
             this.change_gender();
             this.change_rank();
           }
         );
-      });
-  }
-
-  userfunc() {
-    fetch("http://152.70.233.113/chamuser/uid/" + this.context.user_id, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        this.setState({
-          birth: json.info.birth,
-          gender: json.info.gender,
-          memo: json.info.memo,
-          team: json.info.team,
-          name: json.info.name,
-          UID: json.info.UID,
-          progress: json.info.progress,
-          rank: json.info.ranking,
-        });
       });
   }
 
@@ -98,17 +108,36 @@ export default class patient_profile_edit extends Component {
   };
 
   edit_finish = () => {
-    if (this.state.user_pw !== this.state.user_pww) {
-      Alert.alert("비밀번호가 일치하지 않습니다.");
-    } else {
-      Alert.alert("비밀번호가 변경되었습니다..");
+    Alert.alert("프로필을 수정할까요?", "", [
+      {
+        text: "취 소",
+        style: "cancel",
+        onPress: () => {
+          //navigation.navigate("user_setting")
+        },
+      },
+      {
+        cancelable: true,
+        text: "수 정",
+        onPress: () => {
+          if (
+            this.state.user_age.length != 8 &&
+            this.state.user_age.length != 0
+          ) {
+            Alert.alert("생년월일 8자리를 정확하게 입력해주세요.");
+          } else if (this.state.user_pw !== this.state.user_pww) {
+            Alert.alert("비밀번호가 일치하지 않습니다.");
+          } else {
+            Alert.alert("수정되었습니다.");
 
-      // this.context.changePW(this.state.user_pw);
+            // this.context.changePW(this.state.user_pw);
+            // db비밀번호 변경, context비밀번호 변경
 
-      // db비밀번호 변경, context비밀번호 변경
-
-      this.props.navigation.navigate("patient_profile");
-    }
+            this.props.navigation.navigate("patient_profile");
+          }
+        },
+      },
+    ]);
   };
 
   handleClick1 = () => {
@@ -148,6 +177,19 @@ export default class patient_profile_edit extends Component {
     }
   };
 
+  _handleButtonPress = () => {
+    CameraRoll.getPhotos({
+      first: 20,
+      assetType: "Photos",
+    })
+      .then((r) => {
+        this.setState({ photos: r.edges });
+      })
+      .catch((err) => {
+        //Error Loading Images
+      });
+  };
+
   render() {
     return (
       <View style={styles.finalView}>
@@ -172,7 +214,12 @@ export default class patient_profile_edit extends Component {
             color="lightblue"
             alignItems="center"
           />
-          <Text style={styles.user_name}>프로필 사진 변경</Text>
+
+          <TouchableOpacity
+          //onPress={CameraRoll.getAlbums({ assetType: "All" })}
+          >
+            <Text style={styles.user_name}>프로필 사진 변경</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.secondView}>
           <View style={styles.memoView}>
@@ -226,11 +273,15 @@ export default class patient_profile_edit extends Component {
             <Text style={styles.text1}>생년월일</Text>
           </View>
           <View style={styles.textView}>
-            <Text style={styles.text2}>
-              {parseInt(this.state.birth / 10000)}-
-              {String(this.state.birth).substring(4, 6)}-
-              {String(this.state.birth).substring(6, 8)}
-            </Text>
+            <TextInput
+              style={styles.text2}
+              onChangeText={(age) => {
+                this.setState({ user_age: age });
+              }}
+              keyboardType="number-pad"
+              placeholder={String(this.state.birth)}
+              maxLength={8}
+            />
           </View>
         </View>
 
@@ -369,7 +420,7 @@ const styles = StyleSheet.create({
     // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
-    flex: 2,
+    flex: 1.3,
     backgroundColor: "#FFFFFF",
   },
 

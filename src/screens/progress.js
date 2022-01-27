@@ -15,10 +15,27 @@ import ddaysvg from "../icon/dday.svg";
 import { AntDesign } from "@expo/vector-icons";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 import Context from "../Context/context";
+
+const m_items = [
+  { id: "1", label: "1월" },
+  { id: "2", label: "2월" },
+  { id: "3", label: "3월" },
+  { id: "4", label: "4월" },
+  { id: "5", label: "5월" },
+  { id: "6", label: "6월" },
+  { id: "7", label: "7월" },
+  { id: "8", label: "8월" },
+  { id: "9", label: "9월" },
+  { id: "10", label: "10월" },
+  { id: "11", label: "11월" },
+  { id: "12", label: "12월" },
+];
+
 const items = [
   { id: "alarm", label: "최근알림순" },
   { id: "progress", label: "진도율순" },
 ];
+
 var now = new Date();
 var thisdate2 = new Date(
   now.getFullYear(),
@@ -174,6 +191,10 @@ export default class progress extends Component {
       });
   };
 
+  onmonthPress = (id) => {
+    this.setState({ month: id });
+  };
+
   onMenuPress = (id) => {
     if (id === "alarm") {
       // 최근알림순 클릭했을 때
@@ -228,7 +249,16 @@ export default class progress extends Component {
         </View>
 
         <View style={styles.twoView}>
-          <Text style={{ fontSize: 21 }}>{this.state.month} 월</Text>
+          <SimplePopupMenu
+            items={m_items}
+            cancelLabel={"취소"}
+            onSelect={(m_items) => {
+              this.onmonthPress(m_items.id);
+            }}
+            onCancel={() => console.log("onCancel")}
+          >
+            <Text style={{ fontSize: 21 }}>{this.state.month} 월</Text>
+          </SimplePopupMenu>
         </View>
 
         <View style={styles.threeView}>

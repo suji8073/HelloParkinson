@@ -12,15 +12,37 @@ import Task from "./task_move";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 
-const data = [
-  { name: "엉덩이 들기", category: "2-1", a: 1, b: 2 },
-  { name: "엎드려 누운 상태에서 다리들기", category: "2-2", a: 2, b: 6 },
-  { name: "엉덩이 옆 근육 운동", category: "2-3", a: 0, b: 5 },
-  { name: "무릎 벌리기", category: "2-4", a: 4, b: 4 },
-  { name: "런지", category: "2-6", a: 1, b: 3 },
-];
+var myHeaders = new Headers();
+myHeaders.append(
+  "Authorization",
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMxODQ0MTAsImV4cCI6MTY0Mzc4OTIxMH0.7_etGVJgCXvuZHSHGqf6S0nuRl9eO7bYgZ_M64sLiS5-XG5dM5_MMlu7YczT8P0IBEn83Z5V4UFrZO43m4eebw"
+);
 
 export default class move_2 extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      data_length: 0,
+    };
+  }
+  componentDidMount() {
+    this.cat_list();
+  }
+
+  cat_list = () => {
+    fetch(
+      "http://hccparkinson.duckdns.org:19737/progress/personal/exercise?cat=1",
+      {
+        method: "GET",
+        headers: myHeaders,
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({ data: json.data, data_length: json.data.length });
+      });
+  };
   render() {
     return (
       <View style={styles.finalView}>
@@ -30,9 +52,7 @@ export default class move_2 extends Component {
             size={24}
             color="#808080"
             onPress={() => {
-              this.props.navigation.navigate("TabNavigation1", {
-                paramsName: this.props.route.params.paramsName,
-              });
+              this.props.navigation.navigate("TabNavigation1");
             }}
           />
           <View style={styles.margin}></View>
@@ -51,26 +71,26 @@ export default class move_2 extends Component {
           >
             <FlatList
               keyExtractor={(item, index) => index}
-              data={data}
+              data={this.state.data}
               renderItem={({ item }) => {
                 return (
                   <TouchableOpacity
                     activeOpacity={0.8}
                     onPress={() => {
                       this.props.navigation.push("move_play", {
-                        paramName1: item.category,
-                        paramName2: "근력 운동",
-                        paramsName: this.props.route.params.paramsName,
-                        done_num: item.a,
-                        assign_num: item.b,
+                        eid: item.eid,
+                        ename: item.ename,
+                        cat_name: 2,
+                        done_num: item.donecnt,
+                        assign_num: item.setcnt,
                       });
                     }}
                   >
                     <Task
-                      image={item.category}
-                      text1={item.name}
-                      text2={item.a}
-                      text3={item.b}
+                      image={item.eid}
+                      text1={item.ename}
+                      text2={item.donecnt}
+                      text3={item.setcnt}
                     ></Task>
                   </TouchableOpacity>
                 );

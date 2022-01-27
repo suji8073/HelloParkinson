@@ -18,6 +18,9 @@ import thirdsvg from "../icon/third.svg";
 import crownsvg from "../icon/crown.svg";
 
 import Context from "../Context/context";
+
+
+
 export default class patient_Home extends Component {
   static contextType = Context;
   constructor(props) {

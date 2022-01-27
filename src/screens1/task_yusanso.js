@@ -26,7 +26,7 @@ const task_move = ({ image, text1, text2, text3 }) => {
 
       <View style={styles.textView}>
         <Text style={styles.text1}>{text1}</Text>
-        <Text style={styles.text2}>{text2} / {text3}</Text>
+        <Text style={styles.text2}>{text2}분 / {text3}분</Text>
       </View>
     </View>
   );

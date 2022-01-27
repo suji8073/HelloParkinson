@@ -15,39 +15,50 @@ import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 
+//eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdWppIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMxNzkwMDIsImV4cCI6MTY0Mzc4MzgwMn0.mRzdnAN4fibi22ao3-YzNI-lnm5t64IDc1gSx3w4ix1GrwkVrn6LZ6RCqK-Zx3hx3CFtidCo3EifVFcJeCmnAg
+
+var myHeaders = new Headers();
+myHeaders.append(
+  "Authorization",
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdWppIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMxNzkwMDIsImV4cCI6MTY0Mzc4MzgwMn0.mRzdnAN4fibi22ao3-YzNI-lnm5t64IDc1gSx3w4ix1GrwkVrn6LZ6RCqK-Zx3hx3CFtidCo3EifVFcJeCmnAg"
+);
+
 export default class patient_profile extends Component {
   static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {
-      birth: 20001010,
+      birth: 0,
       gender: "",
       memo: "",
       team: "",
       name: "",
       UID: "",
-      progress: "",
     };
   }
 
-  componentDidMount() {
-    fetch("http://152.70.233.113/chamuser/uid/" + this.context.user_id, {
+  user_info = () => {
+    fetch("http://hccparkinson.duckdns.org:19737/chamuser", {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: myHeaders,
     })
       .then((res) => res.json())
       .then((json) => {
         this.setState({
-          birth: json.info.birth,
-          gender: json.info.gender,
-          memo: json.info.memo,
-          team: json.info.team,
-          name: json.info.name,
-          UID: json.info.UID,
-          progress: json.info.progress,
+          birth: json.data[0].birthday,
+          gender: json.data[0].gender == "F" ? "여" : "남",
+          memo: json.data[0].memo,
+          team: json.data[0].team,
+          name: json.data[0].uname,
+          UID: json.data[0].uid,
         });
       });
+  };
+
+  componentDidMount() {
+    this.user_info();
   }
+
   render() {
     return (
       <View style={styles.finalView}>
@@ -73,9 +84,8 @@ export default class patient_profile extends Component {
             color="lightblue"
             alignItems="center"
           />
-          <Text style={styles.user_name}>프로필 사진 변경</Text>
         </View>
-
+        <View style={{ borderTopWidth: 0.5, borderColor: "#E5E5E5" }}></View>
         <View style={styles.secondView}>
           <View style={styles.memoView}>
             <Text style={styles.text1}>이름</Text>
@@ -200,19 +210,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     flexDirection: "row",
-    height: 50,
+    height: 60,
     backgroundColor: "#FFFFFF",
     borderTopWidth: 0.5,
-    borderBottomWidth: 0.5,
     borderColor: "#E5E5E5",
-    paddingLeft: 20,
+    paddingLeft: 30,
   },
 
   marginView: {
     // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
-    flex: 2,
+    flex: 1.5,
     backgroundColor: "#FFFFFF",
   },
 

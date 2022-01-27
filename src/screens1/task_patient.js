@@ -1,18 +1,10 @@
 // progress.js에 들어갈 리스트뷰 모양
 import React from "react";
-// import PropTypes from "prop-types";
-import { Ionicons } from "@expo/vector-icons";
-import {
-  TouchableOpacity,
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-} from "react-native";
+import { View, Text } from "react-native";
 
 import PercentageBar from "../screens/progressbar1";
 
-const task_patient = ({ allcount, done, progress }) => {
+const task_patient = ({ allcount, done }) => {
   return (
     //  전체 뷰
     <View
@@ -31,7 +23,7 @@ const task_patient = ({ allcount, done, progress }) => {
           height={20}
           backgroundColor={"#E5E5E5"}
           completedColor={"#7AC819"}
-          percentage={progress}
+          percentage={String((done / allcount) * 100) + "%"}
         />
       </View>
 

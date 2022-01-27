@@ -39,7 +39,6 @@ const items = [
   { id: "12", label: "12월" },
 ];
 
-
 const data = [
   { date: "20220111", progress: 80 },
   { date: "20220112", progress: 90 },
@@ -224,6 +223,12 @@ export default class user_statistics extends Component {
     var newDate = new Date();
     const selectedDate = newDate || date;
     this.setState({ setDate: selectedDate, setShow: false });
+  };
+  onMenuPress = (id) => {
+    console.log(id.length);
+    if (id.length === 1) var click_date = "20220" + id + "00";
+    else var click_date = "2022" + id + "00";
+    this.setState({ late_date: click_date });
   };
 
   render() {

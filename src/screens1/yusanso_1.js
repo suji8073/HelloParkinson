@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  BackHandler,
+} from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
@@ -16,6 +22,13 @@ import walk_stop from "../icon/walk_stop.svg";
 
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 
+var myHeaders = new Headers();
+myHeaders.append(
+  "Authorization",
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMxODQ0MTAsImV4cCI6MTY0Mzc4OTIxMH0.7_etGVJgCXvuZHSHGqf6S0nuRl9eO7bYgZ_M64sLiS5-XG5dM5_MMlu7YczT8P0IBEn83Z5V4UFrZO43m4eebw"
+);
+myHeaders.append("Content-Type", "application/json");
+
 const storeData = async (value1, value2) => {
   try {
     await AsyncStorage.setItem("@walk_minutes", value1);
@@ -29,11 +42,17 @@ const storeData = async (value1, value2) => {
 export default class yusanso_1 extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       play: false,
       walk_time: 100,
       timer: null,
-      minutes_Counter: "00",
+      minutes_Counter:
+        this.props.route.params.done_num.length === 1
+          ? "0" + String(this.props.route.params.done_num)
+          : this.props.route.params.done_num === 0
+          ? "00"
+          : String(this.props.route.params.done_num),
       seconds_Counter: "00",
       startDisable: false,
     };
@@ -70,7 +89,6 @@ export default class yusanso_1 extends Component {
         });
       }, 1000);
       this.setState({ timer });
-
       this.setState({ startDisable: true });
     } else {
       clearInterval(this.state.timer);
@@ -80,11 +98,30 @@ export default class yusanso_1 extends Component {
     }
   };
 
-  onButtonClear = () => {
-    this.setState({
-      timer: null,
-      minutes_Counter: "00",
-      seconds_Counter: "00",
+  backout = () => {
+    clearInterval(this.state.timer);
+    this.setState({ startDisable: false });
+    this.setState({ play: false });
+    storeData(this.state.minutes_Counter, this.state.seconds_Counter);
+    console.log(parseInt(this.state.minutes_Counter));
+    this.save_progress();
+    this.props.navigation.navigate("move_5");
+  };
+
+  save_progress = () => {
+    fetch("http://hccparkinson.duckdns.org:19737/progress/write", {
+      method: "POST",
+      headers: myHeaders,
+      body: JSON.stringify({
+        eid: this.props.route.params.eid,
+        setcnt: this.props.route.params.assign_num,
+        donecnt: parseInt(this.state.minutes_Counter),
+      }),
+    }).then((res) => {
+      console.log(res.status);
+      if (res.status === 200) {
+        console.log("저장 성공");
+      }
     });
   };
 
@@ -96,9 +133,7 @@ export default class yusanso_1 extends Component {
             name="left"
             size={24}
             color="#808080"
-            onPress={() => {
-              this.props.navigation.navigate("move_5");
-            }}
+            onPress={this.backout}
           />
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>걷기</Text>
@@ -155,12 +190,7 @@ export default class yusanso_1 extends Component {
             <View style={styles.margin1}></View>
 
             <View style={styles.textView}>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => {
-                  this.props.navigation.navigate("move_5");
-                }}
-              >
+              <TouchableOpacity activeOpacity={0.8} onPress={this.backout}>
                 <WithLocalSvg width={90} height={90} asset={stop} />
               </TouchableOpacity>
               <Text style={styles.tttext}>나가기</Text>

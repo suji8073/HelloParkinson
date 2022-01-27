@@ -40,6 +40,7 @@ export default class alarm_add extends Component {
       setDatePickerVisibility: false,
       pickdate: new Date(),
       alarm_array: [],
+      last_key: 0,
     };
   }
 
@@ -54,6 +55,12 @@ export default class alarm_add extends Component {
     } catch (e) {
       console.log("불러와지는 error");
     }
+    var check_array = JSON.parse(this.state.alarm_array);
+    var last_num = 0;
+    check_array.filter((x, y) => {
+      last_num = y;
+    });
+    this.setState({ last_key: last_num + 2 });
   }
 
   onPress_apm1 = () => {
@@ -96,7 +103,7 @@ export default class alarm_add extends Component {
     else this.setState({ apm: "오전", hour: p_hours });
   };
   addalarm = () => {
-    Alert.alert("알림창", "알림을 추가하시겠어요?", [
+    Alert.alert("알림을 추가하시겠어요?", "", [
       {
         text: "취 소",
         onPress: () => console.log("Cancel Pressed"),
@@ -110,10 +117,11 @@ export default class alarm_add extends Component {
             Alert.alert("시간을 입력해주세요.");
           else {
             var add_clock = {
+              key: this.state.last_key,
               apm: this.state.apm,
               hour: this.state.hour,
               minute: this.state.minute,
-              click: 1,
+              check: 1,
             };
 
             if (this.state.alarm_array.length === 0) {
@@ -121,8 +129,6 @@ export default class alarm_add extends Component {
               change_clock.push(add_clock);
             } else {
               var change_clock = JSON.parse(this.state.alarm_array);
-              console.log("?" + change_clock);
-              console.log("?" + change_clock);
               change_clock.push(add_clock);
             }
             console.log("!" + JSON.stringify(change_clock));

@@ -23,6 +23,34 @@ export default class passwchange extends Component {
       name: "",
     };
   }
+
+  passwchange_edit = () => {
+    Alert.alert("프로필을 수정할까요?", "", [
+      {
+        text: "취 소",
+        style: "cancel",
+        onPress: () => {
+          //navigation.navigate("user_setting")
+        },
+      },
+      {
+        cancelable: true,
+        text: "수 정",
+        onPress: () => {
+          this.setState({
+            changepw: this.state.changepw.replace(/\s/gi, ""),
+          });
+          if (this.state.changepw == "") {
+            Alert.alert("기존 비밀번호를 유지합니다.");
+          } else {
+            // 변경된 비밀번호 전달할 API
+            Alert.alert("비밀번호가 정상적으로 변경되었습니다.");
+          }
+          this.props.navigation.navigate("TabNavigation");
+        },
+      },
+    ]);
+  };
   render() {
     let profile_svg = require("../icon/snuh.png");
     return (
@@ -44,18 +72,7 @@ export default class passwchange extends Component {
           <TouchableOpacity
             activeOpacity={0.8}
             hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }} //터치영역을 확장
-            onPress={() => {
-              this.setState({
-                changepw: this.state.changepw.replace(/\s/gi, ""),
-              });
-              if (this.state.changepw == "") {
-                Alert.alert("기존 비밀번호를 유지합니다.");
-              } else {
-                // 변경된 비밀번호 전달할 API
-                Alert.alert("비밀번호가 정상적으로 변경되었습니다.");
-              }
-              this.props.navigation.navigate("TabNavigation");
-            }}
+            onPress={this.passwchange_edit}
           >
             <AntDesign name="check" size={24} color="#5CB405" />
           </TouchableOpacity>

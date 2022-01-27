@@ -15,18 +15,11 @@ import Task from "./task_patient";
 
 import { WithLocalSvg } from "react-native-svg";
 
-const data = {
-  setcnt1: 3,
-  setcnt2: 5,
-  setcnt3: 7,
-  setcnt4: 0,
-  setcnt5: 1,
-  donecnt1: 12,
-  donecnt2: 12,
-  donecnt3: 12,
-  donecnt4: 12,
-  donecnt5: 2,
-};
+var myHeaders = new Headers();
+myHeaders.append(
+  "Authorization",
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMxODQ0MTAsImV4cCI6MTY0Mzc4OTIxMH0.7_etGVJgCXvuZHSHGqf6S0nuRl9eO7bYgZ_M64sLiS5-XG5dM5_MMlu7YczT8P0IBEn83Z5V4UFrZO43m4eebw"
+);
 
 export default class patient_move extends Component {
   constructor(props) {
@@ -42,37 +35,30 @@ export default class patient_move extends Component {
       donecnt3: 0,
       donecnt4: 0,
       donecnt5: 0,
-      cat1: 0,
-      cat2: 0,
-      cat3: 0,
-      cat4: 0,
-      cat5: 0,
     };
   }
 
   componentDidMount() {
-    // 일별 총 진도율
-    /*fetch(
-      "http://152.70.233.113/chamuser/uid/" +
-        this.props.route.params.paramsName,
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    )
+    fetch("http://hccparkinson.duckdns.org:19737/progress/personal/cat/all", {
+      method: "GET",
+      headers: myHeaders,
+    })
       .then((res) => res.json())
       .then((json) => {
+        console.log(json);
         this.setState({
-          progress: json.info.progress,
-          mon: json.info.mon * 0.8,
-          tus: json.info.tus * 0.8,
-          wed: json.info.wed * 0.8,
-          thr: json.info.thr * 0.8,
-          fri: json.info.fri * 0.8,
-          sun: json.info.sun * 0.8,
+          setcnt1: json.data[0].setcntsum,
+          setcnt2: json.data[1].setcntsum,
+          setcnt3: json.data[2].setcntsum,
+          setcnt4: json.data[3].setcntsum,
+          setcnt5: json.data[4].setcntsum,
+          donecnt1: json.data[0].donecntsum,
+          donecnt2: json.data[1].donecntsum,
+          donecnt3: json.data[2].donecntsum,
+          donecnt4: json.data[3].donecntsum,
+          donecnt5: json.data[4].donecntsum,
         });
       });
-      */
   }
 
   render() {
@@ -87,9 +73,7 @@ export default class patient_move extends Component {
         <ScrollView style={styles.secondView}>
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_1", {
-                paramsName: this.props.route.params.paramsName,
-              });
+              this.props.navigation.navigate("move_1");
             }}
           >
             <View style={styles.moveView}>
@@ -101,11 +85,8 @@ export default class patient_move extends Component {
                 <Text style={styles.text2}>신장(스트레칭)운동</Text>
                 <View style={styles.progressView}>
                   <Task
-                    allcount={data.donecnt1}
-                    done={data.setcnt1}
-                    progress={
-                      String((data.setcnt1 / data.donecnt1) * 100) + "%"
-                    }
+                    allcount={this.state.setcnt1}
+                    done={this.state.donecnt1}
                   />
                 </View>
               </View>
@@ -114,9 +95,7 @@ export default class patient_move extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_2", {
-                paramsName: this.props.route.params.paramsName,
-              });
+              this.props.navigation.navigate("move_2");
             }}
           >
             <View style={styles.moveView}>
@@ -128,11 +107,8 @@ export default class patient_move extends Component {
                 <Text style={styles.text2}>근력운동</Text>
                 <View style={styles.progressView}>
                   <Task
-                    allcount={data.donecnt2}
-                    done={data.setcnt2}
-                    progress={
-                      String((data.setcnt2 / data.donecnt2) * 100) + "%"
-                    }
+                    allcount={this.state.setcnt2}
+                    done={this.state.donecnt2}
                   />
                 </View>
               </View>
@@ -141,9 +117,7 @@ export default class patient_move extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_3", {
-                paramsName: this.props.route.params.paramsName,
-              });
+              this.props.navigation.navigate("move_3");
             }}
           >
             <View style={styles.moveView}>
@@ -155,11 +129,8 @@ export default class patient_move extends Component {
                 <Text style={styles.text2}>균형 및 협응 운동</Text>
                 <View style={styles.progressView}>
                   <Task
-                    allcount={data.donecnt3}
-                    done={data.setcnt3}
-                    progress={
-                      String((data.setcnt3 / data.donecnt3) * 100) + "%"
-                    }
+                    allcount={this.state.setcnt3}
+                    done={this.state.donecnt3}
                   />
                 </View>
               </View>
@@ -168,9 +139,7 @@ export default class patient_move extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_4", {
-                paramsName: this.props.route.params.paramsName,
-              });
+              this.props.navigation.navigate("move_4");
             }}
           >
             <View style={styles.moveView}>
@@ -182,11 +151,8 @@ export default class patient_move extends Component {
                 <Text style={styles.text2}>구강 및 발성 운동</Text>
                 <View style={styles.progressView}>
                   <Task
-                    allcount={data.donecnt4}
-                    done={data.setcnt4}
-                    progress={
-                      String((data.setcnt4 / data.donecnt4) * 100) + "%"
-                    }
+                    allcount={this.state.setcnt4}
+                    done={this.state.donecnt4}
                   />
                 </View>
               </View>
@@ -195,9 +161,7 @@ export default class patient_move extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_5", {
-                paramsName: this.props.route.params.paramsName,
-              });
+              this.props.navigation.navigate("move_5");
             }}
           >
             <View style={styles.moveView}>
@@ -209,11 +173,8 @@ export default class patient_move extends Component {
                 <Text style={styles.text2}>유산소 운동</Text>
                 <View style={styles.progressView}>
                   <Task
-                    allcount={data.donecnt5}
-                    done={data.setcnt5}
-                    progress={
-                      String((data.setcnt5 / data.donecnt5) * 100) + "%"
-                    }
+                    allcount={this.state.setcnt5}
+                    done={this.state.donecnt5}
                   />
                 </View>
               </View>
