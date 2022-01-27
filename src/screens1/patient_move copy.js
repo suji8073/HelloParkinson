@@ -45,7 +45,6 @@ export default class patient_move extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         this.setState({
           setcnt1: json.data[0].setcntsum,
           setcnt2: json.data[1].setcntsum,
@@ -87,6 +86,14 @@ export default class patient_move extends Component {
                   <Task
                     allcount={this.state.setcnt1}
                     done={this.state.donecnt1}
+                    progress={
+                      String(
+                        (
+                          (this.state.donecnt1 / this.state.setcnt1) *
+                          100
+                        ).toFixed(0)
+                      ) + "%"
+                    }
                   />
                 </View>
               </View>
@@ -109,6 +116,14 @@ export default class patient_move extends Component {
                   <Task
                     allcount={this.state.setcnt2}
                     done={this.state.donecnt2}
+                    progress={
+                      String(
+                        (
+                          (this.state.donecnt2 / this.state.setcnt2) *
+                          100
+                        ).toFixed(0)
+                      ) + "%"
+                    }
                   />
                 </View>
               </View>
@@ -131,6 +146,14 @@ export default class patient_move extends Component {
                   <Task
                     allcount={this.state.setcnt3}
                     done={this.state.donecnt3}
+                    progress={
+                      String(
+                        (
+                          (this.state.donecnt3 / this.state.setcnt3) *
+                          100
+                        ).toFixed(0)
+                      ) + "%"
+                    }
                   />
                 </View>
               </View>
@@ -153,6 +176,14 @@ export default class patient_move extends Component {
                   <Task
                     allcount={this.state.setcnt4}
                     done={this.state.donecnt4}
+                    progress={
+                      String(
+                        (
+                          (this.state.donecnt4 / this.state.setcnt4) *
+                          100
+                        ).toFixed(0)
+                      ) + "%"
+                    }
                   />
                 </View>
               </View>
@@ -175,6 +206,14 @@ export default class patient_move extends Component {
                   <Task
                     allcount={this.state.setcnt5}
                     done={this.state.donecnt5}
+                    progress={
+                      String(
+                        (
+                          (this.state.donecnt5 / this.state.setcnt5) *
+                          100
+                        ).toFixed(0)
+                      ) + "%"
+                    }
                   />
                 </View>
               </View>

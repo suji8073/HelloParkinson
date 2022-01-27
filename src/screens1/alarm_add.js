@@ -40,6 +40,7 @@ export default class alarm_add extends Component {
       setDatePickerVisibility: false,
       pickdate: new Date(),
       alarm_array: [],
+      last_key: 0,
     };
   }
 
@@ -54,6 +55,12 @@ export default class alarm_add extends Component {
     } catch (e) {
       console.log("불러와지는 error");
     }
+    var check_array = JSON.parse(this.state.alarm_array);
+    var last_num = 0;
+    check_array.filter((x, y) => {
+      last_num = y;
+    });
+    this.setState({ last_key: last_num + 2 });
   }
 
   onPress_apm1 = () => {
@@ -110,6 +117,7 @@ export default class alarm_add extends Component {
             Alert.alert("시간을 입력해주세요.");
           else {
             var add_clock = {
+              key: this.state.last_key,
               apm: this.state.apm,
               hour: this.state.hour,
               minute: this.state.minute,

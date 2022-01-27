@@ -33,7 +33,11 @@ async function savePicture() {
   CameraRoll.save(tag, { type, album });
 }
 
-///////////
+var myHeaders = new Headers();
+myHeaders.append(
+  "Authorization",
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdWppIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMxNzkwMDIsImV4cCI6MTY0Mzc4MzgwMn0.mRzdnAN4fibi22ao3-YzNI-lnm5t64IDc1gSx3w4ix1GrwkVrn6LZ6RCqK-Zx3hx3CFtidCo3EifVFcJeCmnAg"
+);
 
 import Context from "../Context/context";
 export default class patient_profile_edit extends Component {
@@ -48,7 +52,7 @@ export default class patient_profile_edit extends Component {
       user_pw: "",
       user_pww: "",
       user_age: "",
-      birth: 20001010,
+      birth: 0,
       gender: "",
       memo: "",
       team: "",
@@ -63,48 +67,28 @@ export default class patient_profile_edit extends Component {
 
   componentDidMount() {
     // this.userfunc();
-    fetch("http://152.70.233.113/chamuser/uid/" + this.context.user_id, {
+
+    fetch("http://hccparkinson.duckdns.org:19737/chamuser", {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: myHeaders,
     })
       .then((res) => res.json())
       .then((json) => {
         this.setState(
           {
-            birth: json.info.birth,
-            gender: json.info.gender,
-            memo: json.info.memo,
-            team: json.info.team,
-            name: json.info.name,
-            UID: json.info.UID,
-            progress: json.info.progress,
-            rank: json.info.ranking,
+            birth: json.data[0].birthday,
+            gender: json.data[0].gender == "F" ? "여" : "남",
+            memo: json.data[0].memo,
+            team: json.data[0].team,
+            name: json.data[0].uname,
+            UID: json.data[0].uid,
+            rank: json.data[0].ranking,
           },
           () => {
             this.change_gender();
             this.change_rank();
           }
         );
-      });
-  }
-
-  userfunc() {
-    fetch("http://152.70.233.113/chamuser/uid/" + this.context.user_id, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        this.setState({
-          birth: json.info.birth,
-          gender: json.info.gender,
-          memo: json.info.memo,
-          team: json.info.team,
-          name: json.info.name,
-          UID: json.info.UID,
-          progress: json.info.progress,
-          rank: json.info.ranking,
-        });
       });
   }
 

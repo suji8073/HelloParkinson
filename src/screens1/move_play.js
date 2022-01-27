@@ -1,92 +1,80 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Body,
-  TextInput,
-  Alert,
-} from "react-native";
-import Task from "./task_move";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { Video } from "expo-av";
 
-// require("../screens1/1-1_move.mp4")
+var myHeaders = new Headers();
+myHeaders.append(
+  "Authorization",
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMxODQ0MTAsImV4cCI6MTY0Mzc4OTIxMH0.7_etGVJgCXvuZHSHGqf6S0nuRl9eO7bYgZ_M64sLiS5-XG5dM5_MMlu7YczT8P0IBEn83Z5V4UFrZO43m4eebw"
+);
+myHeaders.append("Content-Type", "application/json");
+
 let data = {
-  "1-1": require("../video/1-1.mp4"),
-  "1-2": require("../video/1-2.mp4"),
-  "1-3": require("../video/1-3.mp4"),
-  "1-4": require("../video/1-4.mp4"),
-  "1-5": require("../video/1-5.mp4"),
-  "1-6": require("../video/1-6.mp4"),
-  "1-7": require("../video/1-7.mp4"),
-  "1-8": require("../video/1-8.mp4"),
-  "1-9": require("../video/1-9.mp4"),
-  "1-10": require("../video/1-10.mp4"),
-  "1-11": require("../video/1-11.mp4"),
-  "1-12": require("../video/1-12.mp4"),
+  1: require("../video/1-1.mp4"),
+  2: require("../video/1-2.mp4"),
+  3: require("../video/1-3.mp4"),
+  4: require("../video/1-4.mp4"),
+  5: require("../video/1-5.mp4"),
+  6: require("../video/1-6.mp4"),
+  7: require("../video/1-7.mp4"),
+  8: require("../video/1-8.mp4"),
+  9: require("../video/1-9.mp4"),
+  10: require("../video/1-10.mp4"),
+  11: require("../video/1-11.mp4"),
+  12: require("../video/1-12.mp4"),
 
-  "2-1": require("../video/2-1.mp4"),
-  "2-2": require("../video/2-2.mp4"),
-  "2-3": require("../video/2-3.mp4"),
-  "2-4": require("../video/2-4.mp4"),
-  "2-5": require("../video/2-5.mp4"),
-  "2-6": require("../video/2-6.mp4"),
-  "2-7": require("../video/2-7.mp4"),
-  "2-8": require("../video/2-8.mp4"),
-  "2-9": require("../video/2-9.mp4"),
-  "2-10": require("../video/2-10.mp4"),
-  "2-11": require("../video/2-11.mp4"),
-  "2-12": require("../video/2-12.mp4"),
-  "2-13": require("../video/2-13.mp4"),
-  "2-14": require("../video/2-14.mp4"),
+  13: require("../video/2-1.mp4"),
+  14: require("../video/2-2.mp4"),
+  15: require("../video/2-3.mp4"),
+  16: require("../video/2-4.mp4"),
+  17: require("../video/2-5.mp4"),
+  18: require("../video/2-6.mp4"),
+  19: require("../video/2-7.mp4"),
+  20: require("../video/2-8.mp4"),
+  21: require("../video/2-9.mp4"),
+  22: require("../video/2-10.mp4"),
+  23: require("../video/2-11.mp4"),
+  24: require("../video/2-12.mp4"),
+  25: require("../video/2-13.mp4"),
+  26: require("../video/2-14.mp4"),
 
-  "3-1": require("../video/3-1.mp4"),
-  "3-2": require("../video/3-2.mp4"),
-  "3-3": require("../video/3-3.mp4"),
-  "3-4": require("../video/3-4.mp4"),
-  "3-5": require("../video/3-5.mp4"),
+  27: require("../video/3-1.mp4"),
+  28: require("../video/3-2.mp4"),
+  29: require("../video/3-3.mp4"),
+  30: require("../video/3-4.mp4"),
+  31: require("../video/3-5.mp4"),
 
-  "4-1": require("../video/4-1.mp4"),
-  "4-2": require("../video/4-2.mp4"),
-  "4-3": require("../video/4-3.mp4"),
-  "4-4": require("../video/4-4.mp4"),
-  "4-5": require("../video/4-5.mp4"),
-  "4-6": require("../video/4-6.mp4"),
-  "4-7": require("../video/4-7.mp4"),
-  "4-8": require("../video/4-8.mp4"),
-  "4-9": require("../video/4-9.mp4"),
-  "4-10": require("../video/4-10.mp4"),
-  "4-11": require("../video/4-11.mp4"),
-  "4-12": require("../video/4-12.mp4"),
-  "4-13": require("../video/4-13.mp4"),
-  "4-14": require("../video/4-14.mp4"),
+  32: require("../video/4-1.mp4"),
+  33: require("../video/4-2.mp4"),
+  34: require("../video/4-3.mp4"),
+  35: require("../video/4-4.mp4"),
+  36: require("../video/4-5.mp4"),
+  37: require("../video/4-6.mp4"),
+  38: require("../video/4-7.mp4"),
+  39: require("../video/4-8.mp4"),
+  40: require("../video/4-9.mp4"),
+  41: require("../video/4-10.mp4"),
+  42: require("../video/4-11.mp4"),
+  43: require("../video/4-12.mp4"),
+  44: require("../video/4-13.mp4"),
+  45: require("../video/4-14.mp4"),
 };
 
 export default class move_play extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: "",
-      name: "",
-      link: "",
       isLoading: true,
-      cat1: "",
-      cat2: "",
-      nowpage: "",
       done_num: 0,
       assign_num: 0,
     };
   }
 
   componentDidMount() {
-    this.userfunc();
     this.setState({
-      cat1: String(this.props.route.params.paramName1).substring(0, 1),
-      cat2: String(this.props.route.params.paramName1).substring(2, 4),
       done_num: this.props.route.params.done_num,
       assign_num: this.props.route.params.assign_num,
     });
@@ -101,128 +89,60 @@ export default class move_play extends Component {
         isLoading: false,
         done_num: this.props.route.params.done_num + 1,
       });
-    }, 10000); // 10초
+    }, 1000); // 10초
   };
 
-  userfunc = () => {
-    fetch(
-      "http://152.70.233.113/chammotion/id/" +
-        this.props.route.params.paramName1,
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    )
-      .then((res) => res.json())
-      .then((json) => {
-        this.setState({
-          name: json.name,
-          id: json.id,
-          link: json.link,
-        });
-      });
-  };
   nextpage = () => {
     if (this.state.isLoading === false) {
-      if (this.state.cat1 == 1) {
-        if (this.state.cat2 == 12) {
-          this.props.navigation.navigate("TabNavigation1", {
-            paramsName: this.props.route.params.paramsName,
-          });
-        } else {
-          this.props.navigation.reset({
-            routes: [
-              {
-                name: "move_play",
-                params: {
-                  paramName1: String(
-                    this.state.cat1 + "-" + (parseInt(this.state.cat2) + 1)
-                  ),
-                  paramName2: "신장운동",
-                  paramsName: this.props.route.params.paramsName,
-                },
+      if (this.state.done_num >= this.state.assign_num) {
+        this.save_progress();
+        this.where_page();
+      } else {
+        this.save_progress();
+        this.props.navigation.reset({
+          routes: [
+            {
+              name: "move_play",
+              params: {
+                eid: this.props.route.params.eid,
+                ename: this.props.route.params.ename,
+                cat_name: this.props.route.params.cat_name,
+                done_num: this.state.done_num,
+                assign_num: this.state.assign_num,
               },
-            ],
-          });
-        }
-      } else if (this.state.cat1 == 2) {
-        if (this.state.cat2 == 14) {
-          this.props.navigation.navigate("TabNavigation1");
-        } else {
-          this.props.navigation.reset({
-            routes: [
-              {
-                name: "move_play",
-                params: {
-                  paramName1: String(
-                    this.state.cat1 + "-" + (parseInt(this.state.cat2) + 1)
-                  ),
-                  paramName2: "근력운동",
-                  paramsName: this.props.route.params.paramsName,
-                },
-              },
-            ],
-          });
-        }
-      } else if (this.state.cat1 == 3) {
-        if (this.state.cat2 == 5) {
-          this.props.navigation.navigate("TabNavigation1");
-        } else {
-          this.props.navigation.reset({
-            routes: [
-              {
-                name: "move_play",
-                params: {
-                  paramName1: String(
-                    this.state.cat1 + "-" + (parseInt(this.state.cat2) + 1)
-                  ),
-                  paramName2: "균형 및 협응 운동",
-                  paramsName: this.props.route.params.paramsName,
-                },
-              },
-            ],
-          });
-        }
-      } else if (this.state.cat1 == 4) {
-        if (this.state.cat2 == 14) {
-          this.props.navigation.navigate("TabNavigation1");
-        } else {
-          this.props.navigation.reset({
-            routes: [
-              {
-                name: "move_play",
-                params: {
-                  paramName1: String(
-                    this.state.cat1 + "-" + (parseInt(this.state.cat2) + 1)
-                  ),
-                  paramName2: "구강 및 발성 운동",
-                  paramsName: this.props.route.params.paramsName,
-                },
-              },
-            ],
-          });
-        }
+            },
+          ],
+        });
       }
     }
   };
   where_page = () => {
-    if (this.state.cat1 == 1) {
-      this.props.navigation.navigate("move_1", {
-        paramsName: this.props.route.params.paramsName,
-      });
-    } else if (this.state.cat1 == 2) {
-      this.props.navigation.navigate("move_2", {
-        paramsName: this.props.route.params.paramsName,
-      });
-    } else if (this.state.cat1 == 3) {
-      this.props.navigation.navigate("move_3", {
-        paramsName: this.props.route.params.paramsName,
-      });
-    } else if (this.state.cat1 == 4) {
-      this.props.navigation.navigate("move_4", {
-        paramsName: this.props.route.params.paramsName,
-      });
+    if (this.props.route.params.cat_name == 1) {
+      this.props.navigation.navigate("move_1");
+    } else if (this.props.route.params.cat_name == 2) {
+      this.props.navigation.navigate("move_2");
+    } else if (this.props.route.params.cat_name == 3) {
+      this.props.navigation.navigate("move_3");
+    } else if (this.props.route.params.cat_name == 4) {
+      this.props.navigation.navigate("move_4");
     }
+  };
+
+  save_progress = () => {
+    fetch("http://hccparkinson.duckdns.org:19737/progress/write", {
+      method: "POST",
+      headers: myHeaders,
+      body: JSON.stringify({
+        eid: this.props.route.params.eid,
+        setcnt: this.state.assign_num,
+        donecnt: this.state.done_num,
+      }),
+    }).then((res) => {
+      console.log(res.status);
+      if (res.status === 200) {
+        console.log("저장 성공");
+      }
+    });
   };
 
   render() {
@@ -236,17 +156,14 @@ export default class move_play extends Component {
             onPress={this.where_page}
           />
           <View style={styles.margin}></View>
-          <Text style={styles.titleText}>
-            {this.props.route.params.paramName2}
-          </Text>
+          <Text style={styles.titleText}>{this.props.route.params.ename}</Text>
           <View style={styles.margin}></View>
           <EvilIcons name="star" size={30} color="#ffffff" />
         </View>
 
         <View style={styles.secondView}>
           <Video
-            //source={{uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"}}
-            source={data[this.props.route.params.paramName1]}
+            source={data[this.props.route.params.eid]}
             rate={1.0}
             volume={1.0}
             resizeMode="cover"

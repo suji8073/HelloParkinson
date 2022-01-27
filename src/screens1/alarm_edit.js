@@ -19,7 +19,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const storeData = async (array) => {
   try {
-    await AsyncStorage.setItem("@alarm", JSON.stringify(array));
+    await AsyncStorage.mergeItem("@alarm", JSON.stringify(array));
     console.log("clear");
   } catch (e) {
     // saving error
@@ -45,7 +45,7 @@ export default class alarm_edit extends Component {
   async componentDidMount() {
     try {
       const alarm_array = await AsyncStorage.getItem("@alarm");
-      console.log(alarm_array);
+      //console.log(alarm_array);
 
       if (alarm_array !== null) {
         this.setState({ alarm_array: alarm_array });
@@ -53,6 +53,8 @@ export default class alarm_edit extends Component {
     } catch (e) {
       console.log("불러와지는 error");
     }
+
+    console.log(this.state.alarm_array);
   }
 
   onPress_apm1 = () => {
@@ -104,7 +106,19 @@ export default class alarm_edit extends Component {
         text: "삭 제",
         onPress: () => {
           Alert.alert("삭제되었습니다.");
-          this.props.navigation.pop();
+          console.log(this.state.alarm_array);
+          var change_clock = JSON.parse(this.state.alarm_array);
+
+          //console.log(change_clock);
+          console.log("전");
+          console.log(this.props.route.params.index + 1);
+          //var change_clock = [];
+          change_clock.map((x) => {
+            console.log("1");
+            console.log(x);
+          });
+          //console.log(change_clock);
+          //this.props.navigation.pop();
         },
       },
     ]);
@@ -121,9 +135,9 @@ export default class alarm_edit extends Component {
         text: "수 정",
         onPress: () => {
           Alert.alert("수정되었습니다.");
-          console.log(this.state.alarm_array);
+          //console.log(this.state.alarm_array);
           var change_clock = JSON.parse(this.state.alarm_array);
-          console.log(change_clock);
+          //console.log(change_clock);
 
           change_clock.filter((x, y) => {
             if (x.key === this.state.index) {
@@ -132,7 +146,7 @@ export default class alarm_edit extends Component {
               x.minute = this.state.minute;
             }
           });
-          console.log(change_clock);
+          //console.log(change_clock);
           storeData(change_clock);
           //this.props.navigation.pop();
           this.props.navigation.push("TabNavigation1", {

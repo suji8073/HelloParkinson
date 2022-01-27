@@ -20,15 +20,6 @@ var alarm = [
   { key: 2, apm: "오후", hour: "4", minute: "00", check: 1 },
 ];
 
-const storeData = async (value1, value2) => {
-  try {
-    await AsyncStorage.setItem("@alarm", JSON.stringify(alarm));
-  } catch (e) {
-    // saving error
-    console.log("error");
-  }
-};
-
 export default class patient_alarm extends Component {
   constructor(props) {
     super(props);
@@ -82,6 +73,7 @@ export default class patient_alarm extends Component {
                       minute: item.minute,
                       key: item.key,
                       paramsName: this.props.route.params.paramsName,
+                      index: index,
                     });
                   }}
                 >

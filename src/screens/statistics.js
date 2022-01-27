@@ -19,6 +19,7 @@ const items = [
   { id: "age", label: "나이순" },
 ];
 
+
 export default class statistics extends Component {
   static contextType = Context;
   constructor(props) {
@@ -34,7 +35,7 @@ export default class statistics extends Component {
     this.userfunc();
   }
   userfunc = () => {
-    fetch("http://152.70.233.113/chamuser?sort=name", {
+    fetch("http://hccparkinson.duckdns.org:19737/chamuser", {
       method: "GET",
       headers: {
         Accept: "application/json",

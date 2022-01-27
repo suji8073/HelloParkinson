@@ -28,15 +28,15 @@ export default class task_patient extends Component {
         <View style={styles.graphView}>
           <View style={styles.numView}>
             <View style={styles.num3}></View>
-            <Text style={styles.num2}>{this.props.CAT1}</Text>
+            <Text style={styles.num2}>{this.props.CAT1.toFixed(0) + "%"}</Text>
             <View style={styles.num1}></View>
-            <Text style={styles.num2}>{this.props.CAT2}</Text>
+            <Text style={styles.num2}>{this.props.CAT2.toFixed(0) + "%"}</Text>
             <View style={styles.num1}></View>
-            <Text style={styles.num2}>{this.props.CAT3}</Text>
+            <Text style={styles.num2}>{this.props.CAT3.toFixed(0) + "%"}</Text>
             <View style={styles.num1}></View>
-            <Text style={styles.num2}>{this.props.CAT4}</Text>
+            <Text style={styles.num2}>{this.props.CAT4.toFixed(0) + "%"}</Text>
             <View style={styles.num1}></View>
-            <Text style={styles.num2}>{this.props.CAT5}</Text>
+            <Text style={styles.num2}>{this.props.CAT5.toFixed(0) + "%"}</Text>
             <View style={styles.num4}></View>
           </View>
 
