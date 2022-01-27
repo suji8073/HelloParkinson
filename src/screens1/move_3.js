@@ -15,7 +15,7 @@ import { EvilIcons } from "@expo/vector-icons";
 var myHeaders = new Headers();
 myHeaders.append(
   "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMxODQ0MTAsImV4cCI6MTY0Mzc4OTIxMH0.7_etGVJgCXvuZHSHGqf6S0nuRl9eO7bYgZ_M64sLiS5-XG5dM5_MMlu7YczT8P0IBEn83Z5V4UFrZO43m4eebw"
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyOTQ0NTMsImV4cCI6MTY0Mzg5OTI1M30._Cvfjjc2w5yfS-NSUGDaW-EXBnbsKIL7j7FTsJxAe2jklaxL86tJmwiKajEZSOKO91_roCZbMBZQpy0Tq6PIVg"
 );
 
 export default class move_3 extends Component {

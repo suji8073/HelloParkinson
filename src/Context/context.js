@@ -1,11 +1,11 @@
 import React from "react";
 
 export default React.createContext({
-  user_id: "kw1234",
-  user_pw: "kw1004",
+  user_id: "q",
+  user_pw: "q",
   user_name: "관리자",
   change_exercise: [
-    { id: "4-1", name: "아에이오우 소리내기", set: 10 },
+    { id: "4-1", name: "  아에이오우 소리내기", set: 10 },
     { id: "4-2", name: "파파파파파 소리내기", set: 12 },
     { id: "4-3", name: "쪽 소리내기", set: 5 },
     { id: "4-4", name: "혀로 볼 밀기", set: 5 },

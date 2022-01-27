@@ -1,30 +1,33 @@
 import React, { Component } from "react";
 import {
+  SafeAreaView,
   FlatList,
   StyleSheet,
   View,
   Text,
   ScrollView,
   TouchableOpacity,
-  SafeAreaView,
 } from "react-native";
 import { Dimensions } from "react-native";
-import Task from "./task_record_day";
-import Task1 from "./task_week";
-import Taskm from "../screens1/task_week_m";
-
+import Task from "../screens1/task_record_day";
+import Task1 from "../screens1/task_week1";
+import Taskm from "../screens1/task_week1_m";
+const year = 2022 + 1;
+import Context from "../Context/context";
 import { WithLocalSvg } from "react-native-svg";
+import { AntDesign } from "@expo/vector-icons";
 
 import page_here from "../icon/page_here.svg";
 import page_no from "../icon/page_no.svg";
-
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+
+import MonthPicker from "react-native-month-year-picker";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 
 var myHeaders = new Headers();
 myHeaders.append(
   "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMxODQ0MTAsImV4cCI6MTY0Mzc4OTIxMH0.7_etGVJgCXvuZHSHGqf6S0nuRl9eO7bYgZ_M64sLiS5-XG5dM5_MMlu7YczT8P0IBEn83Z5V4UFrZO43m4eebw"
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyODk0MzAsImV4cCI6MTY0Mzg5NDIzMH0.XJFkawo8_s4okjavnlT1zVzs9nep6rqlMOCAVqmbloNqyf6BzLYen_Mk4JLhSY3jEP-ogqqIxD6CQO1FAFd-zg"
 );
 
 const items = [
@@ -42,25 +45,65 @@ const items = [
   { id: "12", label: "12월" },
 ];
 
+const data = [
+  { date: "20220111", progress: 80 },
+  { date: "20220112", progress: 90 },
+  { date: "20220113", progress: 80 },
+  { date: "20220114", progress: 90 },
+  { date: "20220115", progress: 90 },
+  { date: "20220116", progress: 90 },
+  { date: "20220117", progress: 60 },
+];
+const data1 = [
+  { date: "20220101", progress: 30 },
+  { date: "20220102", progress: 40 },
+  { date: "20220103", progress: 50 },
+  { date: "20220104", progress: 30 },
+  { date: "20220105", progress: 50 },
+  { date: "20220106", progress: 60 },
+  { date: "20220107", progress: 10 },
+  { date: "20220108", progress: 70 },
+  { date: "20220109", progress: 90 },
+  { date: "20220110", progress: 80 },
+  { date: "20220111", progress: 80 },
+  { date: "20220112", progress: 90 },
+  { date: "20220113", progress: 80 },
+  { date: "20220114", progress: 90 },
+  { date: "20220115", progress: 90 },
+  { date: "20220116", progress: 90 },
+  { date: "20220117", progress: 60 },
+];
+
 var sum_progress = 0;
 var sum_progress_m = 0;
 const { width, height } = Dimensions.get("screen");
 
-export default class patient_record extends Component {
+export default class user_statistics extends Component {
+  static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {
-      data: [], // 일주일치 막대그래프
+      all_progress: 0,
+      data: [],
       first_date: "",
       late_date: "",
       sum_p: 0,
       sum_m: 0,
       page_l: true,
+      birth: 19431218,
+      gender: "",
+      memo: "",
+      team: "",
+      name: "",
+      UID: "",
+      progress: 0,
+      data1: [],
       isDatePickerVisible: false,
       setDatePickerVisibility: false,
+      date: new Date(),
+      show: false,
       setShow: false,
-      data2: [], // 하루 당 꺾은선 그래프
-      data_: [], // 한달치 막대그래프
+      data2: [],
     };
   }
 
@@ -72,138 +115,91 @@ export default class patient_record extends Component {
       console.log("2");
       this.setState({ page_l: false });
     }
-  };
-
-  user_cat_day = () => {
-    fetch("http://hccparkinson.duckdns.org:19737/progress/personal/cat/week", {
-      method: "GET",
-      headers: myHeaders,
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        var cat_change_array = json.data;
-        var cat_put_array = {};
-        var change_put_array = [];
-
-        cat_change_array.map((x) => {
-          cat_put_array = {};
-          for (let i = 0; i < x.progress.length; i++) {
-            var cat_name = "CAT" + (i + 1);
-            var cat_day = x.progress[i].day;
-            cat_put_array[cat_name] = x.progress[i].percent * 100;
-          }
-          cat_put_array["R_date"] =
-            String(cat_day).substring(5, 7) + String(cat_day).substring(8, 10);
-          change_put_array.push(cat_put_array);
-        });
-        this.setState({ data2: change_put_array });
-      });
-  };
-
-  user_week_day = () => {
-    var data_array = [];
-    fetch("http://hccparkinson.duckdns.org:19737/progress/personal", {
-      method: "GET",
-      headers: myHeaders,
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        for (let i = 0; i < json.data.length; i++) {
-          data_array.push(json.data[i]);
-        }
-
-        for (let j = 0; j < 7 - json.data.length; j++) {
-          var now = new Date(data_array[json.data.length - 1].day);
-          var yesterday = new Date(now.setDate(now.getDate() - (j + 1))); // 어제
-          var date2 = this.date_change(yesterday);
-
-          var add_data = {
-            day: date2,
-            cat: "null",
-            percent: 0,
-          };
-          data_array.push(add_data);
-        }
-
-        this.setState({ data: data_array.reverse() });
-
-        this.setState({ sum_p: 0 });
-        sum_progress = 0;
-
-        var day_count_progress = this.state.data;
-
-        day_count_progress.map((x) => {
-          sum_progress += x.percent * 100;
-          this.setState({ sum_p: sum_progress / json.data.length });
-        });
-
-        day_count_progress.filter((x, y) => {
-          if (y === 0)
-            this.setState({
-              first_date:
-                String(x.day).substring(0, 4) +
-                String(x.day).substring(5, 7) +
-                String(x.day).substring(8, 10),
-            });
-          if (y === 6)
-            this.setState({
-              late_date:
-                String(x.day).substring(0, 4) +
-                String(x.day).substring(5, 7) +
-                String(x.day).substring(8, 10),
-            });
-        });
-      });
-  };
-
-  user_month = () => {
-    var data_array = [];
-    fetch("http://hccparkinson.duckdns.org:19737/progress/personal/month", {
-      method: "GET",
-      headers: myHeaders,
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        for (let i = 0; i < json.data.length; i++) {
-          data_array.push(json.data[i]);
-        }
-        var last_date = String(data_array[json.data.length - 1].day).substring(
-          8,
-          10
-        );
-
-        for (let j = 0; j < last_date - 1; j++) {
-          var now = new Date(data_array[json.data.length - 1].day);
-          var yesterday = new Date(now.setDate(now.getDate() - (j + 1))); // 어제
-          var date2 = this.date_change(yesterday);
-
-          var add_data = {
-            day: date2,
-            cat: "null",
-            percent: 0,
-          };
-          data_array.push(add_data);
-        }
-
-        this.setState({ data_: data_array.reverse() });
-
-        this.setState({ sum_m: 0 });
-        sum_progress_m = 0;
-
-        var day_count_progress = this.state.data_;
-
-        day_count_progress.map((x) => {
-          sum_progress_m += x.percent * 100;
-          this.setState({ sum_m: sum_progress_m / json.data.length });
-        });
-      });
+    console.log("현재 : " + this.state.page_l);
   };
 
   componentDidMount() {
-    this.user_week_day();
-    this.user_cat_day();
-    this.user_month();
+    this.setState({ sum_p: 0, sum_m: 0 });
+    sum_progress = 0;
+    sum_progress_m = 0;
+    this.function1();
+    this.function2();
+    data.map((x) => {
+      sum_progress += x.progress;
+      this.setState({ sum_p: sum_progress / 7 });
+    });
+
+    data1.map((x) => {
+      sum_progress_m += x.progress;
+      this.setState({ sum_m: sum_progress_m / data1.length });
+    });
+
+    data.filter((x, y) => {
+      if (y === 0) this.setState({ first_date: x.date });
+      if (y === 6) this.setState({ late_date: x.date });
+    });
+
+    // 일별, 카테고리별 진도율
+    fetch(
+      "http://152.70.233.113/chamuser/day/" +
+        this.props.route.params.paramsName,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({ data: json });
+      });
   }
+
+  //환자 정보 가져오는 엔드포인트
+  function1 = () => {
+    fetch(
+      "http://hccparkinson.duckdns.org:19737/onlymanager/uid/" +
+        this.props.route.params.id,
+      {
+        method: "GET",
+        headers: myHeaders,
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json.data[0].uname);
+        this.setState({
+          birth: json.data[0].birthday,
+          gender: json.data[0].gender,
+          name: json.data[0].uname,
+          UID: json.data[0].uid,
+        });
+      });
+  };
+
+  age_count = () => {
+    var today_year = new Date().getFullYear();
+    var birth_year = String(this.state.birth).substring(0, 4);
+    return today_year - birth_year + 1;
+  };
+
+  age_change = () => {
+    return this.state.gender === "F" ? "여" : "남";
+  };
+
+  function2 = () => {
+    fetch(
+      "http://152.70.233.113/chamuser/day/" +
+        this.props.route.params.paramName2,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({ data2: json });
+      });
+  };
 
   showDatePicker = () => {
     this.setState({ setDatePickerVisibility: true, isDatePickerVisible: true });
@@ -220,21 +216,6 @@ export default class patient_record extends Component {
     console.warn("A date has been picked: ", date);
     this.dateToStr(date);
     this.hideDatePicker();
-  };
-
-  date_change = (date) => {
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-
-    var today =
-      year +
-      "-" +
-      ("00" + month.toString()).slice(-2) +
-      "-" +
-      ("00" + day.toString()).slice(-2);
-
-    return today;
   };
 
   dateToStr = (date) => {
@@ -259,13 +240,6 @@ export default class patient_record extends Component {
     const selectedDate = newDate || date;
     this.setState({ setDate: selectedDate, setShow: false });
   };
-
-  onmonthPress = (id) => {
-    if (id.length === 1) var click_date = "20220" + id + "00";
-    else var click_date = "2022" + id + "00";
-    this.setState({ late_date: click_date });
-  };
-
   onMenuPress = (id) => {
     console.log(id.length);
     if (id.length === 1) var click_date = "20220" + id + "00";
@@ -277,8 +251,19 @@ export default class patient_record extends Component {
     return (
       <View style={styles.finalView}>
         <View style={styles.menuView}>
-          <View style={styles.margin}></View>
-          <Text style={styles.titleText}>나의 운동 기록</Text>
+          <View style={styles.margin}>
+            <AntDesign
+              name="left"
+              size={24}
+              color="#808080"
+              onPress={() => {
+                this.props.navigation.pop();
+              }}
+            />
+          </View>
+          <Text style={styles.titleText}>
+            '{this.state.name}'님 의 운동 통계
+          </Text>
           <View style={styles.margin}></View>
         </View>
 
@@ -288,6 +273,13 @@ export default class patient_record extends Component {
               justifyContent: "space-between",
             }}
           >
+            <View style={styles.firstView}>
+              <Text style={styles.user_name}>{this.state.name}</Text>
+              <Text style={styles.user_age}> / {this.age_count()}세</Text>
+              <Text style={styles.user_sex}> / {this.age_change()}</Text>
+              <View style={styles.margin}></View>
+            </View>
+
             <DateTimePickerModal
               isVisible={this.state.isDatePickerVisible}
               mode="date"
@@ -303,8 +295,13 @@ export default class patient_record extends Component {
             >
               <View style={styles.secondView}>
                 <View style={styles.textview}>
+                  <Text style={styles.text2}>{"주 평균" + " "}</Text>
+                  <Text style={styles.text22}>
+                    {this.state.sum_p.toFixed(1)}%
+                  </Text>
+                  <View style={styles.margin}></View>
+
                   <TouchableOpacity
-                    style={styles.margin}
                     activeOpacity={0.8}
                     onPress={this.showDatePicker}
                   >
@@ -321,21 +318,18 @@ export default class patient_record extends Component {
                         "일"}
                     </Text>
                   </TouchableOpacity>
-                  <Text style={styles.text2}>
-                    주 평균 {this.state.sum_p.toFixed(1)}%
-                  </Text>
                 </View>
 
                 <SafeAreaView style={{ flex: 2, width: "100%" }}>
                   <FlatList
                     keyExtractor={(item, index) => index}
-                    data={this.state.data}
+                    data={data}
                     renderItem={({ item, index }) => {
                       return (
                         <Task1
                           id={index}
-                          put_date={item.day}
-                          progress={item.percent}
+                          put_date={item.date}
+                          progress={item.progress}
                         ></Task1>
                       );
                     }}
@@ -345,6 +339,11 @@ export default class patient_record extends Component {
               </View>
               <View style={styles.secondView}>
                 <View style={styles.textview}>
+                  <Text style={styles.text2}>{"월 평균" + " "}</Text>
+                  <Text style={styles.text22}>
+                    {this.state.sum_m.toFixed(1)}%
+                  </Text>
+                  <View style={styles.margin}></View>
                   <SimplePopupMenu
                     style={styles.margin}
                     items={items}
@@ -355,28 +354,25 @@ export default class patient_record extends Component {
                     onCancel={() => console.log("onCancel")}
                   >
                     <Text style={styles.text1}>
-                      {String(this.state.late_date).substring(0, 4) +
+                      {"~ " +
+                        String(this.state.late_date).substring(0, 4) +
                         "년 " +
                         String(this.state.late_date).substring(4, 6) +
                         "월"}
                     </Text>
                   </SimplePopupMenu>
-
-                  <Text style={styles.text2}>
-                    월 평균 {this.state.sum_m.toFixed(1)}%
-                  </Text>
                 </View>
 
                 <SafeAreaView style={{ flex: 2, width: "100%" }}>
                   <FlatList
                     keyExtractor={(item, index) => index}
-                    data={this.state.data_}
+                    data={data1}
                     renderItem={({ item, index }) => {
                       return (
                         <Taskm
                           id={index}
-                          put_date={item.day}
-                          progress={item.percent}
+                          put_date={item.date}
+                          progress={item.progress}
                         ></Taskm>
                       );
                     }}
@@ -433,13 +429,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
 
-  textView: {
-    flexDirection: "row",
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
   page_location: { flexDirection: "row" },
   chart: {
     flex: 0.8,
@@ -486,27 +475,47 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
-  firstView: {
+  user_name: {
+    alignItems: "flex-start",
+    justifyContent: "center",
+    color: "#484848",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+
+  user_age: {
     // padding:30,
+    alignItems: "flex-start",
+    justifyContent: "center",
+    fontSize: 17,
+    color: "#484848",
+  },
+
+  user_sex: {
+    // padding:30,
+    alignItems: "flex-start",
+    justifyContent: "center",
+    fontSize: 17,
+    color: "#484848",
+  },
+
+  firstView: {
     alignItems: "center",
     justifyContent: "flex-start",
-    marginLeft: 20,
-    marginRight: 20,
     flexDirection: "row",
-    flex: 1,
-    marginTop: 15,
-    marginBottom: 15,
-    backgroundColor: "#FFFFFF",
+    marginLeft: 30,
+    marginTop: 10,
+    backgroundColor: "#F8F8F8",
   },
   mainView: {
     backgroundColor: "#F8F8F8",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 180,
+    marginBottom: 70,
   },
   secondView: {
-    marginTop: "3%",
+    marginTop: "2%",
     marginLeft: "3%",
     marginRight: "3%",
     marginBottom: "1%",
@@ -548,25 +557,27 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   text1: {
-    alignItems: "flex-start",
-    fontSize: 17,
-    alignItems: "center",
+    fontSize: 13,
     color: "#000000",
-    justifyContent: "center",
     borderBottomWidth: 0.5,
     borderColor: "#0F9D58",
   },
   text2: {
-    alignItems: "flex-start",
-    fontSize: 21,
+    fontSize: 16,
+    color: "#000000",
+    fontWeight: "bold",
+  },
+  text22: {
+    fontSize: 19,
     color: "#000000",
     fontWeight: "bold",
   },
   textview: {
-    flex: 1,
     marginTop: 10,
     marginBottom: 3,
+    alignItems: "center",
     justifyContent: "center",
+    flexDirection: "row",
   },
   oneview: {
     flex: 1,

@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, SafeAreaView } from "react-native";
 
 const task_week1 = ({ id, put_date, progress }) => {
   const dateToStr = () => {
-    var day = String(put_date).substring(6, 8);
+    var day = String(put_date).substring(8, 10);
     if (parseInt(day) === 5) return "5";
     else if (parseInt(day) === 10) return day;
     else if (parseInt(day) === 15) return day;
@@ -17,7 +17,7 @@ const task_week1 = ({ id, put_date, progress }) => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "flex-start",
-        width: 10,
+        width: 4,
         marginRight: 3,
         marginLeft: 3,
         marginBottom: 2,
@@ -27,7 +27,7 @@ const task_week1 = ({ id, put_date, progress }) => {
         <View style={styles.graphView}>
           <View
             style={progress <= 40 ? styles.chart1 : styles.chart}
-            height={progress}
+            height={progress * 100}
           ></View>
         </View>
         <View style={styles.textView}>
