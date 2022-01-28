@@ -109,7 +109,7 @@ export default class patient_profile extends Component {
             <Text style={styles.text1}>비밀번호</Text>
           </View>
           <View style={styles.textView}>
-            <Text style={styles.text2}>{this.context.user_pw}</Text>
+            <Text style={styles.text2}>******</Text>
           </View>
         </View>
 

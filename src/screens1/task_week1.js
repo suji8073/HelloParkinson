@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
 
 const task_week1 = ({ id, put_date, progress }) => {
-  const dateToStr = (date) => {
+  const dateToStr = (put_date) => {
+    var date = new Date(put_date);
     var week = new Array("일", "월", "화", "수", "목", "금", "토");
 
     var year = date.getFullYear();
@@ -51,7 +52,7 @@ const task_week1 = ({ id, put_date, progress }) => {
       </View>
       <View style={styles.textView}>
         <Text style={id === 6 ? styles.text11 : styles.text1_}>
-          {dateToStr(new Date())}
+          {dateToStr(put_date)}
         </Text>
       </View>
     </View>

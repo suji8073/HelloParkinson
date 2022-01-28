@@ -12,7 +12,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 //////카메라 권한
 import { PermissionsAndroid, Platform } from "react-native";
-import CameraRoll from "@react-native-community/cameraroll";
+//import CameraRoll from "@react-native-community/cameraroll";
 
 async function hasAndroidPermission() {
   const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
@@ -54,8 +54,6 @@ export default class patient_profile_edit extends Component {
       user_age: "",
       birth: 0,
       gender: "",
-      memo: "",
-      team: "",
       name: "",
       UID: "",
       rank: 1,
@@ -66,8 +64,6 @@ export default class patient_profile_edit extends Component {
   }
 
   componentDidMount() {
-    // this.userfunc();
-
     fetch("http://hccparkinson.duckdns.org:19737/chamuser", {
       method: "GET",
       headers: myHeaders,
@@ -78,8 +74,6 @@ export default class patient_profile_edit extends Component {
           {
             birth: json.data[0].birthday,
             gender: json.data[0].gender == "F" ? "여" : "남",
-            memo: json.data[0].memo,
-            team: json.data[0].team,
             name: json.data[0].uname,
             UID: json.data[0].uid,
             rank: json.data[0].ranking,
@@ -91,6 +85,24 @@ export default class patient_profile_edit extends Component {
         );
       });
   }
+
+  edit_update = () => {
+    fetch("http://hccparkinson.duckdns.org:19737/chamuser", {
+      method: "POST",
+      headers: myHeaders,
+      body: JSON.stringify({
+        uid: this.state.UID,
+        //password: this.state.user_pw,
+        gender: this.state.gender,
+        birthday: this.state.birth,
+        ranking: this.state.rank,
+      }),
+    }).then((response) => {
+      console.log(response.status);
+      if (response.status === 400) {
+      }
+    });
+  };
 
   change_rank = () => {
     if (this.state.rank === 1) {
@@ -112,9 +124,6 @@ export default class patient_profile_edit extends Component {
       {
         text: "취 소",
         style: "cancel",
-        onPress: () => {
-          //navigation.navigate("user_setting")
-        },
       },
       {
         cancelable: true,
@@ -132,7 +141,7 @@ export default class patient_profile_edit extends Component {
 
             // this.context.changePW(this.state.user_pw);
             // db비밀번호 변경, context비밀번호 변경
-
+            this.edit_update();
             this.props.navigation.navigate("patient_profile");
           }
         },

@@ -63,6 +63,8 @@ let data = {
   45: require("../video/4-14.mp4"),
 };
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 export default class move_play extends Component {
   constructor(props) {
     super(props);
@@ -70,17 +72,56 @@ export default class move_play extends Component {
       isLoading: true,
       done_num: 0,
       assign_num: 0,
+      list: [],
+      next_name: "",
+      next_done_num: 0,
+      next_assign_num: 0,
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    try {
+      const list = await AsyncStorage.getItem("@move_play");
+
+      if (list !== null) {
+        this.setState({ list: JSON.parse(list) });
+      }
+    } catch (e) {
+      this.setState({ minutes_Counter: "00", seconds_Counter: "00" });
+    }
+
     this.setState({
       done_num: this.props.route.params.done_num,
       assign_num: this.props.route.params.assign_num,
     });
 
-    this.Time();
+    this.params_move();
   }
+
+  params_move = () => {
+    var params_array = this.state.list;
+    console.log(this.props.route.params.eid);
+
+    if (
+      this.props.route.params.eid === 12 &&
+      this.props.route.params.eid === 26 &&
+      this.props.route.params.eid === 31 &&
+      this.props.route.params.eid === 45
+    )
+      this.setState({ next_name: "" });
+    else {
+      params_array.map((x) => {
+        if (x.eid === this.props.route.params.eid + 1) {
+          this.setState({
+            next_name: x.ename,
+            next_done_num: x.donecnt,
+            next_assign_num: x.setcnt,
+          });
+        }
+      });
+    }
+    //this.props.route.params.eid
+  };
 
   Time = () => {
     // 1,000가 1초
@@ -96,7 +137,9 @@ export default class move_play extends Component {
     if (this.state.isLoading === false) {
       if (this.state.done_num >= this.state.assign_num) {
         this.save_progress();
-        this.where_page();
+
+        if (this.next_name === "") this.where_page();
+        else this.where_move_go();
       } else {
         this.save_progress();
         this.props.navigation.reset({
@@ -127,6 +170,10 @@ export default class move_play extends Component {
       this.props.navigation.navigate("move_4");
     }
   };
+
+  where_move_go = () => {
+    
+  }
 
   save_progress = () => {
     fetch("http://hccparkinson.duckdns.org:19737/progress/write", {
