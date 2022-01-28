@@ -95,7 +95,7 @@ export default class patient_profile_edit extends Component {
         //password: this.state.user_pw,
         gender: this.state.gender,
         birthday: this.state.birth,
-        ranking: this.state.rank,
+        ranking: this.state.rank === 1 ? true : false,
       }),
     }).then((response) => {
       console.log(response.status);
