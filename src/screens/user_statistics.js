@@ -251,7 +251,7 @@ export default class user_statistics extends Component {
     return today_year - birth_year + 1;
   };
 
-  age_change = () => {
+  gender_change = () => {
     return this.state.gender === "F" ? "여" : "남";
   };
 
@@ -344,7 +344,7 @@ export default class user_statistics extends Component {
             <View style={styles.firstView}>
               <Text style={styles.user_name}>{this.state.name}</Text>
               <Text style={styles.user_age}> / {this.age_count()}세</Text>
-              <Text style={styles.user_sex}> / {this.age_change()}</Text>
+              <Text style={styles.user_sex}> / {this.gender_change()}</Text>
               <View style={styles.margin}></View>
             </View>
 

@@ -1,14 +1,8 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
 
 import Context from "../Context/context";
-import { SimpleLineIcons } from "@expo/vector-icons";
+
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import Svg1 from "../icon/pencil.svg";
@@ -19,7 +13,13 @@ import silverstarsvg from "../icon/silverstar.svg";
 import greenstarsvg from "../icon/greenstar.svg";
 
 import { WithLocalSvg } from "react-native-svg";
-const year = 2021 + 1;
+
+var myHeaders = new Headers();
+myHeaders.append(
+  "Authorization",
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyODk0MzAsImV4cCI6MTY0Mzg5NDIzMH0.XJFkawo8_s4okjavnlT1zVzs9nep6rqlMOCAVqmbloNqyf6BzLYen_Mk4JLhSY3jEP-ogqqIxD6CQO1FAFd-zg"
+);
+myHeaders.append("Content-Type", "application/json");
 
 export default class user_setting extends Component {
   static contextType = Context;
@@ -31,59 +31,74 @@ export default class user_setting extends Component {
       memo: "",
       team: "",
       name: "",
-      id: 0,
       UID: "",
-      bookmark: 0,
+      bookmark: false,
     };
   }
 
   componentDidMount() {
     fetch(
-      "http://152.70.233.113/chamuser/id/" + this.props.route.params.paramName1,
+      "http://hccparkinson.duckdns.org:19737/onlymanager/uid/" +
+        this.props.route.params.id,
       {
         method: "GET",
-        headers: { "Content-Type": "application/json" },
+        headers: myHeaders,
       }
     )
       .then((res) => res.json())
       .then((json) => {
+        console.log(json.data[0].uname);
+        console.log(json.data[0].bookmark);
         this.setState({
-          birth: json.info.birth,
-          gender: json.info.gender,
-          memo: json.info.memo,
-          team: json.info.team,
-          name: json.info.name,
-          id: json.info.id,
-          UID: json.info.UID,
-          bookmark: json.info.bookmark,
+          birth: json.data[0].birthday,
+          gender: json.data[0].gender,
+          name: json.data[0].uname,
+          memo: json.data[0].memo,
+          team: json.data[0].team,
+          UID: json.data[0].uid,
+          bookmark: json.data[0].bookmark,
         });
       });
   }
 
+  age_count = () => {
+    var today_year = new Date().getFullYear();
+    var birth_year = String(this.state.birth).substring(0, 4);
+    return today_year - birth_year + 1;
+  };
+
+  gender_change = () => {
+    return this.state.gender === "F" ? "여" : "남";
+  };
+
   starclick = () => {
-    if (this.state.bookmark === 0) {
+    if (this.state.bookmark === false) {
       // 아이콘 asset값 변경 greenstarsvg 으로
 
-      fetch("http://152.70.233.113/chamuser/bookmark", {
+      fetch("http://hccparkinson.duckdns.org:19737/onlymanager/bookmark", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: myHeaders,
         body: JSON.stringify({
-          user: String(this.props.route.params.paramName1),
+          uid: String(this.props.route.params.id),
         }),
+      }).then((response) => {
+        console.log(response.status);
+        this.setState({ bookmark: true });
+        Alert.alert("즐겨찾기에 추가되었습니다.");
       });
-      this.setState({ bookmark: 1 });
-      Alert.alert("즐겨찾기에 추가되었습니다.");
     } else {
       // 아이콘 asset값 변경 silverstarsvg 으로
-      fetch("http://152.70.233.113/chamuser/bookmark", {
+      fetch("http://hccparkinson.duckdns.org:19737/onlymanager/bookmark", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: myHeaders,
         body: JSON.stringify({
-          user: String(this.props.route.params.paramName1),
+          uid: String(this.props.route.params.id),
         }),
+      }).then((response) => {
+        console.log(response.status);
+        this.setState({ bookmark: false });
+        Alert.alert("즐겨찾기에서 해제되었습니다.");
       });
-      this.setState({ bookmark: 0 });
-      Alert.alert("즐겨찾기에서 해제되었습니다.");
     }
   };
 
@@ -107,7 +122,9 @@ export default class user_setting extends Component {
             <WithLocalSvg
               width={30}
               height={40}
-              asset={this.state.bookmark === 0 ? silverstarsvg : greenstarsvg}
+              asset={
+                this.state.bookmark === false ? silverstarsvg : greenstarsvg
+              }
             />
           </TouchableOpacity>
         </View>
@@ -121,10 +138,12 @@ export default class user_setting extends Component {
               alignItems="center"
             />
           </View>
-          <Text style={styles.group_num}>{this.state.team}조</Text>
+          <Text style={styles.group_num}>
+            {this.state.team != "" ? " " : this.state.team + "조"}
+          </Text>
           <Text style={styles.user_name}>{this.state.name}</Text>
           <Text style={styles.user_age}>
-            {year - parseInt(this.state.birth / 10000)}세 / {this.state.gender}
+            {this.age_count()}세 / {this.gender_change()}
           </Text>
         </View>
 
@@ -135,7 +154,7 @@ export default class user_setting extends Component {
               activeOpacity={0.8}
               onPress={() => {
                 this.props.navigation.navigate("user_edit", {
-                  paramName1: this.state.id,
+                  id: this.state.UID,
                 });
               }}
             >
@@ -148,8 +167,7 @@ export default class user_setting extends Component {
               activeOpacity={0.8}
               onPress={() => {
                 this.props.navigation.navigate("user_statistics", {
-                  paramName1: this.state.id,
-                  paramName2: this.state.UID,
+                  id: this.state.UID,
                 });
               }}
             >
@@ -162,7 +180,7 @@ export default class user_setting extends Component {
               activeOpacity={0.8}
               onPress={() => {
                 this.props.navigation.navigate("user_progress", {
-                  paramName1: this.state.id,
+                  id: this.state.UID,
                 });
               }}
             >
@@ -176,7 +194,9 @@ export default class user_setting extends Component {
             <Text style={styles.text2}>메모</Text>
           </View>
           <View style={styles.textView}>
-            <Text style={styles.text2}>{this.state.memo}</Text>
+            <Text style={styles.text2}>
+              {this.state.memo != "" ? "메모 없음" : this.state.memo}
+            </Text>
           </View>
         </View>
         <View style={styles.marginView}></View>

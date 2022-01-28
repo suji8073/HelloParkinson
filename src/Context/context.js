@@ -1,8 +1,7 @@
 import React from "react";
-import update from "react-addons-update";
+//import update from "react-addons-update";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default React.createContext({
-
   user_id: "q",
   user_pw: "q",
   num: 0,
