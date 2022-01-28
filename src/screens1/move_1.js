@@ -8,6 +8,7 @@ import {
   FlatList,
 } from "react-native";
 import Task from "./task_move";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
@@ -30,6 +31,16 @@ export default class move_1 extends Component {
     this.cat_list();
   }
 
+  storeData = async (list) => {
+    try {
+      await AsyncStorage.setItem("@move_play", JSON.stringify(list));
+      console.log(JSON.stringify(list));
+    } catch (e) {
+      console.log(e);
+      console.log("error");
+    }
+  };
+
   cat_list = () => {
     fetch(
       "http://hccparkinson.duckdns.org:19737/progress/personal/exercise?cat=0",
@@ -40,8 +51,9 @@ export default class move_1 extends Component {
     )
       .then((res) => res.json())
       .then((json) => {
-        console.log(json.data);
         this.setState({ data: json.data, data_length: json.data.length });
+        AsyncStorage.setItem("@move_play", JSON.stringify(json.data));
+        console.log(JSON.stringify(json.data));
       });
   };
 

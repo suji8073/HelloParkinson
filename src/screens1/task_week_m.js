@@ -26,7 +26,7 @@ const task_week = ({ id, put_date, progress }) => {
       <SafeAreaView style={{ flex: 2, width: "100%" }}>
         <View style={styles.graphView}>
           <View
-            style={progress <= 40 ? styles.chart1 : styles.chart}
+            style={progress <= 50 ? styles.chart1 : styles.chart}
             height={progress * 100}
           ></View>
         </View>
