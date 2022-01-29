@@ -30,21 +30,6 @@ myHeaders.append(
   "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyODk0MzAsImV4cCI6MTY0Mzg5NDIzMH0.XJFkawo8_s4okjavnlT1zVzs9nep6rqlMOCAVqmbloNqyf6BzLYen_Mk4JLhSY3jEP-ogqqIxD6CQO1FAFd-zg"
 );
 
-const items = [
-  { id: "1", label: "1월" },
-  { id: "2", label: "2월" },
-  { id: "3", label: "3월" },
-  { id: "4", label: "4월" },
-  { id: "5", label: "5월" },
-  { id: "6", label: "6월" },
-  { id: "7", label: "7월" },
-  { id: "8", label: "8월" },
-  { id: "9", label: "9월" },
-  { id: "10", label: "10월" },
-  { id: "11", label: "11월" },
-  { id: "12", label: "12월" },
-];
-
 var sum_progress = 0;
 var sum_progress_m = 0;
 const { width, height } = Dimensions.get("screen");
@@ -130,22 +115,42 @@ export default class user_statistics extends Component {
     )
       .then((res) => res.json())
       .then((json) => {
-        for (let i = 0; i < json.data.length; i++) {
-          data_array.push(json.data[i]);
+        console.log(json.data.length);
+
+        if (json.data.length === 0) {
+          for (let j = 0; j < 7 - json.data.length; j++) {
+            var now = new Date(date);
+            var yesterday = new Date(now.setDate(now.getDate() - j)); // 어제
+            console.log(yesterday);
+            var date2 = this.date_change(yesterday);
+
+            var add_data = {
+              day: date2,
+              cat: "null",
+              percent: 0,
+            };
+            data_array.push(add_data);
+          }
+        } else {
+          for (let i = 0; i < json.data.length; i++) {
+            data_array.push(json.data[i]);
+          }
+
+          for (let j = 0; j < 7 - json.data.length; j++) {
+            var now = new Date(data_array[json.data.length - 1].day);
+            var yesterday = new Date(now.setDate(now.getDate() - (j + 1))); // 어제
+            var date2 = this.date_change(yesterday);
+
+            var add_data = {
+              day: date2,
+              cat: "null",
+              percent: 0,
+            };
+            data_array.push(add_data);
+          }
         }
 
-        for (let j = 0; j < 7 - json.data.length; j++) {
-          var now = new Date(date);
-          var yesterday = new Date(now.setDate(now.getDate() - j)); // 어제
-          var date2 = this.date_change(yesterday);
-
-          var add_data = {
-            day: date2,
-            cat: "null",
-            percent: 0,
-          };
-          data_array.push(add_data);
-        }
+        console.log(data_array);
 
         this.setState({ data: data_array.reverse() });
 
@@ -222,7 +227,9 @@ export default class user_statistics extends Component {
           data_array.push(add_data);
         }
 
-        this.setState({ data_: data_array.reverse() });
+        this.setState({ data_: data_array.reverse() }, () => {
+          return this.state.data_;
+        });
 
         this.setState({ sum_m: 0 });
         sum_progress_m = 0;

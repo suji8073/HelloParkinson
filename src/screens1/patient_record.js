@@ -154,12 +154,19 @@ export default class patient_record extends Component {
 
   user_month = (date) => {
     var data_array = [];
-    var day = date.substring(8, 10);
+    var lastDate = "";
+    if (date == this.date_change(new Date())) lastDate = date.substring(8, 10);
+    else
+      var lastDate = new Date(
+        date.substring(0, 4),
+        date.substring(5, 7),
+        0
+      ).getDate();
     fetch(
       "http://hccparkinson.duckdns.org:19737/progress/personal/period/" +
         date +
         "?day=" +
-        day,
+        lastDate,
       {
         method: "GET",
         headers: myHeaders,
@@ -170,12 +177,8 @@ export default class patient_record extends Component {
         for (let i = 0; i < json.data.length; i++) {
           data_array.push(json.data[i]);
         }
-        var last_date = String(data_array[json.data.length - 1].day).substring(
-          8,
-          10
-        );
 
-        for (let j = 0; j < last_date - 1; j++) {
+        for (let j = 0; j < lastDate - 1; j++) {
           var now = new Date(date);
           var yesterday = new Date(now.setDate(now.getDate() - j)); // 어제
           var date2 = this.date_change(yesterday);

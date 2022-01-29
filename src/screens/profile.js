@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import {
   View,
   Text,
-  Button,
+  Alert,
   StatusBar,
   StyleSheet,
   TouchableOpacity,
   Image,
 } from "react-native";
 import Context from "../Context/context";
+import { MaterialIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 export default class profile extends Component {
   static contextType = Context;
@@ -20,6 +22,22 @@ export default class profile extends Component {
       name: "",
     };
   }
+
+  logout = () => {
+    Alert.alert("로그아웃 하시겠습니까?", "", [
+      {
+        text: "취 소",
+        style: "cancel",
+      },
+      {
+        cancelable: true,
+        text: "로그아웃",
+        onPress: () => {
+          this.props.navigation.navigate("login");
+        },
+      },
+    ]);
+  };
   render() {
     let profile_svg = require("../icon/snuh.png");
     return (
@@ -28,7 +46,16 @@ export default class profile extends Component {
         <View style={styles.menu1View}>
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>관리자 프로필</Text>
-          <View style={styles.margin}></View>
+          <View style={styles.margin}>
+            <MaterialIcons
+              name="logout"
+              size={24}
+              color="#808080"
+              onPress={() => {
+                this.logout();
+              }}
+            />
+          </View>
         </View>
         {/* 아이콘과 관리자 이름 뷰 */}
         <View
@@ -83,7 +110,7 @@ export default class profile extends Component {
               <Text style={styles.menuText}>비밀번호</Text>
             </View>
             <View style={styles.answerView}>
-              <Text style={styles.answerText1}>{this.context.user_pw}</Text>
+              <Text style={styles.answerText}>{this.context.user_pw}</Text>
             </View>
           </View>
           {/* 세번째줄 끝 */}
@@ -95,10 +122,7 @@ export default class profile extends Component {
         >
           <View
             style={{
-              height: "20%",
-              marginTop: "15%",
-              borderWidth: 0.3,
-              borderColor: "#DCDCDC",
+              marginTop: "10%",
               justifyContent: "center",
             }}
           >
@@ -208,7 +232,7 @@ const styles = StyleSheet.create({
   },
   margin: {
     // padding:30,
-    alignItems: "flex-start",
+    alignItems: "flex-end",
     justifyContent: "center",
     flex: 1,
   },
