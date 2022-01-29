@@ -19,28 +19,12 @@ import page_here from "../icon/page_here.svg";
 import page_no from "../icon/page_no.svg";
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import SimplePopupMenu from "react-native-simple-popup-menu";
 
 var myHeaders = new Headers();
 myHeaders.append(
   "Authorization",
   "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMxODQ0MTAsImV4cCI6MTY0Mzc4OTIxMH0.7_etGVJgCXvuZHSHGqf6S0nuRl9eO7bYgZ_M64sLiS5-XG5dM5_MMlu7YczT8P0IBEn83Z5V4UFrZO43m4eebw"
 );
-
-const items = [
-  { id: "1", label: "1월" },
-  { id: "2", label: "2월" },
-  { id: "3", label: "3월" },
-  { id: "4", label: "4월" },
-  { id: "5", label: "5월" },
-  { id: "6", label: "6월" },
-  { id: "7", label: "7월" },
-  { id: "8", label: "8월" },
-  { id: "9", label: "9월" },
-  { id: "10", label: "10월" },
-  { id: "11", label: "11월" },
-  { id: "12", label: "12월" },
-];
 
 var sum_progress = 0;
 var sum_progress_m = 0;
@@ -122,7 +106,6 @@ export default class patient_record extends Component {
 
         for (let j = 0; j < 7 - json.data.length; j++) {
           var now = new Date(date);
-          console.log(now);
           var yesterday = new Date(now.setDate(now.getDate() - j)); // 어제
           var date2 = this.date_change(yesterday);
 
@@ -133,8 +116,6 @@ export default class patient_record extends Component {
           };
           data_array.push(add_data);
         }
-
-        console.log(data_array);
 
         this.setState({ data: data_array.reverse() }, () => {
           return this.state.data;
@@ -249,7 +230,6 @@ export default class patient_record extends Component {
     this.hideDatePicker();
     var today = this.date_change(date);
 
-    console.log(today);
     this.user_week_day(today);
     this.user_cat_day(today);
     this.user_month(today);

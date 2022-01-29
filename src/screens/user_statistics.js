@@ -22,6 +22,7 @@ import page_no from "../icon/page_no.svg";
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import SimplePopupMenu from "react-native-simple-popup-menu";
+import { MaterialIcons } from "@expo/vector-icons";
 
 var myHeaders = new Headers();
 myHeaders.append(
@@ -62,10 +63,10 @@ export default class user_statistics extends Component {
       birth: 0,
       gender: "",
       name: "",
-      data_: [],
       isDatePickerVisible: false,
       setDatePickerVisibility: false,
       setShow: false,
+      data_: [], // 하루 당 꺾은선 그래프
       data2: [], // 하루 당 꺾은선 그래프
     };
   }
@@ -78,10 +79,14 @@ export default class user_statistics extends Component {
     }
   };
 
-  user_cat_day = () => {
+  //http://hccparkinson.duckdns.org:19737/onlymanager/progress/user/cat/period/2021-01-12?uid=suji&day=7
+  user_cat_day = (date) => {
     fetch(
-      "http://hccparkinson.duckdns.org:19737//onlymanager/progress/user/category?UID=" +
-        this.props.route.params.id,
+      "http://hccparkinson.duckdns.org:19737/onlymanager/progress/user/cat/period/" +
+        date +
+        "?uid=" +
+        this.props.route.params.id +
+        "&day=7",
       {
         method: "GET",
         headers: myHeaders,
@@ -109,11 +114,15 @@ export default class user_statistics extends Component {
   };
 
   //유저 일주일치 그래프 정보 불러오기
-  user_week_day = () => {
+  //http://hccparkinson.duckdns.org:19737/onlymanager/progress/user/period/2021-01-12?uid=suji&day=7
+  user_week_day = (date) => {
     var data_array = [];
     fetch(
-      "http://hccparkinson.duckdns.org:19737/onlymanager/progress/user?UID=" +
-        this.props.route.params.id,
+      "http://hccparkinson.duckdns.org:19737/onlymanager/progress/user/period/" +
+        date +
+        "?uid=" +
+        this.props.route.params.id +
+        "&day=7",
       {
         method: "GET",
         headers: myHeaders,
@@ -126,8 +135,8 @@ export default class user_statistics extends Component {
         }
 
         for (let j = 0; j < 7 - json.data.length; j++) {
-          var now = new Date(data_array[json.data.length - 1].day);
-          var yesterday = new Date(now.setDate(now.getDate() - (j + 1))); // 어제
+          var now = new Date(date);
+          var yesterday = new Date(now.setDate(now.getDate() - j)); // 어제
           var date2 = this.date_change(yesterday);
 
           var add_data = {
@@ -147,7 +156,9 @@ export default class user_statistics extends Component {
 
         day_count_progress.map((x) => {
           sum_progress += x.percent * 100;
-          this.setState({ sum_p: sum_progress / json.data.length });
+          this.setState({
+            sum_p: json.data.length === 0 ? 0 : sum_progress / json.data.length,
+          });
         });
 
         day_count_progress.filter((x, y) => {
@@ -169,11 +180,24 @@ export default class user_statistics extends Component {
       });
   };
 
-  user_month = () => {
+  //http://hccparkinson.duckdns.org:19737/onlymanager/progress/user/period/2021-01-12?uid=suji&day=30
+  user_month = (date) => {
     var data_array = [];
+    var lastDate = "";
+    if (date == this.date_change(new Date())) lastDate = date.substring(8, 10);
+    else
+      var lastDate = new Date(
+        date.substring(0, 4),
+        date.substring(5, 7),
+        0
+      ).getDate();
     fetch(
-      "http://hccparkinson.duckdns.org:19737/onlymanager/progress/user/month?UID=" +
-        this.props.route.params.id,
+      "http://hccparkinson.duckdns.org:19737/onlymanager/progress/user/period/" +
+        date +
+        "?uid=" +
+        this.props.route.params.id +
+        "&day=" +
+        lastDate,
       {
         method: "GET",
         headers: myHeaders,
@@ -181,18 +205,13 @@ export default class user_statistics extends Component {
     )
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         for (let i = 0; i < json.data.length; i++) {
           data_array.push(json.data[i]);
         }
-        var last_date = String(data_array[json.data.length - 1].day).substring(
-          8,
-          10
-        );
 
-        for (let j = 0; j < last_date - 1; j++) {
-          var now = new Date(data_array[json.data.length - 1].day);
-          var yesterday = new Date(now.setDate(now.getDate() - (j + 1))); // 어제
+        for (let j = 0; j < lastDate - 1; j++) {
+          var now = new Date(date);
+          var yesterday = new Date(now.setDate(now.getDate() - j)); // 어제
           var date2 = this.date_change(yesterday);
 
           var add_data = {
@@ -212,17 +231,20 @@ export default class user_statistics extends Component {
 
         day_count_progress.map((x) => {
           sum_progress_m += x.percent * 100;
-          this.setState({ sum_m: sum_progress_m / json.data.length });
+          this.setState({
+            sum_m:
+              json.data.length === 0 ? 0 : sum_progress_m / json.data.length,
+          });
         });
       });
   };
 
   componentDidMount() {
-    console.log(this.props.route.params.id);
+    var today = this.date_change(new Date());
     this.user_info();
-    this.user_week_day();
-    this.user_cat_day();
-    this.user_month();
+    this.user_week_day(today);
+    this.user_cat_day(today);
+    this.user_month(today);
   }
 
   //환자 정보 가져오는 엔드포인트
@@ -268,8 +290,12 @@ export default class user_statistics extends Component {
 
   handleConfirm = (date) => {
     console.warn("A date has been picked: ", date);
-    this.dateToStr(date);
     this.hideDatePicker();
+    var today = this.date_change(date);
+
+    this.user_week_day(today);
+    this.user_cat_day(today);
+    this.user_month(today);
   };
 
   date_change = (date) => {
@@ -287,28 +313,12 @@ export default class user_statistics extends Component {
     return today;
   };
 
-  dateToStr = (date) => {
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    var daycount = date.getDay();
-
-    var today =
-      year +
-      ("00" + month.toString()).slice(-2) +
-      ("00" + day.toString()).slice(-2);
-
-    this.setState({
-      first_date: parseInt(today) - parseInt(daycount),
-      late_date: parseInt(today) - parseInt(daycount) + 6,
-    });
-  };
-
   onValueChange = () => {
     var newDate = new Date();
     const selectedDate = newDate || date;
     this.setState({ setDate: selectedDate, setShow: false });
   };
+
   onMenuPress = (id) => {
     if (id.length === 1) var click_date = "20220" + id + "00";
     else var click_date = "2022" + id + "00";
@@ -346,6 +356,12 @@ export default class user_statistics extends Component {
               <Text style={styles.user_age}> / {this.age_count()}세</Text>
               <Text style={styles.user_sex}> / {this.gender_change()}</Text>
               <View style={styles.margin}></View>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={this.showDatePicker}
+              >
+                <MaterialIcons name="date-range" size={30} color="#316200" />
+              </TouchableOpacity>
             </View>
 
             <DateTimePickerModal
@@ -363,29 +379,23 @@ export default class user_statistics extends Component {
             >
               <View style={styles.secondView}>
                 <View style={styles.textview}>
-                  <Text style={styles.text2}>{"주 평균" + " "}</Text>
+                  <Text style={styles.text2}>{"최근 7일 평균 "}</Text>
                   <Text style={styles.text22}>
                     {this.state.sum_p.toFixed(1)}%
                   </Text>
                   <View style={styles.margin}></View>
 
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    onPress={this.showDatePicker}
-                  >
-                    <Text style={styles.text1}>
-                      {String(this.state.first_date).substring(0, 4) +
-                        "년 " +
-                        String(this.state.first_date).substring(4, 6) +
-                        "월 " +
-                        +String(this.state.first_date).substring(6, 8) +
-                        "일 ~ " +
-                        String(this.state.late_date).substring(4, 6) +
-                        "월 " +
-                        +String(this.state.late_date).substring(6, 8) +
-                        "일"}
-                    </Text>
-                  </TouchableOpacity>
+                  <Text style={styles.text1}>
+                    {String(this.state.first_date).substring(0, 4) +
+                      "." +
+                      String(this.state.first_date).substring(4, 6) +
+                      "." +
+                      +String(this.state.first_date).substring(6, 8) +
+                      " ~ " +
+                      String(this.state.late_date).substring(4, 6) +
+                      "." +
+                      +String(this.state.late_date).substring(6, 8)}
+                  </Text>
                 </View>
 
                 <SafeAreaView style={{ flex: 2, width: "100%" }}>
@@ -407,28 +417,18 @@ export default class user_statistics extends Component {
               </View>
               <View style={styles.secondView}>
                 <View style={styles.textview}>
-                  <Text style={styles.text2}>{"월 평균" + " "}</Text>
+                  <Text style={styles.text2}>{"월 평균 "}</Text>
                   <Text style={styles.text22}>
                     {this.state.sum_m.toFixed(1)}%
                   </Text>
                   <View style={styles.margin}></View>
-                  <SimplePopupMenu
-                    style={styles.margin}
-                    items={items}
-                    cancelLabel={"취소"}
-                    onSelect={(items) => {
-                      this.onMenuPress(items.id);
-                    }}
-                    onCancel={() => console.log("onCancel")}
-                  >
-                    <Text style={styles.text1}>
-                      {"~ " +
-                        String(this.state.late_date).substring(0, 4) +
-                        "년 " +
-                        String(this.state.late_date).substring(4, 6) +
-                        "월"}
-                    </Text>
-                  </SimplePopupMenu>
+
+                  <Text style={styles.text1}>
+                    {"~ " +
+                      String(this.state.late_date).substring(0, 4) +
+                      "." +
+                      String(this.state.late_date).substring(4, 6)}
+                  </Text>
                 </View>
 
                 <SafeAreaView style={{ flex: 2, width: "100%" }}>
@@ -572,6 +572,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     flexDirection: "row",
     marginLeft: 30,
+    marginRight: 30,
     marginTop: 10,
     backgroundColor: "#F8F8F8",
   },
@@ -589,7 +590,8 @@ const styles = StyleSheet.create({
     marginBottom: "1%",
     paddingLeft: "2%",
     paddingRight: "2%",
-    height: 200,
+    paddingBottom: "1%",
+    height: 220,
     backgroundColor: "#FFFFFF",
     borderWidth: 1,
     borderColor: "#E0E0E0",
@@ -627,8 +629,6 @@ const styles = StyleSheet.create({
   text1: {
     fontSize: 13,
     color: "#000000",
-    borderBottomWidth: 0.5,
-    borderColor: "#0F9D58",
   },
   text2: {
     fontSize: 16,
