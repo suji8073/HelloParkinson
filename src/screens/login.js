@@ -41,9 +41,11 @@ export default class login extends Component {
     // this.setState 적욕이 느림
     // this.login_check();
   }
+
   login_check = () => {
     console.log("아이디: " + this.state.id);
     console.log("비밀번호: " + this.state.pw);
+
     AsyncStorage.getItem("user_info", (err, result) => {
       if (result == null) {
         console.log("비어있음");
@@ -59,26 +61,19 @@ export default class login extends Component {
     if (this.state.id !== "" || this.state.pw !== "") {
       console.log("들어갔는지 확인!");
       try {
-        fetch("http://152.70.233.113/chamlogin", {
+        fetch("http://hccparkinson.duckdns.org:19737/chamlogin", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            id: this.state.id,
-            pw: this.state.pw,
+            uid: this.state.id,
+            password: this.state.pw,
           }),
         })
           .then((res) => res.json())
-          .catch((error) => {
-            // TODO FIXME replace the red screen with something informative.
-            console.error(error);
-            Alert.alert(
-              // 모든 정보가 다 기입되지 않았을 때
-              "아이디 또는 비밀번호가 일치하지 않습니다."
-            );
-          })
           .then((json) => {
             console.log("로그인 통신 확인");
-            if (json.admin == 0) {
+            console.log(json.data[0].manager);
+            if (json.data[0].manager == false) {
               // if(json.ranking==1){
 
               // this.props.navigation.navigate("TabNavigation1");
@@ -96,7 +91,7 @@ export default class login extends Component {
               // Alert.alert(this.context.user_id);
               console.log("로그인 통신 확인");
               this.props.navigation.navigate("TabNavigation2", {});
-            } else if (json.admin == 1) {
+            } else if (json.data[0].manager == true) {
               // 관리자
 
               // this.context.changeNAME(this.state.name)
@@ -109,6 +104,14 @@ export default class login extends Component {
                 "아이디 또는 비밀번호가 일치하지 않습니다."
               );
             }
+          })
+          .catch((error) => {
+            // TODO FIXME replace the red screen with something informative.
+            console.error(error);
+            Alert.alert(
+              // 모든 정보가 다 기입되지 않았을 때
+              "아이디 또는 비밀번호가 일치하지 않습니다."
+            );
           });
       } catch (e) {
         console.log(e.message);
