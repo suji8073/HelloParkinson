@@ -104,7 +104,6 @@ export default class yusanso_2 extends Component {
     this.setState({ startDisable: false });
     this.setState({ play: false });
     storeData(this.state.minutes_Counter, this.state.seconds_Counter);
-    console.log(parseInt(this.state.minutes_Counter));
     this.save_progress();
     this.props.navigation.navigate("move_5");
   };
@@ -119,7 +118,6 @@ export default class yusanso_2 extends Component {
         donecnt: parseInt(this.state.minutes_Counter),
       }),
     }).then((res) => {
-      console.log(res.status);
       if (res.status === 200) {
         console.log("저장 성공");
       }
