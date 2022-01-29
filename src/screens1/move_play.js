@@ -63,6 +63,57 @@ let data = {
   45: require("../video/4-14.mp4"),
 };
 
+let data_time = {
+  1: require("../video/1-1.mp4"),
+  2: require("../video/1-2.mp4"),
+  3: require("../video/1-3.mp4"),
+  4: require("../video/1-4.mp4"),
+  5: require("../video/1-5.mp4"),
+  6: require("../video/1-6.mp4"),
+  7: require("../video/1-7.mp4"),
+  8: require("../video/1-8.mp4"),
+  9: require("../video/1-9.mp4"),
+  10: require("../video/1-10.mp4"),
+  11: require("../video/1-11.mp4"),
+  12: require("../video/1-12.mp4"),
+
+  13: require("../video/2-1.mp4"),
+  14: require("../video/2-2.mp4"),
+  15: require("../video/2-3.mp4"),
+  16: require("../video/2-4.mp4"),
+  17: require("../video/2-5.mp4"),
+  18: require("../video/2-6.mp4"),
+  19: require("../video/2-7.mp4"),
+  20: require("../video/2-8.mp4"),
+  21: require("../video/2-9.mp4"),
+  22: require("../video/2-10.mp4"),
+  23: require("../video/2-11.mp4"),
+  24: require("../video/2-12.mp4"),
+  25: require("../video/2-13.mp4"),
+  26: require("../video/2-14.mp4"),
+
+  27: require("../video/3-1.mp4"),
+  28: require("../video/3-2.mp4"),
+  29: require("../video/3-3.mp4"),
+  30: require("../video/3-4.mp4"),
+  31: require("../video/3-5.mp4"),
+
+  32: require("../video/4-1.mp4"),
+  33: require("../video/4-2.mp4"),
+  34: require("../video/4-3.mp4"),
+  35: require("../video/4-4.mp4"),
+  36: require("../video/4-5.mp4"),
+  37: require("../video/4-6.mp4"),
+  38: require("../video/4-7.mp4"),
+  39: require("../video/4-8.mp4"),
+  40: require("../video/4-9.mp4"),
+  41: require("../video/4-10.mp4"),
+  42: require("../video/4-11.mp4"),
+  43: require("../video/4-12.mp4"),
+  44: require("../video/4-13.mp4"),
+  45: require("../video/4-14.mp4"),
+};
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default class move_play extends Component {
@@ -76,6 +127,7 @@ export default class move_play extends Component {
       next_name: "",
       next_done_num: 0,
       next_assign_num: 0,
+      next_eid: 0,
     };
   }
 
@@ -94,7 +146,7 @@ export default class move_play extends Component {
       done_num: this.props.route.params.done_num,
       assign_num: this.props.route.params.assign_num,
     });
-
+    this.Time();
     this.params_move();
   }
 
@@ -113,6 +165,7 @@ export default class move_play extends Component {
       params_array.map((x) => {
         if (x.eid === this.props.route.params.eid + 1) {
           this.setState({
+            next_eid: x.eid,
             next_name: x.ename,
             next_done_num: x.donecnt,
             next_assign_num: x.setcnt,
@@ -131,6 +184,7 @@ export default class move_play extends Component {
         done_num: this.props.route.params.done_num + 1,
       });
     }, 1000); // 10초
+    //data_time[this.props.route.params.eid]
   };
 
   nextpage = () => {
@@ -172,8 +226,21 @@ export default class move_play extends Component {
   };
 
   where_move_go = () => {
-    
-  }
+    this.props.navigation.reset({
+      routes: [
+        {
+          name: "move_play",
+          params: {
+            eid: this.state.next_eid,
+            ename: this.state.next_name,
+            cat_name: this.props.route.params.cat_name,
+            done_num: this.state.next_done_num,
+            assign_num: this.state.next_assign_num,
+          },
+        },
+      ],
+    });
+  };
 
   save_progress = () => {
     fetch("http://hccparkinson.duckdns.org:19737/progress/write", {

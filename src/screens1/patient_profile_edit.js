@@ -39,15 +39,17 @@ myHeaders.append(
   "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdWppIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMxNzkwMDIsImV4cCI6MTY0Mzc4MzgwMn0.mRzdnAN4fibi22ao3-YzNI-lnm5t64IDc1gSx3w4ix1GrwkVrn6LZ6RCqK-Zx3hx3CFtidCo3EifVFcJeCmnAg"
 );
 
+myHeaders.append("Content-Type", "application/json");
+
 import Context from "../Context/context";
 export default class patient_profile_edit extends Component {
   static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {
-      onname1: check,
+      onname1: nocheck,
       onname2: nocheck,
-      rank1: check,
+      rank1: nocheck,
       rank2: nocheck,
       user_pw: "",
       user_pww: "",
@@ -60,6 +62,7 @@ export default class patient_profile_edit extends Component {
       progress: "",
       M: "남",
       F: "여",
+      post_rank: true,
     };
   }
 
@@ -81,6 +84,7 @@ export default class patient_profile_edit extends Component {
           () => {
             this.change_gender();
             this.change_rank();
+            console.log("rank : " + this.state.rank);
           }
         );
       });
@@ -93,24 +97,61 @@ export default class patient_profile_edit extends Component {
       body: JSON.stringify({
         uid: this.state.UID,
         //password: this.state.user_pw,
-        gender: this.state.gender,
-        birthday: this.state.birth,
-        ranking: this.state.rank,
+        gender: this.state.onname1 == check ? "M" : "F",
+        birthday:
+          this.state.user_age === "" ? this.state.birth : this.state.user_age,
+        ranking: this.state.post_rank,
       }),
-    }).then((response) => {
-      console.log(response.status);
-      if (response.status === 400) {
-      }
-    });
+    })
+      .then((response) => {
+        console.log(response.status);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  edit_pw_update = () => {
+    fetch("http://hccparkinson.duckdns.org:19737/chamuser", {
+      method: "POST",
+      headers: myHeaders,
+      body: JSON.stringify({
+        uid: this.state.UID,
+        password: this.state.user_pw,
+        gender: this.state.onname1 == check ? "M" : "F",
+        birthday:
+          this.state.user_age === "" ? this.state.birth : this.state.user_age,
+        ranking: this.state.post_rank,
+      }),
+    })
+      .then((response) => {
+        console.log(response.status);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  change_rank1 = () => {
+    console.log(this.state.rank);
+    var check = this.state.rank === true ? 1 : 0;
+    console.log(check);
+    if (this.state.gender === this.state.M) {
+      this.setState({ onname1: check, onname2: nocheck });
+    } else if (this.state.gender === this.state.F) {
+      this.setState({ onname1: nocheck, onname2: check });
+    }
   };
 
   change_rank = () => {
-    if (this.state.rank === 1) {
+    if (this.state.rank === true) {
       this.setState({ rank1: check, rank2: nocheck });
-    } else if (this.state.rank === 0) {
+    } else if (this.state.rank === false) {
+      console.log(false + "입니다");
       this.setState({ rank1: nocheck, rank2: check });
     }
   };
+
   change_gender = () => {
     if (this.state.gender === this.state.M) {
       this.setState({ onname1: check, onname2: nocheck });
@@ -140,8 +181,11 @@ export default class patient_profile_edit extends Component {
             Alert.alert("수정되었습니다.");
 
             // this.context.changePW(this.state.user_pw);
-            // db비밀번호 변경, context비밀번호 변경
-            this.edit_update();
+            // db비밀번호 변경, context비밀번호 변
+            this.state.user_pw === ""
+              ? this.edit_update()
+              : this.edit_pw_update();
+
             this.props.navigation.navigate("patient_profile");
           }
         },
@@ -169,20 +213,12 @@ export default class patient_profile_edit extends Component {
   };
   rankClick1 = () => {
     if (this.state.rank1 === nocheck && this.state.rank2 === check) {
-      this.setState({ rank1: check, rank2: nocheck });
-    } else if (this.state.rank1 === nocheck) {
-      this.setState({ rank1: check });
-    } else {
-      this.setState({ rank1: nocheck });
+      this.setState({ rank1: check, rank2: nocheck, post_rank: true });
     }
   };
   rankClick2 = () => {
     if (this.state.rank2 === nocheck && this.state.rank1 === check) {
-      this.setState({ rank2: check, rank1: nocheck });
-    } else if (this.state.rank2 === nocheck) {
-      this.setState({ rank2: check });
-    } else {
-      this.setState({ rank2: nocheck });
+      this.setState({ rank2: check, rank1: nocheck, post_rank: false });
     }
   };
 
@@ -203,7 +239,14 @@ export default class patient_profile_edit extends Component {
     return (
       <View style={styles.finalView}>
         <View style={styles.menuView}>
-          <EvilIcons name="star" size={30} color="#ffffff" />
+          <AntDesign
+            name="left"
+            size={24}
+            color="#808080"
+            onPress={() => {
+              this.props.navigation.pop();
+            }}
+          />
 
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>프로필 편집</Text>

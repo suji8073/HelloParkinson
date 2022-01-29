@@ -34,7 +34,6 @@ export default class move_1 extends Component {
   storeData = async (list) => {
     try {
       await AsyncStorage.setItem("@move_play", JSON.stringify(list));
-      console.log(JSON.stringify(list));
     } catch (e) {
       console.log(e);
       console.log("error");
@@ -53,7 +52,6 @@ export default class move_1 extends Component {
       .then((json) => {
         this.setState({ data: json.data, data_length: json.data.length });
         AsyncStorage.setItem("@move_play", JSON.stringify(json.data));
-        console.log(JSON.stringify(json.data));
       });
   };
 
@@ -116,6 +114,7 @@ export default class move_1 extends Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   finalView: {
     flex: 1,

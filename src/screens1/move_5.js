@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import Task from "./task_yusanso";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 
@@ -20,6 +22,24 @@ myHeaders.append(
   "Authorization",
   "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyOTQ0NTMsImV4cCI6MTY0Mzg5OTI1M30._Cvfjjc2w5yfS-NSUGDaW-EXBnbsKIL7j7FTsJxAe2jklaxL86tJmwiKajEZSOKO91_roCZbMBZQpy0Tq6PIVg"
 );
+
+const storeData = async (value1, value2) => {
+  try {
+    await AsyncStorage.setItem("@walk_minutes", value1);
+    await AsyncStorage.setItem("@ride_minutes", value2);
+  } catch (e) {
+    console.log("error");
+  }
+};
+
+const resetData = async (value1) => {
+  try {
+    await AsyncStorage.setItem("@walk_seconds", value1);
+    await AsyncStorage.setItem("@ride_seconds", value1);
+  } catch (e) {
+    console.log("error");
+  }
+};
 
 export default class move_5 extends Component {
   constructor(props) {
@@ -33,6 +53,44 @@ export default class move_5 extends Component {
     this.cat_list();
   }
 
+  minutes_save = () => {
+    var save_array = this.state.data;
+    var walk_m = 0;
+    var ride_m = 0;
+
+    var walk_timeend = "";
+    var ride_timeend = "";
+    save_array.map((x) => {
+      if (x.ename === "걷기") {
+        walk_m = x.donecnt;
+        walk_timeend = x.timeend;
+      }
+      if (x.ename === "자전거타기") {
+        ride_m = x.donecnt;
+        ride_timeend = x.timeend;
+      }
+    });
+
+    walk_m =
+      String(walk_m).length === 1 ? "0" + String(walk_m) : String(walk_m);
+
+    ride_m =
+      String(ride_m).length === 1 ? "0" + String(ride_m) : String(ride_m);
+
+    this.date_reset_check(walk_timeend);
+    storeData(walk_m, ride_m);
+  };
+
+  date_reset_check = (timeend) => {
+    if (
+      String(timeend).substring(11, 13) === "00" &&
+      String(timeend).substring(14, 16) === "00"
+    ) {
+      console.log("reset");
+      resetData("00");
+    }
+  };
+
   cat_list = () => {
     fetch(
       "http://hccparkinson.duckdns.org:19737/progress/personal/exercise?cat=4",
@@ -43,8 +101,8 @@ export default class move_5 extends Component {
     )
       .then((res) => res.json())
       .then((json) => {
-        console.log(json.data.length);
         this.setState({ data: json.data, data_length: json.data.length });
+        this.minutes_save();
       });
   };
   render() {
