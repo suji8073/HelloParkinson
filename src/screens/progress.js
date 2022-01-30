@@ -15,7 +15,12 @@ import ddaysvg from "../icon/dday.svg";
 import { AntDesign } from "@expo/vector-icons";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 import Context from "../Context/context";
-
+var myHeaders = new Headers();
+myHeaders.append(
+  "Authorization",
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyOTEwOTIsImV4cCI6MTY0Mzg5NTg5Mn0.AVyd0JcjLrPVeqfXUsBcOxkvxvgQOkWz4DHl-BCwzOgE5m2UqW31c7l8XiXLVTJo58YthtQ07BAl_zD465KVAQ"
+);
+myHeaders.append("Content-Type", "application/json");
 const m_items = [
   { id: "1", label: "1월" },
   { id: "2", label: "2월" },
@@ -51,6 +56,7 @@ export default class progress extends Component {
       daytext: ["일", "월", "화", "수", "목", "금", "토"],
       year: parseInt(now.getFullYear()),
       month: parseInt(now.getMonth() + 1),
+      month1: "01",
       day: parseInt(now.getDate()),
       yoil: parseInt(now.getDay()), //(0:일요일 ~ 6: 토요일)
       lastdate: 0,
@@ -59,14 +65,20 @@ export default class progress extends Component {
       thisdate2: 0,
       // yoil: 0,
       data: [],
+      data1: [],
       alarmtime: [],
       user_progress: 0,
       first: [],
       second: [],
     };
   }
-
   componentDidMount() {
+    this.setState({
+      month1:
+        String(this.state.month).length == 1
+          ? "0" + String(this.state.month)
+          : String(this.state.month),
+    });
     this.userfunc();
     this.setState({
       lastdate: new Date(this.state.year, this.state.month - 1, 0).getDate(),
@@ -78,10 +90,12 @@ export default class progress extends Component {
   minus = () => {
     this.setState({ yoil: this.state.yoil - 7 });
     this.setState({ day: this.state.day - 7 });
+    this.userfunc();
   };
   plus = () => {
     this.setState({ yoil: this.state.yoil + 7 });
     this.setState({ day: this.state.day + 7 });
+    this.userfunc();
   };
   dayy = (num) => {
     while (num < 0) {
@@ -175,19 +189,39 @@ export default class progress extends Component {
   };
 
   pressday = (yoilnum, daynum) => {
-    this.setState({ yoil: yoilnum, day: daynum });
+    this.setState({ yoil: yoilnum, day: daynum }, this.userfunc());
   };
   userfunc = () => {
-    fetch("http://152.70.233.113/chamuser?sort=name", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
+    this.setState({
+      month1:
+        String(this.state.month).length == 1
+          ? "0" + String(this.state.month)
+          : String(this.state.month),
+    });
+    fetch(
+      "http://hccparkinson.duckdns.org:19737/onlymanager/progress?date=" +
+        String(this.state.year) +
+        "-" +
+        String(this.state.month1) +
+        "-" +
+        String(this.state.day) +
+        "&&sort=0",
+      {
+        method: "GET",
+        headers: myHeaders,
+      }
+    )
       .then((res) => res.json())
       .then((json) => {
-        this.setState({ data: json });
+        this.setState({ data: json.data }, () => {
+          console.log(this.state.data);
+          console.log(this.state.month1);
+          this.setState({
+            data1: this.state.data.sort(function (a, b) {
+              return parseFloat(a.percent) - parseFloat(b.percent);
+            }),
+          });
+        });
       });
   };
 
@@ -214,17 +248,22 @@ export default class progress extends Component {
     } else if (id === "progress") {
       // 진도율 낮은 순
 
-      fetch("http://152.70.233.113/chamuser?sort=prog", {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      })
+      fetch(
+        "http://hccparkinson.duckdns.org:19737/onlymanager/userlist/progress",
+        {
+          method: "GET",
+          headers: myHeaders,
+        }
+      )
         .then((res) => res.json())
         .then((json) => {
-          this.setState({ data: json });
-          return this.state.data;
+          this.setState({ data: json.data }, () => {
+            this.setState({
+              data1: this.state.data.sort(function (a, b) {
+                return parseFloat(a.percent) - parseFloat(b.percent);
+              }),
+            });
+          });
         });
     }
   };
@@ -371,7 +410,7 @@ export default class progress extends Component {
         <View style={styles.fouuview}>
           <FlatList
             keyExtractor={(item, index) => index.toString()}
-            data={this.state.data}
+            data={this.state.data1}
             renderItem={({ item }) => {
               return (
                 <TouchableOpacity
@@ -383,10 +422,10 @@ export default class progress extends Component {
                   }}
                 >
                   <Task
-                    user={item.name}
-                    age={item.birth}
+                    user={item.uname}
+                    age={item.birthday}
                     sex={item.gender}
-                    progress={item.progress}
+                    progress={item.percent}
                     minute={item.time_send}
                     // 알림 보낸 시간으로 부터 몇분 지났는지 계산해야함 , 1분마다 갱신
                   ></Task>

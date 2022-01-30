@@ -9,7 +9,7 @@ import {
 import Task from "./task_alarm";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+// import { createAlarm } from "react-native-simple-alarm";
 import { WithLocalSvg } from "react-native-svg";
 
 import plussvg from "../icon/plus.svg";
