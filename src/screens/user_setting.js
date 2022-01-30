@@ -195,7 +195,7 @@ export default class user_setting extends Component {
           </View>
           <View style={styles.textView}>
             <Text style={styles.text2}>
-              {this.state.memo != "" ? "메모 없음" : this.state.memo}
+              {this.state.memo === "" ? "메모 없음" : this.state.memo}
             </Text>
           </View>
         </View>

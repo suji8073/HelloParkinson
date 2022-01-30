@@ -4,7 +4,7 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Left,
+  Alert,
   Body,
   TextInput,
 } from "react-native";
@@ -13,7 +13,6 @@ import Context from "../Context/context";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { EvilIcons } from "@expo/vector-icons";
 
 //eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdWppIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMxNzkwMDIsImV4cCI6MTY0Mzc4MzgwMn0.mRzdnAN4fibi22ao3-YzNI-lnm5t64IDc1gSx3w4ix1GrwkVrn6LZ6RCqK-Zx3hx3CFtidCo3EifVFcJeCmnAg
 
@@ -59,6 +58,22 @@ export default class patient_profile extends Component {
     this.user_info();
   }
 
+  logout = () => {
+    Alert.alert("로그아웃 하시겠습니까?", "", [
+      {
+        text: "취 소",
+        style: "cancel",
+      },
+      {
+        cancelable: true,
+        text: "로그아웃",
+        onPress: () => {
+          this.props.navigation.navigate("login");
+        },
+      },
+    ]);
+  };
+
   render() {
     return (
       <View style={styles.finalView}>
@@ -74,7 +89,14 @@ export default class patient_profile extends Component {
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>프로필</Text>
           <View style={styles.margin}></View>
-          <EvilIcons name="star" size={30} color="#ffffff" />
+          <MaterialIcons
+            name="logout"
+            size={24}
+            color="#808080"
+            onPress={() => {
+              this.logout();
+            }}
+          />
         </View>
 
         <View style={styles.firstView}>
@@ -145,6 +167,7 @@ export default class patient_profile extends Component {
             <Text style={styles.user_name}>정보 수정하기</Text>
           </TouchableOpacity>
         </View>
+
         <View style={styles.marginView}></View>
       </View>
     );
@@ -171,7 +194,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingRight: 20,
     paddingLeft: 20,
-    justifyContent: "flex-start",
+    justifyContent: "center",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
   },

@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  BackHandler,
+} from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
@@ -64,54 +70,54 @@ let data = {
 };
 
 let data_time = {
-  1: require("../video/1-1.mp4"),
-  2: require("../video/1-2.mp4"),
-  3: require("../video/1-3.mp4"),
-  4: require("../video/1-4.mp4"),
-  5: require("../video/1-5.mp4"),
-  6: require("../video/1-6.mp4"),
-  7: require("../video/1-7.mp4"),
-  8: require("../video/1-8.mp4"),
-  9: require("../video/1-9.mp4"),
-  10: require("../video/1-10.mp4"),
-  11: require("../video/1-11.mp4"),
-  12: require("../video/1-12.mp4"),
+  1: "2:31",
+  2: "4:01",
+  3: "2:31",
+  4: "3:22",
+  5: "3:45",
+  6: "3:0",
+  7: "3:11",
+  8: "1:10",
+  9: "1:24",
+  10: "2:19",
+  11: "4:37",
+  12: "2:14",
 
-  13: require("../video/2-1.mp4"),
-  14: require("../video/2-2.mp4"),
-  15: require("../video/2-3.mp4"),
-  16: require("../video/2-4.mp4"),
-  17: require("../video/2-5.mp4"),
-  18: require("../video/2-6.mp4"),
-  19: require("../video/2-7.mp4"),
-  20: require("../video/2-8.mp4"),
-  21: require("../video/2-9.mp4"),
-  22: require("../video/2-10.mp4"),
-  23: require("../video/2-11.mp4"),
-  24: require("../video/2-12.mp4"),
-  25: require("../video/2-13.mp4"),
-  26: require("../video/2-14.mp4"),
+  13: "1:18",
+  14: "2:4",
+  15: "1:42",
+  16: "1:36",
+  17: "2:41",
+  18: "2:26",
+  19: "1:43",
+  20: "1:53",
+  21: "1:23",
+  22: "1:47",
+  23: "1:14",
+  24: "1:29",
+  25: "0:27",
+  26: "0:22",
 
-  27: require("../video/3-1.mp4"),
-  28: require("../video/3-2.mp4"),
-  29: require("../video/3-3.mp4"),
-  30: require("../video/3-4.mp4"),
-  31: require("../video/3-5.mp4"),
+  27: "2:10",
+  28: "2:20",
+  29: "2:6",
+  30: "1:19",
+  31: "1:32",
 
-  32: require("../video/4-1.mp4"),
-  33: require("../video/4-2.mp4"),
-  34: require("../video/4-3.mp4"),
-  35: require("../video/4-4.mp4"),
-  36: require("../video/4-5.mp4"),
-  37: require("../video/4-6.mp4"),
-  38: require("../video/4-7.mp4"),
-  39: require("../video/4-8.mp4"),
-  40: require("../video/4-9.mp4"),
-  41: require("../video/4-10.mp4"),
-  42: require("../video/4-11.mp4"),
-  43: require("../video/4-12.mp4"),
-  44: require("../video/4-13.mp4"),
-  45: require("../video/4-14.mp4"),
+  32: "0:27",
+  33: "0:14",
+  34: "0:20",
+  35: "0:30",
+  36: "0:21",
+  37: "0:15",
+  38: "0:16",
+  39: "0:19",
+  40: "0:20",
+  41: "0:17",
+  42: "0:21",
+  43: "1:3",
+  44: "1:7",
+  45: "1:1",
 };
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -128,10 +134,12 @@ export default class move_play extends Component {
       next_done_num: 0,
       next_assign_num: 0,
       next_eid: 0,
+      video_start: false,
     };
   }
 
   async componentDidMount() {
+    console.log(this.props.route.params.eid);
     try {
       const list = await AsyncStorage.getItem("@move_play");
 
@@ -152,7 +160,6 @@ export default class move_play extends Component {
 
   params_move = () => {
     var params_array = this.state.list;
-    console.log(this.props.route.params.eid);
 
     if (
       this.props.route.params.eid === 12 &&
@@ -178,17 +185,28 @@ export default class move_play extends Component {
 
   Time = () => {
     // 1,000가 1초
+    var move_time =
+      (parseInt(
+        String(data_time[this.props.route.params.eid]).substring(0, 1)
+      ) *
+        60 +
+        parseInt(
+          String(data_time[this.props.route.params.eid]).substring(2, 5)
+        )) *
+      1000;
+
     setTimeout(() => {
       this.setState({
         isLoading: false,
         done_num: this.props.route.params.done_num + 1,
+        video_start: true,
       });
-    }, 1000); // 10초
-    //data_time[this.props.route.params.eid]
+    }, 1000); // 배포할 때 move_time로 바꾸기
   };
 
   nextpage = () => {
     if (this.state.isLoading === false) {
+      this.setState({ video_start: false });
       if (this.state.done_num >= this.state.assign_num) {
         this.save_progress();
 
@@ -214,6 +232,7 @@ export default class move_play extends Component {
     }
   };
   where_page = () => {
+    this.setState({ video_start: false });
     if (this.props.route.params.cat_name == 1) {
       this.props.navigation.navigate("move_1");
     } else if (this.props.route.params.cat_name == 2) {
@@ -284,6 +303,7 @@ export default class move_play extends Component {
             shouldPlay
             useNativeControls
             style={styles.fullScreen}
+            paused={this.state.video_start}
           />
         </View>
 

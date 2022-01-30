@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import {
   TouchableOpacity,
-  StatusBar,
+  ScrollView,
   StyleSheet,
   View,
   Text,
-  Image,
-  FlatList,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { WithLocalSvg } from "react-native-svg";
@@ -92,8 +90,7 @@ export default class norank_patient_Home extends Component {
             <Ionicons name="person-circle-sharp" size={35} color="#5CB405" />
           </TouchableOpacity>
         </View>
-
-        <View style={styles.secondView}>
+        <ScrollView style={styles.secondView}>
           <WithLocalSvg
             style={{ left: "-3%", position: "absolute" }}
             width={"130%"}
@@ -195,7 +192,7 @@ export default class norank_patient_Home extends Component {
               </View>
             </View>
           </View>
-        </View>
+        </ScrollView>
       </View>
     );
   }
@@ -251,6 +248,7 @@ const styles = StyleSheet.create({
     paddingTop: "6%",
     backgroundColor: "#F8F8F8",
     height: "100%",
+    marginBottom: 90,
   },
   image: {
     width: "10%",

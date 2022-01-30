@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
 
 const task_week = ({ id, put_date, progress }) => {
-  console.log(put_date);
   const dateToStr = (put_date) => {
     var date = new Date(put_date);
     var week = new Array("일", "월", "화", "수", "목", "금", "토");
@@ -85,25 +84,26 @@ const styles = StyleSheet.create({
     backgroundColor: "#316200",
   },
 
-  text11: {
+  text1: {
     fontSize: 14,
     fontWeight: "bold",
-    color: "#484848",
+    color: "#000000",
   },
-
   text1_: {
     fontSize: 13,
-    color: "#484848",
+    fontWeight: "bold",
+    color: "#565656",
   },
 
   text22: {
     fontSize: 12,
     fontWeight: "bold",
-    color: "#484848",
+    color: "#000000",
   },
 
   text2_: {
     fontSize: 11,
-    color: "#484848",
+    fontWeight: "bold",
+    color: "#565656",
   },
 });

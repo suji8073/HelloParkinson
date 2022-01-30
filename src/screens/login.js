@@ -29,6 +29,7 @@ export default class login extends Component {
   }
 
   componentDidMount() {
+    this.setState({ id: "", pw: "" });
     this.setState(
       // 디바이스에서 값을 가져오는걸로 변경해야함
       // context값도 디바이스 값으로 변경하는 것으로

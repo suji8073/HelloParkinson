@@ -12,16 +12,15 @@ import { Dimensions } from "react-native";
 import Task from "../screens1/task_record_day";
 import Task1 from "../screens1/task_week1";
 import Taskm from "../screens1/task_week1_m";
-const year = 2022 + 1;
+
 import Context from "../Context/context";
 import { WithLocalSvg } from "react-native-svg";
 import { AntDesign } from "@expo/vector-icons";
 
 import page_here from "../icon/page_here.svg";
 import page_no from "../icon/page_no.svg";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-import MonthPicker from "react-native-month-year-picker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 
 var myHeaders = new Headers();
@@ -45,35 +44,6 @@ const items = [
   { id: "12", label: "12월" },
 ];
 
-const data = [
-  { date: "20220111", progress: 80 },
-  { date: "20220112", progress: 90 },
-  { date: "20220113", progress: 80 },
-  { date: "20220114", progress: 90 },
-  { date: "20220115", progress: 90 },
-  { date: "20220116", progress: 90 },
-  { date: "20220117", progress: 60 },
-];
-const data1 = [
-  { date: "20220101", progress: 30 },
-  { date: "20220102", progress: 40 },
-  { date: "20220103", progress: 50 },
-  { date: "20220104", progress: 30 },
-  { date: "20220105", progress: 50 },
-  { date: "20220106", progress: 60 },
-  { date: "20220107", progress: 10 },
-  { date: "20220108", progress: 70 },
-  { date: "20220109", progress: 90 },
-  { date: "20220110", progress: 80 },
-  { date: "20220111", progress: 80 },
-  { date: "20220112", progress: 90 },
-  { date: "20220113", progress: 80 },
-  { date: "20220114", progress: 90 },
-  { date: "20220115", progress: 90 },
-  { date: "20220116", progress: 90 },
-  { date: "20220117", progress: 60 },
-];
-
 var sum_progress = 0;
 var sum_progress_m = 0;
 const { width, height } = Dimensions.get("screen");
@@ -83,79 +53,180 @@ export default class user_statistics extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      all_progress: 0,
-      data: [],
+      data: [], // 일주일 치 막대그래프
       first_date: "",
       late_date: "",
       sum_p: 0,
       sum_m: 0,
       page_l: true,
-      birth: 19431218,
+      birth: 0,
       gender: "",
-      memo: "",
-      team: "",
       name: "",
-      UID: "",
-      progress: 0,
-      data1: [],
+      data_: [],
       isDatePickerVisible: false,
       setDatePickerVisibility: false,
-      date: new Date(),
-      show: false,
       setShow: false,
-      data2: [],
+      data2: [], // 하루 당 꺾은선 그래프
     };
   }
 
   handleScroll = (e) => {
     if (e.nativeEvent.contentOffset.x < 130) {
-      console.log("1");
       this.setState({ page_l: true });
     } else if (e.nativeEvent.contentOffset.x > 130) {
-      console.log("2");
       this.setState({ page_l: false });
     }
-    console.log("현재 : " + this.state.page_l);
   };
 
-  componentDidMount() {
-    this.setState({ sum_p: 0, sum_m: 0 });
-    sum_progress = 0;
-    sum_progress_m = 0;
-    this.function1();
-    this.function2();
-    data.map((x) => {
-      sum_progress += x.progress;
-      this.setState({ sum_p: sum_progress / 7 });
-    });
-
-    data1.map((x) => {
-      sum_progress_m += x.progress;
-      this.setState({ sum_m: sum_progress_m / data1.length });
-    });
-
-    data.filter((x, y) => {
-      if (y === 0) this.setState({ first_date: x.date });
-      if (y === 6) this.setState({ late_date: x.date });
-    });
-
-    // 일별, 카테고리별 진도율
+  user_cat_day = () => {
     fetch(
-      "http://152.70.233.113/chamuser/day/" +
-        this.props.route.params.paramsName,
+      "http://hccparkinson.duckdns.org:19737//onlymanager/progress/user/category?UID=" +
+        this.props.route.params.id,
       {
         method: "GET",
-        headers: { "Content-Type": "application/json" },
+        headers: myHeaders,
       }
     )
       .then((res) => res.json())
       .then((json) => {
-        this.setState({ data: json });
+        var cat_change_array = json.data;
+        var cat_put_array = {};
+        var change_put_array = [];
+
+        cat_change_array.map((x) => {
+          cat_put_array = {};
+          for (let i = 0; i < x.progress.length; i++) {
+            var cat_name = "CAT" + (i + 1);
+            var cat_day = x.progress[i].day;
+            cat_put_array[cat_name] = x.progress[i].percent * 100;
+          }
+          cat_put_array["R_date"] =
+            String(cat_day).substring(5, 7) + String(cat_day).substring(8, 10);
+          change_put_array.push(cat_put_array);
+        });
+        this.setState({ data2: change_put_array });
       });
+  };
+
+  //유저 일주일치 그래프 정보 불러오기
+  user_week_day = () => {
+    var data_array = [];
+    fetch(
+      "http://hccparkinson.duckdns.org:19737/onlymanager/progress/user?UID=" +
+        this.props.route.params.id,
+      {
+        method: "GET",
+        headers: myHeaders,
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        for (let i = 0; i < json.data.length; i++) {
+          data_array.push(json.data[i]);
+        }
+
+        for (let j = 0; j < 7 - json.data.length; j++) {
+          var now = new Date(data_array[json.data.length - 1].day);
+          var yesterday = new Date(now.setDate(now.getDate() - (j + 1))); // 어제
+          var date2 = this.date_change(yesterday);
+
+          var add_data = {
+            day: date2,
+            cat: "null",
+            percent: 0,
+          };
+          data_array.push(add_data);
+        }
+
+        this.setState({ data: data_array.reverse() });
+
+        this.setState({ sum_p: 0 });
+        sum_progress = 0;
+
+        var day_count_progress = this.state.data;
+
+        day_count_progress.map((x) => {
+          sum_progress += x.percent * 100;
+          this.setState({ sum_p: sum_progress / json.data.length });
+        });
+
+        day_count_progress.filter((x, y) => {
+          if (y === 0)
+            this.setState({
+              first_date:
+                String(x.day).substring(0, 4) +
+                String(x.day).substring(5, 7) +
+                String(x.day).substring(8, 10),
+            });
+          if (y === 6)
+            this.setState({
+              late_date:
+                String(x.day).substring(0, 4) +
+                String(x.day).substring(5, 7) +
+                String(x.day).substring(8, 10),
+            });
+        });
+      });
+  };
+
+  user_month = () => {
+    var data_array = [];
+    fetch(
+      "http://hccparkinson.duckdns.org:19737/onlymanager/progress/user/month?UID=" +
+        this.props.route.params.id,
+      {
+        method: "GET",
+        headers: myHeaders,
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        for (let i = 0; i < json.data.length; i++) {
+          data_array.push(json.data[i]);
+        }
+        var last_date = String(data_array[json.data.length - 1].day).substring(
+          8,
+          10
+        );
+
+        for (let j = 0; j < last_date - 1; j++) {
+          var now = new Date(data_array[json.data.length - 1].day);
+          var yesterday = new Date(now.setDate(now.getDate() - (j + 1))); // 어제
+          var date2 = this.date_change(yesterday);
+
+          var add_data = {
+            day: date2,
+            cat: "null",
+            percent: 0,
+          };
+          data_array.push(add_data);
+        }
+
+        this.setState({ data_: data_array.reverse() });
+
+        this.setState({ sum_m: 0 });
+        sum_progress_m = 0;
+
+        var day_count_progress = this.state.data_;
+
+        day_count_progress.map((x) => {
+          sum_progress_m += x.percent * 100;
+          this.setState({ sum_m: sum_progress_m / json.data.length });
+        });
+      });
+  };
+
+  componentDidMount() {
+    console.log(this.props.route.params.id);
+    this.user_info();
+    this.user_week_day();
+    this.user_cat_day();
+    this.user_month();
   }
 
   //환자 정보 가져오는 엔드포인트
-  function1 = () => {
+  user_info = () => {
     fetch(
       "http://hccparkinson.duckdns.org:19737/onlymanager/uid/" +
         this.props.route.params.id,
@@ -166,12 +237,10 @@ export default class user_statistics extends Component {
     )
       .then((res) => res.json())
       .then((json) => {
-        console.log(json.data[0].uname);
         this.setState({
           birth: json.data[0].birthday,
           gender: json.data[0].gender,
           name: json.data[0].uname,
-          UID: json.data[0].uid,
         });
       });
   };
@@ -182,23 +251,8 @@ export default class user_statistics extends Component {
     return today_year - birth_year + 1;
   };
 
-  age_change = () => {
+  gender_change = () => {
     return this.state.gender === "F" ? "여" : "남";
-  };
-
-  function2 = () => {
-    fetch(
-      "http://152.70.233.113/chamuser/day/" +
-        this.props.route.params.paramName2,
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    )
-      .then((res) => res.json())
-      .then((json) => {
-        this.setState({ data2: json });
-      });
   };
 
   showDatePicker = () => {
@@ -216,6 +270,21 @@ export default class user_statistics extends Component {
     console.warn("A date has been picked: ", date);
     this.dateToStr(date);
     this.hideDatePicker();
+  };
+
+  date_change = (date) => {
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+
+    var today =
+      year +
+      "-" +
+      ("00" + month.toString()).slice(-2) +
+      "-" +
+      ("00" + day.toString()).slice(-2);
+
+    return today;
   };
 
   dateToStr = (date) => {
@@ -241,7 +310,6 @@ export default class user_statistics extends Component {
     this.setState({ setDate: selectedDate, setShow: false });
   };
   onMenuPress = (id) => {
-    console.log(id.length);
     if (id.length === 1) var click_date = "20220" + id + "00";
     else var click_date = "2022" + id + "00";
     this.setState({ late_date: click_date });
@@ -276,7 +344,7 @@ export default class user_statistics extends Component {
             <View style={styles.firstView}>
               <Text style={styles.user_name}>{this.state.name}</Text>
               <Text style={styles.user_age}> / {this.age_count()}세</Text>
-              <Text style={styles.user_sex}> / {this.age_change()}</Text>
+              <Text style={styles.user_sex}> / {this.gender_change()}</Text>
               <View style={styles.margin}></View>
             </View>
 
@@ -323,13 +391,13 @@ export default class user_statistics extends Component {
                 <SafeAreaView style={{ flex: 2, width: "100%" }}>
                   <FlatList
                     keyExtractor={(item, index) => index}
-                    data={data}
+                    data={this.state.data}
                     renderItem={({ item, index }) => {
                       return (
                         <Task1
                           id={index}
-                          put_date={item.date}
-                          progress={item.progress}
+                          put_date={item.day}
+                          progress={item.percent}
                         ></Task1>
                       );
                     }}
@@ -366,13 +434,13 @@ export default class user_statistics extends Component {
                 <SafeAreaView style={{ flex: 2, width: "100%" }}>
                   <FlatList
                     keyExtractor={(item, index) => index}
-                    data={data1}
+                    data={this.state.data_}
                     renderItem={({ item, index }) => {
                       return (
                         <Taskm
                           id={index}
-                          put_date={item.date}
-                          progress={item.progress}
+                          put_date={item.day}
+                          progress={item.percent}
                         ></Taskm>
                       );
                     }}

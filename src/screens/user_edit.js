@@ -25,6 +25,8 @@ myHeaders.append(
   "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyODk0MzAsImV4cCI6MTY0Mzg5NDIzMH0.XJFkawo8_s4okjavnlT1zVzs9nep6rqlMOCAVqmbloNqyf6BzLYen_Mk4JLhSY3jEP-ogqqIxD6CQO1FAFd-zg"
 );
 
+myHeaders.append("Content-Type", "application/json");
+
 export default class user_edit extends Component {
   static contextType = Context;
   constructor(props) {
@@ -85,6 +87,43 @@ export default class user_edit extends Component {
     console.log(this.state.gender);
   }
 
+  edit_update = () => {
+    fetch(
+      "http://hccparkinson.duckdns.org:19737/onlymanager/uid/" +
+        this.props.route.params.id,
+      {
+        method: "POST",
+        headers: myHeaders,
+        body: JSON.stringify({
+          uid: this.state.UID,
+          gender: this.state.age1 == on ? "M" : "F",
+          birthday:
+            this.state.user_age === "" ? this.state.birth : this.state.user_age,
+          ranking: this.state.rank1 == on ? "true" : "false",
+          memo:
+            this.state.user_memo === ""
+              ? this.state.memo
+              : this.state.user_memo,
+
+          team:
+            this.state.user_group === ""
+              ? this.state.team
+              : this.state.user_group,
+          uname:
+            this.state.user_name === ""
+              ? this.state.name
+              : this.state.user_name,
+        }),
+      }
+    )
+      .then((response) => {
+        console.log(response.status);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   sex_click1 = () => {
     if (this.state.age1 === off) {
       this.setState({ age1: on, age2: off });
@@ -125,9 +164,6 @@ export default class user_edit extends Component {
       {
         text: "취소",
         style: "cancel",
-        onPress: () => {
-          //navigation.navigate("user_setting")
-        },
       },
       {
         cancelable: true,
@@ -142,7 +178,7 @@ export default class user_edit extends Component {
   edit_finish = () => {
     Alert.alert("프로필을 수정할까요?", "", [
       {
-        text: "취소",
+        text: "취 소",
         style: "cancel",
         onPress: () => {
           //navigation.navigate("user_setting")
@@ -150,7 +186,7 @@ export default class user_edit extends Component {
       },
       {
         cancelable: true,
-        text: "수정",
+        text: "수 정",
         onPress: () => {
           if (
             this.state.user_age.length != 8 &&
@@ -169,6 +205,7 @@ export default class user_edit extends Component {
             } else {
               this.setState({ user_rank: 0 }); // 여자
             }
+            this.edit_update();
             this.props.navigation.navigate("user_setting");
           }
         },
@@ -229,13 +266,7 @@ export default class user_edit extends Component {
               <Text style={styles.text1}>아이디</Text>
             </View>
             <View style={styles.textView}>
-              <TextInput
-                style={styles.text2}
-                onChangeText={(text) => {
-                  this.setState({ user_id: text });
-                }}
-                placeholder={this.state.UID}
-              />
+              <Text style={styles.text2}>{this.state.UID}</Text>
             </View>
           </View>
 
@@ -318,8 +349,8 @@ export default class user_edit extends Component {
                   this.setState({ user_group: text });
                 }}
                 keyboardType="number-pad"
-                placeholder={this.state.team != "" ? "없음" : this.state.team}
-                maxLength={1}
+                placeholder={this.state.team === "" ? "없음" : this.state.team}
+                maxLength={2}
               />
             </View>
           </View>
@@ -334,7 +365,7 @@ export default class user_edit extends Component {
                 onChangeText={(text) => {
                   this.setState({ user_memo: text });
                 }}
-                placeholder={this.state.memo != "" ? "없음" : this.state.memo}
+                placeholder={this.state.memo === "" ? "없음" : this.state.memo}
               />
             </View>
           </View>

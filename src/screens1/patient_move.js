@@ -235,6 +235,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     width: "100%",
     backgroundColor: "#F8F8F8",
+    marginBottom: 90,
   },
   moveView: {
     backgroundColor: "#FFFFFF",
