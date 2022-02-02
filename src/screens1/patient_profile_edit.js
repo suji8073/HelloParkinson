@@ -35,7 +35,7 @@ async function savePicture() {
 var myHeaders = new Headers();
 myHeaders.append(
   "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdWppIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMxNzkwMDIsImV4cCI6MTY0Mzc4MzgwMn0.mRzdnAN4fibi22ao3-YzNI-lnm5t64IDc1gSx3w4ix1GrwkVrn6LZ6RCqK-Zx3hx3CFtidCo3EifVFcJeCmnAg"
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkZCIsIlJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpc3MiOiJIQ0MgTGFiIiwiaWF0IjoxNjQzODE1MjUxLCJleHAiOjE2NDQ0MjAwNTF9.u2zbh9qW7uYv_Y9dOZP-zF6wBFXXvXAvgB1q00iXdfkQEdPIeZpytdjYuVUArMlvq0OC099d_cuV7uuG_7WFJQ"
 );
 
 myHeaders.append("Content-Type", "application/json");
