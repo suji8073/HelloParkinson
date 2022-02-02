@@ -13,54 +13,77 @@ import { WithLocalSvg } from "react-native-svg";
 import silverstarsvg from "../icon/silverstar.svg";
 import greenstarsvg from "../icon/greenstar.svg";
 const year = 2021 + 1;
-
+import { AntDesign } from "@expo/vector-icons";
+var myHeaders = new Headers();
+myHeaders.append(
+  "Authorization",
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyOTEwOTIsImV4cCI6MTY0Mzg5NTg5Mn0.AVyd0JcjLrPVeqfXUsBcOxkvxvgQOkWz4DHl-BCwzOgE5m2UqW31c7l8XiXLVTJo58YthtQ07BAl_zD465KVAQ"
+);
+myHeaders.append("Content-Type", "application/json");
 export default class task1 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      star: silverstarsvg,
-      id: 0,
+      star: this.props.book,
+      id: this.props.id,
     };
   }
   componentDidMount() {
-    this.setState({ id: this.props.id });
-    if (this.props.book === true) {
-      this.setState({ star: greenstarsvg });
-    } else {
-      this.setState({ star: silverstarsvg });
-    }
+    // console.log("123");
+    // this.setState({ id: this.props.id });
+    // // console.log
+    // if (this.props.book === true) {
+    //   this.setState({ star: greenstarsvg });
+    // } else {
+    //   this.setState({ star: silverstarsvg });
+    // }
   }
 
-  dateToStr = () => {
-    var today_year = new Date().getFullYear();
-    var birth_year = String(this.props.age).substring(0, 4);
-    return today_year - birth_year + 1;
-  };
+  componentDidUpdate(prevProps, prevState) {
+    // console.log("1234");
+    // console.log(prevState);
+    // console.log(prevProps);
+    // if (prevState.star !== this.state.star) {
+    //   this.setState({
+    //     star: this.props.book === true ? greenstarsvg : silverstarsvg,
+    //   });
+    // } else {
+    //   this.setState({
+    //     star: this.props.book === true ? greenstarsvg : silverstarsvg,
+    //   });
+    // }
+  }
 
   handleClick = () => {
-    if (this.props.book === true) {
-      this.setState({ star: greenstarsvg });
+    if (this.state.star == silverstarsvg) {
+      // if (this.props.book === false) {
+      // this.setState({ star: greenstarsvg });
+      // this.props({ book: greenstarsvg });
       // 아이콘 asset값 변경 greenstarsvg 으로
 
       fetch("http://hccparkinson.duckdns.org:19737/onlymanager/bookmark", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: myHeaders,
         body: JSON.stringify({
           uid: String(this.props.id),
         }),
+      }).then((response) => {
+        console.log(response.status);
+        Alert.alert("즐겨찾기에 추가되었습니다.");
       });
-      Alert.alert("즐겨찾기에 추가되었습니다.");
     } else {
       this.setState({ star: silverstarsvg });
       // 아이콘 asset값 변경 silverstarsvg 으로
       fetch("http://hccparkinson.duckdns.org:19737/onlymanager/bookmark", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: myHeaders,
         body: JSON.stringify({
           uid: String(this.props.id),
         }),
+      }).then((response) => {
+        console.log(response.status);
+        Alert.alert("즐겨찾기에서 해제되었습니다.");
       });
-      Alert.alert("즐겨찾기에서 해제되었습니다.");
     }
   };
 
@@ -81,7 +104,9 @@ export default class task1 extends Component {
             <View style={styles.textgroup}>
               <Text style={styles.titleText}>{this.props.user}</Text>
               <View style={styles.textgroup1}>
-                <Text style={styles.subtext}>{this.dateToStr()}세 /</Text>
+                <Text style={styles.subtext}>
+                  {year - parseInt(this.props.age / 10000)}세 /
+                </Text>
                 <Text style={styles.subtext}>
                   {" "}
                   {this.props.sex == "M" ? "남" : "여"}성
@@ -96,8 +121,9 @@ export default class task1 extends Component {
             id="svgs"
             width={30}
             height={30}
-            // asset={this.props.book == 1 ? greenstarsvg : silverstarsvg}
-            asset={this.state.star}
+            // asset={this.props.book === true ? greenstarsvg : silverstarsvg}
+            asset={this.props.book}
+            // asset={this.state.star}
           />
         </TouchableOpacity>
       </View>
