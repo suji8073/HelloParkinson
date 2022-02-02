@@ -19,7 +19,7 @@ import { AntDesign } from "@expo/vector-icons";
 var myHeaders = new Headers();
 myHeaders.append(
   "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdWppIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMxNzkwMDIsImV4cCI6MTY0Mzc4MzgwMn0.mRzdnAN4fibi22ao3-YzNI-lnm5t64IDc1gSx3w4ix1GrwkVrn6LZ6RCqK-Zx3hx3CFtidCo3EifVFcJeCmnAg"
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDM4MTQ4MjcsImV4cCI6MTY0NDQxOTYyN30._9nHzGC2K-8u0J21TWb9ZWhLcvAQyOrxabaLH5LGO9frhAdHhxoRhhxcYuyTd47whloqG_deAILbi7yiCQQfhQ"
 );
 
 export default class patient_profile extends Component {

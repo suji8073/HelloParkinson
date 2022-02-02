@@ -406,12 +406,14 @@ export default class siginup4 extends Component {
             </View>
 
             <View style={styles.secondView}>
-              <View
+              <TouchableOpacity
                 style={
                   this.state.usingid === true
                     ? styles.sendButton
                     : styles.sendButton1
                 }
+                activeOpacity={0.8}
+                onPress={this.signup_check}
               >
                 <Text
                   style={
@@ -420,7 +422,7 @@ export default class siginup4 extends Component {
                 >
                   회 원 가 입
                 </Text>
-              </View>
+              </TouchableOpacity>
             </View>
           </ScrollView>
         </View>

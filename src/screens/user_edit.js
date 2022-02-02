@@ -84,7 +84,6 @@ export default class user_edit extends Component {
           this.setState({ rank1: off, rank2: on });
         }
       });
-    console.log(this.state.gender);
   }
 
   edit_update = () => {
@@ -162,15 +161,32 @@ export default class user_edit extends Component {
   createTwoButtonAlert = () =>
     Alert.alert("프로필을 삭제할까요?", "", [
       {
-        text: "취소",
+        text: "취 소",
         style: "cancel",
       },
       {
         cancelable: true,
-        text: "삭제",
+        text: "삭 제",
         onPress: () => {
-          Alert.alert("삭제되었습니다.");
-          this.props.navigation.navigate("TabNavigation");
+          fetch(
+            "http://hccparkinson.duckdns.org:19737/onlymanager/uid/" +
+              this.props.route.params.id,
+            {
+              method: "DELETE",
+              headers: myHeaders,
+            }
+          ).then((response) => {
+            console.log(response.status);
+            if (response.status === 200) {
+              Alert.alert("삭제되었습니다.");
+              this.props.navigation.navigate("TabNavigation");
+            } else if (response.status === 400) {
+              console.log("사용 불가능");
+              Alert.alert("error");
+            } else {
+              throw new Error("Unexpected Http Status Code");
+            }
+          });
         },
       },
     ]);
@@ -180,9 +196,6 @@ export default class user_edit extends Component {
       {
         text: "취 소",
         style: "cancel",
-        onPress: () => {
-          //navigation.navigate("user_setting")
-        },
       },
       {
         cancelable: true,
@@ -212,6 +225,40 @@ export default class user_edit extends Component {
       },
     ]);
   };
+
+  //
+  passwordreset = () =>
+    Alert.alert("비밀번호를 초기화 하시겠습니까?", "", [
+      {
+        text: "취 소",
+        style: "cancel",
+      },
+      {
+        cancelable: true,
+        text: "초기화",
+        onPress: () => {
+          fetch(
+            "http://hccparkinson.duckdns.org:19737/onlymanager/uid/resetpw/" +
+              this.props.route.params.id,
+            {
+              method: "DELETE",
+              headers: myHeaders,
+            }
+          ).then((response) => {
+            if (response.status === 200) {
+              console.log("사용 가능");
+              Alert.alert("초기화 되었습니다.");
+              this.props.navigation.navigate("user_setting");
+            } else if (response.status === 400) {
+              console.log("사용 불가능");
+              Alert.alert("error");
+            } else {
+              throw new Error("Unexpected Http Status Code");
+            }
+          });
+        },
+      },
+    ]);
 
   render() {
     return (
@@ -365,19 +412,44 @@ export default class user_edit extends Component {
                 onChangeText={(text) => {
                   this.setState({ user_memo: text });
                 }}
-                placeholder={this.state.memo === "" ? "없음" : this.state.memo}
+                placeholder={this.state.memo === " " ? "없음" : this.state.memo}
               />
             </View>
           </View>
           <View style={styles.marginView}>
+            <View style={styles.margin}></View>
+
             <TouchableOpacity
+              style={styles.margin1}
               activeOpacity={0.8}
               onPress={() => {
                 this.createTwoButtonAlert();
               }}
             >
-              <EvilIcons name="trash" size={35} color="#808080" />
+              <EvilIcons name="trash" size={40} color="#808080" />
             </TouchableOpacity>
+            <View style={styles.margin}></View>
+
+            <TouchableOpacity
+              style={styles.margin1}
+              activeOpacity={0.8}
+              onPress={() => {
+                this.passwordreset();
+              }}
+            >
+              <Ionicons
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: 2,
+                }}
+                name="ios-reload"
+                size={24}
+                color="#808080"
+              />
+              <Text style={styles.pwreset}>비밀번호 초기화</Text>
+            </TouchableOpacity>
+            <View style={styles.margin}></View>
           </View>
         </ScrollView>
       </View>
@@ -414,16 +486,17 @@ const styles = StyleSheet.create({
   },
 
   firstView: {
-    // padding:30,
     alignItems: "center",
     justifyContent: "center",
     flex: 2,
-    margin: "10%",
+    marginTop: "5%",
+    marginBottom: "8%",
+    marginRight: "10%",
+    marginLeft: "10%",
     backgroundColor: "#FFFFFF",
   },
 
   secondView: {
-    // padding:30,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
@@ -436,13 +509,12 @@ const styles = StyleSheet.create({
   },
 
   threeView: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     paddingLeft: 20,
     paddingRight: 10,
     paddingTop: 10,
-    height: 80,
+    height: 60,
     flexDirection: "row",
     backgroundColor: "#FFFFFF",
     borderBottomWidth: 0.5,
@@ -451,9 +523,9 @@ const styles = StyleSheet.create({
   },
 
   marginView: {
-    // padding:30,
     alignItems: "center",
     justifyContent: "center",
+    flexDirection: "row",
     flex: 2,
     margin: 10,
     backgroundColor: "#FFFFFF",
@@ -461,34 +533,36 @@ const styles = StyleSheet.create({
 
   margin: {
     // padding:30,
-    alignItems: "flex-start",
+    alignItems: "center",
     justifyContent: "center",
     flex: 1,
   },
 
+  margin1: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 4,
+  },
+
   memoView: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 2,
   },
 
   textView: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 3,
   },
 
   margin: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,
   },
 
   ageview: {
-    // padding:30,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
@@ -521,6 +595,13 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     fontSize: 17,
     color: "#316200",
+    justifyContent: "center",
+  },
+
+  pwreset: {
+    fontSize: 14,
+    color: "#808080",
+    alignItems: "center",
     justifyContent: "center",
   },
 });

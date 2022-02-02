@@ -8,8 +8,15 @@ export default class extends React.Component {
   };
   componentDidMount = async () => {
     // 1,000가 1초
+    // http://hccparkinson.duckdns.org:19737/pingtest
+
     setTimeout(() => {
-      this.setState({ isLoading: false });
+      fetch("http://hccparkinson.duckdns.org:19737/pingtest", {
+        method: "GET",
+      }).then((response) => {
+        console.log(response.status);
+        if (response.status === 200) this.setState({ isLoading: false });
+      });
     }, 3000);
   };
 
