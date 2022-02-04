@@ -13,6 +13,7 @@ import { WithLocalSvg } from "react-native-svg";
 import silverstarsvg from "../icon/silverstar.svg";
 import greenstarsvg from "../icon/greenstar.svg";
 const year = 2021 + 1;
+
 import { AntDesign } from "@expo/vector-icons";
 var myHeaders = new Headers();
 myHeaders.append(
@@ -20,6 +21,7 @@ myHeaders.append(
   "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyOTEwOTIsImV4cCI6MTY0Mzg5NTg5Mn0.AVyd0JcjLrPVeqfXUsBcOxkvxvgQOkWz4DHl-BCwzOgE5m2UqW31c7l8XiXLVTJo58YthtQ07BAl_zD465KVAQ"
 );
 myHeaders.append("Content-Type", "application/json");
+
 export default class task1 extends Component {
   constructor(props) {
     super(props);
@@ -53,6 +55,12 @@ export default class task1 extends Component {
     //   });
     // }
   }
+
+  dateToStr = () => {
+    var today_year = new Date().getFullYear();
+    var birth_year = String(this.props.age).substring(0, 4);
+    return today_year - birth_year + 1;
+  };
 
   handleClick = () => {
     if (this.state.star == silverstarsvg) {
@@ -104,9 +112,7 @@ export default class task1 extends Component {
             <View style={styles.textgroup}>
               <Text style={styles.titleText}>{this.props.user}</Text>
               <View style={styles.textgroup1}>
-                <Text style={styles.subtext}>
-                  {year - parseInt(this.props.age / 10000)}세 /
-                </Text>
+                <Text style={styles.subtext}>{this.dateToStr()}세 /</Text>
                 <Text style={styles.subtext}>
                   {" "}
                   {this.props.sex == "M" ? "남" : "여"}성

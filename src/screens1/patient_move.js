@@ -18,7 +18,7 @@ import { WithLocalSvg } from "react-native-svg";
 var myHeaders = new Headers();
 myHeaders.append(
   "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyOTQ0NTMsImV4cCI6MTY0Mzg5OTI1M30._Cvfjjc2w5yfS-NSUGDaW-EXBnbsKIL7j7FTsJxAe2jklaxL86tJmwiKajEZSOKO91_roCZbMBZQpy0Tq6PIVg"
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDM4MTQ4MjcsImV4cCI6MTY0NDQxOTYyN30._9nHzGC2K-8u0J21TWb9ZWhLcvAQyOrxabaLH5LGO9frhAdHhxoRhhxcYuyTd47whloqG_deAILbi7yiCQQfhQ"
 );
 export default class patient_move extends Component {
   constructor(props) {
@@ -44,7 +44,6 @@ export default class patient_move extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         this.setState({
           setcnt1: json.data[0].setcntsum,
           setcnt2: json.data[1].setcntsum,
@@ -236,6 +235,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     width: "100%",
     backgroundColor: "#F8F8F8",
+    marginBottom: 90,
   },
   moveView: {
     backgroundColor: "#FFFFFF",

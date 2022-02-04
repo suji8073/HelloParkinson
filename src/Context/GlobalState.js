@@ -1,6 +1,6 @@
 import React from "react";
 import { Alert } from "react-native";
-import update from "react-addons-update";
+//import update from "react-addons-update";
 import Context from "./context";
 export default class GlobalState extends React.Component {
   state = {

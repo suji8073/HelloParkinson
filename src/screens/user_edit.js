@@ -16,9 +16,16 @@ import { Feather } from "@expo/vector-icons";
 
 import on from "../icon/r_btn_on.svg";
 import off from "../icon/r_btn_off.svg";
-const year = 2021 + 1;
 
 import { WithLocalSvg } from "react-native-svg";
+
+var myHeaders = new Headers();
+myHeaders.append(
+  "Authorization",
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyODk0MzAsImV4cCI6MTY0Mzg5NDIzMH0.XJFkawo8_s4okjavnlT1zVzs9nep6rqlMOCAVqmbloNqyf6BzLYen_Mk4JLhSY3jEP-ogqqIxD6CQO1FAFd-zg"
+);
+
+myHeaders.append("Content-Type", "application/json");
 
 export default class user_edit extends Component {
   static contextType = Context;
@@ -31,9 +38,9 @@ export default class user_edit extends Component {
       user_sex: 1,
       user_group: "",
       user_memo: "",
-      age1: on,
+      age1: off,
       age2: off,
-      rank1: on,
+      rank1: off,
       rank2: off,
       birth: 19550515,
       gender: "",
@@ -41,46 +48,80 @@ export default class user_edit extends Component {
       team: "",
       name: "",
       UID: "",
-
-      rank: 1,
+      rank: true,
       progress: 0,
     };
   }
 
   componentDidMount() {
-    console.log(this.props.route.params.paramName1);
     fetch(
-      "http://152.70.233.113/chamuser/id/" + this.props.route.params.paramName1,
+      "http://hccparkinson.duckdns.org:19737/onlymanager/uid/" +
+        this.props.route.params.id,
       {
         method: "GET",
-        headers: { "Content-Type": "application/json" },
+        headers: myHeaders,
       }
     )
       .then((res) => res.json())
       .then((json) => {
         this.setState({
-          birth: json.info.birth,
-          gender: json.info.gender,
-          memo: json.info.memo,
-          team: json.info.team,
-          name: json.info.name,
-          UID: json.info.UID,
-          rank: json.info.ranking,
-          progress: json.info.progress,
+          birth: json.data[0].birthday,
+          gender: json.data[0].gender,
+          name: json.data[0].uname,
+          memo: json.data[0].memo,
+          team: json.data[0].team,
+          UID: json.data[0].uid,
+          rank: json.data[0].ranking,
         });
+        if (this.state.gender === "M") {
+          this.setState({ age1: on, age2: off });
+        } else {
+          this.setState({ age1: off, age2: on });
+        }
+        if (this.state.rank === true) {
+          this.setState({ rank1: on, rank2: off });
+        } else {
+          this.setState({ rank1: off, rank2: on });
+        }
       });
-
-    if (this.state.gender === "M") {
-      this.setState({ age1: on, age2: off });
-    } else {
-      this.setState({ age1: off, age2: on });
-    }
-    if (this.state.rank === 1) {
-      this.setState({ rank1: on, rank2: off });
-    } else {
-      this.setState({ rank1: off, rank2: on });
-    }
   }
+
+  edit_update = () => {
+    fetch(
+      "http://hccparkinson.duckdns.org:19737/onlymanager/uid/" +
+        this.props.route.params.id,
+      {
+        method: "POST",
+        headers: myHeaders,
+        body: JSON.stringify({
+          uid: this.state.UID,
+          gender: this.state.age1 == on ? "M" : "F",
+          birthday:
+            this.state.user_age === "" ? this.state.birth : this.state.user_age,
+          ranking: this.state.rank1 == on ? "true" : "false",
+          memo:
+            this.state.user_memo === ""
+              ? this.state.memo
+              : this.state.user_memo,
+
+          team:
+            this.state.user_group === ""
+              ? this.state.team
+              : this.state.user_group,
+          uname:
+            this.state.user_name === ""
+              ? this.state.name
+              : this.state.user_name,
+        }),
+      }
+    )
+      .then((response) => {
+        console.log(response.status);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   sex_click1 = () => {
     if (this.state.age1 === off) {
@@ -120,36 +161,45 @@ export default class user_edit extends Component {
   createTwoButtonAlert = () =>
     Alert.alert("프로필을 삭제할까요?", "", [
       {
-        text: "취소",
+        text: "취 소",
         style: "cancel",
-        onPress: () => {
-          //navigation.navigate("user_setting")
-        },
       },
       {
         cancelable: true,
-        text: "삭제",
+        text: "삭 제",
         onPress: () => {
-          Alert.alert("삭제되었습니다.");
-          this.props.navigation.navigate("TabNavigation");
+          fetch(
+            "http://hccparkinson.duckdns.org:19737/onlymanager/uid/" +
+              this.props.route.params.id,
+            {
+              method: "DELETE",
+              headers: myHeaders,
+            }
+          ).then((response) => {
+            console.log(response.status);
+            if (response.status === 200) {
+              Alert.alert("삭제되었습니다.");
+              this.props.navigation.navigate("TabNavigation");
+            } else if (response.status === 400) {
+              console.log("사용 불가능");
+              Alert.alert("error");
+            } else {
+              throw new Error("Unexpected Http Status Code");
+            }
+          });
         },
       },
     ]);
 
-  check_click = () => {};
-
   edit_finish = () => {
     Alert.alert("프로필을 수정할까요?", "", [
       {
-        text: "취소",
+        text: "취 소",
         style: "cancel",
-        onPress: () => {
-          //navigation.navigate("user_setting")
-        },
       },
       {
         cancelable: true,
-        text: "수정",
+        text: "수 정",
         onPress: () => {
           if (
             this.state.user_age.length != 8 &&
@@ -168,12 +218,47 @@ export default class user_edit extends Component {
             } else {
               this.setState({ user_rank: 0 }); // 여자
             }
+            this.edit_update();
             this.props.navigation.navigate("user_setting");
           }
         },
       },
     ]);
   };
+
+  //
+  passwordreset = () =>
+    Alert.alert("비밀번호를 초기화 하시겠습니까?", "", [
+      {
+        text: "취 소",
+        style: "cancel",
+      },
+      {
+        cancelable: true,
+        text: "초기화",
+        onPress: () => {
+          fetch(
+            "http://hccparkinson.duckdns.org:19737/onlymanager/uid/resetpw/" +
+              this.props.route.params.id,
+            {
+              method: "DELETE",
+              headers: myHeaders,
+            }
+          ).then((response) => {
+            if (response.status === 200) {
+              console.log("사용 가능");
+              Alert.alert("초기화 되었습니다.");
+              this.props.navigation.navigate("user_setting");
+            } else if (response.status === 400) {
+              console.log("사용 불가능");
+              Alert.alert("error");
+            } else {
+              throw new Error("Unexpected Http Status Code");
+            }
+          });
+        },
+      },
+    ]);
 
   render() {
     return (
@@ -228,13 +313,7 @@ export default class user_edit extends Component {
               <Text style={styles.text1}>아이디</Text>
             </View>
             <View style={styles.textView}>
-              <TextInput
-                style={styles.text2}
-                onChangeText={(text) => {
-                  this.setState({ user_id: text });
-                }}
-                placeholder={this.state.UID}
-              />
+              <Text style={styles.text2}>{this.state.UID}</Text>
             </View>
           </View>
 
@@ -317,8 +396,8 @@ export default class user_edit extends Component {
                   this.setState({ user_group: text });
                 }}
                 keyboardType="number-pad"
-                placeholder={this.state.team}
-                maxLength={1}
+                placeholder={this.state.team === "" ? "없음" : this.state.team}
+                maxLength={2}
               />
             </View>
           </View>
@@ -333,19 +412,44 @@ export default class user_edit extends Component {
                 onChangeText={(text) => {
                   this.setState({ user_memo: text });
                 }}
-                placeholder={this.state.memo}
+                placeholder={this.state.memo === " " ? "없음" : this.state.memo}
               />
             </View>
           </View>
           <View style={styles.marginView}>
+            <View style={styles.margin}></View>
+
             <TouchableOpacity
+              style={styles.margin1}
               activeOpacity={0.8}
               onPress={() => {
                 this.createTwoButtonAlert();
               }}
             >
-              <EvilIcons name="trash" size={35} color="#808080" />
+              <EvilIcons name="trash" size={40} color="#808080" />
             </TouchableOpacity>
+            <View style={styles.margin}></View>
+
+            <TouchableOpacity
+              style={styles.margin1}
+              activeOpacity={0.8}
+              onPress={() => {
+                this.passwordreset();
+              }}
+            >
+              <Ionicons
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: 2,
+                }}
+                name="ios-reload"
+                size={24}
+                color="#808080"
+              />
+              <Text style={styles.pwreset}>비밀번호 초기화</Text>
+            </TouchableOpacity>
+            <View style={styles.margin}></View>
           </View>
         </ScrollView>
       </View>
@@ -382,16 +486,17 @@ const styles = StyleSheet.create({
   },
 
   firstView: {
-    // padding:30,
     alignItems: "center",
     justifyContent: "center",
     flex: 2,
-    margin: "10%",
+    marginTop: "5%",
+    marginBottom: "8%",
+    marginRight: "10%",
+    marginLeft: "10%",
     backgroundColor: "#FFFFFF",
   },
 
   secondView: {
-    // padding:30,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
@@ -404,13 +509,12 @@ const styles = StyleSheet.create({
   },
 
   threeView: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     paddingLeft: 20,
     paddingRight: 10,
     paddingTop: 10,
-    height: 80,
+    height: 60,
     flexDirection: "row",
     backgroundColor: "#FFFFFF",
     borderBottomWidth: 0.5,
@@ -419,9 +523,9 @@ const styles = StyleSheet.create({
   },
 
   marginView: {
-    // padding:30,
     alignItems: "center",
     justifyContent: "center",
+    flexDirection: "row",
     flex: 2,
     margin: 10,
     backgroundColor: "#FFFFFF",
@@ -429,34 +533,36 @@ const styles = StyleSheet.create({
 
   margin: {
     // padding:30,
-    alignItems: "flex-start",
+    alignItems: "center",
     justifyContent: "center",
     flex: 1,
   },
 
+  margin1: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 4,
+  },
+
   memoView: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 2,
   },
 
   textView: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 3,
   },
 
   margin: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,
   },
 
   ageview: {
-    // padding:30,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
@@ -489,6 +595,13 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     fontSize: 17,
     color: "#316200",
+    justifyContent: "center",
+  },
+
+  pwreset: {
+    fontSize: 14,
+    color: "#808080",
+    alignItems: "center",
     justifyContent: "center",
   },
 });

@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
 
 const task_week = ({ id, put_date, progress }) => {
-  const dateToStr = (date) => {
+  const dateToStr = (put_date) => {
+    var date = new Date(put_date);
     var week = new Array("일", "월", "화", "수", "목", "금", "토");
 
     var year = date.getFullYear();
@@ -47,8 +48,11 @@ const task_week = ({ id, put_date, progress }) => {
         ></View>
       </View>
       <View style={styles.textView}>
+        <Text style={id === 6 ? styles.text22 : styles.text2_}>
+          {put_date.substring(8, 10)}
+        </Text>
         <Text style={id === 6 ? styles.text11 : styles.text1_}>
-          {dateToStr(new Date())}
+          {dateToStr(put_date)}
         </Text>
       </View>
     </View>
@@ -65,7 +69,8 @@ const styles = StyleSheet.create({
   },
 
   textView: {
-    flexDirection: "row",
+    marginTop: 5,
+    flexDirection: "column",
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
@@ -79,14 +84,26 @@ const styles = StyleSheet.create({
     backgroundColor: "#316200",
   },
 
-  text11: {
+  text1: {
     fontSize: 14,
     fontWeight: "bold",
-    color: "#484848",
+    color: "#000000",
   },
-
   text1_: {
     fontSize: 13,
-    color: "#484848",
+    fontWeight: "bold",
+    color: "#565656",
+  },
+
+  text22: {
+    fontSize: 12,
+    fontWeight: "bold",
+    color: "#000000",
+  },
+
+  text2_: {
+    fontSize: 11,
+    fontWeight: "bold",
+    color: "#565656",
   },
 });

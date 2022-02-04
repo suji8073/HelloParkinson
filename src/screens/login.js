@@ -30,6 +30,7 @@ export default class login extends Component {
   }
 
   componentDidMount() {
+    this.setState({ id: "", pw: "" });
     this.setState(
       // 디바이스에서 값을 가져오는걸로 변경해야함
       // context값도 디바이스 값으로 변경하는 것으로
@@ -42,14 +43,18 @@ export default class login extends Component {
     console.log(this.context.user_token);
     // this.context.changeTOKEN("change");
   }
+
   login_check = () => {
-    // console.log("아이디: " + this.state.id);
-    // console.log("비밀번호: " + this.state.pw);
-    // AsyncStorage.getItem("user_info", (err, result) => {
-    //   if (result == null) {
-    //     console.log("비어있음");
-    //   } else {
-    //     const UserInfo = JSON.parse(result);
+
+    console.log("아이디: " + this.state.id);
+    console.log("비밀번호: " + this.state.pw);
+
+    AsyncStorage.getItem("user_info", (err, result) => {
+      if (result == null) {
+        console.log("비어있음");
+      } else {
+        const UserInfo = JSON.parse(result);
+
 
     //     console.log("아이디 : " + UserInfo.u_id);
     //     console.log("비밀번호 : " + UserInfo.u_pw);
@@ -73,15 +78,8 @@ export default class login extends Component {
           }),
         })
           .then((res) => res.json())
-          .catch((error) => {
-            // TODO FIXME replace the red screen with something informative.
-            console.error(error);
-            Alert.alert(
-              // 모든 정보가 다 기입되지 않았을 때
-              "아이디 또는 비밀번호가 일치하지 않습니다."
-            );
-          })
           .then((json) => {
+
             // console.log("로그인 통신 확인");
             console.log(json.data);
             if (json.data[0].manager == false) {
@@ -91,12 +89,16 @@ export default class login extends Component {
                 this.props.navigation.navigate("TabNavigation2");
               }
 
+
               // 환자
               // 아이디, 비밀번호 context변경 기능 필요
               // this.context.changeID(this.state.id);
               // this.context.changePW(this.state.pw);
               // Alert.alert(this.context.user_id);
               console.log("로그인 통신 확인");
+
+              this.props.navigation.navigate("TabNavigation2", {});
+
             } else if (json.data[0].manager == true) {
               // 관리자
 
@@ -110,6 +112,14 @@ export default class login extends Component {
                 "아이디 또는 비밀번호가 일치하지 않습니다."
               );
             }
+          })
+          .catch((error) => {
+            // TODO FIXME replace the red screen with something informative.
+            console.error(error);
+            Alert.alert(
+              // 모든 정보가 다 기입되지 않았을 때
+              "아이디 또는 비밀번호가 일치하지 않습니다."
+            );
           });
       } catch (e) {
         console.log(e.message);

@@ -12,35 +12,19 @@ import { Dimensions } from "react-native";
 import Task from "./task_record_day";
 import Task1 from "./task_week";
 import Taskm from "../screens1/task_week_m";
-
+import { MaterialIcons } from "@expo/vector-icons";
 import { WithLocalSvg } from "react-native-svg";
 
 import page_here from "../icon/page_here.svg";
 import page_no from "../icon/page_no.svg";
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import SimplePopupMenu from "react-native-simple-popup-menu";
 
 var myHeaders = new Headers();
 myHeaders.append(
   "Authorization",
   "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMxODQ0MTAsImV4cCI6MTY0Mzc4OTIxMH0.7_etGVJgCXvuZHSHGqf6S0nuRl9eO7bYgZ_M64sLiS5-XG5dM5_MMlu7YczT8P0IBEn83Z5V4UFrZO43m4eebw"
 );
-
-const items = [
-  { id: "1", label: "1월" },
-  { id: "2", label: "2월" },
-  { id: "3", label: "3월" },
-  { id: "4", label: "4월" },
-  { id: "5", label: "5월" },
-  { id: "6", label: "6월" },
-  { id: "7", label: "7월" },
-  { id: "8", label: "8월" },
-  { id: "9", label: "9월" },
-  { id: "10", label: "10월" },
-  { id: "11", label: "11월" },
-  { id: "12", label: "12월" },
-];
 
 var sum_progress = 0;
 var sum_progress_m = 0;
@@ -66,19 +50,22 @@ export default class patient_record extends Component {
 
   handleScroll = (e) => {
     if (e.nativeEvent.contentOffset.x < 130) {
-      console.log("1");
       this.setState({ page_l: true });
     } else if (e.nativeEvent.contentOffset.x > 130) {
-      console.log("2");
       this.setState({ page_l: false });
     }
   };
 
-  user_cat_day = () => {
-    fetch("http://hccparkinson.duckdns.org:19737/progress/personal/cat/week", {
-      method: "GET",
-      headers: myHeaders,
-    })
+  user_cat_day = (date) => {
+    fetch(
+      "http://hccparkinson.duckdns.org:19737/progress/personal/cat/period/" +
+        date +
+        "?day=7",
+      {
+        method: "GET",
+        headers: myHeaders,
+      }
+    )
       .then((res) => res.json())
       .then((json) => {
         var cat_change_array = json.data;
@@ -100,12 +87,17 @@ export default class patient_record extends Component {
       });
   };
 
-  user_week_day = () => {
+  user_week_day = (date) => {
     var data_array = [];
-    fetch("http://hccparkinson.duckdns.org:19737/progress/personal", {
-      method: "GET",
-      headers: myHeaders,
-    })
+    fetch(
+      "http://hccparkinson.duckdns.org:19737/progress/personal/period/" +
+        date +
+        "?day=7",
+      {
+        method: "GET",
+        headers: myHeaders,
+      }
+    )
       .then((res) => res.json())
       .then((json) => {
         for (let i = 0; i < json.data.length; i++) {
@@ -113,8 +105,8 @@ export default class patient_record extends Component {
         }
 
         for (let j = 0; j < 7 - json.data.length; j++) {
-          var now = new Date(data_array[json.data.length - 1].day);
-          var yesterday = new Date(now.setDate(now.getDate() - (j + 1))); // 어제
+          var now = new Date(date);
+          var yesterday = new Date(now.setDate(now.getDate() - j)); // 어제
           var date2 = this.date_change(yesterday);
 
           var add_data = {
@@ -125,7 +117,9 @@ export default class patient_record extends Component {
           data_array.push(add_data);
         }
 
-        this.setState({ data: data_array.reverse() });
+        this.setState({ data: data_array.reverse() }, () => {
+          return this.state.data;
+        });
 
         this.setState({ sum_p: 0 });
         sum_progress = 0;
@@ -134,7 +128,9 @@ export default class patient_record extends Component {
 
         day_count_progress.map((x) => {
           sum_progress += x.percent * 100;
-          this.setState({ sum_p: sum_progress / json.data.length });
+          this.setState({
+            sum_p: json.data.length === 0 ? 0 : sum_progress / json.data.length,
+          });
         });
 
         day_count_progress.filter((x, y) => {
@@ -156,25 +152,35 @@ export default class patient_record extends Component {
       });
   };
 
-  user_month = () => {
+  user_month = (date) => {
     var data_array = [];
-    fetch("http://hccparkinson.duckdns.org:19737/progress/personal/month", {
-      method: "GET",
-      headers: myHeaders,
-    })
+    var lastDate = "";
+    if (date == this.date_change(new Date())) lastDate = date.substring(8, 10);
+    else
+      var lastDate = new Date(
+        date.substring(0, 4),
+        date.substring(5, 7),
+        0
+      ).getDate();
+    fetch(
+      "http://hccparkinson.duckdns.org:19737/progress/personal/period/" +
+        date +
+        "?day=" +
+        lastDate,
+      {
+        method: "GET",
+        headers: myHeaders,
+      }
+    )
       .then((res) => res.json())
       .then((json) => {
         for (let i = 0; i < json.data.length; i++) {
           data_array.push(json.data[i]);
         }
-        var last_date = String(data_array[json.data.length - 1].day).substring(
-          8,
-          10
-        );
 
-        for (let j = 0; j < last_date - 1; j++) {
-          var now = new Date(data_array[json.data.length - 1].day);
-          var yesterday = new Date(now.setDate(now.getDate() - (j + 1))); // 어제
+        for (let j = 0; j < lastDate - 1; j++) {
+          var now = new Date(date);
+          var yesterday = new Date(now.setDate(now.getDate() - j)); // 어제
           var date2 = this.date_change(yesterday);
 
           var add_data = {
@@ -185,7 +191,9 @@ export default class patient_record extends Component {
           data_array.push(add_data);
         }
 
-        this.setState({ data_: data_array.reverse() });
+        this.setState({ data_: data_array.reverse() }, () => {
+          return this.state.data_;
+        });
 
         this.setState({ sum_m: 0 });
         sum_progress_m = 0;
@@ -194,15 +202,19 @@ export default class patient_record extends Component {
 
         day_count_progress.map((x) => {
           sum_progress_m += x.percent * 100;
-          this.setState({ sum_m: sum_progress_m / json.data.length });
+          this.setState({
+            sum_m:
+              json.data.length === 0 ? 0 : sum_progress_m / json.data.length,
+          });
         });
       });
   };
 
   componentDidMount() {
-    this.user_week_day();
-    this.user_cat_day();
-    this.user_month();
+    var today = this.date_change(new Date());
+    this.user_week_day(today);
+    this.user_cat_day(today);
+    this.user_month(today);
   }
 
   showDatePicker = () => {
@@ -218,8 +230,12 @@ export default class patient_record extends Component {
 
   handleConfirm = (date) => {
     console.warn("A date has been picked: ", date);
-    this.dateToStr(date);
     this.hideDatePicker();
+    var today = this.date_change(date);
+
+    this.user_week_day(today);
+    this.user_cat_day(today);
+    this.user_month(today);
   };
 
   date_change = (date) => {
@@ -237,23 +253,6 @@ export default class patient_record extends Component {
     return today;
   };
 
-  dateToStr = (date) => {
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    var daycount = date.getDay();
-
-    var today =
-      year +
-      ("00" + month.toString()).slice(-2) +
-      ("00" + day.toString()).slice(-2);
-
-    this.setState({
-      first_date: parseInt(today) - parseInt(daycount),
-      late_date: parseInt(today) - parseInt(daycount) + 6,
-    });
-  };
-
   onValueChange = () => {
     var newDate = new Date();
     const selectedDate = newDate || date;
@@ -267,7 +266,6 @@ export default class patient_record extends Component {
   };
 
   onMenuPress = (id) => {
-    console.log(id.length);
     if (id.length === 1) var click_date = "20220" + id + "00";
     else var click_date = "2022" + id + "00";
     this.setState({ late_date: click_date });
@@ -303,11 +301,7 @@ export default class patient_record extends Component {
             >
               <View style={styles.secondView}>
                 <View style={styles.textview}>
-                  <TouchableOpacity
-                    style={styles.margin}
-                    activeOpacity={0.8}
-                    onPress={this.showDatePicker}
-                  >
+                  <View style={{ flexDirection: "row" }}>
                     <Text style={styles.text1}>
                       {String(this.state.first_date).substring(0, 4) +
                         "년 " +
@@ -320,9 +314,21 @@ export default class patient_record extends Component {
                         +String(this.state.late_date).substring(6, 8) +
                         "일"}
                     </Text>
-                  </TouchableOpacity>
+                    <View style={styles.margin}></View>
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      onPress={this.showDatePicker}
+                    >
+                      <MaterialIcons
+                        name="date-range"
+                        size={30}
+                        color="#316200"
+                      />
+                    </TouchableOpacity>
+                  </View>
+
                   <Text style={styles.text2}>
-                    주 평균 {this.state.sum_p.toFixed(1)}%
+                    최근 7일 평균 {this.state.sum_p.toFixed(1)}%
                   </Text>
                 </View>
 
@@ -345,22 +351,25 @@ export default class patient_record extends Component {
               </View>
               <View style={styles.secondView}>
                 <View style={styles.textview}>
-                  <SimplePopupMenu
-                    style={styles.margin}
-                    items={items}
-                    cancelLabel={"취소"}
-                    onSelect={(items) => {
-                      this.onMenuPress(items.id);
-                    }}
-                    onCancel={() => console.log("onCancel")}
-                  >
+                  <View style={{ flexDirection: "row" }}>
                     <Text style={styles.text1}>
                       {String(this.state.late_date).substring(0, 4) +
                         "년 " +
                         String(this.state.late_date).substring(4, 6) +
                         "월"}
                     </Text>
-                  </SimplePopupMenu>
+                    <View style={styles.margin}></View>
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      onPress={this.showDatePicker}
+                    >
+                      <MaterialIcons
+                        name="date-range"
+                        size={30}
+                        color="#316200"
+                      />
+                    </TouchableOpacity>
+                  </View>
 
                   <Text style={styles.text2}>
                     월 평균 {this.state.sum_m.toFixed(1)}%
@@ -512,7 +521,8 @@ const styles = StyleSheet.create({
     marginBottom: "1%",
     paddingLeft: "2%",
     paddingRight: "2%",
-    height: 200,
+    paddingBottom: "2%",
+    height: 220,
     backgroundColor: "#FFFFFF",
     borderWidth: 1,
     borderColor: "#E0E0E0",
@@ -553,8 +563,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
-    borderBottomWidth: 0.5,
-    borderColor: "#0F9D58",
   },
   text2: {
     alignItems: "flex-start",

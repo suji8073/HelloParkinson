@@ -55,6 +55,15 @@ export default class task_patient extends Component {
                   color: (opacity = 0) => `rgba(101, 203, 0, ${opacity})`, // optional
                   strokeWidth: 1.5,
                 },
+                {
+                  data: [0], // min
+
+                  color: (opacity = 0) => `rgba(255, 255, 255, 0)`, // optional
+                },
+                {
+                  data: [100], // max
+                  color: (opacity = 0) => `rgba(255, 255, 255, 1.0)`, // optional
+                },
               ],
             }}
             width={350}

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { TouchableOpacity, View, Text, Switch } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-//const alarm_task = ({ navigation, apm, hour, minute, check }) => {
+
 
 const storeData = async (array) => {
   try {

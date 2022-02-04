@@ -1,5 +1,5 @@
 import React from "react";
-import update from "react-addons-update";
+//import update from "react-addons-update";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default React.createContext({
   user_id: "test",
@@ -11,7 +11,7 @@ export default React.createContext({
     { id: "1-1", name: "목 앞 근육 스트레칭", set: 0 },
     { id: "1-2", name: "날개뼈 모으기", set: 6 },
     { id: "1-3", name: "손목 및 팔꿈치 주변 근육 스트레칭", set: 10 },
-    { id: "2-1", name: "엉덩이 들기", set: 2 },
+    { id: "2-1", name: "엉덩s이 들기", set: 2 },
     { id: "2-2", name: "엎드려 누운 상태에서 다리들기", set: 6 },
     { id: "2-3", name: "엉덩이 옆 근육 운동", set: 10 },
     { id: "2-4", name: "무릎 벌리기", set: 20 },

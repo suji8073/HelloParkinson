@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  BackHandler,
+} from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
@@ -63,6 +69,59 @@ let data = {
   45: require("../video/4-14.mp4"),
 };
 
+let data_time = {
+  1: "2:31",
+  2: "4:01",
+  3: "2:31",
+  4: "3:22",
+  5: "3:45",
+  6: "3:0",
+  7: "3:11",
+  8: "1:10",
+  9: "1:24",
+  10: "2:19",
+  11: "4:37",
+  12: "2:14",
+
+  13: "1:18",
+  14: "2:4",
+  15: "1:42",
+  16: "1:36",
+  17: "2:41",
+  18: "2:26",
+  19: "1:43",
+  20: "1:53",
+  21: "1:23",
+  22: "1:47",
+  23: "1:14",
+  24: "1:29",
+  25: "0:27",
+  26: "0:22",
+
+  27: "2:10",
+  28: "2:20",
+  29: "2:6",
+  30: "1:19",
+  31: "1:32",
+
+  32: "0:27",
+  33: "0:14",
+  34: "0:20",
+  35: "0:30",
+  36: "0:21",
+  37: "0:15",
+  38: "0:16",
+  39: "0:19",
+  40: "0:20",
+  41: "0:17",
+  42: "0:21",
+  43: "1:3",
+  44: "1:7",
+  45: "1:1",
+};
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 export default class move_play extends Component {
   constructor(props) {
     super(props);
@@ -70,33 +129,89 @@ export default class move_play extends Component {
       isLoading: true,
       done_num: 0,
       assign_num: 0,
+      list: [],
+      next_name: "",
+      next_done_num: 0,
+      next_assign_num: 0,
+      next_eid: 0,
+      video_start: false,
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    console.log(this.props.route.params.eid);
+    try {
+      const list = await AsyncStorage.getItem("@move_play");
+
+      if (list !== null) {
+        this.setState({ list: JSON.parse(list) });
+      }
+    } catch (e) {
+      this.setState({ minutes_Counter: "00", seconds_Counter: "00" });
+    }
+
     this.setState({
       done_num: this.props.route.params.done_num,
       assign_num: this.props.route.params.assign_num,
     });
-
     this.Time();
+    this.params_move();
   }
+
+  params_move = () => {
+    var params_array = this.state.list;
+
+    if (
+      this.props.route.params.eid === 12 &&
+      this.props.route.params.eid === 26 &&
+      this.props.route.params.eid === 31 &&
+      this.props.route.params.eid === 45
+    )
+      this.setState({ next_name: "" });
+    else {
+      params_array.map((x) => {
+        if (x.eid === this.props.route.params.eid + 1) {
+          this.setState({
+            next_eid: x.eid,
+            next_name: x.ename,
+            next_done_num: x.donecnt,
+            next_assign_num: x.setcnt,
+          });
+        }
+      });
+    }
+    //this.props.route.params.eid
+  };
 
   Time = () => {
     // 1,000가 1초
+    var move_time =
+      (parseInt(
+        String(data_time[this.props.route.params.eid]).substring(0, 1)
+      ) *
+        60 +
+        parseInt(
+          String(data_time[this.props.route.params.eid]).substring(2, 5)
+        )) *
+      1000;
+
     setTimeout(() => {
       this.setState({
         isLoading: false,
         done_num: this.props.route.params.done_num + 1,
+        video_start: true,
       });
-    }, 1000); // 10초
+    }, 1000); // 배포할 때 move_time로 바꾸기
   };
 
   nextpage = () => {
     if (this.state.isLoading === false) {
+      this.setState({ video_start: false });
       if (this.state.done_num >= this.state.assign_num) {
         this.save_progress();
-        this.where_page();
+
+        if (this.next_name === "") this.where_page();
+        else this.where_move_go();
       } else {
         this.save_progress();
         this.props.navigation.reset({
@@ -117,6 +232,7 @@ export default class move_play extends Component {
     }
   };
   where_page = () => {
+    this.setState({ video_start: false });
     if (this.props.route.params.cat_name == 1) {
       this.props.navigation.navigate("move_1");
     } else if (this.props.route.params.cat_name == 2) {
@@ -126,6 +242,23 @@ export default class move_play extends Component {
     } else if (this.props.route.params.cat_name == 4) {
       this.props.navigation.navigate("move_4");
     }
+  };
+
+  where_move_go = () => {
+    this.props.navigation.reset({
+      routes: [
+        {
+          name: "move_play",
+          params: {
+            eid: this.state.next_eid,
+            ename: this.state.next_name,
+            cat_name: this.props.route.params.cat_name,
+            done_num: this.state.next_done_num,
+            assign_num: this.state.next_assign_num,
+          },
+        },
+      ],
+    });
   };
 
   save_progress = () => {
@@ -170,6 +303,7 @@ export default class move_play extends Component {
             shouldPlay
             useNativeControls
             style={styles.fullScreen}
+            paused={this.state.video_start}
           />
         </View>
 

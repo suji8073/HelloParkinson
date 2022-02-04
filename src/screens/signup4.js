@@ -404,25 +404,27 @@ export default class siginup4 extends Component {
                 </TouchableOpacity>
               </View>
             </View>
-          </ScrollView>
-        </View>
 
-        <View style={styles.chatControl}>
-          <TouchableOpacity
-            style={
-              this.state.usingid === true
-                ? styles.sendButton
-                : styles.sendButton1
-            }
-            activeOpacity={0.8}
-            onPress={this.signup_check}
-          >
-            <Text
-              style={this.state.usingid === true ? styles.white : styles.white1}
-            >
-              회 원 가 입
-            </Text>
-          </TouchableOpacity>
+            <View style={styles.secondView}>
+              <TouchableOpacity
+                style={
+                  this.state.usingid === true
+                    ? styles.sendButton
+                    : styles.sendButton1
+                }
+                activeOpacity={0.8}
+                onPress={this.signup_check}
+              >
+                <Text
+                  style={
+                    this.state.usingid === true ? styles.white : styles.white1
+                  }
+                >
+                  회 원 가 입
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
         </View>
       </View>
     );
@@ -689,16 +691,22 @@ const styles = StyleSheet.create({
     backgroundColor: "#7AC819",
     alignItems: "center",
     justifyContent: "center",
-    width: "100%",
-    height: "35%",
+    marginLeft: "1%",
+    marginRight: "1%",
+    marginTop: 30,
+    width: "98%",
+    height: 50,
   },
 
   sendButton1: {
     backgroundColor: "#F5F5F5",
     alignItems: "center",
     justifyContent: "center",
-    width: "100%",
-    height: "35%",
+    marginLeft: "1%",
+    marginRight: "1%",
+    width: "98%",
+    height: 50,
+    marginTop: 30,
   },
 
   chatControl: {
