@@ -18,7 +18,7 @@ import { AntDesign } from "@expo/vector-icons";
 var myHeaders = new Headers();
 myHeaders.append(
   "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyOTEwOTIsImV4cCI6MTY0Mzg5NTg5Mn0.AVyd0JcjLrPVeqfXUsBcOxkvxvgQOkWz4DHl-BCwzOgE5m2UqW31c7l8XiXLVTJo58YthtQ07BAl_zD465KVAQ"
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDM5NTk5NTMsImV4cCI6MTY0NDU2NDc1M30.j1U1_3O9tmkHPnnib15eFmqas8oXLMfUv7Qz9tH9HZtrC1baYjD8MKXkyxgd3QnNBxmDh4456JaosBtvwTnqzg"
 );
 myHeaders.append("Content-Type", "application/json");
 

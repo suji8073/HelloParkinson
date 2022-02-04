@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "802216555741",
+    "project_id": "hello-parkinson",
+    "storage_bucket": "hello-parkinson.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:802216555741:android:da67050648c508c5881734",
+        "android_client_info": {
+          "package_name": "hcclab.helloparkinson"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "802216555741-6us67bhj1j5d6903rbup49m3evs3sib9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcv3PSM2GxTi2nklTusDe66FidA-bgWvU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "802216555741-6us67bhj1j5d6903rbup49m3evs3sib9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
