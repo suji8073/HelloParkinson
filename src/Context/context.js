@@ -5,6 +5,7 @@ export default React.createContext({
   user_id: "test",
   user_pw: "test",
   num: 0,
+  user_token: "",
   user_name: "관리자",
   user_exercise: [
     { id: "1-1", name: "목 앞 근육 스트레칭", set: 0 },
@@ -34,6 +35,11 @@ export default React.createContext({
     { id: "4-11", name: "도레미파솔라시도", set: 2 },
     { id: "4-12", name: "큰 소리로 음절 읽기", set: 2 },
   ],
+  changeTOKEN: (token) => {
+    this.setState({ user_token: token }, () => {
+      console.log(this.state.user_token);
+    });
+  },
   changePW: (pw) => {
     this.setState({ user_pw: pw }, () => {
       console.log(this.state.user_pw);
@@ -49,6 +55,7 @@ export default React.createContext({
       console.log(this.state.user_name);
     });
   },
+
   changeEXERCISE: (index, task) => {},
   // changeEXERCISE: (index, task) => {
   //   this.setState({ num: index });

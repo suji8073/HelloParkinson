@@ -44,6 +44,11 @@ export default class GlobalState extends React.Component {
   changeNAME = (name) => {
     this.setState({ user_name: name });
   };
+  changeTOKEN = (token) => {
+    this.setState({ user_token: token }, () => {
+      console.log(this.state.user_token);
+    });
+  };
   // changeEXERCISE = (index, task) => {
   //   console.log(this.state.user_exercise);
   //   console.log(index, task);
@@ -68,6 +73,7 @@ export default class GlobalState extends React.Component {
       ),
     });
   };
+
   render() {
     return (
       <Context.Provider
@@ -76,6 +82,7 @@ export default class GlobalState extends React.Component {
           changeID: this.changeID,
           changeNAME: this.changeNAME,
           changeEXERCISE: this.changeEXERCISE,
+          changeTOKEN: this.changeTOKEN,
         }}
       >
         {this.props.children}

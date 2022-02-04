@@ -13,6 +13,9 @@ import { Ionicons } from "@expo/vector-icons";
 import Task from "./task1";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 import Context from "../Context/context";
+import silverstarsvg from "../icon/silverstar.svg";
+import greenstarsvg from "../icon/greenstar.svg";
+
 const items = [
   { id: "abc", label: "가나다순" },
   { id: "star", label: "즐겨찾기순" },
@@ -23,7 +26,7 @@ myHeaders.append(
   "Authorization",
   "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyOTEwOTIsImV4cCI6MTY0Mzg5NTg5Mn0.AVyd0JcjLrPVeqfXUsBcOxkvxvgQOkWz4DHl-BCwzOgE5m2UqW31c7l8XiXLVTJo58YthtQ07BAl_zD465KVAQ"
 );
-
+myHeaders.append("Content-Type", "application/json");
 export default class list extends Component {
   static contextType = Context;
   constructor(props) {
@@ -163,7 +166,7 @@ export default class list extends Component {
                     user={item.uname}
                     age={item.birthday}
                     sex={item.gender}
-                    book={item.bookmark}
+                    book={item.bookmark === true ? greenstarsvg : silverstarsvg}
                   ></Task>
                 </TouchableOpacity>
               );

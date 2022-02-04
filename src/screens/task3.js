@@ -10,7 +10,12 @@ import greenairplane from "../icon/greenairplane.svg";
 
 import { WithLocalSvg } from "react-native-svg";
 const year = 2021 + 1;
-
+var myHeaders = new Headers();
+myHeaders.append(
+  "Authorization",
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyOTEwOTIsImV4cCI6MTY0Mzg5NTg5Mn0.AVyd0JcjLrPVeqfXUsBcOxkvxvgQOkWz4DHl-BCwzOgE5m2UqW31c7l8XiXLVTJo58YthtQ07BAl_zD465KVAQ"
+);
+myHeaders.append("Content-Type", "application/json");
 export default class task3 extends Component {
   constructor(props) {
     super(props);
@@ -120,7 +125,7 @@ export default class task3 extends Component {
         >
           <Text style={{ fontSize: 17 }}>
             {this.props.user} / {year - parseInt(this.props.age / 10000)} /{" "}
-            {this.props.sex}
+            {this.props.sex == "M" ? "남" : "여"}성
           </Text>
 
           {/* 그래프와 숫자 뷰 */}
@@ -142,7 +147,7 @@ export default class task3 extends Component {
                 height={20}
                 backgroundColor={"#E5E5E5"}
                 completedColor={"#7AC819"}
-                percentage={this.props.progress}
+                percentage={Math.ceil(this.props.progress * 100)}
               />
             </View>
 
@@ -155,7 +160,7 @@ export default class task3 extends Component {
                 alignItems: "center",
               }}
             >
-              {this.props.progress}%
+              {Math.ceil(this.props.progress * 100)}%
             </Text>
           </View>
         </View>

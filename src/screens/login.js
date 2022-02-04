@@ -16,6 +16,7 @@ import logosvg from "../icon/logo.svg";
 import Context from "../Context/context";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import GlobalState from "../Context/GlobalState";
 
 export default class login extends Component {
   static contextType = Context;
@@ -39,11 +40,12 @@ export default class login extends Component {
       }
     );
 
-    // this.setState 적욕이 느림
-    // this.login_check();
+    console.log(this.context.user_token);
+    // this.context.changeTOKEN("change");
   }
 
   login_check = () => {
+
     console.log("아이디: " + this.state.id);
     console.log("비밀번호: " + this.state.pw);
 
@@ -53,18 +55,23 @@ export default class login extends Component {
       } else {
         const UserInfo = JSON.parse(result);
 
-        console.log("아이디 : " + UserInfo.u_id);
-        console.log("비밀번호 : " + UserInfo.u_pw);
-        console.log("이름 : " + UserInfo.u_name);
-      }
-    });
+
+    //     console.log("아이디 : " + UserInfo.u_id);
+    //     console.log("비밀번호 : " + UserInfo.u_pw);
+    //     console.log("이름 : " + UserInfo.u_name);
+    //   }
+    // }
+    // );
 
     if (this.state.id !== "" || this.state.pw !== "") {
       console.log("들어갔는지 확인!");
       try {
         fetch("http://hccparkinson.duckdns.org:19737/chamlogin", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({
             uid: this.state.id,
             password: this.state.pw,
@@ -72,18 +79,16 @@ export default class login extends Component {
         })
           .then((res) => res.json())
           .then((json) => {
-            console.log("로그인 통신 확인");
-            console.log(json.data[0].manager);
+
+            // console.log("로그인 통신 확인");
+            console.log(json.data);
             if (json.data[0].manager == false) {
-              // if(json.ranking==1){
+              if (json.data[0].ranking == 1) {
+                this.props.navigation.navigate("TabNavigation1");
+              } else {
+                this.props.navigation.navigate("TabNavigation2");
+              }
 
-              // this.props.navigation.navigate("TabNavigation1");
-
-              // }
-              // else{
-              // this.props.navigation.navigate("TabNavigation2");
-
-              // }
 
               // 환자
               // 아이디, 비밀번호 context변경 기능 필요
@@ -91,7 +96,9 @@ export default class login extends Component {
               // this.context.changePW(this.state.pw);
               // Alert.alert(this.context.user_id);
               console.log("로그인 통신 확인");
+
               this.props.navigation.navigate("TabNavigation2", {});
+
             } else if (json.data[0].manager == true) {
               // 관리자
 
@@ -126,71 +133,73 @@ export default class login extends Component {
   };
   render() {
     return (
-      <View style={styles.finalView}>
-        <View style={styles.NoneView}></View>
+      <GlobalState>
+        <View style={styles.finalView}>
+          <View style={styles.NoneView}></View>
 
-        <View style={styles.firstView}>
-          <WithLocalSvg
-            width={80}
-            height={80}
-            asset={logosvg}
-            style={{ margin: "3%" }}
-          />
-
-          <Text style={styles.titleText}>
-            {"안녕하세요.\n헬로우 파킨슨 입니다."}
-          </Text>
-
-          <Text style={styles.twoText}>
-            {"\n회원 서비스 이용을 위해 로그인 해주세요"}
-          </Text>
-        </View>
-
-        <View style={styles.secondView}>
-          <View style={styles.buttonwhite}>
-            <TextInput
-              placeholder="아이디"
-              secureTextEntry={false}
-              style={styles.textInput}
-              value={this.state.id}
-              onChangeText={(text) => {
-                this.setState({ id: text });
-              }}
+          <View style={styles.firstView}>
+            <WithLocalSvg
+              width={80}
+              height={80}
+              asset={logosvg}
+              style={{ margin: "3%" }}
             />
-          </View>
-          <View style={styles.buttonwhite}>
-            <TextInput
-              secureTextEntry={true}
-              style={styles.textInput}
-              placeholder="비밀번호"
-              value={this.state.pw}
-              onChangeText={(text) => {
-                this.setState({ pw: text });
-              }}
-            />
+
+            <Text style={styles.titleText}>
+              {"안녕하세요.\n헬로우 파킨슨 입니다."}
+            </Text>
+
+            <Text style={styles.twoText}>
+              {"\n회원 서비스 이용을 위해 로그인 해주세요"}
+            </Text>
           </View>
 
-          <TouchableOpacity
-            style={styles.buttongreen}
-            activeOpacity={0.8}
-            onPress={this.login_check}
-          >
-            <Text style={styles.green}> 로그인하기 </Text>
-          </TouchableOpacity>
-
-          <View style={styles.thirdView}>
-            <Text style={styles.secondText1}> 계정이 없으신가요?</Text>
+          <View style={styles.secondView}>
+            <View style={styles.buttonwhite}>
+              <TextInput
+                placeholder="아이디"
+                secureTextEntry={false}
+                style={styles.textInput}
+                value={this.state.id}
+                onChangeText={(text) => {
+                  this.setState({ id: text });
+                }}
+              />
+            </View>
+            <View style={styles.buttonwhite}>
+              <TextInput
+                secureTextEntry={true}
+                style={styles.textInput}
+                placeholder="비밀번호"
+                value={this.state.pw}
+                onChangeText={(text) => {
+                  this.setState({ pw: text });
+                }}
+              />
+            </View>
 
             <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate("signup1");
-              }}
+              style={styles.buttongreen}
+              activeOpacity={0.8}
+              onPress={this.login_check}
             >
-              <Text style={styles.secondText2}> 회원가입 하기.</Text>
+              <Text style={styles.green}> 로그인하기 </Text>
             </TouchableOpacity>
+
+            <View style={styles.thirdView}>
+              <Text style={styles.secondText1}> 계정이 없으신가요?</Text>
+
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.navigation.navigate("signup1");
+                }}
+              >
+                <Text style={styles.secondText2}> 회원가입 하기.</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
+      </GlobalState>
     );
   }
 }
