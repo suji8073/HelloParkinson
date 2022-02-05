@@ -199,7 +199,7 @@ export default class progress extends Component {
           : String(this.state.month),
     });
     fetch(
-      "http://hccparkinson.duckdns.org:19737/onlymanager/progress?date=" +
+      "http://hccparkinson.duckdns.org:19737/onlymanager/userlist/progress?date=" +
         String(this.state.year) +
         "-" +
         String(this.state.month1) +
