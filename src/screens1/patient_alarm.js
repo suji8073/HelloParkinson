@@ -15,6 +15,15 @@ import { WithLocalSvg } from "react-native-svg";
 
 import plussvg from "../icon/plus.svg";
 import ActionButton from "react-native-action-button";
+import * as Notifications from "expo-notifications";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 var alarm = [
   { key: 1, apm: "오전", hour: "10", minute: "00", check: 1 },

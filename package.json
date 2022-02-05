@@ -47,6 +47,7 @@
     "react-native-popup-menu": "^0.15.11",
     "react-native-push-notification": "^8.1.1",
     "react-native-reanimated": "^2.2.0",
+    "react-native-responsive-dimensions": "^3.1.1",
     "react-native-responsive-screen": "^1.4.2",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
@@ -70,7 +71,8 @@
     "react-youtube": "^7.13.1",
     "searchable-flatlist": "0.0.4",
     "simple-circle-timer": "^0.2.1",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.3",
+    "expo-notifications": "~0.12.3"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

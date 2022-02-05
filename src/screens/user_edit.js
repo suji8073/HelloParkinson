@@ -91,7 +91,7 @@ export default class user_edit extends Component {
       "http://hccparkinson.duckdns.org:19737/onlymanager/uid/" +
         this.props.route.params.id,
       {
-        method: "POST",
+        method: "PUT",
         headers: myHeaders,
         body: JSON.stringify({
           uid: this.state.UID,
