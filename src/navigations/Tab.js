@@ -9,6 +9,12 @@ import progress from "../screens/progress";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
 const TabIcon = ({ name, size, color }) => {
   return <MaterialCommunityIcons name={name} size={32} color={color} />;
 };

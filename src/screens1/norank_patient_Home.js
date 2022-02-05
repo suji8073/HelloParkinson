@@ -9,6 +9,12 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { WithLocalSvg } from "react-native-svg";
 
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
 import fignthingsvg from "../icon/fighting.svg";
 
 import backgroud_image from "../icon/background_image2.svg";
@@ -83,7 +89,11 @@ export default class norank_patient_Home extends Component {
     return (
       <View style={styles.finalView}>
         <View style={styles.menuView}>
-          <Ionicons name="person-circle-sharp" size={35} color="#ffffff" />
+          <Ionicons
+            name="person-circle-sharp"
+            style={{ fontSize: responsiveScreenFontSize(5) }}
+            color="#ffffff"
+          />
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>헬로우 파킨슨</Text>
           <View style={styles.margin}></View>
@@ -93,14 +103,19 @@ export default class norank_patient_Home extends Component {
               this.props.navigation.navigate("patient_profile");
             }}
           >
-            <Ionicons name="person-circle-sharp" size={35} color="#5CB405" />
+            <Ionicons
+              name="person-circle-sharp"
+              style={{ fontSize: responsiveScreenFontSize(5) }}
+              color="#5CB405"
+            />
           </TouchableOpacity>
         </View>
+
         <ScrollView style={styles.secondView}>
           <WithLocalSvg
-            style={{ left: "-3%", position: "absolute" }}
-            width={"130%"}
-            height={"120%"}
+            style={{ left: "-39%", position: "absolute", borderWidth: 1 }}
+            width={responsiveScreenHeight(100)}
+            height={responsiveScreenHeight(100)}
             asset={backgroud_image}
           />
           <View style={{ paddingTop: "10%", paddingHorizontal: "5%" }}>
@@ -108,7 +123,7 @@ export default class norank_patient_Home extends Component {
               {this.context.user_name}님{"  "}
               <Text
                 style={{
-                  fontSize: 22,
+                  fontSize: responsiveScreenFontSize(2.48),
                 }}
               >
                 오늘 운동을{"  "}
@@ -119,7 +134,7 @@ export default class norank_patient_Home extends Component {
               style={{
                 color: "#000000",
                 fontWeight: "bold",
-                fontSize: 22,
+                fontSize: responsiveScreenFontSize(2.48),
                 marginBottom: "5%",
               }}
             >
@@ -139,13 +154,19 @@ export default class norank_patient_Home extends Component {
               paddingTop: "3%",
             }}
           >
-            <WithLocalSvg width={100} height={100} asset={fignthingsvg} />
+            <WithLocalSvg
+              width={responsiveScreenWidth(19.7)}
+              height={responsiveScreenHeight(11)}
+              asset={fignthingsvg}
+            />
           </View>
           <View
             style={{
               backgroundColor: "#569D10",
               borderRadius: 20,
-              padding: "1%",
+              marginLeft: " 5.8%",
+              marginRight: " 5.8%",
+              marginBottom: "6.7%",
             }}
           >
             <View
@@ -170,7 +191,7 @@ export default class norank_patient_Home extends Component {
                   파킨슨병 환자의{" "}
                   <Text
                     style={{
-                      fontSize: 17,
+                      fontSize: responsiveScreenFontSize(2),
                     }}
                   >
                     건강한 일상생활
@@ -206,55 +227,44 @@ export default class norank_patient_Home extends Component {
 
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
   menuView: {
+    marginTop: "5.1%",
     backgroundColor: "#FFFFFF",
-    height: 58,
+    height: "8.5%",
     flexDirection: "row",
     alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
-    marginTop: "10%",
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
+    paddingRight: "5%",
+    paddingLeft: "5%",
   },
 
   titleText: {
     alignItems: "flex-start",
-    fontSize: 21,
+    fontSize: responsiveScreenFontSize(2.48),
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
     fontWeight: "bold",
   },
 
-  firstView: {
-    // padding:30,
-    alignItems: "center",
-    justifyContent: "flex-start",
-    marginLeft: 20,
-    marginRight: 20,
-    flexDirection: "row",
-    flex: 1,
-    marginTop: 15,
-    marginBottom: 15,
-    backgroundColor: "#FFFFFF",
-  },
   margin: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,
   },
+
   secondView: {
-    padding: "3%",
-    paddingTop: "6%",
+    paddingTop: "1.8%",
+    flexDirection: "column",
+    height: responsiveScreenHeight(70),
     backgroundColor: "#F8F8F8",
-    height: "100%",
-    marginBottom: 90,
+    marginBottom: "39%",
   },
   image: {
     width: "10%",
@@ -263,30 +273,34 @@ const styles = StyleSheet.create({
   prizetext: {
     position: "absolute",
     bottom: "-30%",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     fontWeight: "bold",
   },
   nametext: {
     color: "#000000",
     fontWeight: "bold",
-    fontSize: 25,
+    fontSize: responsiveScreenFontSize(3),
     marginVertical: "1%",
   },
   progtext: {
     color: "#5CB405",
     fontWeight: "bold",
-    fontSize: 25,
+    fontSize: responsiveScreenFontSize(3),
   },
-  menttext: { marginBottom: "5%", fontSize: 16, fontWeight: "600" },
+  menttext: {
+    marginBottom: "5%",
+    fontSize: responsiveScreenFontSize(1.76),
+    fontWeight: "600",
+  },
   whitetext: {
     color: "#FFFFFF",
-    fontSize: 15,
+    fontSize: responsiveScreenFontSize(1.76),
     fontWeight: "500",
     marginBottom: "3%",
   },
   whitesmalltext: {
     color: "#FFFFFF",
-    fontSize: 14,
+    fontSize: responsiveScreenFontSize(1.64),
     fontWeight: "400",
     marginVertical: "3%",
     paddingLeft: "3%",

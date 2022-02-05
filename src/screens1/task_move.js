@@ -3,6 +3,12 @@ import React from "react";
 // import PropTypes from "prop-types";
 import { StyleSheet, View, Text, Image } from "react-native";
 
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
 let data = {
   1: require("../image/1-1.png"),
   2: require("../image/1-2.png"),
