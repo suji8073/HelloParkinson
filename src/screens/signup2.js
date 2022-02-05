@@ -9,6 +9,12 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
 export default class signup2 extends Component {
   constructor(props) {
     super(props);
@@ -16,7 +22,6 @@ export default class signup2 extends Component {
   render() {
     return (
       <View style={styles.finalView}>
-        <View style={styles.settingView}></View>
         <View>
           <Text style={styles.titleText}>이용약관 동의</Text>
         </View>
@@ -588,44 +593,40 @@ export default class signup2 extends Component {
 }
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
-    padding: 20,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
 
-  settingView: {
-    flex: 1.5,
-    justifyContent: "center",
-    alignItems: "flex-start",
-    marginBottom: "5%",
-    marginTop: "10%",
+  titleText: {
+    alignSelf: "flex-start",
+    fontSize: responsiveScreenFontSize(2.48),
+    fontWeight: "bold",
+    color: "#1E1E1E",
+    marginLeft: "4.7%",
+    marginTop: "10.3%",
   },
 
   MainView: {
-    width: "100%",
-    flex: 25,
+    marginTop: "4.7%",
+    marginLeft: "4.7%",
+    marginRight: "4.7%",
+    height: responsiveScreenHeight(68),
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
     backgroundColor: "#ECECEC",
   },
 
-  titleText: {
-    alignSelf: "flex-start",
-    fontSize: 21,
-    fontWeight: "bold",
-    color: "#1E1E1E",
-    marginBottom: "5%",
-  },
   MText: {
-    fontSize: 13,
+    fontSize: responsiveScreenFontSize(1.52),
     color: "#000000",
-    padding: 20,
-    lineHeight: 20,
+    padding: "3.6%",
+    lineHeight: responsiveScreenFontSize(2.4),
   },
 
   white: {
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     fontWeight: "bold",
     color: "#FFFFFF",
   },
@@ -635,13 +636,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    height: "35%",
+    height: "100%",
   },
 
   chatControl: {
+    height: responsiveScreenHeight(6.8),
     flexDirection: "row",
-    flex: 7,
     alignItems: "center",
     justifyContent: "center",
+    marginLeft: "4.7%",
+    marginRight: "4.7%",
+    marginTop: "1.4%",
   },
 });

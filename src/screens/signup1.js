@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  Alert,
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
 
 import nocheck from "../icon/silver.svg";
 import check from "../icon/checkgreen.svg";
@@ -77,7 +76,11 @@ export default class siginup1 extends Component {
             }}
           >
             <View>
-              <AntDesign name="left" size={24} color="#CACACA" />
+              <AntDesign
+                name="left"
+                style={{ fontSize: responsiveScreenFontSize(3) }}
+                color="#CACACA"
+              />
             </View>
           </TouchableOpacity>
         </View>
@@ -87,11 +90,15 @@ export default class siginup1 extends Component {
             <Text style={styles.point}>약관내용에 동의</Text>해주세요.
           </Text>
         </View>
-        <View style={styles.marginView}></View>
+
         <View style={styles.groupa}>
           <View style={styles.group}>
             <TouchableOpacity onPress={this.handleClick1}>
-              <WithLocalSvg width={30} height={30} asset={this.state.onname1} />
+              <WithLocalSvg
+                width={responsiveScreenWidth(6.1)}
+                height={responsiveScreenHeight(3.4)}
+                asset={this.state.onname1}
+              />
             </TouchableOpacity>
             <TouchableOpacity onPress={this.handleClick1}>
               <Text style={styles.MText}> 약관 전체 동의 </Text>
@@ -99,14 +106,12 @@ export default class siginup1 extends Component {
           </View>
           <View style={styles.line}></View>
 
-          <View style={styles.marginView2}></View>
-
           <View style={styles.MainView}>
             <View style={styles.group}>
               <TouchableOpacity onPress={this.handleClick2}>
                 <WithLocalSvg
-                  width={30}
-                  height={30}
+                  width={responsiveScreenWidth(6.1)}
+                  height={responsiveScreenHeight(3.4)}
                   asset={this.state.onname2}
                 />
               </TouchableOpacity>
@@ -121,7 +126,11 @@ export default class siginup1 extends Component {
                 this.props.navigation.navigate("signup2");
               }}
             >
-              <AntDesign name="right" size={24} color="#CACACA" />
+              <AntDesign
+                name="right"
+                style={{ fontSize: responsiveScreenFontSize(3) }}
+                color="#CACACA"
+              />
             </TouchableOpacity>
           </View>
 
@@ -129,8 +138,8 @@ export default class siginup1 extends Component {
             <View style={styles.group}>
               <TouchableOpacity onPress={this.handleClick3}>
                 <WithLocalSvg
-                  width={30}
-                  height={30}
+                  width={responsiveScreenWidth(6.1)}
+                  height={responsiveScreenHeight(3.4)}
                   asset={this.state.onname3}
                 />
               </TouchableOpacity>
@@ -146,7 +155,11 @@ export default class siginup1 extends Component {
                 this.props.navigation.navigate("signup3");
               }}
             >
-              <AntDesign name="right" size={24} color="#CACACA" />
+              <AntDesign
+                name="right"
+                style={{ fontSize: responsiveScreenFontSize(3) }}
+                color="#CACACA"
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -166,72 +179,68 @@ export default class siginup1 extends Component {
 
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
-    padding: 20,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
+  },
+  settingView: {
+    justifyContent: "center",
+    alignItems: "flex-start",
+    marginLeft: "4.7%",
+    marginTop: "12.3%",
+  },
+  titleText: {
+    fontSize: responsiveScreenFontSize(3.2),
+    fontWeight: "bold",
+    color: "#000000",
+    lineHeight: responsiveScreenFontSize(5),
+    marginLeft: "5.2%",
+    marginTop: "5.3%",
+  },
+  point: {
+    alignSelf: "flex-start",
+    fontSize: responsiveScreenFontSize(3.2),
+    fontWeight: "bold",
+    color: "#7AC819",
   },
   group: {
     flexDirection: "row",
     alignItems: "center",
   },
   groupa: {
-    margin: "2%",
+    marginLeft: "4.7%",
+    marginRight: "4.7%",
+    marginTop: "52.7%",
   },
-  settingView: {
-    flex: 2,
-    justifyContent: "center",
-    alignItems: "flex-start",
-    marginBottom: "5%",
-    marginTop: "10%",
-  },
+
   line: {
     borderBottomWidth: 2,
     borderColor: "#E5E5E5",
-    marginTop: "3%",
-    marginBottom: "3%",
+    marginTop: "3.1%",
+    marginBottom: "2.6%",
   },
-  marginView: {
-    flex: 8,
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
-  },
-  marginView2: {
-    marginBottom: 5,
-    marginTop: 5,
-  },
+
   MainView: {
     width: "100%",
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
-    marginBottom: "4%",
+    marginBottom: "5%",
   },
-  titleText: {
-    alignSelf: "flex-start",
-    fontSize: 27,
-    fontWeight: "bold",
-    color: "#000000",
-    lineHeight: 40,
-  },
+
   MText: {
-    fontSize: 21,
+    fontSize: responsiveScreenFontSize(2.48),
     fontWeight: "bold",
     color: "#1E1E1E",
-    marginLeft: "3%",
+    marginLeft: "3.3%",
   },
   SText: {
-    fontSize: 19,
+    fontSize: responsiveScreenFontSize(2.24),
     justifyContent: "flex-start",
     color: "#1E1E1E",
-    marginLeft: "3%",
+    marginLeft: "3.3%",
   },
-  point: {
-    alignSelf: "flex-start",
-    fontSize: 27,
-    fontWeight: "bold",
-    color: "#7AC819",
-  },
+
   white: {
     fontSize: 17,
     fontWeight: "bold",
@@ -243,12 +252,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    height: "35%",
+    height: "100%",
   },
 
   chatControl: {
+    height: responsiveScreenHeight(6.8),
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    marginLeft: "4.7%",
+    marginRight: "4.7%",
+    marginTop: "7%",
   },
 });
