@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import list from "../screens/List";
@@ -18,83 +18,100 @@ const menuIcon = ({ name, size, color }) => {
 };
 
 const Tab = createBottomTabNavigator();
-
-const TabNavigation = () => {
-  return (
-    <Tab.Navigator
-      initialRouteName="list"
-      screenOptions={{
-        tabBarActiveTintColor: "#5CB405",
-        tabBarInactiveTintColor: "#BBBBBB",
-        tabBarStyle: {
-          backgroundColor: "#ffffff",
-          position: "absolute",
-          borderTopColor: "#BBBBBB",
-          borderTopWidth: 1,
-          paddingBottom: 20,
-          height: 90,
-        },
-      }}
-    >
-      <Tab.Screen
-        name="환자 목록"
-        component={list}
-        options={{
-          headerShown: false,
-          tabBarLabel: "목 록",
-          headerTitleAlign: "center",
-          tabBarLabelStyle: {
-            fontSize: 17,
-            fontWeight: "bold",
+export default class TabNavigation extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  render() {
+    console.log();
+    return (
+      <Tab.Navigator
+        initialRouteName="list"
+        screenOptions={{
+          tabBarActiveTintColor: "#5CB405",
+          tabBarInactiveTintColor: "#BBBBBB",
+          tabBarStyle: {
+            backgroundColor: "#ffffff",
+            position: "absolute",
+            borderTopColor: "#BBBBBB",
+            borderTopWidth: 1,
+            paddingBottom: 20,
+            height: 90,
           },
-          tabBarIcon: (props) => menuIcon({ ...props, name: "reader" }),
         }}
-      />
-      <Tab.Screen
-        name="환자 통계 관리"
-        component={statistics}
-        options={{
-          headerShown: false,
-          tabBarLabel: "통 계",
-          headerTitleAlign: "center",
-          tabBarLabelStyle: {
-            fontSize: 17,
-            fontWeight: "bold",
-          },
-          tabBarIcon: (props) =>
-            menuIcon({ ...props, name: "md-pie-chart-outline" }),
-        }}
-      />
-      <Tab.Screen
-        name="환자 진도율 관리"
-        component={progress}
-        options={{
-          headerShown: false,
-          tabBarLabel: "진도율",
-          headerTitleAlign: "center",
-          tabBarLabelStyle: {
-            fontSize: 17,
-            fontWeight: "bold",
-          },
-          tabBarIcon: (props) => menuIcon({ ...props, name: "podium" }),
-        }}
-      />
-      <Tab.Screen
-        name="프로필"
-        component={profile}
-        options={{
-          headerShown: false,
-          tabBarLabel: "프로필",
-          headerTitleAlign: "center",
-          tabBarLabelStyle: {
-            fontSize: 17,
-            fontWeight: "bold",
-          },
-          tabBarIcon: (props) => TabIcon({ ...props, name: "account-circle" }),
-        }}
-      />
-    </Tab.Navigator>
-  );
-};
-
-export default TabNavigation;
+      >
+        <Tab.Screen
+          name="환자 목록"
+          component={list}
+          initialParams={{
+            paramSetting:
+              this.props.route.params.paramSetting == null
+                ? "abc"
+                : this.props.route.params.paramSetting,
+          }}
+          options={{
+            headerShown: false,
+            tabBarLabel: "목 록",
+            headerTitleAlign: "center",
+            tabBarLabelStyle: {
+              fontSize: 17,
+              fontWeight: "bold",
+            },
+            tabBarIcon: (props) => menuIcon({ ...props, name: "reader" }),
+          }}
+        />
+        <Tab.Screen
+          name="환자 통계 관리"
+          component={statistics}
+          options={{
+            headerShown: false,
+            tabBarLabel: "통 계",
+            headerTitleAlign: "center",
+            tabBarLabelStyle: {
+              fontSize: 17,
+              fontWeight: "bold",
+            },
+            tabBarIcon: (props) =>
+              menuIcon({ ...props, name: "md-pie-chart-outline" }),
+          }}
+        />
+        <Tab.Screen
+          name="환자 진도율 관리"
+          component={progress}
+          initialParams={{
+            paramSetting2:
+              this.props.route.params.paramSetting2 == null
+                ? "progress"
+                : this.props.route.params.paramSetting2,
+          }}
+          options={{
+            headerShown: false,
+            tabBarLabel: "진도율",
+            headerTitleAlign: "center",
+            tabBarLabelStyle: {
+              fontSize: 17,
+              fontWeight: "bold",
+            },
+            tabBarIcon: (props) => menuIcon({ ...props, name: "podium" }),
+          }}
+        />
+        <Tab.Screen
+          name="프로필"
+          component={profile}
+          options={{
+            headerShown: false,
+            tabBarLabel: "프로필",
+            headerTitleAlign: "center",
+            tabBarLabelStyle: {
+              fontSize: 17,
+              fontWeight: "bold",
+            },
+            tabBarIcon: (props) =>
+              TabIcon({ ...props, name: "account-circle" }),
+          }}
+        />
+      </Tab.Navigator>
+    );
+  }
+}

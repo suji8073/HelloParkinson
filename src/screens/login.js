@@ -103,6 +103,8 @@ export default class login extends Component {
               // this.context.changeNAME(this.state.name)
               this.props.navigation.navigate("TabNavigation", {
                 paramName1: "name",
+                paramSetting: "abc",
+                paramSetting2: "progress",
               });
             } else {
               Alert.alert(

@@ -1,5 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import list from "../screens/List";
 import login from "../screens/login";
 import signup1 from "../screens/signup1";
 import signup2 from "../screens/signup2";
@@ -12,6 +13,7 @@ import user_edit from "../screens/user_edit";
 import moveedit from "../screens/moveedit";
 import progress from "../screens/progress";
 
+import task1 from "../screens/task1";
 import user_statistics from "../screens/user_statistics";
 import profile from "../screens/profile";
 import TabNavigation from "./Tab";
@@ -47,6 +49,8 @@ const StackNavigation = () => {
       initialRouteName="login"
       screenOptions={{ headerShown: false }}
     >
+      <Stack.Screen name="task1" component={task1} />
+      <Stack.Screen name="list" component={list} />
       <Stack.Screen name="login" component={login} />
       <Stack.Screen name="signup1" component={signup1} />
       <Stack.Screen name="signup2" component={signup2} />

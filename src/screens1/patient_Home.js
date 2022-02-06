@@ -19,61 +19,72 @@ import crownsvg from "../icon/crown.svg";
 
 import Context from "../Context/context";
 
-
-
+var myHeaders = new Headers();
+myHeaders.append(
+  "Authorization",
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDQxNjk1MDMsImV4cCI6MTY0NDc3NDMwM30.22m7OlYWBKcSc3mh0S3Vvm_ObbPoTAuvZUqKsTOeP-oMyFD20HvsPAK5DdBA73KsMu25lTB2e4u3DJUmV5F-pA"
+);
+myHeaders.append("Content-Type", "application/json");
 export default class patient_Home extends Component {
   static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {
       data: [],
+      first: [],
+      second: [],
+      third: [],
       User_name: "",
     };
   }
 
   componentDidMount() {
     this.userfunc();
-    this.findname();
+    // this.findname();
   }
   userfunc = () => {
-    fetch("http://152.70.233.113/chamuser?sort=prog", {
+    fetch("http://hccparkinson.duckdns.org:19737/progress/rank", {
       method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+      headers: myHeaders,
     })
       .then((res) => res.json())
       .then((json) => {
         this.setState(
           {
-            data: json,
-          }
+            data: json.data,
+            first: json.data[0],
+            second: json.data[1],
+            third: json.data[2],
+          },
+
           // 랭킹 참여하는 사람만 필터링
           // ,() => {
           //   let res = this.state.data.filter((it) => it.ranking === 1);
           //   this.setState({ data: res });
           // }
+          () => {
+            console.log(this.state.first);
+          }
         );
       });
   };
 
-  findname = () => {
-    fetch("http://152.70.233.113/chamuser/uid/" + this.context.user_id, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        this.setState({
-          User_name: json.info.name,
-        });
-        this.context.changeNAME(json.info.name);
-      });
-  };
+  // findname = () => {
+  //   fetch("http://152.70.233.113/chamuser/uid/" + this.context.user_id, {
+  //     method: "GET",
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Content-Type": "application/json",
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((json) => {
+  //       this.setState({
+  //         User_name: json.info.name,
+  //       });
+  //       this.context.changeNAME(json.info.name);
+  //     });
+  // };
 
   render() {
     return (
@@ -133,7 +144,14 @@ export default class patient_Home extends Component {
                   height={30}
                   asset={secondsvg}
                 />
-                <Text style={styles.prizetext}>김인자[89%]</Text>
+                <Text style={styles.prizetext}>
+                  {this.state.second == null
+                    ? "x"
+                    : String(this.state.second["uname"]) +
+                      "[" +
+                      String(this.state.second["percent"]) +
+                      "%]"}
+                </Text>
               </View>
               <View
                 style={{
@@ -170,7 +188,9 @@ export default class patient_Home extends Component {
                   height={30}
                   asset={firstsvg}
                 />
-                <Text style={styles.prizetext}>오석형[98%]</Text>
+                <Text style={styles.prizetext}>
+                  {this.state.first["uname"]}[{this.state.first["percent"]}%]
+                </Text>
               </View>
               <View
                 style={{
@@ -202,7 +222,14 @@ export default class patient_Home extends Component {
                   height={30}
                   asset={thirdsvg}
                 />
-                <Text style={styles.prizetext}>정상철[67%]</Text>
+                <Text style={styles.prizetext}>
+                  {this.state.third == null
+                    ? "x"
+                    : String(this.state.third["uname"]) +
+                      "[" +
+                      String(this.state.third["percent"]) +
+                      "%]"}
+                </Text>
               </View>
             </View>
           </View>
@@ -221,10 +248,10 @@ export default class patient_Home extends Component {
               return (
                 <Task5
                   record={index + 4}
-                  name={item.name}
-                  age={item.birth}
+                  name={item.uname}
+                  age={item.birthday}
                   sex={item.gender}
-                  check={this.state.User_name}
+                  check={this.context.user_name}
                 ></Task5>
               );
             }}

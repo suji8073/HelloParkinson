@@ -42,13 +42,65 @@ export default class list extends Component {
       id: "",
       text: "",
       bookmark: 0,
+      select: "abc",
     };
     this.arrayholder = [];
   }
 
   componentDidMount() {
-    this.userfunc();
+    // this.userfunc();
+    this.setState({ select: this.props.route.params.paramSetting }, () => {
+      console.log("정렬방식: ", this.props.route.params.paramSetting);
+      this.set(this.state.select);
+    });
   }
+  click = (options) => {
+    this.props.navigation.reset({
+      routes: [
+        {
+          name: "TabNavigation",
+          params: {
+            paramSetting: options,
+          },
+        },
+      ],
+    });
+  };
+  set = (option) => {
+    if (option == "abc") {
+      fetch(
+        "http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=0",
+        {
+          method: "GET",
+          headers: myHeaders,
+        }
+      )
+        .then((res) => res.json())
+        .then((json) => {
+          this.setState({ data: json.data, text: "" }, () => {
+            this.arrayholder = json.data;
+
+            return this.state.data;
+          });
+        });
+    } else {
+      fetch(
+        "http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=6",
+        {
+          method: "GET",
+          headers: myHeaders,
+        }
+      )
+        .then((res) => res.json())
+        .then((json) => {
+          this.setState({ data: json.data, test: "" }, () => {
+            this.arrayholder = json.data;
+
+            return this.state.data;
+          });
+        });
+    }
+  };
   userfunc = () => {
     fetch("http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=0", {
       method: "GET",
@@ -79,6 +131,7 @@ export default class list extends Component {
   onMenuPress = (id) => {
     if (id === "abc") {
       // 가나다순 클릭했을 때
+      this.click("abc");
       fetch(
         "http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=0",
         {
@@ -96,6 +149,7 @@ export default class list extends Component {
         });
     } else if (id === "star") {
       // 즐겨찾기순 클릭했을 때
+      this.click("star");
       fetch(
         "http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=6",
         {

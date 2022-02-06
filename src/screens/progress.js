@@ -55,8 +55,10 @@ export default class progress extends Component {
     this.state = {
       daytext: ["일", "월", "화", "수", "목", "금", "토"],
       year: parseInt(now.getFullYear()),
+      year1: "2022",
       month: parseInt(now.getMonth() + 1),
       month1: "01",
+      day1: "01",
       day: parseInt(now.getDate()),
       yoil: parseInt(now.getDay()), //(0:일요일 ~ 6: 토요일)
       lastdate: 0,
@@ -73,30 +75,35 @@ export default class progress extends Component {
     };
   }
   componentDidMount() {
-    this.setState({
-      month1:
-        String(this.state.month).length == 1
-          ? "0" + String(this.state.month)
-          : String(this.state.month),
-    });
-    this.userfunc();
+    this.setState(
+      {
+        year1: String(this.state.year),
+        month1:
+          String(this.state.month).length == 1
+            ? "0" + String(this.state.month)
+            : String(this.state.month),
+        day1:
+          String(this.state.day).length == 1
+            ? "0" + String(this.state.day)
+            : String(this.state.day),
+      },
+      () => {
+        this.userfunc();
+      }
+    );
     this.setState({
       lastdate: new Date(this.state.year, this.state.month - 1, 0).getDate(),
       thisdate: new Date(this.state.year, this.state.month, 0).getDate(),
-
-      // thisdate2: new Date(this.state.year - 1, 12, 0).getDate(),
     });
   }
-  minus = () => {
-    this.setState({ yoil: this.state.yoil - 7 });
-    this.setState({ day: this.state.day - 7 });
-    this.userfunc();
-  };
-  plus = () => {
-    this.setState({ yoil: this.state.yoil + 7 });
-    this.setState({ day: this.state.day + 7 });
-    this.userfunc();
-  };
+  // sortJSON = function (data, key) {
+  //   return data.sort(function (a, b) {
+  //     var x = a[key];
+  //     var y = b[key];
+  //     return x < y ? -1 : x > y ? 1 : 0;
+  //   });
+  // };
+
   dayy = (num) => {
     while (num < 0) {
       num += 7;
@@ -142,43 +149,37 @@ export default class progress extends Component {
     if (num >= this.state.thisdate + 1) {
       // 다음 해로 넘어갈 경우
       if (this.state.month == 12) {
-        this.setState({ year: this.state.year + 1 });
-        this.setState({ month: 1 });
+        this.setState({ year: this.state.year + 1, month: 1 });
       }
       // 같은 해에서 이동할 경우
       else {
         this.setState({ month: this.state.month + 1 });
       }
 
-      this.setState({ day: num - this.state.thisdate });
       this.setState({
+        day: num - this.state.thisdate,
         lastdate: this.state.thisdate,
         thisdate: new Date(this.state.year, this.state.month + 1, 0).getDate(),
       });
 
-      // this.userfunc() 특정 날짜의 환자 전체 진도율
       return this.state.day;
     }
     // 이전달로 넘어갈 경우
     else if (num <= 0) {
-      //하루씩 : (num == 0)
-
       // 이전 해로 넘어갈 경우
       if (this.state.month == 1) {
-        this.setState({ year: this.state.year - 1 });
-        this.setState({ month: 12 });
+        this.setState({ year: this.state.year - 1, month: 12 });
       }
       // 같은해에서 이동할 경우
       else {
         this.setState({ month: this.state.month - 1 });
       }
-      this.setState({ day: this.state.lastdate + num });
       this.setState({
+        day: this.state.lastdate + num,
         thisdate: new Date(this.state.year, this.state.month - 1, 0).getDate(),
         lastdate: new Date(this.state.year, this.state.month - 2, 0).getDate(),
       });
 
-      // this.userfunc() 특정 날짜의 환자 전체 진도율
       return this.state.day;
     }
 
@@ -188,24 +189,20 @@ export default class progress extends Component {
     }
   };
 
-  pressday = (yoilnum, daynum) => {
-    this.setState({ yoil: yoilnum, day: daynum }, this.userfunc());
-  };
-  userfunc = () => {
-    this.setState({
-      month1:
-        String(this.state.month).length == 1
-          ? "0" + String(this.state.month)
-          : String(this.state.month),
-    });
+  // this.userfunc());
+  // };
+  datare = () => {
+    console.log(
+      "날짜: ",
+      this.state.year1 + "-" + this.state.month1 + "-" + this.state.day1
+    );
     fetch(
-      "http://hccparkinson.duckdns.org:19737/onlymanager/progress?date=" +
-        String(this.state.year) +
+      "http://hccparkinson.duckdns.org:19737/onlymanager/userlist/progress?date=" +
+        this.state.year1 +
         "-" +
-        String(this.state.month1) +
+        this.state.month1 +
         "-" +
-        String(this.state.day) +
-        "&&sort=0",
+        this.state.day1,
       {
         method: "GET",
         headers: myHeaders,
@@ -214,15 +211,43 @@ export default class progress extends Component {
       .then((res) => res.json())
       .then((json) => {
         this.setState({ data: json.data }, () => {
-          console.log(this.state.data);
-          console.log(this.state.month1);
+          console.log("데이터:", this.state.data);
+
           this.setState({
-            data1: this.state.data.sort(function (a, b) {
-              return parseFloat(a.percent) - parseFloat(b.percent);
-            }),
+            // data1: this.state.data.sort(function (a, b) {
+            //   return parseFloat(a.percent) - parseFloat(b.percent);
+            // }),
+            // data1: this.sortJSON(this.state.data, "percent"),
+            data1: this.state.data,
           });
         });
       });
+  };
+  userfunc = () => {
+    this.setState(
+      {
+        year1: String(this.state.year),
+        month1:
+          String(this.state.month).length == 1
+            ? "0" + String(this.state.month)
+            : String(this.state.month),
+        day1:
+          String(this.state.day).length == 1
+            ? "0" + String(this.state.day)
+            : String(this.state.day),
+      },
+      () => {
+        this.datare();
+        console.log(
+          "마이너스 날짜: ",
+          String(this.state.year1) +
+            "-" +
+            String(this.state.month1) +
+            "-" +
+            String(this.state.day1)
+        );
+      }
+    );
   };
 
   onmonthPress = (id) => {
@@ -259,13 +284,134 @@ export default class progress extends Component {
         .then((json) => {
           this.setState({ data: json.data }, () => {
             this.setState({
-              data1: this.state.data.sort(function (a, b) {
-                return parseFloat(a.percent) - parseFloat(b.percent);
-              }),
+              // data1: this.state.data.sort(function (a, b) {
+              //   return parseFloat(a.percent) - parseFloat(b.percent);
+              // }),
+              // data1: this.sortJSON(this.state.data, "percent"),
+              data1: this.state.data,
             });
           });
         });
     }
+  };
+  plusdata = () => {
+    if (this.state.day >= this.state.thisdate + 1) {
+      // 다음 해로 넘어갈 경우
+      if (this.state.month == 12) {
+        this.setState({ year: this.state.year + 1, month: 1 });
+        this.setState(
+          {
+            day: this.state.day - this.state.thisdate,
+            lastdate: this.state.thisdate,
+            thisdate: new Date(
+              this.state.year,
+              this.state.month + 1,
+              0
+            ).getDate(),
+          },
+          () => {
+            this.userfunc();
+          }
+        );
+      }
+      // 같은 해에서 이동할 경우
+      else {
+        this.setState({ month: this.state.month + 1 });
+        this.setState(
+          {
+            day: this.state.day - this.state.thisdate,
+            lastdate: this.state.thisdate,
+            thisdate: new Date(
+              this.state.year,
+              this.state.month + 1,
+              0
+            ).getDate(),
+          },
+          () => {
+            this.userfunc();
+          }
+        );
+      }
+    } else {
+      this.userfunc();
+    }
+  };
+
+  minusdata = () => {
+    if (this.state.day <= 0) {
+      // 이전 해로 넘어갈 경우
+      if (this.state.month == 1) {
+        this.setState({ year: this.state.year - 1, month: 12 });
+        this.setState(
+          {
+            day: this.state.lastdate + this.state.day,
+            thisdate: new Date(
+              this.state.year,
+              this.state.month - 1,
+              0
+            ).getDate(),
+            lastdate: new Date(
+              this.state.year,
+              this.state.month - 2,
+              0
+            ).getDate(),
+          },
+          () => {
+            this.userfunc();
+          }
+        );
+      }
+      // 같은해에서 이동할 경우
+      else {
+        this.setState({ month: this.state.month - 1 });
+        this.setState(
+          {
+            day: this.state.lastdate + this.state.day,
+            thisdate: new Date(
+              this.state.year,
+              this.state.month - 1,
+              0
+            ).getDate(),
+            lastdate: new Date(
+              this.state.year,
+              this.state.month - 2,
+              0
+            ).getDate(),
+          },
+          () => {
+            this.userfunc();
+          }
+        );
+      }
+    }
+
+    // 현재 달에서 이동할 경우
+    else {
+      this.userfunc();
+    }
+  };
+  // 이전 일자 눌렀을 떄
+  pressday = (yoilnum, daynum) => {
+    this.setState({ yoil: yoilnum, day: daynum }, () => {
+      this.minusdata();
+    });
+  };
+  // 이전 주 눌렀을 때
+  minus = () => {
+    this.setState(
+      { yoil: this.state.yoil - 7, day: this.state.day - 7 },
+      () => {
+        this.minusdata();
+      }
+    );
+  };
+  plus = () => {
+    this.setState(
+      { yoil: this.state.yoil + 7, day: this.state.day + 7 },
+      () => {
+        this.plusdata();
+      }
+    );
   };
 
   render() {
