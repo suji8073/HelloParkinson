@@ -35,7 +35,7 @@ async function savePicture() {
 var myHeaders = new Headers();
 myHeaders.append(
   "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkZCIsIlJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpc3MiOiJIQ0MgTGFiIiwiaWF0IjoxNjQzODE1MjUxLCJleHAiOjE2NDQ0MjAwNTF9.u2zbh9qW7uYv_Y9dOZP-zF6wBFXXvXAvgB1q00iXdfkQEdPIeZpytdjYuVUArMlvq0OC099d_cuV7uuG_7WFJQ"
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDQwNjU1MzYsImV4cCI6MTY0NDY3MDMzNn0.mnbGyKlMHvwdVFQJRPmgTxMGB966ITczMTA_p4E4lWSRb2DYoOlwW1mrPGapPRkf6h4hyZIIUgfrs1yIqInOJg"
 );
 
 myHeaders.append("Content-Type", "application/json");
@@ -91,7 +91,7 @@ export default class patient_profile_edit extends Component {
 
   edit_update = () => {
     fetch("http://hccparkinson.duckdns.org:19737/chamuser", {
-      method: "POST",
+      method: "PUT",
       headers: myHeaders,
       body: JSON.stringify({
         uid: this.state.UID,
@@ -112,7 +112,7 @@ export default class patient_profile_edit extends Component {
 
   edit_pw_update = () => {
     fetch("http://hccparkinson.duckdns.org:19737/chamuser", {
-      method: "POST",
+      method: "PUT",
       headers: myHeaders,
       body: JSON.stringify({
         uid: this.state.UID,

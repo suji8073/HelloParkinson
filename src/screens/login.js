@@ -88,7 +88,7 @@ export default class login extends Component {
               if (json.data[0].ranking == 1) {
                 this.props.navigation.navigate("TabNavigation1");
               } else {
-                this.props.navigation.navigate("TabNavigation2");
+                this.props.navigation.navigate("TabNavigation2", {});
               }
 
               // 환자
@@ -99,7 +99,6 @@ export default class login extends Component {
               console.log("로그인 통신 확인");
             } else if (json.data[0].manager == true) {
               // 관리자
-
               // this.context.changeNAME(this.state.name)
               this.props.navigation.navigate("TabNavigation", {
                 paramName1: "name",
