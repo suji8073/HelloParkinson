@@ -19,7 +19,16 @@ import crownsvg from "../icon/crown.svg";
 
 import Context from "../Context/context";
 
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
+
 var myHeaders = new Headers();
+
+
 export default class patient_Home extends Component {
   static contextType = Context;
   constructor(props) {
@@ -87,7 +96,11 @@ export default class patient_Home extends Component {
     return (
       <View style={styles.finalView}>
         <View style={styles.menuView}>
-          <Ionicons name="person-circle-sharp" size={35} color="#ffffff" />
+          <Ionicons
+            name="person-circle-sharp"
+            style={{ fontSize: responsiveScreenFontSize(5) }}
+            color="#ffffff"
+          />
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>헬로우 파킨슨</Text>
           <View style={styles.margin}></View>
@@ -97,15 +110,26 @@ export default class patient_Home extends Component {
               this.props.navigation.navigate("patient_profile");
             }}
           >
-            <Ionicons name="person-circle-sharp" size={35} color="#5CB405" />
+            <Ionicons
+              name="person-circle-sharp"
+              style={{ fontSize: responsiveScreenFontSize(5) }}
+              color="#5CB405"
+            />
           </TouchableOpacity>
         </View>
+
         <View style={styles.secondView}>
           {/* 환자 1~3 */}
-          <View style={{ height: "27%", marginTop: "3%" }}>
+          <View
+            style={{
+              marginRight: "6.8%",
+              marginLeft: "6.8%",
+              marginTop: "4%",
+              height: responsiveScreenHeight(22),
+            }}
+          >
             <View
               style={{
-                margin: "5%",
                 flexDirection: "row",
                 alignContent: "flex-end",
                 justifyContent: "space-evenly",
@@ -123,22 +147,22 @@ export default class patient_Home extends Component {
                   style={{
                     borderRadius: 400 / 2,
                     borderColor: "#C4C4C4",
-                    borderWidth: 10,
+                    borderWidth: 7.5,
                   }}
                 >
                   <Image
                     source={require("../image/i1.png")}
                     style={{
-                      width: 90,
-                      height: 90,
-                      borderRadius: 400 / 2,
+                      height: responsiveScreenHeight(11),
+                      width: responsiveScreenWidth(19),
+                      borderRadius: 300 / 2,
                     }}
                   />
                 </View>
                 <WithLocalSvg
                   style={{ top: "80%", position: "absolute" }}
-                  width={30}
-                  height={30}
+                  width={responsiveScreenWidth(6.1)}
+                  height={responsiveScreenHeight(3.4)}
                   asset={secondsvg}
                 />
                 <Text style={styles.prizetext}>
@@ -158,8 +182,8 @@ export default class patient_Home extends Component {
                 }}
               >
                 <WithLocalSvg
-                  width={50}
-                  height={40}
+                  width={responsiveScreenWidth(14)}
+                  height={responsiveScreenHeight(4)}
                   asset={crownsvg}
                   style={{ top: "-20%", position: "absolute" }}
                 />
@@ -167,22 +191,22 @@ export default class patient_Home extends Component {
                   style={{
                     borderRadius: 400 / 2,
                     borderColor: "#F8D500",
-                    borderWidth: 10,
+                    borderWidth: 7.5,
                   }}
                 >
                   <Image
                     source={require("../image/i2.png")}
                     style={{
-                      width: 90,
-                      height: 90,
+                      height: responsiveScreenHeight(11),
+                      width: responsiveScreenWidth(19),
                       borderRadius: 400 / 2,
                     }}
                   />
                 </View>
                 <WithLocalSvg
                   style={{ top: "80%", position: "absolute" }}
-                  width={30}
-                  height={30}
+                  width={responsiveScreenWidth(6.1)}
+                  height={responsiveScreenHeight(3.4)}
                   asset={firstsvg}
                 />
                 <Text style={styles.prizetext}>
@@ -201,22 +225,22 @@ export default class patient_Home extends Component {
                   style={{
                     borderRadius: 400 / 2,
                     borderColor: "#DA9B73",
-                    borderWidth: 10,
+                    borderWidth: 7.5,
                   }}
                 >
                   <Image
                     source={require("../image/i3.png")}
                     style={{
-                      width: 90,
-                      height: 90,
+                      height: responsiveScreenHeight(11),
+                      width: responsiveScreenWidth(19),
                       borderRadius: 400 / 2,
                     }}
                   />
                 </View>
                 <WithLocalSvg
                   style={{ top: "80%", position: "absolute" }}
-                  width={30}
-                  height={30}
+                  width={responsiveScreenWidth(6.1)}
+                  height={responsiveScreenHeight(3.4)}
                   asset={thirdsvg}
                 />
                 <Text style={styles.prizetext}>
@@ -235,9 +259,11 @@ export default class patient_Home extends Component {
           <FlatList
             style={{
               backgroundColor: "#ffffff",
-              margin: "5%",
+              marginTop: "2.6%",
+              marginLeft: "4.7%",
+              marginRight: "4.7%",
               borderRadius: 7,
-              marginBottom: 175,
+              marginBottom: "100%",
             }}
             data={this.state.data.slice(3)}
             keyExtractor={(item, index) => index.toString()}
@@ -261,61 +287,45 @@ export default class patient_Home extends Component {
 
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
   menuView: {
+    marginTop: "5.1%",
     backgroundColor: "#FFFFFF",
-    height: 58,
+    height: "8.5%",
     flexDirection: "row",
     alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
-    marginTop: "3%",
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
+    paddingRight: "5%",
+    paddingLeft: "5%",
   },
 
   titleText: {
     alignItems: "flex-start",
-    fontSize: 21,
+    fontSize: responsiveScreenFontSize(2.48),
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
     fontWeight: "bold",
   },
 
-  firstView: {
-    // padding:30,
-    alignItems: "center",
-    justifyContent: "flex-start",
-    marginLeft: 20,
-    marginRight: 20,
-    flexDirection: "row",
-    flex: 1,
-    marginTop: 15,
-    marginBottom: 15,
-    backgroundColor: "#FFFFFF",
-  },
   margin: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,
   },
   secondView: {
     backgroundColor: "#F8F8F8",
-    height: "100%",
   },
-  image: {
-    width: "10%",
-    height: "10%",
-  },
+
   prizetext: {
     position: "absolute",
     bottom: "-30%",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(1.52),
     fontWeight: "bold",
   },
 });

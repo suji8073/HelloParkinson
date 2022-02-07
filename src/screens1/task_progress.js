@@ -4,7 +4,13 @@ import { View, Text } from "react-native";
 
 import PercentageBar from "../screens/progressbar1";
 
-const task_patient = ({ allcount, done }) => {
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
+const task_progress = ({ allcount, done }) => {
   return (
     //  전체 뷰
     <View
@@ -12,15 +18,14 @@ const task_patient = ({ allcount, done }) => {
         alignItems: "flex-start",
         alignItems: "center",
         flexDirection: "row",
-        marginTop: 10,
-        height: 20,
-        width: "88%",
+        marginTop: "1.7%",
+        width: "100%",
         justifyContent: "space-between",
       }}
     >
-      <View style={{ width: "80%", justifyContent: "center" }}>
+      <View style={{ justifyContent: "center" }}>
         <PercentageBar
-          height={20}
+          height={responsiveScreenHeight(2.6)}
           backgroundColor={"#E5E5E5"}
           completedColor={"#7AC819"}
           percentage={String((done / allcount) * 100) + "%"}
@@ -30,15 +35,15 @@ const task_patient = ({ allcount, done }) => {
       <Text
         style={{
           color: "#484848",
-          fontSize: 16,
-          justifyContent: "flex-start",
+          fontSize: responsiveScreenFontSize(1.8),
           alignItems: "center",
+          marginRight: "5%",
         }}
       >
-        {done + "/" + allcount}
+        {done + " / " + allcount}
       </Text>
     </View>
   );
 };
 
-export default task_patient;
+export default task_progress;

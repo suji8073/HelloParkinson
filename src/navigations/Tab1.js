@@ -16,6 +16,12 @@ const menuIcon1 = ({ name, size, color }) => {
   return <Entypo name={name} size={32} color={color} />;
 };
 
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigation1({ route, navigation }) {
@@ -30,8 +36,8 @@ export default function TabNavigation1({ route, navigation }) {
           position: "absolute",
           borderTopColor: "#BBBBBB",
           borderTopWidth: 1,
-          paddingBottom: 20,
-          height: 90,
+          paddingBottom: "2%",
+          height: responsiveScreenHeight(13.1),
         },
       }}
     >
@@ -44,7 +50,7 @@ export default function TabNavigation1({ route, navigation }) {
           size: "10%",
           headerTitleAlign: "center",
           tabBarLabelStyle: {
-            fontSize: 17,
+            fontSize: responsiveScreenFontSize(2),
             fontWeight: "bold",
           },
           tabBarIcon: (props) => menuIcon1({ ...props, name: "home" }),
@@ -59,7 +65,7 @@ export default function TabNavigation1({ route, navigation }) {
           tabBarLabel: "운동",
           headerTitleAlign: "center",
           tabBarLabelStyle: {
-            fontSize: 17,
+            fontSize: responsiveScreenFontSize(2),
             fontWeight: "bold",
           },
           tabBarIcon: (props) =>
@@ -74,7 +80,7 @@ export default function TabNavigation1({ route, navigation }) {
           tabBarLabel: "기록",
           headerTitleAlign: "center",
           tabBarLabelStyle: {
-            fontSize: 17,
+            fontSize: responsiveScreenFontSize(2),
             fontWeight: "bold",
           },
           tabBarIcon: (props) => menuIcon({ ...props, name: "podium" }),
@@ -88,7 +94,7 @@ export default function TabNavigation1({ route, navigation }) {
           tabBarLabel: "알림",
           headerTitleAlign: "center",
           tabBarLabelStyle: {
-            fontSize: 17,
+            fontSize: responsiveScreenFontSize(2),
             fontWeight: "bold",
           },
           tabBarIcon: (props) => menuIcon({ ...props, name: "alarm-outline" }),

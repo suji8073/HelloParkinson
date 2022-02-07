@@ -11,6 +11,12 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import Context from "../Context/context";
 
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default class siginup4 extends Component {
   static contextType = Context;
@@ -200,19 +206,17 @@ export default class siginup4 extends Component {
             }}
           >
             <View>
-              <AntDesign name="left" size={24} color="#808080" />
+              <AntDesign
+                name="left"
+                style={{ fontSize: responsiveScreenFontSize(3) }}
+                color="#808080"
+              />
             </View>
           </TouchableOpacity>
         </View>
 
         <View style={styles.firstView}>
-          <ScrollView
-            contentContainerStyle={{
-              flexGrow: 1,
-              flexDirection: "column",
-              justifyContent: "space-between",
-            }}
-          >
+          <ScrollView>
             <View style={styles.secondView}>
               <Text style={styles.titleText}>아이디 / 비밀번호 설정</Text>
               <View style={styles.buttonwhite1}>
@@ -310,7 +314,7 @@ export default class siginup4 extends Component {
                 <Text style={styles.titleText}>성별</Text>
                 <Text style={styles.check}>*</Text>
               </View>
-              <View style={{ marginBottom: 3 }}></View>
+
               <View style={styles.numberbutton}>
                 <TouchableOpacity
                   style={
@@ -405,7 +409,7 @@ export default class siginup4 extends Component {
               </View>
             </View>
 
-            <View style={styles.secondView}>
+            <View style={styles.chatControl}>
               <TouchableOpacity
                 style={
                   this.state.usingid === true
@@ -433,22 +437,23 @@ export default class siginup4 extends Component {
 
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
-    padding: 20,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
 
   settingView: {
-    flex: 3,
     justifyContent: "center",
     alignItems: "flex-start",
-    marginBottom: "3%",
-    marginTop: "3%",
+    marginLeft: "4.7%",
+    marginTop: "12.3%",
   },
 
   firstView: {
-    width: "100%",
-    flex: 24,
+    marginLeft: "4.7%",
+    marginRight: "4.7%",
+    marginTop: "5.1%",
+    height: responsiveScreenHeight(78),
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
@@ -456,7 +461,7 @@ const styles = StyleSheet.create({
 
   secondView: {
     alignItems: "flex-start",
-    marginBottom: "5%",
+    marginBottom: "6.1%",
   },
 
   checkView: {
@@ -464,25 +469,22 @@ const styles = StyleSheet.create({
   },
 
   textInput: {
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(1.8),
     color: "#000000",
-    marginLeft: "5%",
-    width: "95%",
-    height: "100%",
+    marginLeft: "5.8%",
   },
 
   textInput1: {
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(1.8),
     color: "#000000",
-    marginLeft: "5%",
-    flex: 4,
+    marginLeft: "5.8%",
   },
 
   clickbtn: {
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     color: "#000000",
-    marginRight: "5%",
-    flex: 1,
+    marginRight: "3%",
+    marginLeft: "48%",
     height: "100%",
     flexDirection: "row",
   },
@@ -503,13 +505,13 @@ const styles = StyleSheet.create({
   },
 
   MText: {
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     color: "#000000",
     marginLeft: "5%",
   },
 
   MMText: {
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     color: "#000000",
     alignItems: "center",
     justifyContent: "center",
@@ -526,11 +528,10 @@ const styles = StyleSheet.create({
   },
 
   buttonwhite1: {
-    justifyContent: "center",
     marginLeft: "1%",
     marginRight: "1%",
     width: "98%",
-    height: 45,
+    height: responsiveScreenHeight(6.7),
     borderWidth: 2,
     borderColor: "#E5E5E5",
     flexDirection: "row",
@@ -540,7 +541,7 @@ const styles = StyleSheet.create({
     marginLeft: "1%",
     marginRight: "1%",
     width: "98%",
-    height: 45,
+    height: responsiveScreenHeight(6.7),
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
@@ -554,7 +555,7 @@ const styles = StyleSheet.create({
     marginLeft: "1%",
     marginRight: "1%",
     width: "98%",
-    height: 45,
+    height: responsiveScreenHeight(6.7),
     borderColor: "#E5E5E5",
     flexDirection: "row",
     alignItems: "center",
@@ -563,7 +564,7 @@ const styles = StyleSheet.create({
 
   number1: {
     width: "15%",
-    height: 45,
+    height: responsiveScreenHeight(6.7),
     borderBottomWidth: 2,
     borderLeftWidth: 2,
     borderColor: "#E5E5E5",
@@ -573,7 +574,7 @@ const styles = StyleSheet.create({
   },
   number2: {
     width: "85%",
-    height: 45,
+    height: responsiveScreenHeight(6.7),
     borderBottomWidth: 2,
     borderLeftWidth: 2,
     borderRightWidth: 2,
@@ -581,28 +582,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
 
-  number3: {
-    marginLeft: "1%",
-    marginRight: "1%",
-    width: "98%",
-    height: 45,
-    borderWidth: 2,
-    borderColor: "#E5E5E5",
-    flexDirection: "row",
-  },
-  number4: {
-    width: "25%",
-    height: 45,
-    borderWidth: 2,
-    borderColor: "#E5E5E5",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row",
-  },
-
   titleText: {
     alignItems: "flex-start",
-    fontSize: 18,
+    fontSize: responsiveScreenFontSize(2),
     marginTop: "1%",
     marginRight: "1%",
     marginLeft: "1%",
@@ -613,38 +595,39 @@ const styles = StyleSheet.create({
 
   check: {
     alignItems: "flex-start",
-    fontSize: 18,
+    fontSize: responsiveScreenFontSize(2),
     margin: "1%",
     fontWeight: "bold",
     color: "#C20000",
   },
 
   gendertext: {
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(1.8),
     color: "#AFAFAF",
     alignItems: "center",
     justifyContent: "center",
   },
+
   gendertext1: {
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(1.8),
     color: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
   },
   ttext: {
-    fontSize: 13,
+    fontSize: responsiveScreenFontSize(1.52),
     color: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
   },
 
   white: {
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     fontWeight: "bold",
     color: "#FFFFFF",
   },
   white1: {
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     fontWeight: "bold",
     color: "#AFAFAF",
   },
@@ -652,7 +635,7 @@ const styles = StyleSheet.create({
   genderB1: {
     backgroundColor: "#F5F5F5",
     width: "49%",
-    height: 50,
+    height: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -665,7 +648,7 @@ const styles = StyleSheet.create({
   genderB11: {
     backgroundColor: "#F5F5F5",
     width: "49%",
-    height: 50,
+    height: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -679,7 +662,7 @@ const styles = StyleSheet.create({
   genderB2: {
     backgroundColor: "#7AC819",
     width: "49%",
-    height: 50,
+    height: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -691,27 +674,23 @@ const styles = StyleSheet.create({
     backgroundColor: "#7AC819",
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: "1%",
-    marginRight: "1%",
-    marginTop: 30,
-    width: "98%",
-    height: 50,
+    width: "100%",
   },
 
   sendButton1: {
     backgroundColor: "#F5F5F5",
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: "1%",
-    marginRight: "1%",
-    width: "98%",
-    height: 50,
-    marginTop: 30,
+    width: "100%",
+    height: "100%",
   },
 
   chatControl: {
+    height: responsiveScreenHeight(6.8),
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    marginTop: "2%",
+    marginBottom: "4%",
   },
 });

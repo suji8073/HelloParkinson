@@ -23,7 +23,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 var myHeaders = new Headers();
 myHeaders.append(
   "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMxODQ0MTAsImV4cCI6MTY0Mzc4OTIxMH0.7_etGVJgCXvuZHSHGqf6S0nuRl9eO7bYgZ_M64sLiS5-XG5dM5_MMlu7YczT8P0IBEn83Z5V4UFrZO43m4eebw"
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDQwNjU1MzYsImV4cCI6MTY0NDY3MDMzNn0.mnbGyKlMHvwdVFQJRPmgTxMGB966ITczMTA_p4E4lWSRb2DYoOlwW1mrPGapPRkf6h4hyZIIUgfrs1yIqInOJg"
 );
 
 var sum_progress = 0;
@@ -182,7 +182,9 @@ export default class patient_record extends Component {
           var now = new Date(date);
           var yesterday = new Date(now.setDate(now.getDate() - j)); // 어제
           var date2 = this.date_change(yesterday);
-
+          if (String(date2).substring(8, 10) === lastDate) {
+            break;
+          }
           var add_data = {
             day: date2,
             cat: "null",

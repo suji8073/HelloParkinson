@@ -21,6 +21,8 @@ const items = [
 ];
 
 var myHeaders = new Headers();
+
+
 export default class statistics extends Component {
   static contextType = Context;
   constructor(props) {

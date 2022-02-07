@@ -3,7 +3,9 @@ import { StyleSheet, View, Text, SafeAreaView } from "react-native";
 
 const task_week = ({ id, put_date, progress }) => {
   const dateToStr = () => {
+    //console.log("+" + put_date);
     var day = String(put_date).substring(8, 10);
+    //console.log("*" + (id + 1));
     if (parseInt(day) === 5) return "5";
     else if (parseInt(day) === 10) return day;
     else if (parseInt(day) === 15) return day;

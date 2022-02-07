@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, Alert, TextInput } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Alert,
+  TextInput,
+  ScrollView,
+} from "react-native";
 
 import { WithLocalSvg } from "react-native-svg";
 import { Ionicons } from "@expo/vector-icons";
@@ -32,10 +39,16 @@ async function savePicture() {
   CameraRoll.save(tag, { type, album });
 }
 
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
 var myHeaders = new Headers();
 myHeaders.append(
   "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkZCIsIlJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpc3MiOiJIQ0MgTGFiIiwiaWF0IjoxNjQzODE1MjUxLCJleHAiOjE2NDQ0MjAwNTF9.u2zbh9qW7uYv_Y9dOZP-zF6wBFXXvXAvgB1q00iXdfkQEdPIeZpytdjYuVUArMlvq0OC099d_cuV7uuG_7WFJQ"
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDQwNjU1MzYsImV4cCI6MTY0NDY3MDMzNn0.mnbGyKlMHvwdVFQJRPmgTxMGB966ITczMTA_p4E4lWSRb2DYoOlwW1mrPGapPRkf6h4hyZIIUgfrs1yIqInOJg"
 );
 
 myHeaders.append("Content-Type", "application/json");
@@ -91,7 +104,7 @@ export default class patient_profile_edit extends Component {
 
   edit_update = () => {
     fetch("http://hccparkinson.duckdns.org:19737/chamuser", {
-      method: "POST",
+      method: "PUT",
       headers: myHeaders,
       body: JSON.stringify({
         uid: this.state.UID,
@@ -112,7 +125,7 @@ export default class patient_profile_edit extends Component {
 
   edit_pw_update = () => {
     fetch("http://hccparkinson.duckdns.org:19737/chamuser", {
-      method: "POST",
+      method: "PUT",
       headers: myHeaders,
       body: JSON.stringify({
         uid: this.state.UID,
@@ -240,7 +253,7 @@ export default class patient_profile_edit extends Component {
         <View style={styles.menuView}>
           <AntDesign
             name="left"
-            size={24}
+            style={{ fontSize: responsiveScreenFontSize(3) }}
             color="#808080"
             onPress={() => {
               this.props.navigation.pop();
@@ -252,7 +265,7 @@ export default class patient_profile_edit extends Component {
           <View style={styles.margin}></View>
           <AntDesign
             name="check"
-            size={24}
+            style={{ fontSize: responsiveScreenFontSize(3) }}
             color="#5CB405"
             onPress={this.edit_finish}
           />
@@ -261,7 +274,7 @@ export default class patient_profile_edit extends Component {
         <View style={styles.firstView}>
           <Ionicons
             name="person-circle-sharp"
-            size={120}
+            style={{ fontSize: responsiveScreenFontSize(18) }}
             color="lightblue"
             alignItems="center"
           />
@@ -272,6 +285,7 @@ export default class patient_profile_edit extends Component {
             <Text style={styles.user_name}>프로필 사진 변경</Text>
           </TouchableOpacity>
         </View>
+
         <View style={styles.secondView}>
           <View style={styles.memoView}>
             <Text style={styles.text1}>이름</Text>
@@ -396,15 +410,17 @@ export default class patient_profile_edit extends Component {
 
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
   text1: {
     alignItems: "flex-start",
-    fontSize: 17,
-    color: "#000000",
+    fontSize: responsiveScreenFontSize(2),
+    color: "#484848",
     justifyContent: "center",
   },
+
   ageview: {
     // padding:30,
     alignItems: "center",
@@ -415,21 +431,21 @@ const styles = StyleSheet.create({
   },
 
   menuView: {
-    marginTop: "3%",
+    marginTop: "5.1%",
     backgroundColor: "#FFFFFF",
-    height: 58,
+    height: "8.5%",
     flexDirection: "row",
     alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
+    paddingRight: "5%",
+    paddingLeft: "5%",
   },
 
   titleText: {
     alignItems: "flex-start",
-    fontSize: 21,
+    fontSize: responsiveScreenFontSize(2.48),
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
@@ -437,30 +453,27 @@ const styles = StyleSheet.create({
   },
 
   firstView: {
-    // padding:30,
     alignItems: "center",
     justifyContent: "center",
-    flex: 2,
-    margin: "10%",
+    marginBottom: "4.7%",
     backgroundColor: "#FFFFFF",
   },
 
   secondView: {
-    // padding:30,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    height: 50,
+    height: responsiveScreenHeight(7),
     backgroundColor: "#FFFFFF",
     borderTopWidth: 0.5,
     borderColor: "#E5E5E5",
   },
+
   secondView1: {
-    // padding:30,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    height: 50,
+    height: responsiveScreenHeight(7),
     backgroundColor: "#FFFFFF",
     borderTopWidth: 0.5,
     borderBottomWidth: 0.5,
@@ -468,7 +481,6 @@ const styles = StyleSheet.create({
   },
 
   marginView: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1.3,
@@ -476,14 +488,12 @@ const styles = StyleSheet.create({
   },
 
   margin: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,
   },
 
   memoView: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     marginLeft: "8%",
@@ -491,7 +501,6 @@ const styles = StyleSheet.create({
   },
 
   textView: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 2,
@@ -499,14 +508,14 @@ const styles = StyleSheet.create({
 
   text2: {
     alignItems: "flex-start",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     color: "#484848",
     justifyContent: "center",
   },
 
   user_name: {
     alignItems: "flex-start",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     fontWeight: "bold",
     color: "#59A60B",
     justifyContent: "center",
@@ -514,7 +523,7 @@ const styles = StyleSheet.create({
 
   user_age: {
     alignItems: "flex-start",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     color: "#747474",
     justifyContent: "center",
   },

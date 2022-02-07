@@ -195,7 +195,9 @@ export default class progress extends Component {
     );
     fetch(
       "http://hccparkinson.duckdns.org:19737/onlymanager/userlist/progress?date=" +
+
         this.state.year1 +
+
         "-" +
         this.state.month1 +
         "-" +

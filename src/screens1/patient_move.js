@@ -11,15 +11,22 @@ import TestSvg2 from "../icon/Frame2.svg";
 import TestSvg3 from "../icon/Frame3.svg";
 import TestSvg4 from "../icon/Frame4.svg";
 import TestSvg5 from "../icon/Frame5.svg";
-import Task from "./task_patient";
+import Task from "./task_progress";
 
 import { WithLocalSvg } from "react-native-svg";
+
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
 
 var myHeaders = new Headers();
 myHeaders.append(
   "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDM4MTQ4MjcsImV4cCI6MTY0NDQxOTYyN30._9nHzGC2K-8u0J21TWb9ZWhLcvAQyOrxabaLH5LGO9frhAdHhxoRhhxcYuyTd47whloqG_deAILbi7yiCQQfhQ"
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDQwNjU1MzYsImV4cCI6MTY0NDY3MDMzNn0.mnbGyKlMHvwdVFQJRPmgTxMGB966ITczMTA_p4E4lWSRb2DYoOlwW1mrPGapPRkf6h4hyZIIUgfrs1yIqInOJg"
 );
+
 export default class patient_move extends Component {
   constructor(props) {
     super(props);
@@ -76,7 +83,7 @@ export default class patient_move extends Component {
           >
             <View style={styles.moveView}>
               <View style={styles.image}>
-                <WithLocalSvg width={60} height={60} asset={TestSvg1} />
+                <WithLocalSvg width={"100%"} height={"100%"} asset={TestSvg1} />
               </View>
 
               <View style={styles.listview}>
@@ -98,7 +105,7 @@ export default class patient_move extends Component {
           >
             <View style={styles.moveView}>
               <View style={styles.image}>
-                <WithLocalSvg width={60} height={60} asset={TestSvg2} />
+                <WithLocalSvg width={"100%"} height={"100%"} asset={TestSvg2} />
               </View>
 
               <View style={styles.listview}>
@@ -120,7 +127,7 @@ export default class patient_move extends Component {
           >
             <View style={styles.moveView}>
               <View style={styles.image}>
-                <WithLocalSvg width={60} height={60} asset={TestSvg3} />
+                <WithLocalSvg width={"100%"} height={"100%"} asset={TestSvg3} />
               </View>
 
               <View style={styles.listview}>
@@ -142,7 +149,7 @@ export default class patient_move extends Component {
           >
             <View style={styles.moveView}>
               <View style={styles.image}>
-                <WithLocalSvg width={60} height={60} asset={TestSvg4} />
+                <WithLocalSvg width={"100%"} height={"100%"} asset={TestSvg4} />
               </View>
 
               <View style={styles.listview}>
@@ -164,7 +171,7 @@ export default class patient_move extends Component {
           >
             <View style={styles.moveView}>
               <View style={styles.image}>
-                <WithLocalSvg width={60} height={60} asset={TestSvg5} />
+                <WithLocalSvg width={"100%"} height={"100%"} asset={TestSvg5} />
               </View>
 
               <View style={styles.listview}>
@@ -186,63 +193,49 @@ export default class patient_move extends Component {
 
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
   menuView: {
+    marginTop: "5.1%",
     backgroundColor: "#FFFFFF",
-    height: 58,
+    height: "8.5%",
     flexDirection: "row",
     alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
-    marginTop: "3%",
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
-  },
-  margin: {
-    // padding:30,
-    alignItems: "flex-start",
-    justifyContent: "center",
-    flex: 1,
+    paddingRight: "5%",
+    paddingLeft: "5%",
   },
 
   titleText: {
     alignItems: "flex-start",
-    fontSize: 21,
+    fontSize: responsiveScreenFontSize(2.48),
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
     fontWeight: "bold",
   },
-
-  firstView: {
-    // padding:30,
-    alignItems: "center",
-    justifyContent: "flex-start",
-    marginLeft: 20,
-    marginRight: 20,
-    flexDirection: "row",
+  margin: {
+    alignItems: "flex-start",
+    justifyContent: "center",
     flex: 1,
-    marginTop: 15,
-    marginBottom: 15,
-    backgroundColor: "#FFFFFF",
   },
 
   secondView: {
-    paddingTop: 10,
+    paddingTop: "1.8%",
     flexDirection: "column",
-    width: "100%",
+    height: responsiveScreenHeight(70),
     backgroundColor: "#F8F8F8",
-    marginBottom: 90,
+    marginBottom: "39%",
   },
   moveView: {
     backgroundColor: "#FFFFFF",
-    height: 90,
     width: "92%",
-    marginLeft: "4%",
-    marginRight: "4%",
+    marginLeft: "4.7%",
+    marginRight: "4.7%",
     marginTop: "3%",
     marginBottom: "3%",
     flexDirection: "row",
@@ -251,28 +244,22 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   image: {
-    width: "20%",
-    marginTop: 15,
-    marginBottom: 15,
-    marginLeft: 10,
-    marginRight: 5,
+    width: responsiveScreenWidth(14),
+    height: responsiveScreenHeight(9.3),
+    marginTop: "2.5%",
+    marginBottom: "2.5%",
+    marginLeft: "4.7%",
   },
   listview: {
-    marginLeft: 10,
+    marginLeft: "4.7%",
     width: "75%",
     flexDirection: "column",
-    marginTop: 15,
+    marginTop: "4.7%",
   },
-  line: {
-    width: "1%",
-    marginTop: 5,
-    marginBottom: 5,
-    borderWidth: 1,
-    borderColor: "#EAEAEA",
-  },
+
   text2: {
     alignItems: "flex-start",
-    fontSize: 18,
+    fontSize: responsiveScreenFontSize(2.12),
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
@@ -280,7 +267,6 @@ const styles = StyleSheet.create({
   },
   progressView: {
     width: "100%",
-    marginTop: 5,
     justifyContent: "flex-start",
     borderColor: "#E0E0E0",
     flexDirection: "row",
