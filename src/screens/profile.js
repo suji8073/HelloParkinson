@@ -115,7 +115,8 @@ export default class profile extends Component {
           </View>
           {/* 세번째줄 끝 */}
         </View>
-        <TouchableOpacity
+        {/* 비밀번호 변경기능 제거 */}
+        {/* <TouchableOpacity
           onPress={() => {
             this.props.navigation.navigate("passwchange");
           }}
@@ -138,7 +139,7 @@ export default class profile extends Component {
               </Text>
             </View>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     );
   }

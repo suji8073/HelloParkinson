@@ -27,11 +27,7 @@ import {
 
 
 var myHeaders = new Headers();
-myHeaders.append(
-  "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDQxNjk1MDMsImV4cCI6MTY0NDc3NDMwM30.22m7OlYWBKcSc3mh0S3Vvm_ObbPoTAuvZUqKsTOeP-oMyFD20HvsPAK5DdBA73KsMu25lTB2e4u3DJUmV5F-pA"
-);
-myHeaders.append("Content-Type", "application/json");
+
 
 export default class patient_Home extends Component {
   static contextType = Context;
@@ -48,6 +44,8 @@ export default class patient_Home extends Component {
 
   componentDidMount() {
     this.userfunc();
+    myHeaders.append("Authorization", "Bearer " + this.context.patient_token);
+    myHeaders.append("Content-Type", "application/json");
     // this.findname();
   }
   userfunc = () => {
