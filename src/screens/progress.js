@@ -15,12 +15,6 @@ import ddaysvg from "../icon/dday.svg";
 import { AntDesign } from "@expo/vector-icons";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 import Context from "../Context/context";
-var myHeaders = new Headers();
-myHeaders.append(
-  "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDM5NTk5NTMsImV4cCI6MTY0NDU2NDc1M30.j1U1_3O9tmkHPnnib15eFmqas8oXLMfUv7Qz9tH9HZtrC1baYjD8MKXkyxgd3QnNBxmDh4456JaosBtvwTnqzg"
-);
-myHeaders.append("Content-Type", "application/json");
 const m_items = [
   { id: "1", label: "1월" },
   { id: "2", label: "2월" },
@@ -48,6 +42,7 @@ var thisdate2 = new Date(
   now.getDate()
 ).getDate();
 
+var myHeaders = new Headers();
 export default class progress extends Component {
   static contextType = Context;
   constructor(props) {
@@ -75,6 +70,8 @@ export default class progress extends Component {
     };
   }
   componentDidMount() {
+    myHeaders.append("Authorization", "Bearer " + this.context.manager_token);
+    myHeaders.append("Content-Type", "application/json");
     this.setState(
       {
         year1: String(this.state.year),
@@ -568,6 +565,7 @@ export default class progress extends Component {
                   }}
                 >
                   <Task
+                    id={item.uid}
                     user={item.uname}
                     age={item.birthday}
                     sex={item.gender}

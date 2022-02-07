@@ -21,11 +21,6 @@ const items = [
 ];
 
 var myHeaders = new Headers();
-myHeaders.append(
-  "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyODk0MzAsImV4cCI6MTY0Mzg5NDIzMH0.XJFkawo8_s4okjavnlT1zVzs9nep6rqlMOCAVqmbloNqyf6BzLYen_Mk4JLhSY3jEP-ogqqIxD6CQO1FAFd-zg"
-);
-
 export default class statistics extends Component {
   static contextType = Context;
   constructor(props) {
@@ -38,6 +33,8 @@ export default class statistics extends Component {
   }
 
   componentDidMount() {
+    myHeaders.append("Authorization", "Bearer " + this.context.manager_token);
+    myHeaders.append("Content-Type", "application/json");
     this.userfunc();
   }
 

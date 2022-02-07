@@ -7,6 +7,10 @@ export default React.createContext({
   num: 0,
   user_token: "",
   user_name: "관리자",
+  manager_token:
+    "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDQyNDkyNDYsImV4cCI6MTY0NDg1NDA0Nn0.SdE2Y2lG0qv1VZXZ36DLBmHm8Xxkty7Fuiv9B5JrCERAPd7aoLkXFVYncPQI9ZBR_2jdBHV8KArAQ3sWH-AuqQ",
+  patient_token:
+    "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDQyNDkyODgsImV4cCI6MTY0NDg1NDA4OH0.omw1cfwvLXv3L4hCFr8V1TFvA4gV675PQ9xgouGFJzxS8nFRh2j4sW80OKPN4AkZ3am1Sj1JRE9paOpQzzl-dQ",
   user_exercise: [
     { id: "1-1", name: "목 앞 근육 스트레칭", set: 0 },
     { id: "1-2", name: "날개뼈 모으기", set: 6 },
