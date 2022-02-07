@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   Alert,
+  BackHandler,
   TouchableOpacityComponent,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -26,35 +27,13 @@ export default class task1 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      star: this.props.book,
-      id: this.props.id,
+      ...props,
     };
+    console.log(this.state);
   }
-  componentDidMount() {
-    // console.log("123");
-    // this.setState({ id: this.props.id });
-    // // console.log
-    // if (this.props.book === true) {
-    //   this.setState({ star: greenstarsvg });
-    // } else {
-    //   this.setState({ star: silverstarsvg });
-    // }
-  }
+  // componentDidMount() {}
 
-  componentDidUpdate(prevProps, prevState) {
-    // console.log("1234");
-    // console.log(prevState);
-    // console.log(prevProps);
-    // if (prevState.star !== this.state.star) {
-    //   this.setState({
-    //     star: this.props.book === true ? greenstarsvg : silverstarsvg,
-    //   });
-    // } else {
-    //   this.setState({
-    //     star: this.props.book === true ? greenstarsvg : silverstarsvg,
-    //   });
-    // }
-  }
+  // componentDidUpdate(prevProps, prevState) {}
 
   dateToStr = () => {
     var today_year = new Date().getFullYear();
@@ -63,14 +42,12 @@ export default class task1 extends Component {
   };
 
   handleClick = () => {
-    if (this.state.star == silverstarsvg) {
-      // if (this.props.book === false) {
-      // this.setState({ star: greenstarsvg });
-      // this.props({ book: greenstarsvg });
+    if (this.state.book == silverstarsvg) {
+      this.setState({ book: greenstarsvg });
       // 아이콘 asset값 변경 greenstarsvg 으로
 
       fetch("http://hccparkinson.duckdns.org:19737/onlymanager/bookmark", {
-        method: "POST",
+        method: "PUT",
         headers: myHeaders,
         body: JSON.stringify({
           uid: String(this.props.id),
@@ -80,10 +57,10 @@ export default class task1 extends Component {
         Alert.alert("즐겨찾기에 추가되었습니다.");
       });
     } else {
-      this.setState({ star: silverstarsvg });
+      this.setState({ book: silverstarsvg });
       // 아이콘 asset값 변경 silverstarsvg 으로
       fetch("http://hccparkinson.duckdns.org:19737/onlymanager/bookmark", {
-        method: "POST",
+        method: "PUT",
         headers: myHeaders,
         body: JSON.stringify({
           uid: String(this.props.id),
@@ -128,7 +105,7 @@ export default class task1 extends Component {
             width={30}
             height={30}
             // asset={this.props.book === true ? greenstarsvg : silverstarsvg}
-            asset={this.props.book}
+            asset={this.state.book}
             // asset={this.state.star}
           />
         </TouchableOpacity>
