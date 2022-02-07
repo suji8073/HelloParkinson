@@ -2,14 +2,16 @@ import React, { Component } from "react";
 import { TouchableOpacity, View, Text, Switch } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
+import {
+  responsiveScreenHeight,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
 
 const storeData = async (array) => {
   try {
     await AsyncStorage.mergeItem("@alarm", JSON.stringify(array));
     console.log(array);
   } catch (e) {
-    // saving error
     console.log(e);
   }
 };
@@ -81,7 +83,7 @@ export default class alarm_task extends Component {
           flexDirection: "row",
           borderRadius: 6,
           borderWidth: 2,
-          marginTop: 25,
+          marginTop: "2%",
           paddingRight: "5%",
           paddingLeft: "5%",
           paddingTop: "7%",
@@ -94,7 +96,7 @@ export default class alarm_task extends Component {
         <View style={{ flexDirection: "column", flex: 8 }}>
           <Text
             style={{
-              fontSize: 28,
+              fontSize: responsiveScreenFontSize(3.2),
               justifyContent: "flex-start",
             }}
           >
@@ -112,7 +114,7 @@ export default class alarm_task extends Component {
           }}
         >
           <Switch
-            style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
+            style={{ transform: [{ scaleX: responsiveScreenHeight(0.18) }, { scaleY: responsiveScreenHeight(0.18) }] }}
             ios_backgroundColor={"black"}
             trackColor={{ false: "#BBBBBB", true: "#5CB405" }}
             //trackColor={{ false: "#767577", true: "#81b0ff" }}

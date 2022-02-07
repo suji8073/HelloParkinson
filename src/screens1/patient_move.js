@@ -5,6 +5,7 @@ import {
   StyleSheet,
   View,
   Text,
+  StatusBar,
 } from "react-native";
 import TestSvg1 from "../icon/Frame1.svg";
 import TestSvg2 from "../icon/Frame2.svg";
@@ -12,6 +13,7 @@ import TestSvg3 from "../icon/Frame3.svg";
 import TestSvg4 from "../icon/Frame4.svg";
 import TestSvg5 from "../icon/Frame5.svg";
 import Task from "./task_progress";
+StatusBar.setBackgroundColor("white");
 
 import { WithLocalSvg } from "react-native-svg";
 
@@ -196,6 +198,7 @@ const styles = StyleSheet.create({
     height: responsiveScreenHeight(100),
     width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
+    backgroundColor: "#F8F8F8",
   },
   menuView: {
     marginTop: "5.1%",
@@ -229,7 +232,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     height: responsiveScreenHeight(70),
     backgroundColor: "#F8F8F8",
-    marginBottom: "39%",
+    marginBottom: "38%",
   },
   moveView: {
     backgroundColor: "#FFFFFF",

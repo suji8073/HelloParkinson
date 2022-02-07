@@ -67,18 +67,20 @@ const task_move = ({ image, text1, text2, text3 }) => {
       style={{
         alignItems: "center",
         flexDirection: "row",
-        height: 100,
-        width: "90%",
+        height: responsiveScreenHeight(13.9),
+        width: "100%",
         borderBottomWidth: 1,
         borderColor: "#E0E0E0",
-        justifyContent: "center",
-        marginLeft: "5%",
-        marginRight: "5%",
+        marginLeft: "4.7%",
+        marginRight: "4.7%",
       }}
     >
       <View style={styles.imageView}>
         <Image
-          style={{ height: 70, width: 130 }}
+          style={{
+            height: responsiveScreenHeight(9.0),
+            width: responsiveScreenWidth(28.6),
+          }}
           source={data[String(image)]}
         />
       </View>
@@ -108,37 +110,35 @@ const task_move = ({ image, text1, text2, text3 }) => {
 export default task_move;
 const styles = StyleSheet.create({
   text1: {
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
     fontWeight: "bold",
-    width: "90%",
+    width: "100%",
   },
   text2: {
-    fontSize: 16,
+    fontSize: responsiveScreenFontSize(1.88),
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
-    marginTop: 10,
+    marginTop: "1.7%",
   },
   text22: {
-    fontSize: 16,
+    fontSize: responsiveScreenFontSize(1.88),
     alignItems: "center",
     color: "#C20000",
     justifyContent: "center",
-    marginTop: 10,
+    marginTop: "1.7%",
     fontWeight: "bold",
   },
   imageView: {
-    flex: 2.5,
-    margin: "2%",
     alignItems: "center",
     justifyContent: "center",
   },
   textView: {
-    margin: "2%",
-    flex: 3,
+    marginLeft: "5.8%",
+    width: responsiveScreenWidth(56),
     flexDirection: "column",
   },
 });

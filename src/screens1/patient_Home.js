@@ -25,7 +25,6 @@ import {
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
 
-
 var myHeaders = new Headers();
 myHeaders.append(
   "Authorization",
@@ -57,6 +56,7 @@ export default class patient_Home extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
+        console.log(json);
         this.setState(
           {
             data: json.data,
@@ -171,8 +171,8 @@ export default class patient_Home extends Component {
                   {this.state.second == null
                     ? "x"
                     : String(this.state.second["uname"]) +
-                      "[" +
-                      String(this.state.second["percent"]) +
+                      " [" +
+                      parseInt(this.state.second["percent"]).toFixed(1) +
                       "%]"}
                 </Text>
               </View>
@@ -212,7 +212,8 @@ export default class patient_Home extends Component {
                   asset={firstsvg}
                 />
                 <Text style={styles.prizetext}>
-                  {this.state.first["uname"]}[{this.state.first["percent"]}%]
+                  {this.state.first["uname"]} [
+                  {parseInt(this.state.first["percent"]).toFixed(1)}%]
                 </Text>
               </View>
               <View
@@ -249,8 +250,8 @@ export default class patient_Home extends Component {
                   {this.state.third == null
                     ? "x"
                     : String(this.state.third["uname"]) +
-                      "[" +
-                      String(this.state.third["percent"]) +
+                      " [" +
+                      parseInt(this.state.third["percent"]).toFixed(1) +
                       "%]"}
                 </Text>
               </View>

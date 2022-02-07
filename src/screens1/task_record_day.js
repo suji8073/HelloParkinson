@@ -6,6 +6,12 @@ function* yLabel() {
   yield* ["0%", "", "50%", "", "100%"];
 }
 
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
 export default class task_patient extends Component {
   render() {
     const yLabelIterator = yLabel();
@@ -15,8 +21,8 @@ export default class task_patient extends Component {
         style={{
           alignItems: "flex-start",
           flexDirection: "column",
-          height: 200,
-          width: 300,
+          height: responsiveScreenHeight(29.3),
+          width: "100%",
           justifyContent: "center",
         }}
       >
@@ -27,7 +33,6 @@ export default class task_patient extends Component {
 
         <View style={styles.graphView}>
           <View style={styles.numView}>
-            <View style={styles.num3}></View>
             <Text style={styles.num2}>{this.props.CAT1.toFixed(0) + "%"}</Text>
             <View style={styles.num1}></View>
             <Text style={styles.num2}>{this.props.CAT2.toFixed(0) + "%"}</Text>
@@ -37,7 +42,6 @@ export default class task_patient extends Component {
             <Text style={styles.num2}>{this.props.CAT4.toFixed(0) + "%"}</Text>
             <View style={styles.num1}></View>
             <Text style={styles.num2}>{this.props.CAT5.toFixed(0) + "%"}</Text>
-            <View style={styles.num4}></View>
           </View>
 
           <LineChart
@@ -66,8 +70,8 @@ export default class task_patient extends Component {
                 },
               ],
             }}
-            width={350}
-            height={100}
+            width={responsiveScreenWidth(90)}
+            height={responsiveScreenHeight(13.1)}
             formatYLabel={() => [yLabelIterator.next().value]}
             chartConfig={{
               backgroundColor: "#FFFFFF",
@@ -83,7 +87,6 @@ export default class task_patient extends Component {
           />
 
           <View style={styles.textView}>
-            <View style={styles.text4}></View>
             <Text style={styles.text2}>신장</Text>
             <View style={styles.text3}></View>
             <Text style={styles.text2}>근육</Text>
@@ -93,7 +96,6 @@ export default class task_patient extends Component {
             <Text style={styles.text2}>균형{"\n"}협응</Text>
             <View style={styles.text3}></View>
             <Text style={styles.text2}>유산소</Text>
-            <View style={styles.text5}></View>
           </View>
         </View>
       </View>
@@ -103,71 +105,60 @@ export default class task_patient extends Component {
 const styles = StyleSheet.create({
   text1: {
     alignItems: "flex-start",
-    fontSize: 17,
-    marginBottom: 5,
+    fontSize: responsiveScreenFontSize(2),
+    marginBottom: "3%",
+    marginLeft: "3%",
     color: "#000000",
     justifyContent: "center",
     fontWeight: "bold",
+    paddingLeft: "3%",
   },
   text2: {
-    fontSize: 14,
+    fontSize: responsiveScreenFontSize(1.52),
     color: "#484848",
     alignItems: "center",
     justifyContent: "center",
-    lineHeight: 20,
+    lineHeight: responsiveScreenFontSize(1.8),
   },
   text3: {
-    width: 30,
+    width: "12.5%",
     justifyContent: "center",
     alignItems: "center",
   },
-  text4: {
-    width: 30,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  text5: {
-    width: 6,
-    justifyContent: "center",
-    alignItems: "center",
-  },
+
   graphView: {
     flex: 3,
     marginBottom: "5%",
     width: "100%",
     height: "100%",
-    alignItems: "center",
     justifyContent: "center",
   },
   chart: {
-    alignItems: "center",
-    justifyContent: "center",
+    width: "100%",
   },
   textView: {
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "center",
-    marginBottom: "5%",
+    marginTop: "1.8%",
+    marginLeft: "15%",
+    marginRight: "10%",
   },
   numView: {
     flexDirection: "row",
     alignItems: "flex-start",
-    justifyContent: "center",
-    marginTop: "8%",
+    justifyContent: "flex-start",
+    marginLeft: "17%",
+    marginRight: "10%",
+    marginBottom: "1%",
   },
   num1: {
-    width: 40,
+    width: "16%",
   },
   num2: {
-    fontSize: 14,
+    fontSize: responsiveScreenFontSize(1.52),
     color: "#484848",
     justifyContent: "center",
     alignItems: "center",
-  },
-  num3: {
-    width: 30,
-  },
-  num4: {
-    width: 15,
   },
 });

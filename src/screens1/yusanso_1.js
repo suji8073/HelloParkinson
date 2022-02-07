@@ -4,12 +4,18 @@ import {
   View,
   Text,
   TouchableOpacity,
-  BackHandler,
 } from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { WithLocalSvg } from "react-native-svg";
+
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+  responsiveWidth,
+} from "react-native-responsive-dimensions";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -95,7 +101,6 @@ export default class yusanso_1 extends Component {
       this.setState({ startDisable: false });
       this.setState({ play: false });
       storeData(this.state.minutes_Counter, this.state.seconds_Counter);
-      
     }
   };
 
@@ -130,20 +135,23 @@ export default class yusanso_1 extends Component {
         <View style={styles.menuView}>
           <AntDesign
             name="left"
-            size={24}
+            style={{ fontSize: responsiveScreenFontSize(3) }}
             color="#808080"
             onPress={this.backout}
           />
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>걷기</Text>
           <View style={styles.margin}></View>
-          <EvilIcons name="star" size={30} color="#ffffff" />
+          <EvilIcons
+            name="star"
+            style={{ fontSize: responsiveScreenFontSize(3) }}
+            color="#ffffff"
+          />
         </View>
         <View style={styles.secondView}>
-          <View style={styles.one}></View>
           <View style={styles.two}>
             <CountdownCircleTimer
-              size={280}
+              size={responsiveScreenWidth(76.3)}
               onComplete={() => {
                 return [true, 1000]; // repeat animation in 1.5 seconds
               }}
@@ -155,14 +163,14 @@ export default class yusanso_1 extends Component {
             >
               <View style={styles.circleview}>
                 <WithLocalSvg
-                  width={40}
-                  height={40}
+                  width={responsiveWidth(10)}
+                  height={responsiveWidth(10)}
                   asset={this.state.play === false ? walk_stop : walk_play}
                 />
                 <Text style={styles.timetext}>
                   {this.state.minutes_Counter} : {this.state.seconds_Counter}
                 </Text>
-                <Text style={styles.ttext}>
+                <Text style={styles.tttext}>
                   {this.state.play === false ? "쉬는중" : "진행중"}
                 </Text>
               </View>
@@ -171,16 +179,16 @@ export default class yusanso_1 extends Component {
 
           <View style={styles.three}>
             <View style={styles.margin}></View>
-
             <View style={styles.textView}>
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={this.onButtonStart}
               >
                 <WithLocalSvg
-                  width={90}
-                  height={90}
+                  width={responsiveScreenWidth(23)}
+                  height={responsiveScreenWidth(23)}
                   asset={this.state.play === false ? off : on}
+                  style={{ marginBottom: "2%" }}
                 />
               </TouchableOpacity>
               <Text style={styles.tttext}>일시중지</Text>
@@ -190,7 +198,12 @@ export default class yusanso_1 extends Component {
 
             <View style={styles.textView}>
               <TouchableOpacity activeOpacity={0.8} onPress={this.backout}>
-                <WithLocalSvg width={90} height={90} asset={stop} />
+                <WithLocalSvg
+                  width={responsiveScreenWidth(23)}
+                  height={responsiveScreenWidth(23)}
+                  asset={stop}
+                  style={{ marginBottom: "2%" }}
+                />
               </TouchableOpacity>
               <Text style={styles.tttext}>나가기</Text>
             </View>
@@ -204,57 +217,44 @@ export default class yusanso_1 extends Component {
 }
 
 const styles = StyleSheet.create({
-  sel_placeholder: {
-    fontSize: 25,
-    alignItems: "center",
-    color: "#000000",
-    justifyContent: "center",
-    fontWeight: "bold",
-  },
   finalView: {
-    flex: 1,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
-
   menuView: {
-    marginTop: "3%",
+    marginTop: "5.1%",
     backgroundColor: "#FFFFFF",
-    height: 58,
+    height: "8.5%",
     flexDirection: "row",
     alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
-  },
-
-  textView: {
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  tttext: {
-    fontSize: 17,
-    alignItems: "center",
-    color: "#666666",
-    justifyContent: "center",
-    fontWeight: "bold",
-    marginTop: 20,
+    paddingRight: "5%",
+    paddingLeft: "5%",
   },
 
   titleText: {
     alignItems: "flex-start",
-    fontSize: 21,
+    fontSize: responsiveScreenFontSize(2.48),
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
     fontWeight: "bold",
   },
 
+  tttext: {
+    fontSize: responsiveScreenFontSize(2),
+    alignItems: "center",
+    color: "#666666",
+    justifyContent: "center",
+    fontWeight: "bold",
+    marginTop: "4%",
+  },
+
   timetext: {
-    fontSize: 48,
+    fontSize: responsiveScreenFontSize(6.5),
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
@@ -262,21 +262,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
 
-  firstView: {
-    // padding:30,
+  textView: {
     alignItems: "center",
     justifyContent: "center",
-    flex: 2,
-    margin: 15,
-    backgroundColor: "#FFFFFF",
   },
 
   secondView: {
+    marginTop: "10.3%",
+    marginRight: "11.6%",
+    marginLeft: "11.6%",
     alignItems: "center",
-    justifyContent: "center",
     flexDirection: "column",
-    flex: 5,
-    marginBottom: "30%",
+    height: "100%",
   },
 
   circleview: {
@@ -285,55 +282,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  onetext: {
-    fontSize: 18,
-    alignItems: "center",
-    color: "#666666",
-    fontWeight: "bold",
-    justifyContent: "center",
-    marginBottom: 10,
-  },
-
-  onettext: {
-    fontSize: 23,
-    alignItems: "center",
-    color: "#000000",
-    fontWeight: "bold",
-    justifyContent: "center",
-  },
-
-  ttext: {
-    fontSize: 17,
-    alignItems: "center",
-    color: "#666666",
-    justifyContent: "center",
-    marginTop: 5,
-  },
-
-  one: {
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
-    width: "100%",
-  },
-
   two: {
     alignItems: "center",
     justifyContent: "center",
-    flex: 4,
-    width: "80%",
     flexDirection: "column",
   },
 
-  timer: {
-    width: 300,
-  },
-
   three: {
-    marginTop: "10%",
+    marginTop: "7%",
     alignItems: "center",
     justifyContent: "center",
-    flex: 2,
     flexDirection: "row",
   },
 
@@ -347,6 +305,6 @@ const styles = StyleSheet.create({
   margin1: {
     alignItems: "flex-start",
     justifyContent: "center",
-    flex: 0.3,
+    flex: 1,
   },
 });

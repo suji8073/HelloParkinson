@@ -13,6 +13,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
 var myHeaders = new Headers();
 myHeaders.append(
   "Authorization",
@@ -62,7 +68,7 @@ export default class move_3 extends Component {
         <View style={styles.menuView}>
           <AntDesign
             name="left"
-            size={24}
+            style={{ fontSize: responsiveScreenFontSize(3) }}
             color="#808080"
             onPress={() => {
               this.props.navigation.navigate("TabNavigation1");
@@ -71,7 +77,11 @@ export default class move_3 extends Component {
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>균형 협응 운동</Text>
           <View style={styles.margin}></View>
-          <EvilIcons name="star" size={30} color="#ffffff" />
+          <EvilIcons
+            name="star"
+            style={{ fontSize: responsiveScreenFontSize(3) }}
+            color="#ffffff"
+          />
         </View>
 
         <View style={styles.secondView}>
@@ -118,46 +128,38 @@ export default class move_3 extends Component {
 
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
-
   menuView: {
-    marginTop: "3%",
+    marginTop: "5.1%",
     backgroundColor: "#FFFFFF",
-    height: 58,
+    height: "8.5%",
     flexDirection: "row",
     alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
+    paddingRight: "5%",
+    paddingLeft: "5%",
   },
 
   titleText: {
     alignItems: "flex-start",
-    fontSize: 21,
+    fontSize: responsiveScreenFontSize(2.48),
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
     fontWeight: "bold",
   },
 
-  firstView: {
-    // padding:30,
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 2,
-    margin: 15,
-    backgroundColor: "#FFFFFF",
-  },
-
   secondView: {
+    marginTop: "2%",
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
-    marginBottom: "30%",
+    marginBottom: "35%",
   },
 
   margin: {
