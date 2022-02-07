@@ -25,9 +25,7 @@ import {
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
 
-
 var myHeaders = new Headers();
-
 
 export default class patient_Home extends Component {
   static contextType = Context;
@@ -43,9 +41,9 @@ export default class patient_Home extends Component {
   }
 
   componentDidMount() {
-    this.userfunc();
     myHeaders.append("Authorization", "Bearer " + this.context.patient_token);
     myHeaders.append("Content-Type", "application/json");
+    this.userfunc();
     // this.findname();
   }
   userfunc = () => {
@@ -167,7 +165,7 @@ export default class patient_Home extends Component {
                 />
                 <Text style={styles.prizetext}>
                   {this.state.second == null
-                    ? "x"
+                    ? " "
                     : String(this.state.second["uname"]) +
                       "[" +
                       String(this.state.second["percent"]) +
@@ -210,7 +208,12 @@ export default class patient_Home extends Component {
                   asset={firstsvg}
                 />
                 <Text style={styles.prizetext}>
-                  {this.state.first["uname"]}[{this.state.first["percent"]}%]
+                  {this.state.first == null
+                    ? " "
+                    : String(this.state.first["uname"]) +
+                      "[" +
+                      String(this.state.first["percent"]) +
+                      "%]"}
                 </Text>
               </View>
               <View
@@ -245,7 +248,7 @@ export default class patient_Home extends Component {
                 />
                 <Text style={styles.prizetext}>
                   {this.state.third == null
-                    ? "x"
+                    ? " "
                     : String(this.state.third["uname"]) +
                       "[" +
                       String(this.state.third["percent"]) +
