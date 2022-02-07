@@ -10,6 +10,12 @@ import {
 import React, { Component } from "react";
 import "react-native-gesture-handler";
 
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
 import { WithLocalSvg } from "react-native-svg";
 
 import logosvg from "../icon/logo.svg";
@@ -130,10 +136,9 @@ export default class login extends Component {
 
           <View style={styles.firstView}>
             <WithLocalSvg
-              width={80}
-              height={80}
+              width={responsiveScreenWidth(17)}
+              height={responsiveScreenHeight(10)}
               asset={logosvg}
-              style={{ margin: "3%" }}
             />
 
             <Text style={styles.titleText}>
@@ -141,7 +146,7 @@ export default class login extends Component {
             </Text>
 
             <Text style={styles.twoText}>
-              {"\n회원 서비스 이용을 위해 로그인 해주세요"}
+              {"회원 서비스 이용을 위해 로그인 해주세요."}
             </Text>
           </View>
 
@@ -196,91 +201,94 @@ export default class login extends Component {
 }
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
-    padding: 20,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
-  NoneView: {
-    flex: 1,
-  },
+
   firstView: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
-    flex: 4,
     backgroundColor: "#FFFFFF",
+    marginLeft: "4.7%",
+    marginTop: "31.9%",
+    marginRight: "7.5%",
   },
   secondView: {
-    // padding:30,
     alignItems: "center",
-    flex: 5,
+    marginLeft: "4.7%",
+    marginTop: "6.4%",
+    marginRight: "5%",
+    marginBottom: "8%",
     backgroundColor: "#FFFFFF",
   },
+
   thirdView: {
-    flex: 1,
+    marginTop: "4%",
     backgroundColor: "#FFFFFF",
     flexDirection: "row",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     color: "#2E2E2E",
   },
   textInput: {
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     color: "#000000",
     marginLeft: "5%",
     height: "100%",
   },
   green: {
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     color: "#FFFFFF",
     fontWeight: "bold",
   },
 
   titleText: {
     alignItems: "flex-start",
-    fontSize: 27,
+    fontSize: responsiveScreenFontSize(3.2),
     color: "#000000",
     fontWeight: "bold",
-    lineHeight: 40,
-    marginTop: "1%",
+    lineHeight: responsiveScreenFontSize(5),
+    marginTop: "4%",
   },
   twoText: {
     alignItems: "flex-start",
-    fontSize: 17,
+    marginTop: "3.4%",
+    fontSize: responsiveScreenFontSize(2),
     color: "#2E2E2E",
   },
   secondText1: {
     alignItems: "flex-start",
-    fontSize: 15,
+    fontSize: responsiveScreenFontSize(1.8),
     justifyContent: "center",
     fontWeight: "bold",
     color: "#838383",
   },
   secondText2: {
     alignItems: "flex-start",
-    fontSize: 15,
+    fontSize: responsiveScreenFontSize(1.8),
     justifyContent: "center",
     fontWeight: "bold",
     color: "#2E2E2E",
   },
   buttonwhite: {
     justifyContent: "center",
-    margin: "3%",
+    marginBottom: "2.5%",
     backgroundColor: "#FFFFFF",
     width: "100%",
-    height: 50,
+    height: responsiveScreenHeight(6.8),
     borderWidth: 2,
     borderColor: "#E5E5E5",
   },
   buttongreen: {
-    margin: "10%",
+    marginTop: "3.7%",
     backgroundColor: "#7AC819",
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    height: "15%",
+    height: responsiveScreenHeight(6.8),
   },
   logintext: {
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     fontWeight: "bold",
     color: "#FFFFFF",
   },

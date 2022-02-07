@@ -5,8 +5,7 @@ import {
   Text,
   TouchableOpacity,
   Alert,
-  Body,
-  TextInput,
+
 } from "react-native";
 
 import Context from "../Context/context";
@@ -14,7 +13,11 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 
-//eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdWppIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMxNzkwMDIsImV4cCI6MTY0Mzc4MzgwMn0.mRzdnAN4fibi22ao3-YzNI-lnm5t64IDc1gSx3w4ix1GrwkVrn6LZ6RCqK-Zx3hx3CFtidCo3EifVFcJeCmnAg
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
 
 var myHeaders = new Headers();
 myHeaders.append(
@@ -80,7 +83,7 @@ export default class patient_profile extends Component {
         <View style={styles.menuView}>
           <AntDesign
             name="left"
-            size={24}
+            style={{ fontSize: responsiveScreenFontSize(3) }}
             color="#808080"
             onPress={() => {
               this.props.navigation.navigate("TabNavigation1");
@@ -91,7 +94,7 @@ export default class patient_profile extends Component {
           <View style={styles.margin}></View>
           <MaterialIcons
             name="logout"
-            size={24}
+            style={{ fontSize: responsiveScreenFontSize(3) }}
             color="#808080"
             onPress={() => {
               this.logout();
@@ -102,12 +105,12 @@ export default class patient_profile extends Component {
         <View style={styles.firstView}>
           <Ionicons
             name="person-circle-sharp"
-            size={120}
+            style={{ fontSize: responsiveScreenFontSize(20) }}
             color="lightblue"
             alignItems="center"
           />
         </View>
-        <View style={{ borderTopWidth: 0.5, borderColor: "#E5E5E5" }}></View>
+
         <View style={styles.secondView}>
           <View style={styles.memoView}>
             <Text style={styles.text1}>이름</Text>
@@ -176,32 +179,33 @@ export default class patient_profile extends Component {
 
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
   text1: {
     alignItems: "flex-start",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     color: "#484848",
     justifyContent: "center",
   },
 
   menuView: {
-    marginTop: "3%",
+    marginTop: "5.1%",
     backgroundColor: "#FFFFFF",
-    height: 58,
+    height: "8.5%",
     flexDirection: "row",
     alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
+    paddingRight: "5%",
+    paddingLeft: "5%",
   },
 
   titleText: {
     alignItems: "flex-start",
-    fontSize: 21,
+    fontSize: responsiveScreenFontSize(2.48),
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
@@ -209,39 +213,35 @@ const styles = StyleSheet.create({
   },
 
   firstView: {
-    // padding:30,
     alignItems: "center",
     justifyContent: "center",
-    flex: 2,
-    margin: "10%",
+    marginTop: "5.1%",
+    marginBottom: "10.3%",
     backgroundColor: "#FFFFFF",
   },
 
   secondView: {
-    // padding:30,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    height: 50,
+    height: "7%",
     backgroundColor: "#FFFFFF",
     borderTopWidth: 0.5,
     borderColor: "#E5E5E5",
   },
 
   threeView: {
-    // padding:30,
     alignItems: "center",
     justifyContent: "flex-start",
     flexDirection: "row",
-    height: 60,
+    height: "9%",
     backgroundColor: "#FFFFFF",
     borderTopWidth: 0.5,
     borderColor: "#E5E5E5",
-    paddingLeft: 30,
+    paddingLeft: "7%",
   },
 
   marginView: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1.5,
@@ -249,14 +249,12 @@ const styles = StyleSheet.create({
   },
 
   margin: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,
   },
 
   memoView: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     marginLeft: "8%",
@@ -264,7 +262,6 @@ const styles = StyleSheet.create({
   },
 
   textView: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 2,
@@ -272,14 +269,14 @@ const styles = StyleSheet.create({
 
   text2: {
     alignItems: "flex-start",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     color: "#484848",
     justifyContent: "center",
   },
 
   user_name: {
     alignItems: "flex-start",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     color: "#59A60B",
     fontWeight: "bold",
     justifyContent: "center",
@@ -287,7 +284,7 @@ const styles = StyleSheet.create({
 
   user_age: {
     alignItems: "flex-start",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     color: "#747474",
     justifyContent: "center",
   },
