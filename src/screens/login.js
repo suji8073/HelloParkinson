@@ -19,13 +19,29 @@ import {
 import { WithLocalSvg } from "react-native-svg";
 
 import logosvg from "../icon/logo.svg";
-import Context from "../Context/context";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import GlobalState from "../Context/GlobalState";
+
+const storeData = async (data) => {
+  try {
+    await AsyncStorage.setItem("@user_data", JSON.stringify(data));
+    console.log("data_ clear");
+  } catch (e) {
+    // saving error
+    console.log("data _ error");
+  }
+};
+
+const storeToken = async (token) => {
+  try {
+    await AsyncStorage.setItem("@user_token", JSON.stringify(token));
+    console.log("token_clear");
+  } catch (e) {
+    // saving error
+    console.log("token_error");
+  }
+};
 
 export default class login extends Component {
-  static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {
@@ -35,35 +51,28 @@ export default class login extends Component {
     };
   }
 
-  componentDidMount() {
-    this.setState(
-      // 디바이스에서 값을 가져오는걸로 변경해야함
-      // context값도 디바이스 값으로 변경하는 것으로
-      { id: this.context.user_id, pw: this.context.user_pw },
-      () => {
-        this.login_check();
+  async componentDidMount() {
+    try {
+      const user_data = await AsyncStorage.getItem("@user_data");
+      if (user_data != null) {
+        // 값이 있다는 소리
+        this.setState(
+          // 디바이스에서 값을 가져오는걸로 변경해야함
+          // context값도 디바이스 값으로 변경하는 것으로
+          { id: JSON.parse(user_data).ID, pw: JSON.parse(user_data).PW },
+          () => {
+            this.login_check();
+          }
+        );
       }
-    );
+    } catch (e) {
+      console.log("error");
+      console.log(e);
+    }
 
-    console.log(this.context.user_token);
     // this.context.changeTOKEN("change");
   }
   login_check = () => {
-    // console.log("아이디: " + this.state.id);
-    // console.log("비밀번호: " + this.state.pw);
-    // AsyncStorage.getItem("user_info", (err, result) => {
-    //   if (result == null) {
-    //     console.log("비어있음");
-    //   } else {
-    //     const UserInfo = JSON.parse(result);
-
-    //     console.log("아이디 : " + UserInfo.u_id);
-    //     console.log("비밀번호 : " + UserInfo.u_pw);
-    //     console.log("이름 : " + UserInfo.u_name);
-    //   }
-    // }
-    // );
-
     if (this.state.id !== "" || this.state.pw !== "") {
       console.log("들어갔는지 확인!");
       try {
@@ -90,6 +99,14 @@ export default class login extends Component {
           .then((json) => {
             // console.log("로그인 통신 확인");
             console.log(json.data);
+
+            var user_data = {
+              name: json.data[0].uname,
+              ID: this.state.id,
+              PW: this.state.pw,
+            };
+            storeData(user_data);
+            storeToken(json.data[0].token);
             if (json.data[0].manager == false) {
               if (json.data[0].ranking == 1) {
                 this.props.navigation.navigate("TabNavigation1");
@@ -97,15 +114,9 @@ export default class login extends Component {
                 this.props.navigation.navigate("TabNavigation2", {});
               }
 
-              // 환자
-              // 아이디, 비밀번호 context변경 기능 필요
-              // this.context.changeID(this.state.id);
-              // this.context.changePW(this.state.pw);
-              // Alert.alert(this.context.user_id);
               console.log("로그인 통신 확인");
             } else if (json.data[0].manager == true) {
               // 관리자
-              // this.context.changeNAME(this.state.name)
               this.props.navigation.navigate("TabNavigation", {
                 paramName1: "name",
                 paramSetting: "abc",
@@ -130,72 +141,70 @@ export default class login extends Component {
   };
   render() {
     return (
-      <GlobalState>
-        <View style={styles.finalView}>
-          <View style={styles.NoneView}></View>
+      <View style={styles.finalView}>
+        <View style={styles.NoneView}></View>
 
-          <View style={styles.firstView}>
-            <WithLocalSvg
-              width={responsiveScreenWidth(17)}
-              height={responsiveScreenHeight(10)}
-              asset={logosvg}
+        <View style={styles.firstView}>
+          <WithLocalSvg
+            width={responsiveScreenWidth(17)}
+            height={responsiveScreenHeight(10)}
+            asset={logosvg}
+          />
+
+          <Text style={styles.titleText}>
+            {"안녕하세요.\n헬로우 파킨슨 입니다."}
+          </Text>
+
+          <Text style={styles.twoText}>
+            {"회원 서비스 이용을 위해 로그인 해주세요."}
+          </Text>
+        </View>
+
+        <View style={styles.secondView}>
+          <View style={styles.buttonwhite}>
+            <TextInput
+              placeholder="아이디"
+              secureTextEntry={false}
+              style={styles.textInput}
+              value={this.state.id}
+              onChangeText={(text) => {
+                this.setState({ id: text });
+              }}
             />
-
-            <Text style={styles.titleText}>
-              {"안녕하세요.\n헬로우 파킨슨 입니다."}
-            </Text>
-
-            <Text style={styles.twoText}>
-              {"회원 서비스 이용을 위해 로그인 해주세요."}
-            </Text>
+          </View>
+          <View style={styles.buttonwhite}>
+            <TextInput
+              secureTextEntry={true}
+              style={styles.textInput}
+              placeholder="비밀번호"
+              value={this.state.pw}
+              onChangeText={(text) => {
+                this.setState({ pw: text });
+              }}
+            />
           </View>
 
-          <View style={styles.secondView}>
-            <View style={styles.buttonwhite}>
-              <TextInput
-                placeholder="아이디"
-                secureTextEntry={false}
-                style={styles.textInput}
-                value={this.state.id}
-                onChangeText={(text) => {
-                  this.setState({ id: text });
-                }}
-              />
-            </View>
-            <View style={styles.buttonwhite}>
-              <TextInput
-                secureTextEntry={true}
-                style={styles.textInput}
-                placeholder="비밀번호"
-                value={this.state.pw}
-                onChangeText={(text) => {
-                  this.setState({ pw: text });
-                }}
-              />
-            </View>
+          <TouchableOpacity
+            style={styles.buttongreen}
+            activeOpacity={0.8}
+            onPress={this.login_check}
+          >
+            <Text style={styles.green}> 로그인하기 </Text>
+          </TouchableOpacity>
+
+          <View style={styles.thirdView}>
+            <Text style={styles.secondText1}> 계정이 없으신가요?</Text>
 
             <TouchableOpacity
-              style={styles.buttongreen}
-              activeOpacity={0.8}
-              onPress={this.login_check}
+              onPress={() => {
+                this.props.navigation.navigate("signup1");
+              }}
             >
-              <Text style={styles.green}> 로그인하기 </Text>
+              <Text style={styles.secondText2}> 회원가입 하기.</Text>
             </TouchableOpacity>
-
-            <View style={styles.thirdView}>
-              <Text style={styles.secondText1}> 계정이 없으신가요?</Text>
-
-              <TouchableOpacity
-                onPress={() => {
-                  this.props.navigation.navigate("signup1");
-                }}
-              >
-                <Text style={styles.secondText2}> 회원가입 하기.</Text>
-              </TouchableOpacity>
-            </View>
           </View>
         </View>
-      </GlobalState>
+      </View>
     );
   }
 }

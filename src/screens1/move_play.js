@@ -1,22 +1,16 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  BackHandler,
-} from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { Video } from "expo-av";
 
-var myHeaders = new Headers();
-myHeaders.append(
-  "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDQwNjU1MzYsImV4cCI6MTY0NDY3MDMzNn0.mnbGyKlMHvwdVFQJRPmgTxMGB966ITczMTA_p4E4lWSRb2DYoOlwW1mrPGapPRkf6h4hyZIIUgfrs1yIqInOJg"
-);
-myHeaders.append("Content-Type", "application/json");
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+  responsiveWidth,
+} from "react-native-responsive-dimensions";
 
 let data = {
   1: require("../video/1-1.mp4"),
@@ -139,16 +133,7 @@ export default class move_play extends Component {
   }
 
   async componentDidMount() {
-    console.log(this.props.route.params.eid);
-    try {
-      const list = await AsyncStorage.getItem("@move_play");
-
-      if (list !== null) {
-        this.setState({ list: JSON.parse(list) });
-      }
-    } catch (e) {
-      this.setState({ minutes_Counter: "00", seconds_Counter: "00" });
-    }
+    const user_token = await AsyncStorage.getItem("@user_token");
 
     this.setState({
       done_num: this.props.route.params.done_num,
@@ -208,12 +193,12 @@ export default class move_play extends Component {
     if (this.state.isLoading === false) {
       this.setState({ video_start: false });
       if (this.state.done_num >= this.state.assign_num) {
-        this.save_progress();
+        this.save_progress(user_token);
 
         if (this.next_name === "") this.where_page();
         else this.where_move_go();
       } else {
-        this.save_progress();
+        this.save_progress(user_token);
         this.props.navigation.reset({
           routes: [
             {
@@ -261,10 +246,13 @@ export default class move_play extends Component {
     });
   };
 
-  save_progress = () => {
+  save_progress = (user_token) => {
     fetch("http://hccparkinson.duckdns.org:19737/progress/write", {
       method: "POST",
-      headers: myHeaders,
+      headers: {
+        Authorization: "Bearer " + user_token.slice(1, -1),
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         eid: this.props.route.params.eid,
         setcnt: this.state.assign_num,
@@ -284,73 +272,79 @@ export default class move_play extends Component {
         <View style={styles.menuView}>
           <AntDesign
             name="left"
-            size={24}
+            style={{ fontSize: responsiveScreenFontSize(3) }}
             color="#808080"
             onPress={this.where_page}
           />
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>{this.props.route.params.ename}</Text>
           <View style={styles.margin}></View>
-          <EvilIcons name="star" size={30} color="#ffffff" />
-        </View>
-
-        <View style={styles.secondView}>
-          <Video
-            source={data[this.props.route.params.eid]}
-            rate={1.0}
-            volume={1.0}
-            resizeMode="cover"
-            shouldPlay
-            useNativeControls
-            style={styles.fullScreen}
-            paused={this.state.video_start}
+          <EvilIcons
+            name="star"
+            style={{ fontSize: responsiveScreenFontSize(3) }}
+            color="#ffffff"
           />
         </View>
 
-        <View style={styles.chatControl}>
-          <TouchableOpacity
-            style={
-              this.state.isLoading === false
-                ? styles.sendButton
-                : styles.sendButton1
-            }
-            activeOpacity={0.8}
-            onPress={this.nextpage}
-          >
-            <View style={styles.mg}></View>
-            <View style={styles.margin}></View>
-            <View style={styles.margin}></View>
-            <Text
+        <View style={styles.firstView}>
+          <View style={styles.secondView}>
+            <Video
+              source={data[this.props.route.params.eid]}
+              rate={1.0}
+              volume={1.0}
+              resizeMode="cover"
+              shouldPlay
+              useNativeControls
+              style={styles.fullScreen}
+              paused={this.state.video_start}
+            />
+          </View>
+
+          <View style={styles.chatControl}>
+            <TouchableOpacity
               style={
-                this.state.isLoading === false ? styles.white : styles.green1
+                this.state.isLoading === false
+                  ? styles.sendButton
+                  : styles.sendButton1
               }
+              activeOpacity={0.8}
+              onPress={this.nextpage}
             >
-              {this.state.isLoading === false
-                ? this.state.done_num < this.state.assign_num
-                  ? "다 음  세 트  ( " +
+              <View style={styles.mg}></View>
+              <View style={styles.margin}></View>
+              <View style={styles.margin}></View>
+              <Text
+                style={
+                  this.state.isLoading === false ? styles.white : styles.green1
+                }
+              >
+                {this.state.isLoading === false
+                  ? this.state.done_num < this.state.assign_num
+                    ? "다 음  세 트  ( " +
+                      this.state.done_num +
+                      " / " +
+                      this.state.assign_num +
+                      " )"
+                    : "다 음  운 동"
+                  : this.state.done_num !== this.state.assign_num
+                  ? "다 음  세 트 ( " +
                     this.state.done_num +
                     " / " +
                     this.state.assign_num +
                     " )"
-                  : "다 음  운 동"
-                : this.state.done_num !== this.state.assign_num
-                ? "다 음  세 트 ( " +
-                  this.state.done_num +
-                  " / " +
-                  this.state.assign_num +
-                  " )"
-                : "다 음  운 동"}
-            </Text>
-            <View style={styles.margin}></View>
-            <View style={styles.margin}>
-              <AntDesign
-                name="right"
-                size={15}
-                color={this.state.isLoading === false ? "#FFFFFF" : "#AFAFAF"}
-              />
-            </View>
-            <View style={styles.mg}></View>
-          </TouchableOpacity>
+                  : "다 음  운 동"}
+              </Text>
+              <View style={styles.margin}></View>
+              <View style={styles.margin}>
+                <AntDesign
+                  name="right"
+                  style={{ fontSize: responsiveScreenFontSize(2.5) }}
+                  color={this.state.isLoading === false ? "#FFFFFF" : "#AFAFAF"}
+                />
+              </View>
+              <View style={styles.mg}></View>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     );
@@ -359,33 +353,26 @@ export default class move_play extends Component {
 
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
-  fullScreen: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-  },
-
   menuView: {
-    marginTop: "10%",
+    marginTop: "5.1%",
     backgroundColor: "#FFFFFF",
-    height: 58,
+    height: "8.5%",
     flexDirection: "row",
     alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
+    paddingRight: "5%",
+    paddingLeft: "5%",
   },
 
   titleText: {
     alignItems: "flex-start",
-    fontSize: 21,
+    fontSize: responsiveScreenFontSize(2.48),
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
@@ -393,14 +380,14 @@ const styles = StyleSheet.create({
   },
 
   firstView: {
-    // padding:30,
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 2,
-    margin: 15,
     backgroundColor: "#FFFFFF",
+    height: "100%",
+    marginLeft: "5.8%",
+    marginRight: "5.8%",
+    marginTop: "5.8%",
   },
-  backgroundVideo: {
+
+  fullScreen: {
     position: "absolute",
     top: 0,
     left: 0,
@@ -412,21 +399,18 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
-    marginLeft: "5%",
-    marginRight: "5%",
-    marginTop: "5%",
-    marginBottom: "5%",
-    flex: 1,
+    height: responsiveScreenHeight(64.4),
   },
+
   white: {
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     fontWeight: "bold",
     color: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
   },
   green1: {
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     fontWeight: "bold",
     color: "#AFAFAF",
     alignItems: "center",
@@ -435,16 +419,16 @@ const styles = StyleSheet.create({
 
   sendButton: {
     backgroundColor: "#7AC819",
-    width: "90%",
-    height: 50,
+    width: "100%",
+    height: "100%",
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
   },
   sendButton1: {
     backgroundColor: "#F5F5F5",
-    width: "90%",
-    height: 50,
+    width: "100%",
+    height: "100%",
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
@@ -454,11 +438,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: "15%",
+    marginTop: "2.5%",
+    height: responsiveScreenHeight(6.875),
   },
 
   margin: {
-    // padding:30,
     alignItems: "flex-end",
     paddingRight: 20,
     justifyContent: "center",

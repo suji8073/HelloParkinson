@@ -20,11 +20,11 @@ import page_no from "../icon/page_no.svg";
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-var myHeaders = new Headers();
-myHeaders.append(
-  "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDQwNjU1MzYsImV4cCI6MTY0NDY3MDMzNn0.mnbGyKlMHvwdVFQJRPmgTxMGB966ITczMTA_p4E4lWSRb2DYoOlwW1mrPGapPRkf6h4hyZIIUgfrs1yIqInOJg"
-);
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
 
 var sum_progress = 0;
 var sum_progress_m = 0;
@@ -56,14 +56,17 @@ export default class patient_record extends Component {
     }
   };
 
-  user_cat_day = (date) => {
+  user_cat_day = (date, user_token) => {
     fetch(
       "http://hccparkinson.duckdns.org:19737/progress/personal/cat/period/" +
         date +
         "?day=7",
       {
         method: "GET",
-        headers: myHeaders,
+        headers: {
+          Authorization: "Bearer " + user_token.slice(1, -1),
+          "Content-Type": "application/json",
+        },
       }
     )
       .then((res) => res.json())
@@ -87,7 +90,7 @@ export default class patient_record extends Component {
       });
   };
 
-  user_week_day = (date) => {
+  user_week_day = (date, user_token) => {
     var data_array = [];
     fetch(
       "http://hccparkinson.duckdns.org:19737/progress/personal/period/" +
@@ -95,7 +98,10 @@ export default class patient_record extends Component {
         "?day=7",
       {
         method: "GET",
-        headers: myHeaders,
+        headers: {
+          Authorization: "Bearer " + user_token.slice(1, -1),
+          "Content-Type": "application/json",
+        },
       }
     )
       .then((res) => res.json())
@@ -152,7 +158,7 @@ export default class patient_record extends Component {
       });
   };
 
-  user_month = (date) => {
+  user_month = (date, user_token) => {
     var data_array = [];
     var lastDate = "";
     if (date == this.date_change(new Date())) lastDate = date.substring(8, 10);
@@ -169,7 +175,10 @@ export default class patient_record extends Component {
         lastDate,
       {
         method: "GET",
-        headers: myHeaders,
+        headers: {
+          Authorization: "Bearer " + user_token.slice(1, -1),
+          "Content-Type": "application/json",
+        },
       }
     )
       .then((res) => res.json())
@@ -212,11 +221,13 @@ export default class patient_record extends Component {
       });
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    const user_token = await AsyncStorage.getItem("@user_token");
+
     var today = this.date_change(new Date());
-    this.user_week_day(today);
-    this.user_cat_day(today);
-    this.user_month(today);
+    this.user_week_day(today, user_token);
+    this.user_cat_day(today, user_token);
+    this.user_month(today, user_token);
   }
 
   showDatePicker = () => {
@@ -235,9 +246,9 @@ export default class patient_record extends Component {
     this.hideDatePicker();
     var today = this.date_change(date);
 
-    this.user_week_day(today);
-    this.user_cat_day(today);
-    this.user_month(today);
+    this.user_week_day(today, user_token);
+    this.user_cat_day(today, user_token);
+    this.user_month(today, user_token);
   };
 
   date_change = (date) => {
@@ -288,15 +299,9 @@ export default class patient_record extends Component {
               justifyContent: "space-between",
             }}
           >
-            <DateTimePickerModal
-              isVisible={this.state.isDatePickerVisible}
-              mode="date"
-              onConfirm={this.handleConfirm}
-              onCancel={this.hideDatePicker}
-            />
             <ScrollView
               horizontal
-              contentContainerStyle={{ width: width * 2 }}
+              contentContainerStyle={{ width: responsiveScreenWidth(100) * 2 }}
               showsHorizontalScrollIndicator={false}
               pagingEnabled={true}
               onScroll={this.handleScroll}
@@ -321,9 +326,15 @@ export default class patient_record extends Component {
                       activeOpacity={0.8}
                       onPress={this.showDatePicker}
                     >
+                      <DateTimePickerModal
+                        isVisible={this.state.isDatePickerVisible}
+                        mode="date"
+                        onConfirm={this.handleConfirm}
+                        onCancel={this.hideDatePicker}
+                      />
                       <MaterialIcons
                         name="date-range"
-                        size={30}
+                        style={{ fontSize: responsiveScreenFontSize(3) }}
                         color="#316200"
                       />
                     </TouchableOpacity>
@@ -334,7 +345,12 @@ export default class patient_record extends Component {
                   </Text>
                 </View>
 
-                <SafeAreaView style={{ flex: 2, width: "100%" }}>
+                <SafeAreaView
+                  style={{
+                    width: "100%",
+                    height: responsiveScreenHeight(17),
+                  }}
+                >
                   <FlatList
                     keyExtractor={(item, index) => index}
                     data={this.state.data}
@@ -367,7 +383,7 @@ export default class patient_record extends Component {
                     >
                       <MaterialIcons
                         name="date-range"
-                        size={30}
+                        style={{ fontSize: responsiveScreenFontSize(3) }}
                         color="#316200"
                       />
                     </TouchableOpacity>
@@ -378,7 +394,12 @@ export default class patient_record extends Component {
                   </Text>
                 </View>
 
-                <SafeAreaView style={{ flex: 2, width: "100%" }}>
+                <SafeAreaView
+                  style={{
+                    width: "100%",
+                    height: responsiveScreenHeight(17),
+                  }}
+                >
                   <FlatList
                     keyExtractor={(item, index) => index}
                     data={this.state.data_}
@@ -399,21 +420,21 @@ export default class patient_record extends Component {
             <View style={styles.page_location}>
               <View style={styles.p_margin}></View>
               <WithLocalSvg
-                width={10}
-                height={10}
+                width={responsiveScreenWidth(2.7)}
+                height={responsiveScreenHeight(1.5)}
                 asset={this.state.page_l == true ? page_here : page_no}
               />
               <View style={styles.pp_margin}></View>
               <WithLocalSvg
-                width={10}
-                height={10}
+                width={responsiveScreenWidth(2.7)}
+                height={responsiveScreenHeight(1.5)}
                 asset={this.state.page_l == false ? page_here : page_no}
               />
               <View style={styles.p_margin}></View>
             </View>
 
             <View style={styles.threeView}>
-              <SafeAreaView style={{ flex: 1 }}>
+              <SafeAreaView style={{ width: "100%" }}>
                 <FlatList
                   keyExtractor={(item, index) => index}
                   data={this.state.data2}
@@ -440,25 +461,44 @@ export default class patient_record extends Component {
 }
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
-
-  textView: {
+  menuView: {
+    marginTop: "5.1%",
+    backgroundColor: "#FFFFFF",
+    height: "8.5%",
     flexDirection: "row",
-    flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    borderBottomWidth: 1.8,
+    borderColor: "#E5E5E5",
+    paddingRight: "5%",
+    paddingLeft: "5%",
   },
 
-  page_location: { flexDirection: "row" },
+  titleText: {
+    alignItems: "flex-start",
+    fontSize: responsiveScreenFontSize(2.48),
+    alignItems: "center",
+    color: "#000000",
+    justifyContent: "center",
+    fontWeight: "bold",
+  },
+
+  page_location: {
+    flexDirection: "row",
+    marginTop: "0.5%",
+    marginBottom: "2%",
+  },
   chart: {
     flex: 0.8,
     backgroundColor: "#5CB405",
   },
 
   text11: {
-    fontSize: 14,
+    fontSize: responsiveScreenFontSize(1.68),
     color: "#484848",
     justifyContent: "center",
     alignItems: "center",
@@ -475,107 +515,55 @@ const styles = StyleSheet.create({
   pp_margin: {
     flex: 0.5,
   },
-  menuView: {
-    backgroundColor: "#FFFFFF",
-    height: 58,
-    flexDirection: "row",
-    alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
-    marginTop: "3%",
-    justifyContent: "flex-start",
-    borderBottomWidth: 1.8,
-    borderColor: "#E5E5E5",
-  },
 
-  titleText: {
-    alignItems: "flex-start",
-    fontSize: 21,
-    alignItems: "center",
-    color: "#000000",
-    justifyContent: "center",
-    fontWeight: "bold",
-  },
-
-  firstView: {
-    // padding:30,
-    alignItems: "center",
-    justifyContent: "flex-start",
-    marginLeft: 20,
-    marginRight: 20,
-    flexDirection: "row",
-    flex: 1,
-    marginTop: 15,
-    marginBottom: 15,
-    backgroundColor: "#FFFFFF",
-  },
   mainView: {
+    paddingTop: "1.8%",
+    flexDirection: "column",
+    height: responsiveScreenHeight(70),
     backgroundColor: "#F8F8F8",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 180,
+    marginBottom: "39%",
   },
   secondView: {
-    marginTop: "3%",
-    marginLeft: "3%",
-    marginRight: "3%",
-    marginBottom: "1%",
-    paddingLeft: "2%",
-    paddingRight: "2%",
+    marginTop: "2%",
+    marginLeft: responsiveScreenWidth(4.7),
+    marginRight: responsiveScreenWidth(4.7),
+    paddingLeft: "3.1%",
+    paddingRight: "3.1%",
+    paddingTop: "3.1%",
     paddingBottom: "2%",
-    height: 220,
+    marginBottom: "1%",
+    height: responsiveScreenHeight(30.9),
     backgroundColor: "#FFFFFF",
     borderWidth: 1,
     borderColor: "#E0E0E0",
-    width: width - 40,
+    width: responsiveScreenWidth(90),
   },
   threeView: {
-    marginTop: "3%",
-    marginLeft: "5%",
-    marginRight: "5%",
-    marginBottom: "5%",
-    padding: "5%",
-    backgroundColor: "#FFFFFF",
+    marginLeft: responsiveScreenWidth(4.7),
+    marginRight: responsiveScreenWidth(4.7),
+    marginBottom: "2%",
+    paddingTop: "3.1%",
     borderWidth: 1,
-    borderColor: "#E0E0E0",
-  },
-  moveView: {
     backgroundColor: "#FFFFFF",
-    height: 90,
-    width: "92%",
-    marginLeft: "4%",
-    marginRight: "4%",
-    marginTop: "3%",
-    marginBottom: "3%",
-    flexDirection: "row",
-    borderWidth: 1,
     borderColor: "#E0E0E0",
-    borderRadius: 5,
   },
 
-  graphview: {
-    flex: 3,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   text1: {
     alignItems: "flex-start",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(1.68),
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
+    marginBottom: "1%",
   },
   text2: {
     alignItems: "flex-start",
-    fontSize: 21,
+    fontSize: responsiveScreenFontSize(2.12),
     color: "#000000",
     fontWeight: "bold",
   },
   textview: {
-    flex: 1,
-    marginTop: 10,
-    marginBottom: 3,
+    marginBottom: "1.8%",
     justifyContent: "center",
   },
   oneview: {

@@ -5,8 +5,15 @@ import {
   View,
   Text,
   FlatList,
+  ScrollView,
 } from "react-native";
 import Task from "./task_alarm";
+
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { createAlarm } from "react-native-simple-alarm";
@@ -40,10 +47,9 @@ export default class patient_alarm extends Component {
   }
 
   async componentDidMount() {
-    console.log(fireDate);
     try {
       //await AsyncStorage.clear();
-      //await AsyncStorage.setItem("@alarm", JSON.stringify(alarm));
+      await AsyncStorage.setItem("@alarm", JSON.stringify(alarm));
       const alarm_array = await AsyncStorage.getItem("@alarm");
 
       if (alarm_array !== null) {
@@ -63,14 +69,7 @@ export default class patient_alarm extends Component {
           <View style={styles.margin}></View>
         </View>
 
-        <View
-          style={{
-            paddingLeft: "5%",
-            paddingRight: "5%",
-            backgroundColor: "#F8F8F8",
-            height: "100%",
-          }}
-        >
+        <ScrollView style={styles.secondView}>
           <FlatList
             keyExtractor={(item, index) => index}
             data={this.state.alarm_array}
@@ -98,24 +97,22 @@ export default class patient_alarm extends Component {
               );
             }}
           />
+        </ScrollView>
 
-          <ActionButton
-            buttonColor="#577F67"
-            style={styles.plusbtn}
-            renderIcon={() => (
-              <WithLocalSvg
-                width={90}
-                height={90}
-                asset={plussvg}
-                onPress={() => {
-                  this.props.navigation.navigate("alarm_add", {
-                    paramsName: this.props.route.params.paramsName,
-                  });
-                }}
-              />
-            )}
-          ></ActionButton>
-        </View>
+        <ActionButton
+          buttonColor="#577F67"
+          style={styles.plusbtn}
+          renderIcon={() => (
+            <WithLocalSvg
+              width={90}
+              height={90}
+              asset={plussvg}
+              onPress={() => {
+                this.props.navigation.navigate("alarm_add");
+              }}
+            />
+          )}
+        ></ActionButton>
       </View>
     );
   }
@@ -123,52 +120,46 @@ export default class patient_alarm extends Component {
 
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
   menuView: {
+    marginTop: "5.1%",
     backgroundColor: "#FFFFFF",
-    height: 58,
+    height: "8.5%",
     flexDirection: "row",
     alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
-    marginTop: "3%",
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
-  },
-  margin: {
-    // padding:30,
-    alignItems: "flex-start",
-    justifyContent: "center",
-    flex: 1,
+    paddingRight: "5%",
+    paddingLeft: "5%",
   },
 
   titleText: {
     alignItems: "flex-start",
-    fontSize: 21,
+    fontSize: responsiveScreenFontSize(2.48),
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
     fontWeight: "bold",
   },
 
-  firstView: {
-    // padding:30,
-    alignItems: "center",
-    justifyContent: "flex-start",
-    marginLeft: 20,
-    marginRight: 20,
-    flexDirection: "row",
+  margin: {
+    alignItems: "flex-start",
+    justifyContent: "center",
     flex: 1,
-    marginTop: 15,
-    marginBottom: 15,
-    backgroundColor: "#FFFFFF",
   },
+  secondView: {
+    paddingLeft: "4.7%",
+    paddingRight: "4.7%",
+    backgroundColor: "#F8F8F8",
+    height: "100%",
+  },
+
   plusbtn: {
     position: "absolute",
-    left: "70%",
-    bottom: "30%",
+    bottom: responsiveScreenHeight(20),
   },
 });

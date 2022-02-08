@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {
   TouchableOpacity,
-  StatusBar,
   StyleSheet,
   View,
   Text,
@@ -17,18 +16,17 @@ import secondsvg from "../icon/second.svg";
 import thirdsvg from "../icon/third.svg";
 import crownsvg from "../icon/crown.svg";
 
-import Context from "../Context/context";
-
 import {
   responsiveScreenHeight,
   responsiveScreenWidth,
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
 
-var myHeaders = new Headers();
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+
 
 export default class patient_Home extends Component {
-  static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {
@@ -40,16 +38,19 @@ export default class patient_Home extends Component {
     };
   }
 
-  componentDidMount() {
-    myHeaders.append("Authorization", "Bearer " + this.context.patient_token);
-    myHeaders.append("Content-Type", "application/json");
-    this.userfunc();
-    // this.findname();
+
+  async componentDidMount() {
+    const user_token = await AsyncStorage.getItem("@user_token");
+    this.userfunc(user_token);
   }
-  userfunc = () => {
+
+  userfunc = (user_token) => {
     fetch("http://hccparkinson.duckdns.org:19737/progress/rank", {
       method: "GET",
-      headers: myHeaders,
+      headers: {
+        Authorization: "Bearer " + user_token.slice(1, -1),
+        "Content-Type": "application/json",
+      },
     })
       .then((res) => res.json())
       .then((json) => {
@@ -61,34 +62,12 @@ export default class patient_Home extends Component {
             third: json.data[2],
           },
 
-          // 랭킹 참여하는 사람만 필터링
-          // ,() => {
-          //   let res = this.state.data.filter((it) => it.ranking === 1);
-          //   this.setState({ data: res });
-          // }
-          () => {
-            console.log(this.state.first);
-          }
+    
         );
       });
   };
 
-  // findname = () => {
-  //   fetch("http://152.70.233.113/chamuser/uid/" + this.context.user_id, {
-  //     method: "GET",
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json",
-  //     },
-  //   })
-  //     .then((res) => res.json())
-  //     .then((json) => {
-  //       this.setState({
-  //         User_name: json.info.name,
-  //       });
-  //       this.context.changeNAME(json.info.name);
-  //     });
-  // };
+
 
   render() {
     return (
@@ -167,8 +146,8 @@ export default class patient_Home extends Component {
                   {this.state.second == null
                     ? " "
                     : String(this.state.second["uname"]) +
-                      "[" +
-                      String(this.state.second["percent"]) +
+                      " [" +
+                      parseInt(this.state.second["percent"]).toFixed(1) +
                       "%]"}
                 </Text>
               </View>
@@ -208,12 +187,10 @@ export default class patient_Home extends Component {
                   asset={firstsvg}
                 />
                 <Text style={styles.prizetext}>
-                  {this.state.first == null
-                    ? " "
-                    : String(this.state.first["uname"]) +
-                      "[" +
-                      String(this.state.first["percent"]) +
-                      "%]"}
+
+                  {this.state.first["uname"]} [
+                  {parseInt(this.state.first["percent"]).toFixed(1)}%]
+
                 </Text>
               </View>
               <View
@@ -250,8 +227,8 @@ export default class patient_Home extends Component {
                   {this.state.third == null
                     ? " "
                     : String(this.state.third["uname"]) +
-                      "[" +
-                      String(this.state.third["percent"]) +
+                      " [" +
+                      parseInt(this.state.third["percent"]).toFixed(1) +
                       "%]"}
                 </Text>
               </View>

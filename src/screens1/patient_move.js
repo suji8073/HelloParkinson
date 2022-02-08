@@ -5,6 +5,7 @@ import {
   StyleSheet,
   View,
   Text,
+  StatusBar,
 } from "react-native";
 import TestSvg1 from "../icon/Frame1.svg";
 import TestSvg2 from "../icon/Frame2.svg";
@@ -12,6 +13,9 @@ import TestSvg3 from "../icon/Frame3.svg";
 import TestSvg4 from "../icon/Frame4.svg";
 import TestSvg5 from "../icon/Frame5.svg";
 import Task from "./task_progress";
+StatusBar.setBackgroundColor("white");
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { WithLocalSvg } from "react-native-svg";
 
@@ -20,12 +24,6 @@ import {
   responsiveScreenWidth,
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
-
-var myHeaders = new Headers();
-myHeaders.append(
-  "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDQwNjU1MzYsImV4cCI6MTY0NDY3MDMzNn0.mnbGyKlMHvwdVFQJRPmgTxMGB966ITczMTA_p4E4lWSRb2DYoOlwW1mrPGapPRkf6h4hyZIIUgfrs1yIqInOJg"
-);
 
 export default class patient_move extends Component {
   constructor(props) {
@@ -44,10 +42,15 @@ export default class patient_move extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const user_token = await AsyncStorage.getItem("@user_token");
+
     fetch("http://hccparkinson.duckdns.org:19737/progress/personal/cat/all", {
       method: "GET",
-      headers: myHeaders,
+      headers: {
+        Authorization: "Bearer " + user_token.slice(1, -1),
+        "Content-Type": "application/json",
+      },
     })
       .then((res) => res.json())
       .then((json) => {
@@ -196,6 +199,7 @@ const styles = StyleSheet.create({
     height: responsiveScreenHeight(100),
     width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
+    backgroundColor: "#F8F8F8",
   },
   menuView: {
     marginTop: "5.1%",
@@ -229,7 +233,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     height: responsiveScreenHeight(70),
     backgroundColor: "#F8F8F8",
-    marginBottom: "39%",
+    marginBottom: "38%",
   },
   moveView: {
     backgroundColor: "#FFFFFF",

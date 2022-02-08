@@ -1,12 +1,38 @@
 import React from "react";
 import { Alert } from "react-native";
-//import update from "react-addons-update";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Context from "./context";
+
 export default class GlobalState extends React.Component {
+  async componentDidMount() {
+    try {
+      const user_data = await AsyncStorage.getItem("@user_data");
+      const user_token = await AsyncStorage.getItem("@user_token");
+
+      console.log("GlobalState");
+      // console.log(typeof JSON.parse(user_data).PW);
+      // console.log(user_token);
+
+      this.setState({ user_pw: JSON.parse(user_data).PW });
+      this.setState({ user_id: JSON.parse(user_data).ID });
+      this.setState({ user_name: JSON.parse(user_data).name });
+      this.setState({ user_token: user_token });
+
+      console.log(this.state.user_id);
+      console.log(this.state.user_pw);
+      console.log(this.state.user_name);
+      console.log(this.state.user_token);
+    } catch (e) {
+      console.log("GlobalState _ error");
+      console.log(e);
+    }
+  }
+
   state = {
     user_id: "",
     user_pw: "",
     user_name: "",
+    user_token: "",
     user_exercise: [
       { id: "1-1", name: "목 앞 근육 스트레칭", set: 0 },
       { id: "1-2", name: "날개뼈 모으기", set: 6 },
@@ -78,6 +104,10 @@ export default class GlobalState extends React.Component {
     return (
       <Context.Provider
         value={{
+          user_id: this.state.user_id,
+          user_pw: this.state.user_pw,
+          user_name: this.state.user_name,
+          user_token: this.state.user_token,
           changePW: this.changePW,
           changeID: this.changeID,
           changeNAME: this.changeNAME,
