@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {
   TouchableOpacity,
-  StatusBar,
   StyleSheet,
   View,
   Text,
@@ -17,23 +16,16 @@ import secondsvg from "../icon/second.svg";
 import thirdsvg from "../icon/third.svg";
 import crownsvg from "../icon/crown.svg";
 
-import Context from "../Context/context";
-
 import {
   responsiveScreenHeight,
   responsiveScreenWidth,
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
 
-var myHeaders = new Headers();
-myHeaders.append(
-  "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDQxNjk1MDMsImV4cCI6MTY0NDc3NDMwM30.22m7OlYWBKcSc3mh0S3Vvm_ObbPoTAuvZUqKsTOeP-oMyFD20HvsPAK5DdBA73KsMu25lTB2e4u3DJUmV5F-pA"
-);
-myHeaders.append("Content-Type", "application/json");
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 export default class patient_Home extends Component {
-  static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {
@@ -45,18 +37,21 @@ export default class patient_Home extends Component {
     };
   }
 
-  componentDidMount() {
-    this.userfunc();
-    // this.findname();
+  async componentDidMount() {
+    const user_token = await AsyncStorage.getItem("@user_token");
+    this.userfunc(user_token);
   }
-  userfunc = () => {
+
+  userfunc = (user_token) => {
     fetch("http://hccparkinson.duckdns.org:19737/progress/rank", {
       method: "GET",
-      headers: myHeaders,
+      headers: {
+        Authorization: "Bearer " + user_token.slice(1, -1),
+        "Content-Type": "application/json",
+      },
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         this.setState(
           {
             data: json.data,
@@ -71,7 +66,7 @@ export default class patient_Home extends Component {
           //   this.setState({ data: res });
           // }
           () => {
-            console.log(this.state.first);
+            //console.log(this.state.first);
           }
         );
       });

@@ -2,10 +2,12 @@ import React from "react";
 //import update from "react-addons-update";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default React.createContext({
-  user_id: "cham",
-  user_pw: "suji",
+  user_id: "",
+  user_pw: "",
   num: 0,
   user_token: "",
+  
+  patient_token: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDQzMDA3ODUsImV4cCI6MTY0NDkwNTU4NX0.tn_SztAIy7z1kYcOgUlMO41Ir-QJ317aBvqQFBbD9-AY0dZyw8MkG-zOSMS-QsZNcOVxmyCL4pkRihrQ6hytyA",
   user_name: "관리자",
   user_exercise: [
     { id: "1-1", name: "목 앞 근육 스트레칭", set: 0 },
@@ -35,47 +37,9 @@ export default React.createContext({
     { id: "4-11", name: "도레미파솔라시도", set: 2 },
     { id: "4-12", name: "큰 소리로 음절 읽기", set: 2 },
   ],
-  changeTOKEN: (token) => {
-    this.setState({ user_token: token }, () => {
-      console.log(this.state.user_token);
-    });
-  },
-  changePW: (pw) => {
-    this.setState({ user_pw: pw }, () => {
-      console.log(this.state.user_pw);
-    });
-  },
-  changeID: (id) => {
-    this.setState({ user_id: id }, () => {
-      console.log(this.state.user_id);
-    });
-  },
-  changeNAME: (name) => {
-    this.setState({ user_name: name }, () => {
-      console.log(this.state.user_name);
-    });
-  },
-
+  changeTOKEN: (token) => {},
+  changePW: (pw) => {},
+  changeID: (id) => {},
+  changeNAME: (name) => {},
   changeEXERCISE: (index, task) => {},
-  // changeEXERCISE: (index, task) => {
-  //   this.setState({ num: index });
-  //   console.log(index, task);
-  // this.setState({ user_exercise: 0 }, () => {
-  // });
-  // this.setState(
-  //   {
-  //     user_exercise: update(this.state.user_exercise, {
-  //       index: {
-  //         set: {
-  //           $set: this.context.user_excercise[index].set + task,
-  //         },
-  //       },
-  //     }),
-  //   },
-  //   () => {
-  //     console.log(index, task);
-  //     console.log(this.state.user_excercise[index][task]);
-  //   }
-  // );
-  // },
 });

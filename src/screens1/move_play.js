@@ -12,13 +12,6 @@ import {
   responsiveWidth,
 } from "react-native-responsive-dimensions";
 
-var myHeaders = new Headers();
-myHeaders.append(
-  "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDQwNjU1MzYsImV4cCI6MTY0NDY3MDMzNn0.mnbGyKlMHvwdVFQJRPmgTxMGB966ITczMTA_p4E4lWSRb2DYoOlwW1mrPGapPRkf6h4hyZIIUgfrs1yIqInOJg"
-);
-myHeaders.append("Content-Type", "application/json");
-
 let data = {
   1: require("../video/1-1.mp4"),
   2: require("../video/1-2.mp4"),
@@ -140,16 +133,7 @@ export default class move_play extends Component {
   }
 
   async componentDidMount() {
-    console.log(this.props.route.params.eid);
-    try {
-      const list = await AsyncStorage.getItem("@move_play");
-
-      if (list !== null) {
-        this.setState({ list: JSON.parse(list) });
-      }
-    } catch (e) {
-      this.setState({ minutes_Counter: "00", seconds_Counter: "00" });
-    }
+    const user_token = await AsyncStorage.getItem("@user_token");
 
     this.setState({
       done_num: this.props.route.params.done_num,
@@ -209,12 +193,12 @@ export default class move_play extends Component {
     if (this.state.isLoading === false) {
       this.setState({ video_start: false });
       if (this.state.done_num >= this.state.assign_num) {
-        this.save_progress();
+        this.save_progress(user_token);
 
         if (this.next_name === "") this.where_page();
         else this.where_move_go();
       } else {
-        this.save_progress();
+        this.save_progress(user_token);
         this.props.navigation.reset({
           routes: [
             {
@@ -262,10 +246,13 @@ export default class move_play extends Component {
     });
   };
 
-  save_progress = () => {
+  save_progress = (user_token) => {
     fetch("http://hccparkinson.duckdns.org:19737/progress/write", {
       method: "POST",
-      headers: myHeaders,
+      headers: {
+        Authorization: "Bearer " + user_token.slice(1, -1),
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         eid: this.props.route.params.eid,
         setcnt: this.state.assign_num,

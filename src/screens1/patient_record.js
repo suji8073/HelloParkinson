@@ -26,12 +26,6 @@ import {
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
 
-var myHeaders = new Headers();
-myHeaders.append(
-  "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDQwNjU1MzYsImV4cCI6MTY0NDY3MDMzNn0.mnbGyKlMHvwdVFQJRPmgTxMGB966ITczMTA_p4E4lWSRb2DYoOlwW1mrPGapPRkf6h4hyZIIUgfrs1yIqInOJg"
-);
-
 var sum_progress = 0;
 var sum_progress_m = 0;
 const { width, height } = Dimensions.get("screen");
@@ -62,14 +56,17 @@ export default class patient_record extends Component {
     }
   };
 
-  user_cat_day = (date) => {
+  user_cat_day = (date, user_token) => {
     fetch(
       "http://hccparkinson.duckdns.org:19737/progress/personal/cat/period/" +
         date +
         "?day=7",
       {
         method: "GET",
-        headers: myHeaders,
+        headers: {
+          Authorization: "Bearer " + user_token.slice(1, -1),
+          "Content-Type": "application/json",
+        },
       }
     )
       .then((res) => res.json())
@@ -93,7 +90,7 @@ export default class patient_record extends Component {
       });
   };
 
-  user_week_day = (date) => {
+  user_week_day = (date, user_token) => {
     var data_array = [];
     fetch(
       "http://hccparkinson.duckdns.org:19737/progress/personal/period/" +
@@ -101,7 +98,10 @@ export default class patient_record extends Component {
         "?day=7",
       {
         method: "GET",
-        headers: myHeaders,
+        headers: {
+          Authorization: "Bearer " + user_token.slice(1, -1),
+          "Content-Type": "application/json",
+        },
       }
     )
       .then((res) => res.json())
@@ -158,7 +158,7 @@ export default class patient_record extends Component {
       });
   };
 
-  user_month = (date) => {
+  user_month = (date, user_token) => {
     var data_array = [];
     var lastDate = "";
     if (date == this.date_change(new Date())) lastDate = date.substring(8, 10);
@@ -175,7 +175,10 @@ export default class patient_record extends Component {
         lastDate,
       {
         method: "GET",
-        headers: myHeaders,
+        headers: {
+          Authorization: "Bearer " + user_token.slice(1, -1),
+          "Content-Type": "application/json",
+        },
       }
     )
       .then((res) => res.json())
@@ -218,11 +221,13 @@ export default class patient_record extends Component {
       });
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    const user_token = await AsyncStorage.getItem("@user_token");
+
     var today = this.date_change(new Date());
-    this.user_week_day(today);
-    this.user_cat_day(today);
-    this.user_month(today);
+    this.user_week_day(today, user_token);
+    this.user_cat_day(today, user_token);
+    this.user_month(today, user_token);
   }
 
   showDatePicker = () => {
@@ -241,9 +246,9 @@ export default class patient_record extends Component {
     this.hideDatePicker();
     var today = this.date_change(date);
 
-    this.user_week_day(today);
-    this.user_cat_day(today);
-    this.user_month(today);
+    this.user_week_day(today, user_token);
+    this.user_cat_day(today, user_token);
+    this.user_month(today, user_token);
   };
 
   date_change = (date) => {

@@ -24,10 +24,6 @@ import ride_stop from "../icon/ride_stop.svg";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 
 var myHeaders = new Headers();
-myHeaders.append(
-  "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDQwNjU1MzYsImV4cCI6MTY0NDY3MDMzNn0.mnbGyKlMHvwdVFQJRPmgTxMGB966ITczMTA_p4E4lWSRb2DYoOlwW1mrPGapPRkf6h4hyZIIUgfrs1yIqInOJg"
-);
 myHeaders.append("Content-Type", "application/json");
 
 const storeData = async (value1, value2) => {
@@ -61,6 +57,11 @@ export default class yusanso_2 extends Component {
 
   async componentDidMount() {
     try {
+      const user_token = await AsyncStorage.getItem("@user_token");
+      var put_token = "Bearer " + user_token.slice(1, -1);
+      myHeaders.append("Authorization", put_token);
+      myHeaders.append("Content-Type", "application/json");
+
       const value1 = await AsyncStorage.getItem("@ride_minutes");
       const value2 = await AsyncStorage.getItem("@ride_seconds");
 
@@ -69,6 +70,8 @@ export default class yusanso_2 extends Component {
       }
     } catch (e) {
       this.setState({ minutes_Counter: "00", seconds_Counter: "00" });
+      console.log("error");
+      console.log(e);
     }
   }
 

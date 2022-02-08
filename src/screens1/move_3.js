@@ -19,12 +19,6 @@ import {
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
 
-var myHeaders = new Headers();
-myHeaders.append(
-  "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDQwNjU1MzYsImV4cCI6MTY0NDY3MDMzNn0.mnbGyKlMHvwdVFQJRPmgTxMGB966ITczMTA_p4E4lWSRb2DYoOlwW1mrPGapPRkf6h4hyZIIUgfrs1yIqInOJg"
-);
-
 export default class move_3 extends Component {
   constructor(props) {
     super(props);
@@ -33,8 +27,10 @@ export default class move_3 extends Component {
       data_length: 0,
     };
   }
-  componentDidMount() {
-    this.cat_list();
+  async componentDidMount() {
+    const user_token = await AsyncStorage.getItem("@user_token");
+
+    this.cat_list(user_token);
   }
 
   storeData = async (list) => {
@@ -47,12 +43,15 @@ export default class move_3 extends Component {
     }
   };
 
-  cat_list = () => {
+  cat_list = (user_token) => {
     fetch(
       "http://hccparkinson.duckdns.org:19737/progress/personal/exercise?cat=2",
       {
         method: "GET",
-        headers: myHeaders,
+        headers: {
+          Authorization: "Bearer " + user_token.slice(1, -1),
+          "Content-Type": "application/json",
+        },
       }
     )
       .then((res) => res.json())
