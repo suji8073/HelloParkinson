@@ -61,7 +61,15 @@ export default class task3 extends Component {
   };
   handleClick = () => {
     if (this.state.alarm === greenairplane) {
-      Alert.alert("알림을 전송합니다.");
+      fetch("http://hccparkinson.duckdns.org:19737/onlymanager/alarm", {
+        method: "POST",
+        headers: myHeaders,
+        body: JSON.stringify({
+          uid: String(this.props.id),
+        }),
+      }).then(() => {
+        Alert.alert("알림을 전송합니다.");
+      });
 
       this.setState({
         alarm: airplane,

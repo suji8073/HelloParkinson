@@ -21,11 +21,7 @@ const items = [
 ];
 
 var myHeaders = new Headers();
-myHeaders.append(
-  "Authorization",
-  //"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyODk0MzAsImV4cCI6MTY0Mzg5NDIzMH0.XJFkawo8_s4okjavnlT1zVzs9nep6rqlMOCAVqmbloNqyf6BzLYen_Mk4JLhSY3jEP-ogqqIxD6CQO1FAFd-zg"
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDM5NTk5NTMsImV4cCI6MTY0NDU2NDc1M30.j1U1_3O9tmkHPnnib15eFmqas8oXLMfUv7Qz9tH9HZtrC1baYjD8MKXkyxgd3QnNBxmDh4456JaosBtvwTnqzg"
-);
+
 
 export default class statistics extends Component {
   static contextType = Context;
@@ -39,6 +35,8 @@ export default class statistics extends Component {
   }
 
   componentDidMount() {
+    myHeaders.append("Authorization", "Bearer " + this.context.manager_token);
+    myHeaders.append("Content-Type", "application/json");
     this.userfunc();
   }
 

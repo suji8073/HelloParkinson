@@ -23,11 +23,6 @@ const items = [
 ];
 const today = new Date();
 var myHeaders = new Headers();
-myHeaders.append(
-  "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDM5NTk5NTMsImV4cCI6MTY0NDU2NDc1M30.j1U1_3O9tmkHPnnib15eFmqas8oXLMfUv7Qz9tH9HZtrC1baYjD8MKXkyxgd3QnNBxmDh4456JaosBtvwTnqzg"
-);
-myHeaders.append("Content-Type", "application/json");
 export default class list extends Component {
   static contextType = Context;
   constructor(props) {
@@ -49,6 +44,8 @@ export default class list extends Component {
 
   componentDidMount() {
     // this.userfunc();
+    myHeaders.append("Authorization", "Bearer " + this.context.manager_token);
+    myHeaders.append("Content-Type", "application/json");
     this.setState({ select: this.props.route.params.paramSetting }, () => {
       console.log("정렬방식: ", this.props.route.params.paramSetting);
       this.set(this.state.select);

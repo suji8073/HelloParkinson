@@ -25,6 +25,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
+
 export default class patient_Home extends Component {
   constructor(props) {
     super(props);
@@ -36,6 +37,7 @@ export default class patient_Home extends Component {
       User_name: "",
     };
   }
+
 
   async componentDidMount() {
     const user_token = await AsyncStorage.getItem("@user_token");
@@ -60,34 +62,12 @@ export default class patient_Home extends Component {
             third: json.data[2],
           },
 
-          // 랭킹 참여하는 사람만 필터링
-          // ,() => {
-          //   let res = this.state.data.filter((it) => it.ranking === 1);
-          //   this.setState({ data: res });
-          // }
-          () => {
-            //console.log(this.state.first);
-          }
+    
         );
       });
   };
 
-  // findname = () => {
-  //   fetch("http://152.70.233.113/chamuser/uid/" + this.context.user_id, {
-  //     method: "GET",
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json",
-  //     },
-  //   })
-  //     .then((res) => res.json())
-  //     .then((json) => {
-  //       this.setState({
-  //         User_name: json.info.name,
-  //       });
-  //       this.context.changeNAME(json.info.name);
-  //     });
-  // };
+
 
   render() {
     return (
@@ -164,7 +144,7 @@ export default class patient_Home extends Component {
                 />
                 <Text style={styles.prizetext}>
                   {this.state.second == null
-                    ? "x"
+                    ? " "
                     : String(this.state.second["uname"]) +
                       " [" +
                       parseInt(this.state.second["percent"]).toFixed(1) +
@@ -207,8 +187,10 @@ export default class patient_Home extends Component {
                   asset={firstsvg}
                 />
                 <Text style={styles.prizetext}>
+
                   {this.state.first["uname"]} [
                   {parseInt(this.state.first["percent"]).toFixed(1)}%]
+
                 </Text>
               </View>
               <View
@@ -243,7 +225,7 @@ export default class patient_Home extends Component {
                 />
                 <Text style={styles.prizetext}>
                   {this.state.third == null
-                    ? "x"
+                    ? " "
                     : String(this.state.third["uname"]) +
                       " [" +
                       parseInt(this.state.third["percent"]).toFixed(1) +
