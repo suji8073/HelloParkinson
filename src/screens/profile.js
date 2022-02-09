@@ -10,7 +10,11 @@ import {
 } from "react-native";
 import Context from "../Context/context";
 import { MaterialIcons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
 
 export default class profile extends Component {
   static contextType = Context;
@@ -42,7 +46,7 @@ export default class profile extends Component {
     let profile_svg = require("../icon/snuh.png");
     return (
       <View style={styles.finalView}>
-        <StatusBar backgroundColor="#D6D6D6" barStyle="dark-content" />
+        <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
         <View style={styles.menu1View}>
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>관리자 프로필</Text>
@@ -146,26 +150,42 @@ export default class profile extends Component {
 }
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
+  },
+  menu1View: {
+    backgroundColor: "#FFFFFF",
+    height: "8.5%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    borderBottomWidth: 1.8,
+    borderColor: "#E5E5E5",
+    paddingRight: "5%",
+    paddingLeft: "5%",
+  },
+
+  titleText: {
+    alignItems: "flex-start",
+    fontSize: responsiveScreenFontSize(2.48),
+    alignItems: "center",
+    color: "#000000",
+    justifyContent: "center",
+    fontWeight: "bold",
   },
   menuText: {
     color: "#484848",
     justifyContent: "flex-start",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
   },
   answerText: {
     color: "#000000",
     alignItems: "flex-start",
     justifyContent: "flex-start",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
   },
-  answerText1: {
-    color: "#858585",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-    fontSize: 17,
-  },
+
   menuView: {
     flexDirection: "row",
     alignItems: "center",
@@ -189,48 +209,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
   },
-  titleText: {
-    alignItems: "flex-start",
-    fontSize: 21,
-    fontWeight: "bold",
-    marginBottom: "5%",
-    alignItems: "center",
-    color: "#000000",
-    justifyContent: "center",
-  },
 
-  menu1View: {
-    marginTop: "3%",
-    backgroundColor: "#FFFFFF",
-    height: 58,
-    flexDirection: "row",
-    alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
-    justifyContent: "flex-start",
-    borderBottomWidth: 1.8,
-    borderColor: "#E5E5E5",
-  },
-  titleText: {
-    alignItems: "flex-start",
-    fontSize: 20,
-    alignItems: "center",
-    color: "#000000",
-    justifyContent: "center",
-    fontWeight: "bold",
-  },
-  firstView: {
-    // padding:30,
-    alignItems: "center",
-    justifyContent: "flex-start",
-    marginLeft: 20,
-    marginRight: 20,
-    flexDirection: "row",
-    flex: 1,
-    marginTop: 15,
-    marginBottom: 15,
-    backgroundColor: "#FFFFFF",
-  },
   margin: {
     // padding:30,
     alignItems: "flex-end",

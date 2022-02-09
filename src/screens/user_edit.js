@@ -18,14 +18,13 @@ import on from "../icon/r_btn_on.svg";
 import off from "../icon/r_btn_off.svg";
 
 import { WithLocalSvg } from "react-native-svg";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-var myHeaders = new Headers();
-myHeaders.append(
-  "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyODk0MzAsImV4cCI6MTY0Mzg5NDIzMH0.XJFkawo8_s4okjavnlT1zVzs9nep6rqlMOCAVqmbloNqyf6BzLYen_Mk4JLhSY3jEP-ogqqIxD6CQO1FAFd-zg"
-);
-
-myHeaders.append("Content-Type", "application/json");
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
 
 export default class user_edit extends Component {
   static contextType = Context;
@@ -53,13 +52,17 @@ export default class user_edit extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const manager_token = await AsyncStorage.getItem("@manager_token");
+
     fetch(
       "http://hccparkinson.duckdns.org:19737/onlymanager/uid/" +
         this.props.route.params.id,
       {
         method: "GET",
-        headers: myHeaders,
+        headers: {
+          Authorization: "Bearer " + manager_token.slice(1, -1),
+        },
       }
     )
       .then((res) => res.json())
@@ -282,176 +285,204 @@ export default class user_edit extends Component {
             onPress={this.edit_finish}
           />
         </View>
-        <ScrollView>
-          <View style={styles.firstView}>
-            <Ionicons
-              name="person-circle-sharp"
-              size={120}
-              color="lightblue"
-              alignItems="center"
-            />
-            <Text style={styles.profile_edit}>프로필 사진 바꾸기</Text>
-          </View>
-
-          <View style={styles.secondView}>
-            <View style={styles.memoView}>
-              <Text style={styles.text1}>환자 이름</Text>
-            </View>
-            <View style={styles.textView}>
-              <TextInput
-                style={styles.text2}
-                onChangeText={(text) => {
-                  this.setState({ user_name: text });
-                }}
-                placeholder={this.state.name}
-              />
-            </View>
-          </View>
-
-          <View style={styles.secondView}>
-            <View style={styles.memoView}>
-              <Text style={styles.text1}>아이디</Text>
-            </View>
-            <View style={styles.textView}>
-              <Text style={styles.text2}>{this.state.UID}</Text>
-            </View>
-          </View>
-
-          <View style={styles.secondView}>
-            <View style={styles.memoView}>
-              <Text style={styles.text1}>생년월일</Text>
-            </View>
-            <View style={styles.textView}>
-              <TextInput
-                style={styles.text2}
-                onChangeText={(age) => {
-                  this.setState({ user_age: age });
-                }}
-                keyboardType="number-pad"
-                placeholder={String(this.state.birth)}
-                maxLength={8}
-              />
-            </View>
-          </View>
-
-          <View style={styles.secondView}>
-            <View style={styles.memoView}>
-              <Text style={styles.text1}>성별</Text>
-            </View>
-
-            <View style={styles.ageview}>
-              <TouchableOpacity
-                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                onPress={this.sex_click1}
-              >
-                <WithLocalSvg width={20} height={20} asset={this.state.age1} />
-              </TouchableOpacity>
-              <Text style={styles.text2}> 남</Text>
-
-              <View style={styles.margin}></View>
-              <TouchableOpacity
-                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                onPress={this.sex_click2}
-              >
-                <WithLocalSvg width={20} height={20} asset={this.state.age2} />
-              </TouchableOpacity>
-              <Text style={styles.text2}> 여</Text>
-              <View style={styles.margin}></View>
-            </View>
-          </View>
-          <View style={styles.secondView}>
-            <View style={styles.memoView}>
-              <Text style={styles.text1}>랭킹참가</Text>
-            </View>
-
-            <View style={styles.ageview}>
-              <TouchableOpacity
-                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                onPress={this.rank_click1}
-              >
-                <WithLocalSvg width={20} height={20} asset={this.state.rank1} />
-              </TouchableOpacity>
-              <Text style={styles.text2}> YES</Text>
-
-              <View style={styles.margin}></View>
-              <TouchableOpacity
-                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                onPress={this.rank_click2}
-              >
-                <WithLocalSvg width={20} height={20} asset={this.state.rank2} />
-              </TouchableOpacity>
-              <Text style={styles.text2}> NO</Text>
-              <View style={styles.margin}></View>
-            </View>
-          </View>
-
-          <View style={styles.secondView}>
-            <View style={styles.memoView}>
-              <Text style={styles.text1}>조</Text>
-            </View>
-            <View style={styles.textView}>
-              <TextInput
-                style={styles.textg}
-                onChangeText={(text) => {
-                  this.setState({ user_group: text });
-                }}
-                keyboardType="number-pad"
-                placeholder={this.state.team === "" ? "없음" : this.state.team}
-                maxLength={2}
-              />
-            </View>
-          </View>
-
-          <View style={styles.threeView}>
-            <View style={styles.memoView}>
-              <Text style={styles.text1}>메모</Text>
-            </View>
-            <View style={styles.textView}>
-              <TextInput
-                style={styles.text2}
-                onChangeText={(text) => {
-                  this.setState({ user_memo: text });
-                }}
-                placeholder={this.state.memo === " " ? "없음" : this.state.memo}
-              />
-            </View>
-          </View>
-          <View style={styles.marginView}>
-            <View style={styles.margin}></View>
-
-            <TouchableOpacity
-              style={styles.margin1}
-              activeOpacity={0.8}
-              onPress={() => {
-                this.createTwoButtonAlert();
-              }}
-            >
-              <EvilIcons name="trash" size={40} color="#808080" />
-            </TouchableOpacity>
-            <View style={styles.margin}></View>
-
-            <TouchableOpacity
-              style={styles.margin1}
-              activeOpacity={0.8}
-              onPress={() => {
-                this.passwordreset();
-              }}
-            >
+        <View style={styles.scrollView}>
+          <ScrollView
+            contentContainerStyle={{
+              flexGrow: 1,
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <View style={styles.firstView}>
               <Ionicons
-                style={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginTop: 2,
-                }}
-                name="ios-reload"
-                size={24}
-                color="#808080"
+                name="person-circle-sharp"
+                size={120}
+                color="lightblue"
+                alignItems="center"
               />
-              <Text style={styles.pwreset}>비밀번호 초기화</Text>
-            </TouchableOpacity>
-            <View style={styles.margin}></View>
-          </View>
-        </ScrollView>
+              {/**<Text style={styles.profile_edit}>프로필 사진 바꾸기</Text>**/}
+            </View>
+
+            <View style={styles.secondView}>
+              <View style={styles.memoView}>
+                <Text style={styles.text1}>환자 이름</Text>
+              </View>
+              <View style={styles.textView}>
+                <TextInput
+                  style={styles.text2}
+                  onChangeText={(text) => {
+                    this.setState({ user_name: text });
+                  }}
+                  placeholder={this.state.name}
+                />
+              </View>
+            </View>
+
+            <View style={styles.secondView}>
+              <View style={styles.memoView}>
+                <Text style={styles.text1}>아이디</Text>
+              </View>
+              <View style={styles.textView}>
+                <Text style={styles.text2}>{this.state.UID}</Text>
+              </View>
+            </View>
+
+            <View style={styles.secondView}>
+              <View style={styles.memoView}>
+                <Text style={styles.text1}>생년월일</Text>
+              </View>
+              <View style={styles.textView}>
+                <TextInput
+                  style={styles.text2}
+                  onChangeText={(age) => {
+                    this.setState({ user_age: age });
+                  }}
+                  keyboardType="number-pad"
+                  placeholder={String(this.state.birth)}
+                  maxLength={8}
+                />
+              </View>
+            </View>
+
+            <View style={styles.secondView}>
+              <View style={styles.memoView}>
+                <Text style={styles.text1}>성별</Text>
+              </View>
+
+              <View style={styles.ageview}>
+                <TouchableOpacity
+                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  onPress={this.sex_click1}
+                >
+                  <WithLocalSvg
+                    width={20}
+                    height={20}
+                    asset={this.state.age1}
+                  />
+                </TouchableOpacity>
+                <Text style={styles.text2}> 남</Text>
+
+                <View style={styles.margin}></View>
+                <TouchableOpacity
+                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  onPress={this.sex_click2}
+                >
+                  <WithLocalSvg
+                    width={20}
+                    height={20}
+                    asset={this.state.age2}
+                  />
+                </TouchableOpacity>
+                <Text style={styles.text2}> 여</Text>
+                <View style={styles.margin}></View>
+              </View>
+            </View>
+            <View style={styles.secondView}>
+              <View style={styles.memoView}>
+                <Text style={styles.text1}>랭킹참가</Text>
+              </View>
+
+              <View style={styles.ageview}>
+                <TouchableOpacity
+                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  onPress={this.rank_click1}
+                >
+                  <WithLocalSvg
+                    width={20}
+                    height={20}
+                    asset={this.state.rank1}
+                  />
+                </TouchableOpacity>
+                <Text style={styles.text2}> YES</Text>
+
+                <View style={styles.margin}></View>
+                <TouchableOpacity
+                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  onPress={this.rank_click2}
+                >
+                  <WithLocalSvg
+                    width={20}
+                    height={20}
+                    asset={this.state.rank2}
+                  />
+                </TouchableOpacity>
+                <Text style={styles.text2}> NO</Text>
+                <View style={styles.margin}></View>
+              </View>
+            </View>
+
+            <View style={styles.secondView}>
+              <View style={styles.memoView}>
+                <Text style={styles.text1}>조</Text>
+              </View>
+              <View style={styles.textView}>
+                <TextInput
+                  style={styles.textg}
+                  onChangeText={(text) => {
+                    this.setState({ user_group: text });
+                  }}
+                  keyboardType="number-pad"
+                  placeholder={
+                    this.state.team === "" ? "없음" : this.state.team
+                  }
+                  maxLength={2}
+                />
+              </View>
+            </View>
+
+            <View style={styles.threeView}>
+              <View style={styles.memoView}>
+                <Text style={styles.text1}>메모</Text>
+              </View>
+              <View style={styles.textView}>
+                <TextInput
+                  style={styles.text2}
+                  onChangeText={(text) => {
+                    this.setState({ user_memo: text });
+                  }}
+                  placeholder={
+                    this.state.memo === " " ? "없음" : this.state.memo
+                  }
+                />
+              </View>
+            </View>
+            <View style={styles.marginView}>
+              <View style={styles.margin}></View>
+
+              <TouchableOpacity
+                style={styles.margin1}
+                activeOpacity={0.8}
+                onPress={() => {
+                  this.createTwoButtonAlert();
+                }}
+              >
+                <EvilIcons name="trash" size={40} color="#808080" />
+              </TouchableOpacity>
+              <View style={styles.margin}></View>
+
+              <TouchableOpacity
+                style={styles.margin1}
+                activeOpacity={0.8}
+                onPress={() => {
+                  this.passwordreset();
+                }}
+              >
+                <Ionicons
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginTop: 2,
+                  }}
+                  name="ios-reload"
+                  size={24}
+                  color="#808080"
+                />
+                <Text style={styles.pwreset}>비밀번호 초기화</Text>
+              </TouchableOpacity>
+              <View style={styles.margin}></View>
+            </View>
+          </ScrollView>
+        </View>
       </View>
     );
   }
@@ -459,26 +490,25 @@ export default class user_edit extends Component {
 
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
-
   menuView: {
-    marginTop: "3%",
     backgroundColor: "#FFFFFF",
-    height: 58,
+    height: "8.5%",
     flexDirection: "row",
     alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
+    paddingRight: "5%",
+    paddingLeft: "5%",
   },
 
   titleText: {
     alignItems: "flex-start",
-    fontSize: 21,
+    fontSize: responsiveScreenFontSize(2.48),
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
@@ -489,11 +519,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flex: 2,
-    marginTop: "5%",
-    marginBottom: "8%",
+    marginTop: "3%",
+    marginBottom: "5%",
     marginRight: "10%",
     marginLeft: "10%",
     backgroundColor: "#FFFFFF",
+  },
+
+  scrollView: {
+    alignItems: "flex-start",
+    justifyContent: "center",
+    flexDirection: "row",
+    marginBottom: "40%",
   },
 
   secondView: {
@@ -572,34 +609,34 @@ const styles = StyleSheet.create({
 
   profile_edit: {
     alignItems: "flex-start",
-    fontSize: 16,
+    fontSize: responsiveScreenFontSize(1.88),
     color: "#59A60B",
     justifyContent: "center",
   },
 
   text1: {
     alignItems: "flex-start",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     color: "#000000",
     justifyContent: "center",
   },
 
   text2: {
     alignItems: "flex-start",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     color: "#484848",
     justifyContent: "center",
     alignItems: "center",
   },
   textg: {
     alignItems: "flex-start",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     color: "#316200",
     justifyContent: "center",
   },
 
   pwreset: {
-    fontSize: 14,
+    fontSize: responsiveScreenFontSize(1.52),
     color: "#808080",
     alignItems: "center",
     justifyContent: "center",

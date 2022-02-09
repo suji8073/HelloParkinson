@@ -19,6 +19,7 @@ import page_here from "../icon/page_here.svg";
 import page_no from "../icon/page_no.svg";
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import {
   responsiveScreenHeight,

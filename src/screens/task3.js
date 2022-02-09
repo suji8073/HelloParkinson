@@ -10,6 +10,12 @@ import greenairplane from "../icon/greenairplane.svg";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { WithLocalSvg } from "react-native-svg";
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
 const year = 2021 + 1;
 export default class task3 extends Component {
   constructor(props) {
@@ -49,6 +55,13 @@ export default class task3 extends Component {
     );
     this.setState({ man_token: manager_token });
   }
+
+  dateToStr = () => {
+    var today_year = new Date().getFullYear();
+    var birth_year = String(this.props.age).substring(0, 4);
+    return today_year - birth_year + 1;
+  };
+
   sendtimes = () => {
     this.setState({
       sendtimestamp:
@@ -111,9 +124,7 @@ export default class task3 extends Component {
       // 알림 누른 시각과 환자 db로 보냄
     }
   };
-  // componentDidMount() {
-  //   this.setState({nowtimestamp: this.set.date.ge})
-  // }
+
   render() {
     return (
       //  전체 뷰
@@ -142,8 +153,8 @@ export default class task3 extends Component {
             margin: "5%",
           }}
         >
-          <Text style={{ fontSize: 17 }}>
-            {this.props.user} / {year - parseInt(this.props.age / 10000)} /{" "}
+          <Text style={{ fontSize: responsiveScreenFontSize(2) }}>
+            {this.props.user} / {this.dateToStr()} /{" "}
             {this.props.sex == "M" ? "남" : "여"}성
           </Text>
 
@@ -173,7 +184,7 @@ export default class task3 extends Component {
             <Text
               style={{
                 color: "#484848",
-                fontSize: 16,
+                fontSize: responsiveScreenFontSize(1.88),
                 marginLeft: "5%",
                 justifyContent: "center",
                 alignItems: "center",

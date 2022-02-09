@@ -15,6 +15,13 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import Movelist from "./movelist";
 import O2_task from "./O2_task";
+
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
 const move_store = async (move_list) => {
   try {
     await AsyncStorage.setItem("@move_store", JSON.stringify(move_list));
@@ -277,8 +284,29 @@ export default class progress extends Component {
 
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
+  },
+  menuView: {
+    backgroundColor: "#FFFFFF",
+    height: "8.5%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    borderBottomWidth: 1.8,
+    borderColor: "#E5E5E5",
+    paddingRight: "5%",
+    paddingLeft: "5%",
+  },
+
+  titleText: {
+    alignItems: "flex-start",
+    fontSize: responsiveScreenFontSize(2.48),
+    alignItems: "center",
+    color: "#000000",
+    justifyContent: "center",
+    fontWeight: "bold",
   },
   listview: {
     flexDirection: "row",
@@ -308,33 +336,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: 3,
     marginVertical: 10,
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
   },
   movebtn: {
     color: "#FFFFFF",
-    fontSize: 17,
-  },
-
-  menuView: {
-    backgroundColor: "#FFFFFF",
-    height: 58,
-    flexDirection: "row",
-    alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
-    marginTop: "10%",
-    justifyContent: "flex-start",
-    borderBottomWidth: 1.8,
-    borderColor: "#E5E5E5",
-  },
-
-  titleText: {
-    alignItems: "flex-start",
-    fontSize: 20,
-    alignItems: "center",
-    color: "#000000",
-    justifyContent: "center",
-    fontWeight: "bold",
+    fontSize: responsiveScreenFontSize(2),
   },
 
   firstView: {

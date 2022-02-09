@@ -16,11 +16,11 @@ import {
 } from "react-native-responsive-dimensions";
 
 const TabIcon = ({ name, size, color }) => {
-  return <MaterialCommunityIcons name={name} size={32} color={color} />;
+  return <MaterialCommunityIcons name={name} size={30} color={color} />;
 };
 
 const menuIcon = ({ name, size, color }) => {
-  return <Ionicons name={name} size={32} color={color} />;
+  return <Ionicons name={name} size={30} color={color} />;
 };
 
 const Tab = createBottomTabNavigator();
@@ -46,8 +46,8 @@ export default class TabNavigation extends Component {
             position: "absolute",
             borderTopColor: "#BBBBBB",
             borderTopWidth: 1,
-            paddingBottom: 20,
-            height: 90,
+            paddingBottom: "2%",
+            height: responsiveScreenHeight(12),
           },
         }}
       >
@@ -65,8 +65,7 @@ export default class TabNavigation extends Component {
             tabBarLabel: "목 록",
             headerTitleAlign: "center",
             tabBarLabelStyle: {
-              fontSize: 17,
-              fontWeight: "bold",
+              fontSize: responsiveScreenFontSize(1.88),
             },
             tabBarIcon: (props) => menuIcon({ ...props, name: "reader" }),
           }}
@@ -79,8 +78,7 @@ export default class TabNavigation extends Component {
             tabBarLabel: "통 계",
             headerTitleAlign: "center",
             tabBarLabelStyle: {
-              fontSize: 17,
-              fontWeight: "bold",
+              fontSize: responsiveScreenFontSize(1.88),
             },
             tabBarIcon: (props) =>
               menuIcon({ ...props, name: "md-pie-chart-outline" }),
@@ -100,8 +98,7 @@ export default class TabNavigation extends Component {
             tabBarLabel: "진도율",
             headerTitleAlign: "center",
             tabBarLabelStyle: {
-              fontSize: 17,
-              fontWeight: "bold",
+              fontSize: responsiveScreenFontSize(1.88),
             },
             tabBarIcon: (props) => menuIcon({ ...props, name: "podium" }),
           }}
@@ -114,8 +111,7 @@ export default class TabNavigation extends Component {
             tabBarLabel: "프로필",
             headerTitleAlign: "center",
             tabBarLabelStyle: {
-              fontSize: 17,
-              fontWeight: "bold",
+              fontSize: responsiveScreenFontSize(1.88),
             },
             tabBarIcon: (props) =>
               TabIcon({ ...props, name: "account-circle" }),

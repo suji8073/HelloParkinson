@@ -1,23 +1,17 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Alert,
-  BackHandler,
-  TouchableOpacityComponent,
-} from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import { WithLocalSvg } from "react-native-svg";
 import silverstarsvg from "../icon/silverstar.svg";
 import greenstarsvg from "../icon/greenstar.svg";
-const year = 2021 + 1;
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AntDesign } from "@expo/vector-icons";
-var myHeaders = new Headers();
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
 
 export default class task1 extends Component {
   constructor(props) {
@@ -156,7 +150,7 @@ const styles = StyleSheet.create({
 
   titleText: {
     alignItems: "flex-start",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     alignItems: "center",
     color: "#484848",
     justifyContent: "center",
@@ -165,7 +159,7 @@ const styles = StyleSheet.create({
 
   subtext: {
     alignItems: "flex-start",
-    fontSize: 14,
+    fontSize: responsiveScreenFontSize(1.64),
     alignItems: "center",
     color: "#747474",
     justifyContent: "center",

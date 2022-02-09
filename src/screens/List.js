@@ -7,6 +7,7 @@ import {
   Text,
   TextInput,
   FlatList,
+  StatusBar,
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -15,6 +16,12 @@ import SimplePopupMenu from "react-native-simple-popup-menu";
 import Context from "../Context/context";
 import silverstarsvg from "../icon/silverstar.svg";
 import greenstarsvg from "../icon/greenstar.svg";
+
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const items = [
@@ -123,6 +130,7 @@ export default class list extends Component {
   render() {
     return (
       <View style={styles.finalView}>
+        <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
         <View style={styles.menuView}>
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>환자 목록</Text>
@@ -153,7 +161,6 @@ export default class list extends Component {
         </View>
 
         <View style={styles.threeView}>
-          <Text>{this.state.data.bookmark}</Text>
           <FlatList
             keyExtractor={(item, index) => index.toString()}
             data={this.state.data}
@@ -164,7 +171,7 @@ export default class list extends Component {
                   activeOpacity={0.8}
                   onPress={() => {
                     this.props.navigation.navigate("user_setting", {
-                      paramName1: item.uid,
+                      id: item.uid,
                     });
                   }}
                 >
@@ -187,25 +194,25 @@ export default class list extends Component {
 
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
   menuView: {
     backgroundColor: "#FFFFFF",
-    height: 58,
+    height: "8.5%",
     flexDirection: "row",
     alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
-    marginTop: "10%",
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
+    paddingRight: "5%",
+    paddingLeft: "5%",
   },
 
   titleText: {
     alignItems: "flex-start",
-    fontSize: 20,
+    fontSize: responsiveScreenFontSize(2.48),
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
@@ -258,12 +265,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   threeView: {
-    // padding:30,
     marginTop: 10,
-    marginBottom: 230,
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
+    marginBottom: responsiveScreenHeight(13.1) * 2,
   },
   SearchBarWrapper: {
     flexDirection: "row",

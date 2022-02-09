@@ -11,15 +11,14 @@ import Svg3 from "../icon/graph.svg";
 
 import silverstarsvg from "../icon/silverstar.svg";
 import greenstarsvg from "../icon/greenstar.svg";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { WithLocalSvg } from "react-native-svg";
 
-var myHeaders = new Headers();
-myHeaders.append(
-  "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyODk0MzAsImV4cCI6MTY0Mzg5NDIzMH0.XJFkawo8_s4okjavnlT1zVzs9nep6rqlMOCAVqmbloNqyf6BzLYen_Mk4JLhSY3jEP-ogqqIxD6CQO1FAFd-zg"
-);
-myHeaders.append("Content-Type", "application/json");
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
 
 export default class user_setting extends Component {
   static contextType = Context;
@@ -36,19 +35,21 @@ export default class user_setting extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const manager_token = await AsyncStorage.getItem("@manager_token");
+
     fetch(
       "http://hccparkinson.duckdns.org:19737/onlymanager/uid/" +
         this.props.route.params.id,
       {
         method: "GET",
-        headers: myHeaders,
+        headers: {
+          Authorization: "Bearer " + manager_token.slice(1, -1),
+        },
       }
     )
       .then((res) => res.json())
       .then((json) => {
-        console.log(json.data[0].uname);
-        console.log(json.data[0].bookmark);
         this.setState({
           birth: json.data[0].birthday,
           gender: json.data[0].gender,
@@ -108,10 +109,12 @@ export default class user_setting extends Component {
         <View style={styles.menuView}>
           <AntDesign
             name="left"
-            size={24}
+            style={{ fontSize: responsiveScreenFontSize(3) }}
             color="#808080"
             onPress={() => {
-              this.props.navigation.navigate("TabNavigation");
+              this.props.navigation.navigate("TabNavigation", {
+                init_set: "list",
+              });
             }}
           />
           <View style={styles.margin}></View>
@@ -120,8 +123,7 @@ export default class user_setting extends Component {
 
           <TouchableOpacity onPress={this.starclick}>
             <WithLocalSvg
-              width={30}
-              height={40}
+              style={{ fontSize: responsiveScreenFontSize(3) }}
               asset={
                 this.state.bookmark === false ? silverstarsvg : greenstarsvg
               }
@@ -133,7 +135,7 @@ export default class user_setting extends Component {
           <View style={styles.icon}>
             <Ionicons
               name="person-circle-sharp"
-              size={120}
+              style={{ fontSize: responsiveScreenFontSize(13) }}
               color="lightblue"
               alignItems="center"
             />
@@ -207,26 +209,25 @@ export default class user_setting extends Component {
 
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
-
   menuView: {
-    marginTop: "3%",
     backgroundColor: "#FFFFFF",
-    height: 58,
+    height: "8.5%",
     flexDirection: "row",
     alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
+    paddingRight: "5%",
+    paddingLeft: "5%",
   },
 
   titleText: {
     alignItems: "flex-start",
-    fontSize: 20,
+    fontSize: responsiveScreenFontSize(2.48),
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
@@ -236,8 +237,9 @@ const styles = StyleSheet.create({
   firstView: {
     alignItems: "center",
     justifyContent: "center",
-    flex: 2,
-    margin: "8%",
+    flex: 2.5,
+    marginTop: "3%",
+    marginBottom: "8%",
     backgroundColor: "#FFFFFF",
   },
 
@@ -254,7 +256,7 @@ const styles = StyleSheet.create({
 
   twotext: {
     alignItems: "flex-start",
-    fontSize: 15,
+    fontSize: responsiveScreenFontSize(1.76),
     color: "#5CB405",
     marginTop: 10,
     justifyContent: "center",
@@ -324,36 +326,33 @@ const styles = StyleSheet.create({
 
   text2: {
     alignItems: "flex-start",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     color: "#484848",
     justifyContent: "center",
   },
   icon: {
-    width: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
 
   group_num: {
     alignItems: "center",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     fontWeight: "bold",
     color: "#316200",
-    marginBottom: "1%",
     justifyContent: "center",
   },
   user_name: {
     alignItems: "center",
-    fontSize: 21,
+    fontSize: responsiveScreenFontSize(2.48),
     color: "#000000",
     fontWeight: "bold",
-    marginBottom: "1%",
     justifyContent: "center",
   },
 
   user_age: {
     alignItems: "center",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     color: "#747474",
     justifyContent: "center",
   },

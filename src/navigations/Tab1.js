@@ -47,7 +47,6 @@ export default function TabNavigation1({ route, navigation }) {
         options={{
           headerShown: false,
           tabBarLabel: "홈",
-          size: "10%",
           headerTitleAlign: "center",
           tabBarLabelStyle: {
             fontSize: responsiveScreenFontSize(2),

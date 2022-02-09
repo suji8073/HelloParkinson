@@ -3,6 +3,12 @@ import { StyleSheet, View, Text } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
 export default class task2 extends Component {
   dateToStr = () => {
     var today_year = new Date().getFullYear();
@@ -56,7 +62,7 @@ const styles = StyleSheet.create({
 
   titleText: {
     alignItems: "flex-start",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     alignItems: "center",
     color: "#484848",
     justifyContent: "center",
@@ -64,7 +70,7 @@ const styles = StyleSheet.create({
 
   subtext: {
     alignItems: "flex-start",
-    fontSize: 14,
+    fontSize: responsiveScreenFontSize(1.64),
     alignItems: "center",
     color: "#747474",
     justifyContent: "center",
