@@ -31,10 +31,12 @@ export default class task3 extends Component {
           this.state.date.getFullYear() * 100000000 +
           (this.state.date.getMonth() + 1) * 1000000 +
           this.state.date.getDate() * 10000 +
-          (this.state.date.getHours() + 9) * 100 +
+          this.state.date.getHours() * 100 +
+          // (this.state.date.getHours() + 9) * 100 +
           this.state.date.getMinutes(),
       },
       () => {
+        console.log(this.state.nowtimestamp);
         this.setState({
           alarm:
             this.state.nowtimestamp - this.props.minute <= 15
@@ -55,7 +57,8 @@ export default class task3 extends Component {
         this.state.date.getFullYear() * 100000000 +
         (this.state.date.getMonth() + 1) * 1000000 +
         this.state.date.getDate() * 10000 +
-        (this.state.date.getHours() + 9) * 100 +
+        this.state.date.getHours() * 100 +
+        // (this.state.date.getHours() + 9) * 100 +
         this.state.date.getMinutes(),
     });
   };
@@ -65,7 +68,8 @@ export default class task3 extends Component {
         this.state.date.getFullYear() * 100000000 +
         (this.state.date.getMonth() + 1) * 1000000 +
         this.state.date.getDate() * 10000 +
-        (this.state.date.getHours() + 9) * 100 +
+        this.state.date.getHours() * 100 +
+        // (this.state.date.getHours() + 9) * 100 +
         this.state.date.getMinutes(),
     });
   };
@@ -183,23 +187,30 @@ export default class task3 extends Component {
             </Text>
           </View>
         </View>
-        <TouchableOpacity onPress={this.handleClick} activeOpacity={1}>
-          <WithLocalSvg
-            style={{ marginTop: "20%" }}
-            width={40}
-            height={40}
-            asset={this.state.alarm}
-          />
+        <View
+          style={{
+            flexDirection: "column",
+            alignItems: "flex-end",
+          }}
+        >
+          <TouchableOpacity onPress={this.handleClick} activeOpacity={1}>
+            <WithLocalSvg
+              style={{ marginTop: "20%" }}
+              width={40}
+              height={40}
+              asset={this.state.alarm}
+            />
+          </TouchableOpacity>
           <Text
             style={
               this.state.alarm == airplane
-                ? styles.timetextgreen
-                : styles.timetextsilver
+                ? styles.timetextsilver
+                : styles.timetextgreen
             }
           >
             {this.state.nowtimestamp - this.state.minute}분 전
           </Text>
-        </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -266,11 +277,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   timetextgreen: {
-    color: "#000000",
+    color: "#FFFFFF",
     marginTop: "2%",
   },
   timetextsilver: {
-    color: "#FFFFFF",
+    color: "#000000",
     marginTop: "2%",
   },
 });

@@ -24,6 +24,25 @@ const move_store = async (move_list) => {
     console.log("move_store_error");
   }
 };
+// uid, eid setcnt
+const move_set = async (moveset) => {
+  try {
+    await AsyncStorage.setItem("@move_set", moveset);
+    console.log("move_store");
+  } catch (e) {
+    // saving error
+    console.log("move_store_error");
+  }
+};
+const user_moveset = async (moveset) => {
+  try {
+    await AsyncStorage.setItem("@user_moveset", JSON.stringify(moveset));
+    console.log("환자 할당량 store");
+  } catch (e) {
+    console.log("환자 할당량 error");
+  }
+};
+
 export default class progress extends Component {
   static contextType = Context;
   constructor(props) {
@@ -40,7 +59,6 @@ export default class progress extends Component {
       click4: 0,
       click5: 0,
       man_token: "",
-      //데이터가 내림차순 되어서 들어오면 좋겠음~!
       m1: [],
       m2: [],
       m3: [],
@@ -48,12 +66,12 @@ export default class progress extends Component {
       m5: [],
       data: [],
       m_num: 3,
+      man_token: "",
     };
   }
 
   async componentDidMount() {
     const manager_token = await AsyncStorage.getItem("@manager_token");
-
     this.setState({
       man_token: manager_token,
     });
@@ -70,6 +88,7 @@ export default class progress extends Component {
     )
       .then((res) => res.json())
       .then((json) => {
+        user_moveset(json.data);
         this.setState(
           {
             m1: json.data.filter((it) => it.cat === "신장운동"),
@@ -80,24 +99,29 @@ export default class progress extends Component {
           },
           () => {
             this.setState({ data: this.state.m1 });
-
-            // try {
-            //   await AsyncStorage.setItem(
-            //     "@user_moveset",
-            //     JSON.stringify(json.data)
-            //   );
-            //   console.log("환자 할당량 store");
-            // } catch (e) {
-            //   console.log("환자 할당량 error");
-            // }
-
-            // const user_moveset = await AsyncStorage.getItem("@user_moveset");
-            // console.log(user_moveset);
           }
         );
       });
     move_store(this.state.data);
   }
+  store_final = async () => {
+    try {
+      const move_final = await AsyncStorage.getItem("@user_moveset");
+
+      fetch("http://hccparkinson.duckdns.org:19737/onlymanager/assigned", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + this.state.man_token.slice(1, -1),
+          "Content-Type": "application/json",
+        },
+        body: move_final,
+      });
+      console.log("환자 할당량 최종 store");
+    } catch (e) {
+      console.log("환자 할당량 최종 error");
+    }
+  };
+
   handleClick1 = () => {
     this.setState({
       data: this.state.m1,
@@ -195,6 +219,7 @@ export default class progress extends Component {
               size={24}
               color="#5CB405"
               onPress={() => {
+                this.store_final();
                 Alert.alert("저장되었습니다.");
                 this.props.navigation.pop();
               }}
@@ -260,11 +285,19 @@ export default class progress extends Component {
             renderItem={({ item }) => {
               if (this.state.task == 0) {
                 return (
-                  <Movelist name={item.ename} m_num={item.setcnt}></Movelist>
+                  <Movelist
+                    name={item.ename}
+                    m_num={item.setcnt}
+                    eid={item.eid}
+                  ></Movelist>
                 );
               } else {
                 return (
-                  <O2_task name={item.ename} m_num={item.setcnt}></O2_task>
+                  <O2_task
+                    name={item.ename}
+                    m_num={item.setcnt}
+                    eid={item.eid}
+                  ></O2_task>
                 );
               }
             }}
