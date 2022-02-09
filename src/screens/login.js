@@ -6,6 +6,9 @@ import {
   TouchableOpacity,
   TextInput,
   Alert,
+  Keyboard,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
 } from "react-native";
 import React, { Component } from "react";
 import "react-native-gesture-handler";
@@ -20,6 +23,12 @@ import { WithLocalSvg } from "react-native-svg";
 
 import logosvg from "../icon/logo.svg";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const HideKeyboard = ({ children }) => (
+  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    {children}
+  </TouchableWithoutFeedback>
+);
 
 const manager_storeToken = async (token) => {
   try {
@@ -58,6 +67,7 @@ export default class login extends Component {
       id: "",
       pw: "",
       name: "",
+      behavior: "position",
     };
   }
 
@@ -151,70 +161,74 @@ export default class login extends Component {
   };
   render() {
     return (
-      <View style={styles.finalView}>
-        <View style={styles.NoneView}></View>
+      <HideKeyboard>
+        <View style={styles.finalView}>
+          <KeyboardAvoidingView behavior={this.state.behavior}>
+            <View style={styles.NoneView}></View>
 
-        <View style={styles.firstView}>
-          <WithLocalSvg
-            width={responsiveScreenWidth(17)}
-            height={responsiveScreenHeight(10)}
-            asset={logosvg}
-          />
+            <View style={styles.firstView}>
+              <WithLocalSvg
+                width={responsiveScreenWidth(17)}
+                height={responsiveScreenHeight(10)}
+                asset={logosvg}
+              />
 
-          <Text style={styles.titleText}>
-            {"안녕하세요.\n헬로우 파킨슨 입니다."}
-          </Text>
+              <Text style={styles.titleText}>
+                {"안녕하세요.\n헬로우 파킨슨 입니다."}
+              </Text>
 
-          <Text style={styles.twoText}>
-            {"회원 서비스 이용을 위해 로그인 해주세요."}
-          </Text>
+              <Text style={styles.twoText}>
+                {"회원 서비스 이용을 위해 로그인 해주세요."}
+              </Text>
+            </View>
+
+            <View style={styles.secondView}>
+              <View style={styles.buttonwhite}>
+                <TextInput
+                  placeholder="아이디"
+                  secureTextEntry={false}
+                  style={styles.textInput}
+                  value={this.state.id}
+                  onChangeText={(text) => {
+                    this.setState({ id: text });
+                  }}
+                />
+              </View>
+              <View style={styles.buttonwhite}>
+                <TextInput
+                  secureTextEntry={true}
+                  style={styles.textInput}
+                  placeholder="비밀번호"
+                  value={this.state.pw}
+                  onChangeText={(text) => {
+                    this.setState({ pw: text });
+                  }}
+                />
+              </View>
+
+              <TouchableOpacity
+                style={styles.buttongreen}
+                activeOpacity={0.8}
+                onPress={this.login_check}
+              >
+                <Text style={styles.green}> 로그인하기 </Text>
+              </TouchableOpacity>
+
+              <View style={styles.thirdView}>
+                <Text style={styles.secondText1}> 계정이 없으신가요?</Text>
+
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.navigation.navigate("signup1");
+                  }}
+                >
+                  <Text style={styles.secondText2}> 회원가입 하기.</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </KeyboardAvoidingView>
         </View>
-
-        <View style={styles.secondView}>
-          <View style={styles.buttonwhite}>
-            <TextInput
-              placeholder="아이디"
-              secureTextEntry={false}
-              style={styles.textInput}
-              value={this.state.id}
-              onChangeText={(text) => {
-                this.setState({ id: text });
-              }}
-            />
-          </View>
-          <View style={styles.buttonwhite}>
-            <TextInput
-              secureTextEntry={true}
-              style={styles.textInput}
-              placeholder="비밀번호"
-              value={this.state.pw}
-              onChangeText={(text) => {
-                this.setState({ pw: text });
-              }}
-            />
-          </View>
-
-          <TouchableOpacity
-            style={styles.buttongreen}
-            activeOpacity={0.8}
-            onPress={this.login_check}
-          >
-            <Text style={styles.green}> 로그인하기 </Text>
-          </TouchableOpacity>
-
-          <View style={styles.thirdView}>
-            <Text style={styles.secondText1}> 계정이 없으신가요?</Text>
-
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate("signup1");
-              }}
-            >
-              <Text style={styles.secondText2}> 회원가입 하기.</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
+      </HideKeyboard>
     );
   }
 }

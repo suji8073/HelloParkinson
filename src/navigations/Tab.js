@@ -36,8 +36,6 @@ export default class TabNavigation extends Component {
         initialRouteName={
           this.props.route.params.init_set == "progress" ? "progress" : "list"
         }
-        // component={progress}
-        // initialRouteName="progress"
         screenOptions={{
           tabBarActiveTintColor: "#5CB405",
           tabBarInactiveTintColor: "#BBBBBB",

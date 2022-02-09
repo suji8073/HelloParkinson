@@ -153,6 +153,7 @@ export default class statistics extends Component {
 
         <View style={styles.threeView}>
           <FlatList
+            style={styles.FlatList}
             data={this.state.data}
             renderItem={({ item }) => {
               return (
@@ -180,7 +181,7 @@ export default class statistics extends Component {
 
 const styles = StyleSheet.create({
   finalView: {
-    height: responsiveScreenHeight(100),
+    height: responsiveScreenHeight(88),
     width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
@@ -248,12 +249,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   threeView: {
-    // padding:30,
     marginTop: 10,
-    marginBottom: responsiveScreenHeight(13.1) * 2,
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
+    height: responsiveScreenHeight(62.6),
+  },
+  FlatList: {
+    marginBottom: responsiveScreenHeight(5),
   },
 
   SearchBarWrapper: {

@@ -7,6 +7,8 @@ import {
   TextInput,
   Alert,
   ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Context from "../Context/context";
@@ -16,6 +18,12 @@ import {
   responsiveScreenWidth,
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
+
+const HideKeyboard = ({ children }) => (
+  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    {children}
+  </TouchableWithoutFeedback>
+);
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default class siginup4 extends Component {
@@ -197,240 +205,242 @@ export default class siginup4 extends Component {
 
   render() {
     return (
-      <View style={styles.finalView}>
-        <View style={styles.settingView}>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => {
-              this.props.navigation.navigate("signup1");
-            }}
-          >
-            <View>
-              <AntDesign
-                name="left"
-                style={{ fontSize: responsiveScreenFontSize(3) }}
-                color="#808080"
-              />
-            </View>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.firstView}>
-          <ScrollView>
-            <View style={styles.secondView}>
-              <Text style={styles.titleText}>아이디 / 비밀번호 설정</Text>
-              <View style={styles.buttonwhite1}>
-                <TextInput
-                  style={styles.textInput1}
-                  secureTextEntry={false}
-                  placeholder="아이디 입력"
-                  onChangeText={(text) => {
-                    this.setState({ user_id: text });
-                  }}
+      <HideKeyboard>
+        <View style={styles.finalView}>
+          <View style={styles.settingView}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => {
+                this.props.navigation.navigate("signup1");
+              }}
+            >
+              <View>
+                <AntDesign
+                  name="left"
+                  style={{ fontSize: responsiveScreenFontSize(3) }}
+                  color="#808080"
                 />
-                <View style={styles.clickbtn}>
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    onPress={this.login_input}
-                  >
-                    <View style={styles.margin}></View>
-                    <View style={styles.user_id_click}>
-                      <Text style={styles.ttext}>중복 확인</Text>
-                    </View>
-                    <View style={styles.margin}></View>
-                  </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.firstView}>
+            <ScrollView>
+              <View style={styles.secondView}>
+                <Text style={styles.titleText}>아이디 / 비밀번호 설정</Text>
+                <View style={styles.buttonwhite1}>
+                  <TextInput
+                    style={styles.textInput1}
+                    secureTextEntry={false}
+                    placeholder="아이디 입력"
+                    onChangeText={(text) => {
+                      this.setState({ user_id: text });
+                    }}
+                  />
+                  <View style={styles.clickbtn}>
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      onPress={this.login_input}
+                    >
+                      <View style={styles.margin}></View>
+                      <View style={styles.user_id_click}>
+                        <Text style={styles.ttext}>중복 확인</Text>
+                      </View>
+                      <View style={styles.margin}></View>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+                <View style={styles.button1}>
+                  <TextInput
+                    style={styles.textInput}
+                    secureTextEntry={true}
+                    placeholder="비밀번호 입력"
+                    onChangeText={(pw) => {
+                      this.setState({ user_pw: pw });
+                    }}
+                  />
                 </View>
               </View>
 
-              <View style={styles.button1}>
-                <TextInput
-                  style={styles.textInput}
-                  secureTextEntry={true}
-                  placeholder="비밀번호 입력"
-                  onChangeText={(pw) => {
-                    this.setState({ user_pw: pw });
-                  }}
-                />
-              </View>
-            </View>
-
-            <View style={styles.secondView}>
-              <View style={styles.checkView}>
-                <Text style={styles.titleText}>성명 / 전화번호</Text>
-                <Text style={styles.check}>*</Text>
-              </View>
-              <View style={styles.buttonwhite}>
-                <TextInput
-                  style={styles.textInput}
-                  secureTextEntry={false}
-                  placeholder="이름"
-                  onChangeText={(name) => {
-                    this.setState({ user_name: name });
-                  }}
-                  maxLength={4}
-                />
-              </View>
-
-              <View style={styles.numberbutton}>
-                <View style={styles.number1}>
-                  <Text style={styles.MMText}>010</Text>
+              <View style={styles.secondView}>
+                <View style={styles.checkView}>
+                  <Text style={styles.titleText}>성명 / 전화번호</Text>
+                  <Text style={styles.check}>*</Text>
                 </View>
-                <View style={styles.number2}>
+                <View style={styles.buttonwhite}>
                   <TextInput
                     style={styles.textInput}
                     secureTextEntry={false}
-                    placeholder="휴대전화번호"
-                    onChangeText={(tel) => {
-                      this.setState({ user_telphone: tel });
+                    placeholder="이름"
+                    onChangeText={(name) => {
+                      this.setState({ user_name: name });
+                    }}
+                    maxLength={4}
+                  />
+                </View>
+
+                <View style={styles.numberbutton}>
+                  <View style={styles.number1}>
+                    <Text style={styles.MMText}>010</Text>
+                  </View>
+                  <View style={styles.number2}>
+                    <TextInput
+                      style={styles.textInput}
+                      secureTextEntry={false}
+                      placeholder="휴대전화번호"
+                      onChangeText={(tel) => {
+                        this.setState({ user_telphone: tel });
+                      }}
+                      keyboardType="number-pad"
+                      maxLength={8}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.secondView}>
+                <View style={styles.checkView}>
+                  <Text style={styles.titleText}>생년월일</Text>
+                  <Text style={styles.check}>*</Text>
+                </View>
+                <View style={styles.buttonwhite}>
+                  <TextInput
+                    style={styles.textInput}
+                    secureTextEntry={false}
+                    placeholder="'-' 제외 8자리를 입력해주세요 ex) 19001010"
+                    onChangeText={(age) => {
+                      this.setState({ user_age: age });
                     }}
                     keyboardType="number-pad"
                     maxLength={8}
                   />
                 </View>
               </View>
-            </View>
 
-            <View style={styles.secondView}>
-              <View style={styles.checkView}>
-                <Text style={styles.titleText}>생년월일</Text>
-                <Text style={styles.check}>*</Text>
-              </View>
-              <View style={styles.buttonwhite}>
-                <TextInput
-                  style={styles.textInput}
-                  secureTextEntry={false}
-                  placeholder="'-' 제외 8자리를 입력해주세요 ex) 19001010"
-                  onChangeText={(age) => {
-                    this.setState({ user_age: age });
-                  }}
-                  keyboardType="number-pad"
-                  maxLength={8}
-                />
-              </View>
-            </View>
+              <View style={styles.secondView}>
+                <View style={styles.checkView}>
+                  <Text style={styles.titleText}>성별</Text>
+                  <Text style={styles.check}>*</Text>
+                </View>
 
-            <View style={styles.secondView}>
-              <View style={styles.checkView}>
-                <Text style={styles.titleText}>성별</Text>
-                <Text style={styles.check}>*</Text>
-              </View>
-
-              <View style={styles.numberbutton}>
-                <TouchableOpacity
-                  style={
-                    this.state.user_sex === 1
-                      ? styles.genderB2 //클릭됨
-                      : styles.genderB1
-                  }
-                  activeOpacity={0.8}
-                  onPress={this.onPress_age1}
-                >
-                  <Text
+                <View style={styles.numberbutton}>
+                  <TouchableOpacity
                     style={
                       this.state.user_sex === 1
-                        ? styles.gendertext1
-                        : styles.gendertext
+                        ? styles.genderB2 //클릭됨
+                        : styles.genderB1
                     }
+                    activeOpacity={0.8}
+                    onPress={this.onPress_age1}
                   >
-                    남자
-                  </Text>
-                </TouchableOpacity>
+                    <Text
+                      style={
+                        this.state.user_sex === 1
+                          ? styles.gendertext1
+                          : styles.gendertext
+                      }
+                    >
+                      남자
+                    </Text>
+                  </TouchableOpacity>
 
-                <TouchableOpacity
-                  style={
-                    this.state.user_sex === 2
-                      ? styles.genderB2
-                      : styles.genderB11
-                  }
-                  activeOpacity={0.8}
-                  onPress={this.onPress_age2}
-                  onChangeText={this.onPress_age2}
-                >
-                  <Text
+                  <TouchableOpacity
                     style={
                       this.state.user_sex === 2
-                        ? styles.gendertext1
-                        : styles.gendertext
+                        ? styles.genderB2
+                        : styles.genderB11
                     }
+                    activeOpacity={0.8}
+                    onPress={this.onPress_age2}
+                    onChangeText={this.onPress_age2}
                   >
-                    {" "}
-                    여자{" "}
-                  </Text>
-                </TouchableOpacity>
+                    <Text
+                      style={
+                        this.state.user_sex === 2
+                          ? styles.gendertext1
+                          : styles.gendertext
+                      }
+                    >
+                      {" "}
+                      여자{" "}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-            <View style={styles.secondView}>
-              <View style={styles.checkView}>
-                <Text style={styles.titleText}>랭킹참여</Text>
-                <Text style={styles.check}>*</Text>
-              </View>
-              <View style={{ marginBottom: 3 }}></View>
-              <View style={styles.numberbutton}>
-                <TouchableOpacity
-                  style={
-                    this.state.user_rank === 1
-                      ? styles.genderB2 //클릭됨
-                      : styles.genderB1
-                  }
-                  activeOpacity={0.8}
-                  onPress={this.onPress_rank1}
-                >
-                  <Text
+              <View style={styles.secondView}>
+                <View style={styles.checkView}>
+                  <Text style={styles.titleText}>랭킹참여</Text>
+                  <Text style={styles.check}>*</Text>
+                </View>
+                <View style={{ marginBottom: 3 }}></View>
+                <View style={styles.numberbutton}>
+                  <TouchableOpacity
                     style={
                       this.state.user_rank === 1
-                        ? styles.gendertext1
-                        : styles.gendertext
+                        ? styles.genderB2 //클릭됨
+                        : styles.genderB1
                     }
+                    activeOpacity={0.8}
+                    onPress={this.onPress_rank1}
                   >
-                    한다
-                  </Text>
-                </TouchableOpacity>
+                    <Text
+                      style={
+                        this.state.user_rank === 1
+                          ? styles.gendertext1
+                          : styles.gendertext
+                      }
+                    >
+                      한다
+                    </Text>
+                  </TouchableOpacity>
 
+                  <TouchableOpacity
+                    style={
+                      this.state.user_rank === 0
+                        ? styles.genderB2
+                        : styles.genderB11
+                    }
+                    activeOpacity={0.8}
+                    onPress={this.onPress_rank2}
+                    onChangeText={this.onPress_rank2}
+                  >
+                    <Text
+                      style={
+                        this.state.user_rank === 0
+                          ? styles.gendertext1
+                          : styles.gendertext
+                      }
+                    >
+                      안한다
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              <View style={styles.chatControl}>
                 <TouchableOpacity
                   style={
-                    this.state.user_rank === 0
-                      ? styles.genderB2
-                      : styles.genderB11
+                    this.state.usingid === true
+                      ? styles.sendButton
+                      : styles.sendButton1
                   }
                   activeOpacity={0.8}
-                  onPress={this.onPress_rank2}
-                  onChangeText={this.onPress_rank2}
+                  onPress={this.signup_check}
                 >
                   <Text
                     style={
-                      this.state.user_rank === 0
-                        ? styles.gendertext1
-                        : styles.gendertext
+                      this.state.usingid === true ? styles.white : styles.white1
                     }
                   >
-                    안한다
+                    회 원 가 입
                   </Text>
                 </TouchableOpacity>
               </View>
-            </View>
-
-            <View style={styles.chatControl}>
-              <TouchableOpacity
-                style={
-                  this.state.usingid === true
-                    ? styles.sendButton
-                    : styles.sendButton1
-                }
-                activeOpacity={0.8}
-                onPress={this.signup_check}
-              >
-                <Text
-                  style={
-                    this.state.usingid === true ? styles.white : styles.white1
-                  }
-                >
-                  회 원 가 입
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
+            </ScrollView>
+          </View>
         </View>
-      </View>
+      </HideKeyboard>
     );
   }
 }
@@ -522,7 +532,7 @@ const styles = StyleSheet.create({
     marginLeft: "1%",
     marginRight: "1%",
     width: "98%",
-    height: 45,
+    height: responsiveScreenHeight(6.7),
     borderWidth: 2,
     borderColor: "#E5E5E5",
   },
@@ -675,6 +685,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
+    height: "100%",
   },
 
   sendButton1: {

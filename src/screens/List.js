@@ -162,6 +162,7 @@ export default class list extends Component {
 
         <View style={styles.threeView}>
           <FlatList
+            style={styles.FlatList}
             keyExtractor={(item, index) => index.toString()}
             data={this.state.data}
             extraData={this.state.data}
@@ -194,7 +195,8 @@ export default class list extends Component {
 
 const styles = StyleSheet.create({
   finalView: {
-    height: responsiveScreenHeight(100),
+    //height: responsiveScreenHeight(12) - 하단
+    height: responsiveScreenHeight(88),
     width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
@@ -269,7 +271,10 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
-    marginBottom: responsiveScreenHeight(13.1) * 2,
+    height: responsiveScreenHeight(62.6),
+  },
+  FlatList: {
+    marginBottom: responsiveScreenHeight(5),
   },
   SearchBarWrapper: {
     flexDirection: "row",

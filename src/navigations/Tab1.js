@@ -18,7 +18,6 @@ const menuIcon1 = ({ name, size, color }) => {
 
 import {
   responsiveScreenHeight,
-  responsiveScreenWidth,
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
 

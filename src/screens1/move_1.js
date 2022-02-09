@@ -29,7 +29,7 @@ export default class move_1 extends Component {
   }
   async componentDidMount() {
     const user_token = await AsyncStorage.getItem("@user_token");
-
+    console.log(user_token);
     this.cat_list(user_token);
   }
 

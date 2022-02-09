@@ -421,7 +421,7 @@ export default class progress extends Component {
             }}
             onCancel={() => console.log("onCancel")}
           >
-            <Text style={{ fontSize: responsiveScreenFontSize(2.48), }}>
+            <Text style={{ fontSize: responsiveScreenFontSize(2.48) }}>
               {this.state.month} 월
             </Text>
           </SimplePopupMenu>
@@ -536,6 +536,7 @@ export default class progress extends Component {
 
         <View style={styles.fouuview}>
           <FlatList
+            style={styles.FlatList}
             keyExtractor={(item, index) => index.toString()}
             data={this.state.data_final}
             renderItem={({ item }) => {
@@ -569,7 +570,7 @@ export default class progress extends Component {
 }
 const styles = StyleSheet.create({
   finalView: {
-    height: responsiveScreenHeight(100),
+    height: responsiveScreenHeight(88),
     width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
@@ -595,11 +596,14 @@ const styles = StyleSheet.create({
   },
   fouuview: {
     paddingTop: 10,
-    marginBottom: responsiveScreenHeight(13.1) * 4,
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
     backgroundColor: "#ffffff",
+    height: responsiveScreenHeight(51.7),
+  },
+  FlatList: {
+    marginBottom: responsiveScreenHeight(5),
   },
   firstView: {
     // padding:30,

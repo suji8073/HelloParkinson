@@ -24,8 +24,6 @@ import {
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
-
 export default class patient_Home extends Component {
   constructor(props) {
     super(props);
@@ -37,7 +35,6 @@ export default class patient_Home extends Component {
       User_name: "",
     };
   }
-
 
   async componentDidMount() {
     const user_token = await AsyncStorage.getItem("@user_token");
@@ -54,20 +51,15 @@ export default class patient_Home extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        this.setState(
-          {
-            data: json.data,
-            first: json.data[0],
-            second: json.data[1],
-            third: json.data[2],
-          },
-
-    
-        );
+        console.log(json);
+        this.setState({
+          data: json.data,
+          first: json.data[0],
+          second: json.data[1],
+          third: json.data[2],
+        });
       });
   };
-
-
 
   render() {
     return (
@@ -187,10 +179,8 @@ export default class patient_Home extends Component {
                   asset={firstsvg}
                 />
                 <Text style={styles.prizetext}>
-
                   {this.state.first["uname"]} [
                   {parseInt(this.state.first["percent"]).toFixed(1)}%]
-
                 </Text>
               </View>
               <View

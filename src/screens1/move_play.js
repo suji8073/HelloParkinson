@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  RefreshControlBase,
+} from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
@@ -129,13 +135,22 @@ export default class move_play extends Component {
       next_assign_num: 0,
       next_eid: 0,
       video_start: false,
+      token: "",
     };
   }
 
   async componentDidMount() {
+    try {
+      const list = await AsyncStorage.getItem("@move_play");
+      if (list !== null) {
+        this.setState({ list: JSON.parse(list) });
+      }
+    } catch (e) {
+      this.setState({ minutes_Counter: "00", seconds_Counter: "00" });
+    }
     const user_token = await AsyncStorage.getItem("@user_token");
-
     this.setState({
+      token: user_token,
       done_num: this.props.route.params.done_num,
       assign_num: this.props.route.params.assign_num,
     });
@@ -193,12 +208,12 @@ export default class move_play extends Component {
     if (this.state.isLoading === false) {
       this.setState({ video_start: false });
       if (this.state.done_num >= this.state.assign_num) {
-        this.save_progress(user_token);
+        this.save_progress(this.state.token);
 
         if (this.next_name === "") this.where_page();
         else this.where_move_go();
       } else {
-        this.save_progress(user_token);
+        this.save_progress(this.state.token);
         this.props.navigation.reset({
           routes: [
             {
@@ -247,10 +262,12 @@ export default class move_play extends Component {
   };
 
   save_progress = (user_token) => {
+    console.log("save_progress");
+    console.log(user_token);
     fetch("http://hccparkinson.duckdns.org:19737/progress/write", {
       method: "POST",
       headers: {
-        Authorization: "Bearer " + user_token.slice(1, -1),
+        Authorization: "Bearer " + String(user_token).slice(1, -1),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
