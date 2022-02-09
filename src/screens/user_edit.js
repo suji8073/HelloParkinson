@@ -27,7 +27,6 @@ import {
 } from "react-native-responsive-dimensions";
 
 export default class user_edit extends Component {
-  static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {
@@ -54,6 +53,7 @@ export default class user_edit extends Component {
 
   async componentDidMount() {
     const manager_token = await AsyncStorage.getItem("@manager_token");
+    this.setState({ user_token: manager_token });
 
     fetch(
       "http://hccparkinson.duckdns.org:19737/onlymanager/uid/" +
@@ -61,7 +61,8 @@ export default class user_edit extends Component {
       {
         method: "GET",
         headers: {
-          Authorization: "Bearer " + manager_token.slice(1, -1),
+          Authorization: "Bearer " + String(this.state.user_token).slice(1, -1),
+          "Content-Type": "application/json",
         },
       }
     )
@@ -95,7 +96,9 @@ export default class user_edit extends Component {
         this.props.route.params.id,
       {
         method: "PUT",
-        headers: myHeaders,
+        headers: {
+          Authorization: "Bearer " + String(this.state.user_token).slice(1, -1),
+        },
         body: JSON.stringify({
           uid: this.state.UID,
           gender: this.state.age1 == on ? "M" : "F",
@@ -122,6 +125,7 @@ export default class user_edit extends Component {
         console.log(response.status);
       })
       .catch((error) => {
+        console.log("error");
         console.log(error);
       });
   };
@@ -176,7 +180,11 @@ export default class user_edit extends Component {
               this.props.route.params.id,
             {
               method: "DELETE",
-              headers: myHeaders,
+              headers: {
+                Authorization:
+                  "Bearer " + String(this.state.user_token).slice(1, -1),
+                "Content-Type": "application/json",
+              },
             }
           ).then((response) => {
             console.log(response.status);
@@ -245,7 +253,11 @@ export default class user_edit extends Component {
               this.props.route.params.id,
             {
               method: "DELETE",
-              headers: myHeaders,
+              headers: {
+                Authorization:
+                  "Bearer " + String(this.state.user_token).slice(1, -1),
+                "Content-Type": "application/json",
+              },
             }
           ).then((response) => {
             if (response.status === 200) {

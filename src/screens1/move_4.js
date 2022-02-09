@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   FlatList,
+  StatusBar,
 } from "react-native";
 import Task from "./task_move";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -18,8 +19,6 @@ import {
   responsiveScreenWidth,
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
-
-var myHeaders = new Headers();
 
 export default class move_4 extends Component {
   constructor(props) {
@@ -66,6 +65,7 @@ export default class move_4 extends Component {
   render() {
     return (
       <View style={styles.finalView}>
+        <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
         <View style={styles.menuView}>
           <AntDesign
             name="left"
@@ -134,7 +134,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   menuView: {
-    marginTop: "5.1%",
     backgroundColor: "#FFFFFF",
     height: "8.5%",
     flexDirection: "row",

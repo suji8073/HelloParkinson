@@ -5,7 +5,7 @@ import {
   View,
   Text,
   Alert,
-  TextInput,
+  StatusBar,
 } from "react-native";
 
 import trashsvg from "../icon/trashcan.svg";
@@ -164,6 +164,7 @@ export default class alarm_edit extends Component {
   render() {
     return (
       <View style={styles.finalView}>
+        <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
         <View style={styles.menuView}>
           <AntDesign
             name="left"

@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   SafeAreaView,
+  StatusBar,
 } from "react-native";
 import { Dimensions } from "react-native";
 import Task from "./task_record_day";
@@ -288,6 +289,7 @@ export default class patient_record extends Component {
   render() {
     return (
       <View style={styles.finalView}>
+        <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
         <View style={styles.menuView}>
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>나의 운동 기록</Text>
@@ -467,7 +469,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   menuView: {
-    marginTop: "5.1%",
     backgroundColor: "#FFFFFF",
     height: "8.5%",
     flexDirection: "row",

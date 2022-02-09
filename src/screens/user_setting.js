@@ -78,7 +78,10 @@ export default class user_setting extends Component {
 
       fetch("http://hccparkinson.duckdns.org:19737/onlymanager/bookmark", {
         method: "POST",
-        headers: myHeaders,
+        headers: {
+          Authorization: "Bearer " + String(this.state.user_token).slice(1, -1),
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           uid: String(this.props.route.params.id),
         }),
@@ -91,7 +94,10 @@ export default class user_setting extends Component {
       // 아이콘 asset값 변경 silverstarsvg 으로
       fetch("http://hccparkinson.duckdns.org:19737/onlymanager/bookmark", {
         method: "POST",
-        headers: myHeaders,
+        headers: {
+          Authorization: "Bearer " + String(this.state.user_token).slice(1, -1),
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           uid: String(this.props.route.params.id),
         }),

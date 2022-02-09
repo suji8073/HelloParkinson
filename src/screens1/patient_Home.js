@@ -5,6 +5,7 @@ import {
   View,
   Text,
   Image,
+  StatusBar,
   FlatList,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -64,6 +65,7 @@ export default class patient_Home extends Component {
   render() {
     return (
       <View style={styles.finalView}>
+        <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
         <View style={styles.menuView}>
           <Ionicons
             name="person-circle-sharp"
@@ -225,30 +227,31 @@ export default class patient_Home extends Component {
             </View>
           </View>
           {/* 환자 순위 4~ */}
-
-          <FlatList
-            style={{
-              backgroundColor: "#ffffff",
-              marginTop: "2.6%",
-              marginLeft: "4.7%",
-              marginRight: "4.7%",
-              borderRadius: 7,
-              marginBottom: "100%",
-            }}
-            data={this.state.data.slice(3)}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item, index }) => {
-              return (
-                <Task5
-                  record={index + 4}
-                  name={item.uname}
-                  age={item.birthday}
-                  sex={item.gender}
-                  check={this.context.user_name}
-                ></Task5>
-              );
-            }}
-          />
+          <View style={styles.threeView}>
+            <FlatList
+              style={{
+                backgroundColor: "#ffffff",
+                marginTop: "2.6%",
+                marginLeft: "4.7%",
+                marginRight: "4.7%",
+                borderRadius: 7,
+                marginBottom: responsiveScreenHeight(5),
+              }}
+              data={this.state.data.slice(3)}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item, index }) => {
+                return (
+                  <Task5
+                    record={index + 4}
+                    name={item.uname}
+                    age={item.birthday}
+                    sex={item.gender}
+                    check={this.context.user_name}
+                  ></Task5>
+                );
+              }}
+            />
+          </View>
         </View>
       </View>
     );
@@ -262,7 +265,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   menuView: {
-    marginTop: "5.1%",
     backgroundColor: "#FFFFFF",
     height: "8.5%",
     flexDirection: "row",
@@ -281,6 +283,10 @@ const styles = StyleSheet.create({
     color: "#000000",
     justifyContent: "center",
     fontWeight: "bold",
+  },
+
+  threeView: {
+    height: responsiveScreenHeight(45.7),
   },
 
   margin: {

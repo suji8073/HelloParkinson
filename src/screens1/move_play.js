@@ -4,7 +4,7 @@ import {
   View,
   Text,
   TouchableOpacity,
-  RefreshControlBase,
+  StatusBar,
 } from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
@@ -205,6 +205,7 @@ export default class move_play extends Component {
   };
 
   nextpage = () => {
+    //다음 페이지
     if (this.state.isLoading === false) {
       this.setState({ video_start: false });
       if (this.state.done_num >= this.state.assign_num) {
@@ -232,7 +233,9 @@ export default class move_play extends Component {
     }
   };
   where_page = () => {
-    this.setState({ video_start: false });
+    this.setState({ video_start: false }, () => {
+      console.log("여기당");
+    });
     if (this.props.route.params.cat_name == 1) {
       this.props.navigation.navigate("move_1");
     } else if (this.props.route.params.cat_name == 2) {
@@ -286,6 +289,7 @@ export default class move_play extends Component {
   render() {
     return (
       <View style={styles.finalView}>
+        <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
         <View style={styles.menuView}>
           <AntDesign
             name="left"
@@ -375,7 +379,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   menuView: {
-    marginTop: "5.1%",
     backgroundColor: "#FFFFFF",
     height: "8.5%",
     flexDirection: "row",

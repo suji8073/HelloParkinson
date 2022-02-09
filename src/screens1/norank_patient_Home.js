@@ -5,6 +5,7 @@ import {
   StyleSheet,
   View,
   Text,
+  StatusBar,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { WithLocalSvg } from "react-native-svg";
@@ -84,6 +85,7 @@ export default class norank_patient_Home extends Component {
     // let backgroud_image = require("../icon/backgroud.png");
     return (
       <View style={styles.finalView}>
+        <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
         <View style={styles.menuView}>
           <Ionicons
             name="person-circle-sharp"
@@ -228,7 +230,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   menuView: {
-    marginTop: "5.1%",
     backgroundColor: "#FFFFFF",
     height: "8.5%",
     flexDirection: "row",

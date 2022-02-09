@@ -5,7 +5,7 @@ import {
   StyleSheet,
   View,
   Text,
-  TextInput,
+  StatusBar,
 } from "react-native";
 
 import plussvg from "../icon/plus.svg";
@@ -151,6 +151,7 @@ export default class alarm_add extends Component {
   render() {
     return (
       <View style={styles.finalView}>
+        <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
         <View style={styles.menuView}>
           <AntDesign
             name="left"
