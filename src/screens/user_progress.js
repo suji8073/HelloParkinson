@@ -48,43 +48,11 @@ export default class progress extends Component {
       day1: "01",
       day: parseInt(now.getDate()),
       enamenow: "신장 운동",
-      m1: [
-        { ename: "목 앞 근육 스트레칭", setcnt: 0, donecnt: 2 },
-        { ename: "날개뼈 모으기", setcnt: 0, donecnt: 22 },
-        { ename: "손목 및 팔꿈치 주변 근육 스트레칭", setcnt: 3, donecnt: 2 },
-      ],
-      m2: [
-        { ename: "엉덩이 들기", setcnt: 2, donecnt: 2 },
-        { ename: "엎드려 누운 상태에서 다리들기", setcnt: 2, donecnt: 0 },
-        { ename: "엉덩이 옆 근육 운동", setcnt: 2, donecnt: 0 },
-        { ename: "무릎 벌리기", setcnt: 23, donecnt: 0 },
-        { ename: "무릎 펴기", setcnt: 22, donecnt: 2 },
-      ],
-      m3: [
-        { ename: "한발 서기", setcnt: 5, donecnt: 2 },
-        { ename: "버드독 1단계", setcnt: 20, donecnt: 2 },
-        { ename: "버드독 2단계", setcnt: 21, donecnt: 2 },
-        { ename: "앉은 상태에서 제자리 걷기", setcnt: 0, donecnt: 0 },
-        { ename: "움직이는 런지", setcnt: 0, donecnt: 2 },
-      ],
-      m4: [
-        { ename: "아에이오우 소리내기", setcnt: 2, donecnt: 2 },
-        { ename: "파파파파파 소리내기", setcnt: 2, donecnt: 0 },
-        { ename: "쪽 소리내기", setcnt: 2, donecnt: 0 },
-        { ename: "혀로 볼 밀기", setcnt: 2, donecnt: 0 },
-        { ename: "혀로 입천장 밀기", setcnt: 2, donecnt: 0 },
-        { ename: "똑딱 소리내기", setcnt: 2, donecnt: 21 },
-        { ename: "혀 물고 침 삼키기", setcnt: 2, donecnt: 20 },
-        { ename: "아 짧게 소리내기", setcnt: 2, donecnt: 4 },
-        { ename: "아 길게 소리내기", setcnt: 2, donecnt: 5 },
-        { ename: "고음 가성으로 소리내기", setcnt: 2, donecnt: 6 },
-        { ename: "도레미파솔라시도", setcnt: 2, donecnt: 20 },
-        { ename: "큰 소리로 음절 읽기", setcnt: 2, donecnt: 21 },
-      ],
-      m5: [
-        { ename: "걷기", setcnt: 70, donecnt: 40 },
-        { ename: "자전거 타기", setcnt: 100, donecnt: 200 },
-      ],
+      m1: [],
+      m2: [],
+      m3: [],
+      m4: [],
+      m5: [],
 
       data: [],
     };
@@ -97,6 +65,70 @@ export default class progress extends Component {
       man_token: manager_token,
       progress: this.props.route.params.paramName2,
     });
+    fetch(
+      "http://hccparkinson.duckdns.org:19737/onlymanager/progress/detail/" +
+        this.props.route.params.paramName1,
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + manager_token.slice(1, -1),
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState(
+          {
+            m1: json.data.filter((it) => 1 <= it.eid && it.eid <= 12),
+            m2: json.data.filter((it) => 13 <= it.eid && it.eid <= 26),
+            m3: json.data.filter((it) => 27 <= it.eid && it.eid <= 31),
+            m4: json.data.filter((it) => 32 <= it.eid && it.eid <= 45),
+            m5: json.data.filter((it) => 46 <= it.eid && it.eid <= 47),
+          },
+          () => {
+            this.setState({ data: this.state.m1 }, () => {
+              let base = this.state.data.filter((it) => it.setcnt !== 0);
+              // 진행중
+              let ing1 = base.filter((it) => it.donecnt !== 0);
+              let ing2 = ing1.filter((it) => it.setcnt > it.donecnt);
+              // 기준 다시!!
+              this.setState({ ing: ing2 });
+              // 미실시
+              let no1 = base.filter((it) => it.donecnt == 0);
+              this.setState({ no: no1 });
+              // 완료
+              let doen1 = base.filter((it) => it.setcnt <= it.donecnt);
+              this.setState({ done: doen1 });
+            });
+          }
+        );
+      });
+
+    fetch(
+      "http://hccparkinson.duckdns.org:19737/onlymanager/uid/" +
+        this.props.route.params.id,
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + this.state.man_token.slice(1, -1),
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        this.setState({
+          birth: json.data[0].birthday,
+          gender: json.data[0].gender == "F" ? "여" : "남",
+          memo: json.data[0].memo,
+          team: json.data[0].team,
+          name: json.data[0].uname,
+          UID: json.data[0].uid,
+        });
+      });
+
     this.setState(
       {
         year1: String(this.state.year),
@@ -121,46 +153,6 @@ export default class progress extends Component {
         });
       }
     );
-    // 각 카테고리별 운동 받아오기 필요 ~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
-    // 전체 운동 할당/진도율 받아오기->카테고리 나누기-> 진행, 미실시, 완료 필터
-    // 또는 각 카테고리별 할당/진도율 받아오기->진행중, 미실시, 완료 필떠
-    this.setState({ data: this.state.m1 }, () => {
-      let base = this.state.data.filter((it) => it.setcnt !== 0);
-      // 진행중
-      let ing1 = base.filter((it) => it.donecnt !== 0);
-      let ing2 = ing1.filter((it) => it.setcnt > it.donecnt);
-      // 기준 다시!!
-      this.setState({ ing: ing2 });
-      // 미실시
-      let no1 = base.filter((it) => it.donecnt == 0);
-      this.setState({ no: no1 });
-      // 완료
-      let doen1 = base.filter((it) => it.setcnt <= it.donecnt);
-      this.setState({ done: doen1 });
-    });
-    fetch(
-      "http://hccparkinson.duckdns.org:19737/onlymanager/uid/" +
-        this.props.route.params.id,
-      {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + this.state.man_token.slice(1, -1),
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then((json) => {
-        console.log(json);
-        this.setState({
-          birth: json.data[0].birthday,
-          gender: json.data[0].gender == "F" ? "여" : "남",
-          memo: json.data[0].memo,
-          team: json.data[0].team,
-          name: json.data[0].uname,
-          UID: json.data[0].uid,
-        });
-      });
   }
   movecheck = (id) => {
     if (id === 1) {
@@ -359,7 +351,7 @@ export default class progress extends Component {
 
           <View styel={styles.threeView}>
             {/* ScrollView */}
-            <View
+            <ScrollView
               contentContainerStyle={{
                 paddingTop: "3%",
                 flexGrow: 1,
@@ -389,7 +381,7 @@ export default class progress extends Component {
               </View>
 
               {/* ScrollView */}
-            </View>
+            </ScrollView>
           </View>
         </View>
 

@@ -37,10 +37,12 @@ export default class task3 extends Component {
           this.state.date.getFullYear() * 100000000 +
           (this.state.date.getMonth() + 1) * 1000000 +
           this.state.date.getDate() * 10000 +
-          (this.state.date.getHours() + 9) * 100 +
+          this.state.date.getHours() * 100 +
+          // (this.state.date.getHours() + 9) * 100 +
           this.state.date.getMinutes(),
       },
       () => {
+        console.log(this.state.nowtimestamp);
         this.setState({
           alarm:
             this.state.nowtimestamp - this.props.minute <= 15
@@ -68,7 +70,8 @@ export default class task3 extends Component {
         this.state.date.getFullYear() * 100000000 +
         (this.state.date.getMonth() + 1) * 1000000 +
         this.state.date.getDate() * 10000 +
-        (this.state.date.getHours() + 9) * 100 +
+        this.state.date.getHours() * 100 +
+        // (this.state.date.getHours() + 9) * 100 +
         this.state.date.getMinutes(),
     });
   };
@@ -78,7 +81,8 @@ export default class task3 extends Component {
         this.state.date.getFullYear() * 100000000 +
         (this.state.date.getMonth() + 1) * 1000000 +
         this.state.date.getDate() * 10000 +
-        (this.state.date.getHours() + 9) * 100 +
+        this.state.date.getHours() * 100 +
+        // (this.state.date.getHours() + 9) * 100 +
         this.state.date.getMinutes(),
     });
   };
@@ -201,6 +205,7 @@ export default class task3 extends Component {
           </View>
         </View>
 
+
         <TouchableOpacity
           style={{
             alignItems: "flex-end",
@@ -219,16 +224,17 @@ export default class task3 extends Component {
             height={responsiveScreenHeight(6)}
             asset={this.state.alarm}
           />
+
           <Text
             style={
               this.state.alarm == airplane
-                ? styles.timetextgreen
-                : styles.timetextsilver
+                ? styles.timetextsilver
+                : styles.timetextgreen
             }
           >
             {this.state.nowtimestamp - this.state.minute}분 전
           </Text>
-        </TouchableOpacity>
+        </View>
       </View>
     );
   }
