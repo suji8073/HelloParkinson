@@ -13,11 +13,9 @@ import "dayjs/locale/ko";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Task from "./task3";
 import { Entypo } from "@expo/vector-icons";
-import ddaysvg from "../icon/dday.svg";
 import { AntDesign } from "@expo/vector-icons";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 import Context from "../Context/context";
-import { element, number } from "prop-types";
 const m_items = [
   { id: "1", label: "1월" },
   { id: "2", label: "2월" },
@@ -213,7 +211,7 @@ export default class progress extends Component {
                   : new Date(element.lastAlarm).getFullYear() * 100000000 +
                     (new Date(element.lastAlarm).getMonth() + 1) * 1000000 +
                     new Date(element.lastAlarm).getDate() * 10000 +
-                    (new Date(element.lastAlarm).getHours() + 9) * 100 +
+                    new Date(element.lastAlarm).getHours() * 100 +
                     new Date(element.lastAlarm).getMinutes())
           );
           if (this.state.option == "progress") {
@@ -669,6 +667,7 @@ const styles = StyleSheet.create({
     padding: "3%",
     backgroundColor: "#F8F8F8",
   },
+
   threeView: {
     borderRadius: 19,
     backgroundColor: "#FFFFFF",
