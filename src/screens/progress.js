@@ -23,7 +23,6 @@ import {
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
 
-
 const m_items = [
   { id: "1", label: "1월" },
   { id: "2", label: "2월" },
@@ -549,8 +548,8 @@ export default class progress extends Component {
                   activeOpacity={0.8} //깜빡임을 조절하는 기능
                   onPress={() => {
                     this.props.navigation.navigate("user_progress", {
-                      paramName1: item.uid,
-                      paramName2: item.percent,
+                      id: item.uid,
+                      percent: item.percent,
                     });
                   }}
                 >

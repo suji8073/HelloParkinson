@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, FlatList, View, StyleSheet, Touchable } from "react-native";
+import { Text, FlatList, View, StyleSheet, ScrollView } from "react-native";
 import Context from "../Context/context";
 import ActionButton from "react-native-action-button";
 import { AntDesign } from "@expo/vector-icons";
@@ -63,11 +63,11 @@ export default class progress extends Component {
 
     this.setState({
       man_token: manager_token,
-      progress: this.props.route.params.paramName2,
+      progress: Math.ceil(this.props.route.params.percent * 100),
     });
     fetch(
       "http://hccparkinson.duckdns.org:19737/onlymanager/progress/detail/" +
-        this.props.route.params.paramName1,
+        this.props.route.params.id,
       {
         method: "GET",
         headers: {
