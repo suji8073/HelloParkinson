@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity,StatusBar } from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
@@ -23,8 +23,6 @@ import walk_stop from "../icon/walk_stop.svg";
 
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 
-var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
 
 const storeData = async (value1, value2) => {
   try {
@@ -52,15 +50,14 @@ export default class yusanso_1 extends Component {
           : String(this.props.route.params.done_num),
       seconds_Counter: "00",
       startDisable: false,
+      user_token: "",
     };
   }
 
   async componentDidMount() {
     try {
       const user_token = await AsyncStorage.getItem("@user_token");
-      var put_token = "Bearer " + user_token.slice(1, -1);
-      myHeaders.append("Authorization", put_token);
-      myHeaders.append("Content-Type", "application/json");
+      this.setState({ user_token: user_token });
 
       const value1 = await AsyncStorage.getItem("@walk_minutes");
       const value2 = await AsyncStorage.getItem("@walk_seconds");
@@ -114,7 +111,10 @@ export default class yusanso_1 extends Component {
   save_progress = () => {
     fetch("http://hccparkinson.duckdns.org:19737/progress/write", {
       method: "POST",
-      headers: myHeaders,
+      headers: {
+        Authorization: "Bearer " + String(this.state.user_token).slice(1, -1),
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         eid: this.props.route.params.eid,
         setcnt: this.props.route.params.assign_num,
@@ -221,7 +221,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   menuView: {
-    marginTop: "5.1%",
     backgroundColor: "#FFFFFF",
     height: "8.5%",
     flexDirection: "row",

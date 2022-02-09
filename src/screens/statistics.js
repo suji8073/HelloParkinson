@@ -15,13 +15,17 @@ import Task from "./task2";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 import Context from "../Context/context";
 
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const items = [
   { id: "abc", label: "가나다순" },
   { id: "age", label: "나이순" },
 ];
-
-var myHeaders = new Headers();
-
 
 export default class statistics extends Component {
   static contextType = Context;
@@ -34,16 +38,18 @@ export default class statistics extends Component {
     this.arrayholder = [];
   }
 
-  componentDidMount() {
-    myHeaders.append("Authorization", "Bearer " + this.context.manager_token);
-    myHeaders.append("Content-Type", "application/json");
-    this.userfunc();
+  async componentDidMount() {
+    const manager_token = await AsyncStorage.getItem("@manager_token");
+    this.userfunc(manager_token);
   }
 
-  userfunc = () => {
+  userfunc = (manager_token) => {
     fetch("http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=0", {
       method: "GET",
-      headers: myHeaders,
+      headers: {
+        Authorization: "Bearer " + manager_token.slice(1, -1),
+        "Content-Type": "application/json",
+      },
     })
       .then((res) => res.json())
       .then((json) => {
@@ -69,13 +75,16 @@ export default class statistics extends Component {
   }
 
   onMenuPress = (id) => {
-    console.log(id);
+    const manager_token = AsyncStorage.getItem("@manager_token");
     if (id === "age") {
       fetch(
         "http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=4",
         {
           method: "GET",
-          headers: myHeaders,
+          headers: {
+            Authorization: "Bearer " + manager_token.slice(1, -1),
+            "Content-Type": "application/json",
+          },
         }
       )
         .then((res) => res.json())
@@ -91,7 +100,10 @@ export default class statistics extends Component {
         "http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=0",
         {
           method: "GET",
-          headers: myHeaders,
+          headers: {
+            Authorization: "Bearer " + manager_token.slice(1, -1),
+            "Content-Type": "application/json",
+          },
         }
       )
         .then((res) => res.json())
@@ -141,6 +153,7 @@ export default class statistics extends Component {
 
         <View style={styles.threeView}>
           <FlatList
+            style={styles.FlatList}
             data={this.state.data}
             renderItem={({ item }) => {
               return (
@@ -168,8 +181,29 @@ export default class statistics extends Component {
 
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
+    height: responsiveScreenHeight(88),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
+  },
+  menuView: {
+    backgroundColor: "#FFFFFF",
+    height: "8.5%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    borderBottomWidth: 1.8,
+    borderColor: "#E5E5E5",
+    paddingRight: "5%",
+    paddingLeft: "5%",
+  },
+
+  titleText: {
+    alignItems: "flex-start",
+    fontSize: responsiveScreenFontSize(2.48),
+    alignItems: "center",
+    color: "#000000",
+    justifyContent: "center",
+    fontWeight: "bold",
   },
   sTextItem: {
     height: 50,
@@ -185,27 +219,6 @@ const styles = StyleSheet.create({
     borderColor: "gray",
     borderWidth: 1,
     fontSize: 18,
-  },
-  menuView: {
-    backgroundColor: "#FFFFFF",
-    height: 58,
-    flexDirection: "row",
-    alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
-    marginTop: "3%",
-    justifyContent: "flex-start",
-    borderBottomWidth: 1.8,
-    borderColor: "#E5E5E5",
-  },
-
-  titleText: {
-    alignItems: "flex-start",
-    fontSize: 20,
-    alignItems: "center",
-    color: "#000000",
-    justifyContent: "center",
-    fontWeight: "bold",
   },
 
   firstView: {
@@ -236,12 +249,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   threeView: {
-    // padding:30,
     marginTop: 10,
-    marginBottom: 215,
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
+    height: responsiveScreenHeight(62.6),
+  },
+  FlatList: {
+    marginBottom: responsiveScreenHeight(5),
   },
 
   SearchBarWrapper: {

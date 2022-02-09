@@ -8,12 +8,18 @@ import patient_move from "../screens1/patient_move";
 import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
 const menuIcon = ({ name, size, color }) => {
-  return <Ionicons name={name} size={32} color={color} />;
+  return <Ionicons name={name} size={30} color={color} />;
 };
 
 const menuIcon1 = ({ name, size, color }) => {
-  return <Entypo name={name} size={32} color={color} />;
+  return <Entypo name={name} size={30} color={color} />;
 };
 
 const Tab = createBottomTabNavigator();
@@ -31,8 +37,8 @@ export default function TabNavigation2({ route, navigation }) {
           position: "absolute",
           borderTopColor: "#BBBBBB",
           borderTopWidth: 1,
-          paddingBottom: 20,
-          height: 90,
+          paddingBottom: "2%",
+          height: responsiveScreenHeight(12),
         },
       }}
     >
@@ -43,11 +49,9 @@ export default function TabNavigation2({ route, navigation }) {
         options={{
           headerShown: false,
           tabBarLabel: "홈",
-          size: "10%",
           headerTitleAlign: "center",
           tabBarLabelStyle: {
-            fontSize: 17,
-            fontWeight: "bold",
+            fontSize: responsiveScreenFontSize(1.88),
           },
           tabBarIcon: (props) => menuIcon1({ ...props, name: "home" }),
         }}
@@ -62,8 +66,7 @@ export default function TabNavigation2({ route, navigation }) {
           tabBarLabel: "운동",
           headerTitleAlign: "center",
           tabBarLabelStyle: {
-            fontSize: 17,
-            fontWeight: "bold",
+            fontSize: responsiveScreenFontSize(1.88),
           },
           tabBarIcon: (props) =>
             menuIcon1({ ...props, name: "controller-play" }),
@@ -78,8 +81,7 @@ export default function TabNavigation2({ route, navigation }) {
           tabBarLabel: "기록",
           headerTitleAlign: "center",
           tabBarLabelStyle: {
-            fontSize: 17,
-            fontWeight: "bold",
+            fontSize: responsiveScreenFontSize(1.88),
           },
           tabBarIcon: (props) => menuIcon({ ...props, name: "podium" }),
         }}
@@ -93,8 +95,7 @@ export default function TabNavigation2({ route, navigation }) {
           tabBarLabel: "알림",
           headerTitleAlign: "center",
           tabBarLabelStyle: {
-            fontSize: 17,
-            fontWeight: "bold",
+            fontSize: responsiveScreenFontSize(1.88),
           },
           tabBarIcon: (props) => menuIcon({ ...props, name: "alarm-outline" }),
         }}

@@ -10,6 +10,12 @@ import greenairplane from "../icon/greenairplane.svg";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { WithLocalSvg } from "react-native-svg";
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
 const year = 2021 + 1;
 export default class task3 extends Component {
   constructor(props) {
@@ -51,6 +57,13 @@ export default class task3 extends Component {
     );
     this.setState({ man_token: manager_token });
   }
+
+  dateToStr = () => {
+    var today_year = new Date().getFullYear();
+    var birth_year = String(this.props.age).substring(0, 4);
+    return today_year - birth_year + 1;
+  };
+
   sendtimes = () => {
     this.setState({
       sendtimestamp:
@@ -115,9 +128,7 @@ export default class task3 extends Component {
       // 알림 누른 시각과 환자 db로 보냄
     }
   };
-  // componentDidMount() {
-  //   this.setState({nowtimestamp: this.set.date.ge})
-  // }
+
   render() {
     return (
       //  전체 뷰
@@ -126,28 +137,35 @@ export default class task3 extends Component {
           borderRadius: 15,
           borderColor: "#EBEBEB",
           borderWidth: 2,
-          margin: "3%",
-          height: 100,
-          width: "94%",
+          marginLeft: "4.7%",
+          marginRight: "4.7%",
+          marginTop: "2%",
+          marginBottom: "2%",
+          height: responsiveScreenHeight(10.6),
           flexDirection: "row",
-          paddingRight: "5%",
           justifyContent: "center",
           alignItems: "center",
+          paddingRight: "2%",
         }}
       >
         {/* 사용자와 그래프 뷰 , 숫자*/}
         <View
           style={{
-            width: "90%",
             flexDirection: "column",
             alignItems: "flex-start",
-            justifyContent: "center",
+            justifyContent: "flex-start",
             flex: 1,
-            margin: "5%",
+            padding: "3%",
+            marginLeft: responsiveScreenWidth(3.6),
           }}
         >
-          <Text style={{ fontSize: 17 }}>
-            {this.props.user} / {year - parseInt(this.props.age / 10000)} /{" "}
+          <Text
+            style={{
+              fontSize: responsiveScreenFontSize(2),
+              marginTop: "1%",
+            }}
+          >
+            {this.props.user} / {this.dateToStr()} /{" "}
             {this.props.sex == "M" ? "남" : "여"}성
           </Text>
 
@@ -157,7 +175,7 @@ export default class task3 extends Component {
               alignItems: "center",
               flexDirection: "row",
               justifyContent: "space-between",
-              marginTop: "3%",
+              marginTop: "1.5%",
             }}
           >
             <View
@@ -167,7 +185,7 @@ export default class task3 extends Component {
               }}
             >
               <PercentageBar
-                height={20}
+                height={responsiveScreenHeight(1.4)}
                 backgroundColor={"#E5E5E5"}
                 completedColor={"#7AC819"}
                 percentage={Math.ceil(this.props.progress * 100)}
@@ -177,8 +195,7 @@ export default class task3 extends Component {
             <Text
               style={{
                 color: "#484848",
-                fontSize: 16,
-                marginLeft: "5%",
+                fontSize: responsiveScreenFontSize(1.88),
                 justifyContent: "center",
                 alignItems: "center",
               }}
@@ -187,20 +204,27 @@ export default class task3 extends Component {
             </Text>
           </View>
         </View>
-        <View
+
+
+        <TouchableOpacity
           style={{
-            flexDirection: "column",
             alignItems: "flex-end",
+            justifyContent: "flex-end",
+            marginRight: "2%",
           }}
+          onPress={this.handleClick}
+          activeOpacity={1}
         >
-          <TouchableOpacity onPress={this.handleClick} activeOpacity={1}>
-            <WithLocalSvg
-              style={{ marginTop: "20%" }}
-              width={40}
-              height={40}
-              asset={this.state.alarm}
-            />
-          </TouchableOpacity>
+          <WithLocalSvg
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            width={responsiveScreenWidth(10)}
+            height={responsiveScreenHeight(6)}
+            asset={this.state.alarm}
+          />
+
           <Text
             style={
               this.state.alarm == airplane
@@ -217,59 +241,6 @@ export default class task3 extends Component {
 }
 
 const styles = StyleSheet.create({
-  Container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: "#FFFFFF",
-    borderWidth: 2,
-    borderColor: "#ebebeb",
-    alignItems: "center",
-    marginLeft: 15,
-    marginRight: 15,
-    marginBottom: 10,
-    height: 90,
-    borderRadius: 10,
-    flexDirection: "row",
-  },
-  full: {
-    flexDirection: "row",
-  },
-
-  textgroup: {
-    alignItems: "flex-start",
-    marginLeft: 15,
-    justifyContent: "center",
-    flexDirection: "column",
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-  },
-
-  textgroup1: {
-    alignItems: "center",
-    justifyContent: "flex-start",
-    flexDirection: "row",
-    marginTop: 5,
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-  },
-
-  titleText: {
-    alignItems: "flex-start",
-    fontSize: 17,
-    alignItems: "center",
-    color: "#484848",
-    justifyContent: "center",
-    fontWeight: "bold",
-  },
-
-  subtext: {
-    alignItems: "flex-start",
-    fontSize: 14,
-    alignItems: "center",
-    color: "#747474",
-    justifyContent: "center",
-  },
-
   margin: {
     // padding:30,
     alignItems: "flex-start",
@@ -277,11 +248,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   timetextgreen: {
-    color: "#FFFFFF",
-    marginTop: "2%",
+    color: "#000000",
+    fontSize: responsiveScreenFontSize(1.4),
   },
   timetextsilver: {
-    color: "#000000",
-    marginTop: "2%",
+    color: "#FFFFFF",
+    fontSize: responsiveScreenFontSize(1.4),
   },
 });

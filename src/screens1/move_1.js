@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   FlatList,
+  StatusBar,
 } from "react-native";
 import Task from "./task_move";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -29,7 +30,7 @@ export default class move_1 extends Component {
   }
   async componentDidMount() {
     const user_token = await AsyncStorage.getItem("@user_token");
-
+    console.log(user_token);
     this.cat_list(user_token);
   }
 
@@ -63,6 +64,7 @@ export default class move_1 extends Component {
   render() {
     return (
       <View style={styles.finalView}>
+        <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
         <View style={styles.menuView}>
           <AntDesign
             name="left"
@@ -131,7 +133,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   menuView: {
-    marginTop: "5.1%",
     backgroundColor: "#FFFFFF",
     height: "8.5%",
     flexDirection: "row",

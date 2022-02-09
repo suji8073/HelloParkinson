@@ -72,6 +72,7 @@ export default class patient_move extends Component {
   render() {
     return (
       <View style={styles.finalView}>
+        <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
         <View style={styles.menuView}>
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>나의 운동 목록</Text>
@@ -202,7 +203,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#F8F8F8",
   },
   menuView: {
-    marginTop: "5.1%",
     backgroundColor: "#FFFFFF",
     height: "8.5%",
     flexDirection: "row",
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     height: responsiveScreenHeight(70),
     backgroundColor: "#F8F8F8",
-    marginBottom: "38%",
+    marginBottom: responsiveScreenHeight(25),
   },
   moveView: {
     backgroundColor: "#FFFFFF",

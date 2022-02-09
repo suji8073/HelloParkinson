@@ -6,6 +6,9 @@ import {
   TouchableOpacity,
   TextInput,
   Alert,
+  Keyboard,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
 } from "react-native";
 import React, { Component } from "react";
 import "react-native-gesture-handler";
@@ -21,7 +24,12 @@ import { WithLocalSvg } from "react-native-svg";
 import logosvg from "../icon/logo.svg";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import GlobalState from "../Context/GlobalState";
+const HideKeyboard = ({ children }) => (
+  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    {children}
+  </TouchableWithoutFeedback>
+);
+
 const manager_storeToken = async (token) => {
   try {
     await AsyncStorage.setItem("@manager_token", JSON.stringify(token));
@@ -59,6 +67,7 @@ export default class login extends Component {
       id: "",
       pw: "",
       name: "",
+      behavior: "position",
     };
   }
 
@@ -80,8 +89,6 @@ export default class login extends Component {
       console.log("error");
       console.log(e);
     }
-
-    // this.context.changeTOKEN("change");
   }
   login_check = () => {
     if (this.state.id !== "" || this.state.pw !== "") {
@@ -108,32 +115,33 @@ export default class login extends Component {
             );
           })
           .then((json) => {
-            // console.log("로그인 통신 확인");
+            console.log("ss로그인 통신 확인");
             console.log(json.data);
+            if (json.data != null) {
+              var user_data = {
+                name: json.data[0].uname,
+                ID: this.state.id,
+                PW: this.state.pw,
+              };
+              storeData(user_data);
+              storeToken(json.data[0].token);
+              if (json.data[0].manager == false) {
+                if (json.data[0].ranking == 1) {
+                  this.props.navigation.navigate("TabNavigation1");
+                } else {
+                  this.props.navigation.navigate("TabNavigation2", {});
+                }
 
-            var user_data = {
-              name: json.data[0].uname,
-              ID: this.state.id,
-              PW: this.state.pw,
-            };
-            storeData(user_data);
-            storeToken(json.data[0].token);
-            if (json.data[0].manager == false) {
-              if (json.data[0].ranking == 1) {
-                this.props.navigation.navigate("TabNavigation1");
-              } else {
-                this.props.navigation.navigate("TabNavigation2", {});
+                console.log("로그인 통신 확인");
+              } else if (json.data[0].manager == true) {
+                manager_storeToken(json.data[0].token);
+                // 관리자
+                this.props.navigation.navigate("TabNavigation", {
+                  init_set: "list",
+                  paramSetting: "abc",
+                  paramSetting2: "progress",
+                });
               }
-
-              console.log("로그인 통신 확인");
-            } else if (json.data[0].manager == true) {
-              manager_storeToken(json.data[0].token);
-              // 관리자
-              this.props.navigation.navigate("TabNavigation", {
-                init_set: "list",
-                paramSetting: "abc",
-                paramSetting2: "progress",
-              });
             } else {
               Alert.alert(
                 // 모든 정보가 다 기입되지 않았을 때
@@ -153,70 +161,74 @@ export default class login extends Component {
   };
   render() {
     return (
-      <View style={styles.finalView}>
-        <View style={styles.NoneView}></View>
+      <HideKeyboard>
+        <View style={styles.finalView}>
+          <KeyboardAvoidingView behavior={this.state.behavior}>
+            <View style={styles.NoneView}></View>
 
-        <View style={styles.firstView}>
-          <WithLocalSvg
-            width={responsiveScreenWidth(17)}
-            height={responsiveScreenHeight(10)}
-            asset={logosvg}
-          />
+            <View style={styles.firstView}>
+              <WithLocalSvg
+                width={responsiveScreenWidth(17)}
+                height={responsiveScreenHeight(10)}
+                asset={logosvg}
+              />
 
-          <Text style={styles.titleText}>
-            {"안녕하세요.\n헬로우 파킨슨 입니다."}
-          </Text>
+              <Text style={styles.titleText}>
+                {"안녕하세요.\n헬로우 파킨슨 입니다."}
+              </Text>
 
-          <Text style={styles.twoText}>
-            {"회원 서비스 이용을 위해 로그인 해주세요."}
-          </Text>
+              <Text style={styles.twoText}>
+                {"회원 서비스 이용을 위해 로그인 해주세요."}
+              </Text>
+            </View>
+
+            <View style={styles.secondView}>
+              <View style={styles.buttonwhite}>
+                <TextInput
+                  placeholder="아이디"
+                  secureTextEntry={false}
+                  style={styles.textInput}
+                  value={this.state.id}
+                  onChangeText={(text) => {
+                    this.setState({ id: text });
+                  }}
+                />
+              </View>
+              <View style={styles.buttonwhite}>
+                <TextInput
+                  secureTextEntry={true}
+                  style={styles.textInput}
+                  placeholder="비밀번호"
+                  value={this.state.pw}
+                  onChangeText={(text) => {
+                    this.setState({ pw: text });
+                  }}
+                />
+              </View>
+
+              <TouchableOpacity
+                style={styles.buttongreen}
+                activeOpacity={0.8}
+                onPress={this.login_check}
+              >
+                <Text style={styles.green}> 로그인하기 </Text>
+              </TouchableOpacity>
+
+              <View style={styles.thirdView}>
+                <Text style={styles.secondText1}> 계정이 없으신가요?</Text>
+
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.navigation.navigate("signup1");
+                  }}
+                >
+                  <Text style={styles.secondText2}> 회원가입 하기.</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </KeyboardAvoidingView>
         </View>
-
-        <View style={styles.secondView}>
-          <View style={styles.buttonwhite}>
-            <TextInput
-              placeholder="아이디"
-              secureTextEntry={false}
-              style={styles.textInput}
-              value={this.state.id}
-              onChangeText={(text) => {
-                this.setState({ id: text });
-              }}
-            />
-          </View>
-          <View style={styles.buttonwhite}>
-            <TextInput
-              secureTextEntry={true}
-              style={styles.textInput}
-              placeholder="비밀번호"
-              value={this.state.pw}
-              onChangeText={(text) => {
-                this.setState({ pw: text });
-              }}
-            />
-          </View>
-
-          <TouchableOpacity
-            style={styles.buttongreen}
-            activeOpacity={0.8}
-            onPress={this.login_check}
-          >
-            <Text style={styles.green}> 로그인하기 </Text>
-          </TouchableOpacity>
-
-          <View style={styles.thirdView}>
-            <Text style={styles.secondText1}> 계정이 없으신가요?</Text>
-
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate("signup1");
-              }}
-            >
-              <Text style={styles.secondText2}> 회원가입 하기.</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
+      </HideKeyboard>
     );
   }
 }
