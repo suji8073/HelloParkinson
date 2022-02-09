@@ -33,7 +33,11 @@ export default class TabNavigation extends Component {
     console.log();
     return (
       <Tab.Navigator
-        initialRouteName="list"
+        initialRouteName={
+          this.props.route.params.init_set == "progress" ? "progress" : "list"
+        }
+        // component={progress}
+        // initialRouteName="progress"
         screenOptions={{
           tabBarActiveTintColor: "#5CB405",
           tabBarInactiveTintColor: "#BBBBBB",
@@ -48,11 +52,11 @@ export default class TabNavigation extends Component {
         }}
       >
         <Tab.Screen
-          name="환자 목록"
+          name="list"
           component={list}
           initialParams={{
             paramSetting:
-              this.props.route.params.paramSetting == null
+              this.props.route.params.paramSetting === null
                 ? "abc"
                 : this.props.route.params.paramSetting,
           }}
@@ -68,7 +72,7 @@ export default class TabNavigation extends Component {
           }}
         />
         <Tab.Screen
-          name="환자 통계 관리"
+          name="statistics"
           component={statistics}
           options={{
             headerShown: false,
@@ -83,7 +87,7 @@ export default class TabNavigation extends Component {
           }}
         />
         <Tab.Screen
-          name="환자 진도율 관리"
+          name="progress"
           component={progress}
           initialParams={{
             paramSetting2:
@@ -103,7 +107,7 @@ export default class TabNavigation extends Component {
           }}
         />
         <Tab.Screen
-          name="프로필"
+          name="profile"
           component={profile}
           options={{
             headerShown: false,

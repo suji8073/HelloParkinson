@@ -8,14 +8,9 @@ import PercentageBar from "./progressbar";
 import airplane from "../icon/airplane.svg";
 import greenairplane from "../icon/greenairplane.svg";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { WithLocalSvg } from "react-native-svg";
 const year = 2021 + 1;
-var myHeaders = new Headers();
-myHeaders.append(
-  "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyOTEwOTIsImV4cCI6MTY0Mzg5NTg5Mn0.AVyd0JcjLrPVeqfXUsBcOxkvxvgQOkWz4DHl-BCwzOgE5m2UqW31c7l8XiXLVTJo58YthtQ07BAl_zD465KVAQ"
-);
-myHeaders.append("Content-Type", "application/json");
 export default class task3 extends Component {
   constructor(props) {
     super(props);
@@ -24,26 +19,12 @@ export default class task3 extends Component {
       date: new Date(),
       nowtimestamp: 0,
       sendtimestamp: 0,
+      minute: 0,
     };
   }
-
-  sendtimes = () => {
-    this.setState(
-      {
-        sendtimestamp:
-          this.state.date.getFullYear() * 100000000 +
-          (this.state.date.getMonth() + 1) * 1000000 +
-          this.state.date.getDate() * 10000 +
-          (this.state.date.getHours() + 9) * 100 +
-          this.state.date.getMinutes(),
-      },
-      () => {
-        console.log(this.state.sendtimestamp);
-        console.log(typeof this.state.sendtimestamp);
-      }
-    );
-  };
-  nowtimes = () => {
+  async componentDidMount() {
+    const manager_token = await AsyncStorage.getItem("@manager_token");
+    this.nowtimes();
     this.setState(
       {
         nowtimestamp:
@@ -54,19 +35,49 @@ export default class task3 extends Component {
           this.state.date.getMinutes(),
       },
       () => {
-        console.log(this.state.nowtimestamp);
-        console.log(typeof this.state.nowtimestamp);
+        this.setState({
+          alarm:
+            this.state.nowtimestamp - this.props.minute <= 15
+              ? airplane
+              : greenairplane,
+          minute:
+            this.state.nowtimestamp - this.props.minute <= 15
+              ? this.props.minute
+              : this.state.nowtimestamp,
+        });
       }
     );
+    this.setState({ man_token: manager_token });
+  }
+  sendtimes = () => {
+    this.setState({
+      sendtimestamp:
+        this.state.date.getFullYear() * 100000000 +
+        (this.state.date.getMonth() + 1) * 1000000 +
+        this.state.date.getDate() * 10000 +
+        (this.state.date.getHours() + 9) * 100 +
+        this.state.date.getMinutes(),
+    });
+  };
+  nowtimes = () => {
+    this.setState({
+      nowtimestamp:
+        this.state.date.getFullYear() * 100000000 +
+        (this.state.date.getMonth() + 1) * 1000000 +
+        this.state.date.getDate() * 10000 +
+        (this.state.date.getHours() + 9) * 100 +
+        this.state.date.getMinutes(),
+    });
   };
   handleClick = () => {
     if (this.state.alarm === greenairplane) {
       fetch("http://hccparkinson.duckdns.org:19737/onlymanager/alarm", {
         method: "POST",
-        headers: myHeaders,
-        body: JSON.stringify({
-          uid: String(this.props.id),
-        }),
+        headers: {
+          Authorization: "Bearer " + this.state.man_token.slice(1, -1),
+          "Content-Type": "application/json",
+        },
+        body: String(this.props.id),
       }).then(() => {
         Alert.alert("알림을 전송합니다.");
       });
@@ -186,7 +197,7 @@ export default class task3 extends Component {
                 : styles.timetextsilver
             }
           >
-            {this.state.nowtimestamp - this.state.sendtimestamp}분 전
+            {this.state.nowtimestamp - this.state.minute}분 전
           </Text>
         </TouchableOpacity>
       </View>

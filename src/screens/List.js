@@ -2,7 +2,6 @@
 import React, { Component } from "react";
 import {
   TouchableOpacity,
-  Alert,
   StyleSheet,
   View,
   Text,
@@ -17,12 +16,12 @@ import Context from "../Context/context";
 import silverstarsvg from "../icon/silverstar.svg";
 import greenstarsvg from "../icon/greenstar.svg";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const items = [
   { id: "abc", label: "가나다순" },
   { id: "star", label: "즐겨찾기순" },
 ];
-const today = new Date();
-var myHeaders = new Headers();
+
 export default class list extends Component {
   static contextType = Context;
   constructor(props) {
@@ -42,13 +41,29 @@ export default class list extends Component {
     this.arrayholder = [];
   }
 
-  componentDidMount() {
-    // this.userfunc();
-    myHeaders.append("Authorization", "Bearer " + this.context.manager_token);
-    myHeaders.append("Content-Type", "application/json");
-    this.setState({ select: this.props.route.params.paramSetting }, () => {
-      console.log("정렬방식: ", this.props.route.params.paramSetting);
-      this.set(this.state.select);
+  async componentDidMount() {
+    const manager_token = await AsyncStorage.getItem("@manager_token");
+    var setting = this.props.route.params.paramSetting;
+    var num = setting === "abc" ? 0 : 6;
+
+    this.setState({ select: setting }, () => {
+      fetch(
+        "http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=" +
+          num,
+        {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + manager_token.slice(1, -1),
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((json) => {
+          this.setState({ data: json.data }, () => {
+            this.arrayholder = json.data;
+          });
+        });
     });
   }
   click = (options) => {
@@ -58,50 +73,20 @@ export default class list extends Component {
           name: "TabNavigation",
           params: {
             paramSetting: options,
+            init_set: "list",
           },
         },
       ],
     });
   };
-  set = (option) => {
-    if (option == "abc") {
-      fetch(
-        "http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=0",
-        {
-          method: "GET",
-          headers: myHeaders,
-        }
-      )
-        .then((res) => res.json())
-        .then((json) => {
-          this.setState({ data: json.data, text: "" }, () => {
-            this.arrayholder = json.data;
 
-            return this.state.data;
-          });
-        });
-    } else {
-      fetch(
-        "http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=6",
-        {
-          method: "GET",
-          headers: myHeaders,
-        }
-      )
-        .then((res) => res.json())
-        .then((json) => {
-          this.setState({ data: json.data, test: "" }, () => {
-            this.arrayholder = json.data;
-
-            return this.state.data;
-          });
-        });
-    }
-  };
-  userfunc = () => {
+  userfunc = (manager_token) => {
     fetch("http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=0", {
       method: "GET",
-      headers: myHeaders,
+      headers: {
+        Authorization: "Bearer " + manager_token.slice(1, -1),
+        "Content-Type": "application/json",
+      },
     })
       .then((res) => res.json())
       .then((json) => {
@@ -129,39 +114,9 @@ export default class list extends Component {
     if (id === "abc") {
       // 가나다순 클릭했을 때
       this.click("abc");
-      fetch(
-        "http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=0",
-        {
-          method: "GET",
-          headers: myHeaders,
-        }
-      )
-        .then((res) => res.json())
-        .then((json) => {
-          this.setState({ data: json.data, text: "" }, () => {
-            this.arrayholder = json.data;
-
-            return this.state.data;
-          });
-        });
     } else if (id === "star") {
       // 즐겨찾기순 클릭했을 때
       this.click("star");
-      fetch(
-        "http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=6",
-        {
-          method: "GET",
-          headers: myHeaders,
-        }
-      )
-        .then((res) => res.json())
-        .then((json) => {
-          this.setState({ data: json.data, test: "" }, () => {
-            this.arrayholder = json.data;
-
-            return this.state.data;
-          });
-        });
     }
   };
 

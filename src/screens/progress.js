@@ -9,12 +9,14 @@ import {
 } from "react-native";
 import { WithLocalSvg } from "react-native-svg";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Task from "./task3";
 import { Entypo } from "@expo/vector-icons";
 import ddaysvg from "../icon/dday.svg";
 import { AntDesign } from "@expo/vector-icons";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 import Context from "../Context/context";
+import { element, number } from "prop-types";
 const m_items = [
   { id: "1", label: "1월" },
   { id: "2", label: "2월" },
@@ -29,7 +31,7 @@ const m_items = [
   { id: "11", label: "11월" },
   { id: "12", label: "12월" },
 ];
-
+const date = new Date();
 const items = [
   { id: "alarm", label: "최근알림순" },
   { id: "progress", label: "진도율순" },
@@ -41,8 +43,6 @@ var thisdate2 = new Date(
   now.getMonth() + 1,
   now.getDate()
 ).getDate();
-
-var myHeaders = new Headers();
 export default class progress extends Component {
   static contextType = Context;
   constructor(props) {
@@ -63,43 +63,38 @@ export default class progress extends Component {
       // yoil: 0,
       data: [],
       data1: [],
+      data2: [],
       alarmtime: [],
       user_progress: 0,
       first: [],
       second: [],
+      option: "progress",
+      man_token: "",
+      data_final: [],
     };
   }
-  componentDidMount() {
-    myHeaders.append("Authorization", "Bearer " + this.context.manager_token);
-    myHeaders.append("Content-Type", "application/json");
+  async componentDidMount() {
+    const manager_token = await AsyncStorage.getItem("@manager_token");
+
     this.setState(
       {
-        year1: String(this.state.year),
-        month1:
-          String(this.state.month).length == 1
-            ? "0" + String(this.state.month)
-            : String(this.state.month),
-        day1:
-          String(this.state.day).length == 1
-            ? "0" + String(this.state.day)
-            : String(this.state.day),
+        man_token: manager_token,
+        option:
+          this.props.route.params.paramSetting2 == null
+            ? "progress"
+            : this.props.route.params.paramSetting2,
       },
       () => {
+        console.log("진도율 정렬방식:", this.state.option);
         this.userfunc();
       }
     );
+
     this.setState({
       lastdate: new Date(this.state.year, this.state.month - 1, 0).getDate(),
       thisdate: new Date(this.state.year, this.state.month, 0).getDate(),
     });
   }
-  // sortJSON = function (data, key) {
-  //   return data.sort(function (a, b) {
-  //     var x = a[key];
-  //     var y = b[key];
-  //     return x < y ? -1 : x > y ? 1 : 0;
-  //   });
-  // };
 
   dayy = (num) => {
     while (num < 0) {
@@ -186,39 +181,52 @@ export default class progress extends Component {
     }
   };
 
-  // this.userfunc());
-  // };
   datare = () => {
-    console.log(
-      "날짜: ",
-      this.state.year1 + "-" + this.state.month1 + "-" + this.state.day1
-    );
     fetch(
       "http://hccparkinson.duckdns.org:19737/onlymanager/userlist/progress?date=" +
-
         this.state.year1 +
-
         "-" +
         this.state.month1 +
         "-" +
         this.state.day1,
       {
         method: "GET",
-        headers: myHeaders,
+        headers: {
+          Authorization: "Bearer " + this.state.man_token.slice(1, -1),
+          "Content-Type": "application/json",
+        },
       }
     )
       .then((res) => res.json())
       .then((json) => {
         this.setState({ data: json.data }, () => {
-          console.log("데이터:", this.state.data);
-
-          this.setState({
-            // data1: this.state.data.sort(function (a, b) {
-            //   return parseFloat(a.percent) - parseFloat(b.percent);
-            // }),
-            // data1: this.sortJSON(this.state.data, "percent"),
-            data1: this.state.data,
-          });
+          this.state.data.forEach(
+            (element) =>
+              // (last_date = new Date(element.lastAlarm)),
+              (element.lastAlarm =
+                element.lastAlarm == null
+                  ? 0
+                  : new Date(element.lastAlarm).getFullYear() * 100000000 +
+                    (new Date(element.lastAlarm).getMonth() + 1) * 1000000 +
+                    new Date(element.lastAlarm).getDate() * 10000 +
+                    (new Date(element.lastAlarm).getHours() + 9) * 100 +
+                    new Date(element.lastAlarm).getMinutes())
+          );
+          if (this.state.option == "progress") {
+            this.setState({
+              data_final: this.state.data.sort(function (a, b) {
+                //오름차순
+                return parseFloat(a.percent) - parseFloat(b.percent);
+              }),
+            });
+          } else {
+            this.setState({
+              data_final: this.state.data.sort(function (a, b) {
+                //내림차순
+                return parseFloat(b.lastAlarm) - parseFloat(a.lastAlarm);
+              }),
+            });
+          }
         });
       });
   };
@@ -237,14 +245,6 @@ export default class progress extends Component {
       },
       () => {
         this.datare();
-        console.log(
-          "마이너스 날짜: ",
-          String(this.state.year1) +
-            "-" +
-            String(this.state.month1) +
-            "-" +
-            String(this.state.day1)
-        );
       }
     );
   };
@@ -252,47 +252,20 @@ export default class progress extends Component {
   onmonthPress = (id) => {
     this.setState({ month: id });
   };
-
-  onMenuPress = (id) => {
-    if (id === "alarm") {
-      // 최근알림순 클릭했을 때
-      // 주소 변경필요
-      fetch("http://152.70.233.113/chamuser?sort=name", {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((json) => {
-          this.setState({ data: json });
-          return this.state.data;
-        });
-    } else if (id === "progress") {
-      // 진도율 낮은 순
-
-      fetch(
-        "http://hccparkinson.duckdns.org:19737/onlymanager/userlist/progress",
+  click = (options) => {
+    this.props.navigation.reset({
+      routes: [
         {
-          method: "GET",
-          headers: myHeaders,
-        }
-      )
-        .then((res) => res.json())
-        .then((json) => {
-          this.setState({ data: json.data }, () => {
-            this.setState({
-              // data1: this.state.data.sort(function (a, b) {
-              //   return parseFloat(a.percent) - parseFloat(b.percent);
-              // }),
-              // data1: this.sortJSON(this.state.data, "percent"),
-              data1: this.state.data,
-            });
-          });
-        });
-    }
+          name: "TabNavigation",
+          params: {
+            paramSetting2: options,
+            init_set: "progress",
+          },
+        },
+      ],
+    });
   };
+
   plusdata = () => {
     if (this.state.day >= this.state.thisdate + 1) {
       // 다음 해로 넘어갈 경우
@@ -424,7 +397,7 @@ export default class progress extends Component {
             items={items}
             cancelLabel={"취소"}
             onSelect={(items) => {
-              this.onMenuPress(items.id);
+              this.click(items.id);
             }}
             onCancel={() => console.log("onCancel")}
           >
@@ -555,14 +528,15 @@ export default class progress extends Component {
         <View style={styles.fouuview}>
           <FlatList
             keyExtractor={(item, index) => index.toString()}
-            data={this.state.data1}
+            data={this.state.data_final}
             renderItem={({ item }) => {
               return (
                 <TouchableOpacity
                   activeOpacity={0.8} //깜빡임을 조절하는 기능
                   onPress={() => {
                     this.props.navigation.navigate("user_progress", {
-                      paramName1: item.id,
+                      paramName1: item.uid,
+                      paramName2: item.percent,
                     });
                   }}
                 >
@@ -572,7 +546,7 @@ export default class progress extends Component {
                     age={item.birthday}
                     sex={item.gender}
                     progress={item.percent}
-                    minute={item.time_send}
+                    minute={item.lastAlarm}
                     // 알림 보낸 시간으로 부터 몇분 지났는지 계산해야함 , 1분마다 갱신
                   ></Task>
                 </TouchableOpacity>

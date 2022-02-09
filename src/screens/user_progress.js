@@ -21,10 +21,8 @@ import SimplePopupMenu from "react-native-simple-popup-menu";
 import { Entypo } from "@expo/vector-icons";
 import PercentageBar from "../screens/progressbar";
 import movelist from "./movelist";
-const date = new Date();
-const year = date.getFullYear();
-const today =
-  year + "년 " + date.getMonth() + 1 + "월 " + date.getDate() + "일";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const items = [
   { id: 1, label: "신장 운동" },
   { id: 2, label: "근력 운동" },
@@ -32,6 +30,7 @@ const items = [
   { id: 4, label: "구강 및 발성 운동" },
   { id: 5, label: "유산소 운동" },
 ];
+var now = new Date();
 export default class progress extends Component {
   static contextType = Context;
   constructor(props) {
@@ -46,6 +45,14 @@ export default class progress extends Component {
       done: [],
       ing: [],
       no: [],
+      today: "",
+      man_token: "",
+      year: parseInt(now.getFullYear()),
+      year1: "2022",
+      month: parseInt(now.getMonth() + 1),
+      month1: "01",
+      day1: "01",
+      day: parseInt(now.getDate()),
       enamenow: "신장 운동",
       m1: [
         { ename: "목 앞 근육 스트레칭", setcnt: 0, donecnt: 2 },
@@ -89,7 +96,40 @@ export default class progress extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const manager_token = await AsyncStorage.getItem("@manager_token");
+
+    this.setState({
+      man_token: manager_token,
+      progress: this.props.route.params.paramName2,
+    });
+    this.setState(
+      {
+        year1: String(this.state.year),
+        month1:
+          String(this.state.month).length == 1
+            ? "0" + String(this.state.month)
+            : String(this.state.month),
+        day1:
+          String(this.state.day).length == 1
+            ? "0" + String(this.state.day)
+            : String(this.state.day),
+      },
+      () => {
+        this.setState({
+          today:
+            this.state.year1 +
+            "년 " +
+            this.state.month1 +
+            "월 " +
+            this.state.day1 +
+            "일",
+        });
+      }
+    );
+    // 각 카테고리별 운동 받아오기 필요 ~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+    // 전체 운동 할당/진도율 받아오기->카테고리 나누기-> 진행, 미실시, 완료 필터
+    // 또는 각 카테고리별 할당/진도율 받아오기->진행중, 미실시, 완료 필떠
     this.setState({ data: this.state.m1 }, () => {
       let base = this.state.data.filter((it) => it.setcnt !== 0);
       // 진행중
@@ -105,21 +145,25 @@ export default class progress extends Component {
       this.setState({ done: doen1 });
     });
     fetch(
-      "http://152.70.233.113/chamuser/id/" + this.props.route.params.paramName1,
+      "http://hccparkinson.duckdns.org:19737/onlymanager/uid/" +
+        this.props.route.params.paramName1,
       {
         method: "GET",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          Authorization: "Bearer " + this.state.man_token.slice(1, -1),
+          "Content-Type": "application/json",
+        },
       }
     )
       .then((res) => res.json())
       .then((json) => {
         this.setState({
-          birth: json.info.birth,
-          gender: json.info.gender,
-          memo: json.info.memo,
-          team: json.info.team,
-          name: json.info.name,
-          progress: json.info.progress,
+          birth: json.data[0].birthday,
+          gender: json.data[0].gender == "F" ? "여" : "남",
+          memo: json.data[0].memo,
+          team: json.data[0].team,
+          name: json.data[0].uname,
+          UID: json.data[0].uid,
         });
       });
   }
@@ -181,7 +225,8 @@ export default class progress extends Component {
               <Text
                 style={{ marginBottom: 10, fontSize: 23, fontWeight: "bold" }}
               >
-                {this.state.name} / {year - parseInt(this.state.birth / 10000)}/{" "}
+                {this.state.name} /{" "}
+                {this.state.year - parseInt(this.state.birth / 10000)} /{" "}
                 {this.state.gender}
               </Text>
               <View style={{ flexDirection: "row" }}>
@@ -241,7 +286,7 @@ export default class progress extends Component {
             <View style={{ flexDirection: "row", padding: "5%" }}>
               {/* 햄버거아이콘 빼고*/}
               <View style={{ flex: 9, flexDirection: "column" }}>
-                <Text>{today}</Text>
+                <Text>{this.state.today}</Text>
                 <Text
                   style={{ fontSize: 19, fontWeight: "bold", paddingTop: "1%" }}
                 >
@@ -314,7 +359,8 @@ export default class progress extends Component {
           {/* 여기부터 view3/3 */}
 
           <View styel={styles.threeView}>
-            <ScrollView
+            {/* ScrollView */}
+            <View
               contentContainerStyle={{
                 paddingTop: "3%",
                 flexGrow: 1,
@@ -342,7 +388,9 @@ export default class progress extends Component {
                   }}
                 />
               </View>
-            </ScrollView>
+
+              {/* ScrollView */}
+            </View>
           </View>
         </View>
 
@@ -357,6 +405,7 @@ export default class progress extends Component {
               onPress={() => {
                 this.props.navigation.navigate("moveedit", {
                   paramName1: this.state.name,
+                  paramName2: this.state.UID,
                 });
               }}
             />
