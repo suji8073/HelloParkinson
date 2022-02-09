@@ -39,6 +39,9 @@ export default class patient_Home extends Component {
 
   async componentDidMount() {
     const user_token = await AsyncStorage.getItem("@user_token");
+    const user_data = await AsyncStorage.getItem("@user_data");
+    this.setState({ User_name: JSON.parse(user_data).name });
+    console.log(this.state.User_name);
     this.userfunc(user_token);
   }
 
@@ -52,7 +55,6 @@ export default class patient_Home extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         this.setState({
           data: json.data,
           first: json.data[0],
@@ -136,7 +138,13 @@ export default class patient_Home extends Component {
                   height={responsiveScreenHeight(3.4)}
                   asset={secondsvg}
                 />
-                <Text style={styles.prizetext}>
+                <Text
+                  style={
+                    this.state.second["uname"] === this.state.User_name
+                      ? styles.prizetext_f
+                      : styles.prizetext
+                  }
+                >
                   {this.state.second == null
                     ? " "
                     : String(this.state.second["uname"]) +
@@ -180,7 +188,13 @@ export default class patient_Home extends Component {
                   height={responsiveScreenHeight(3.4)}
                   asset={firstsvg}
                 />
-                <Text style={styles.prizetext}>
+                <Text
+                  style={
+                    this.state.first["uname"] == this.state.User_name
+                      ? styles.prizetext_f
+                      : styles.prizetext
+                  }
+                >
                   {this.state.first["uname"]} [
                   {parseInt(this.state.first["percent"]).toFixed(1)}%]
                 </Text>
@@ -215,7 +229,13 @@ export default class patient_Home extends Component {
                   height={responsiveScreenHeight(3.4)}
                   asset={thirdsvg}
                 />
-                <Text style={styles.prizetext}>
+                <Text
+                  style={
+                    this.state.third["uname"] == this.state.User_name
+                      ? styles.prizetext_f
+                      : styles.prizetext
+                  }
+                >
                   {this.state.third == null
                     ? " "
                     : String(this.state.third["uname"]) +
@@ -235,7 +255,7 @@ export default class patient_Home extends Component {
                 marginLeft: "4.7%",
                 marginRight: "4.7%",
                 borderRadius: 7,
-                marginBottom: responsiveScreenHeight(5),
+                marginBottom: responsiveScreenHeight(2),
               }}
               data={this.state.data.slice(3)}
               keyExtractor={(item, index) => index.toString()}
@@ -246,7 +266,7 @@ export default class patient_Home extends Component {
                     name={item.uname}
                     age={item.birthday}
                     sex={item.gender}
-                    check={this.context.user_name}
+                    check={this.state.User_name}
                   ></Task5>
                 );
               }}
@@ -303,5 +323,13 @@ const styles = StyleSheet.create({
     bottom: "-30%",
     fontSize: responsiveScreenFontSize(1.52),
     fontWeight: "bold",
+  },
+
+  prizetext_f: {
+    position: "absolute",
+    bottom: "-30%",
+    fontSize: responsiveScreenFontSize(1.68),
+    fontWeight: "bold",
+    color: "#5CB405",
   },
 });

@@ -161,6 +161,6 @@ const styles = StyleSheet.create({
 
   plusbtn: {
     position: "absolute",
-    bottom: responsiveScreenHeight(20),
+    bottom: responsiveScreenHeight(25),
   },
 });

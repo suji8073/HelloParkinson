@@ -82,7 +82,9 @@ export default class patient_move extends Component {
         <ScrollView style={styles.secondView}>
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_1");
+              this.props.navigation.navigate("move_1", {
+                reset_click: false,
+              });
             }}
           >
             <View style={styles.moveView}>
@@ -104,7 +106,9 @@ export default class patient_move extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_2");
+              this.props.navigation.navigate("move_2", {
+                reset_click: false,
+              });
             }}
           >
             <View style={styles.moveView}>
@@ -126,7 +130,9 @@ export default class patient_move extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_3");
+              this.props.navigation.navigate("move_3", {
+                reset_click: false,
+              });
             }}
           >
             <View style={styles.moveView}>
@@ -148,7 +154,9 @@ export default class patient_move extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_4");
+              this.props.navigation.navigate("move_4", {
+                reset_click: false,
+              });
             }}
           >
             <View style={styles.moveView}>

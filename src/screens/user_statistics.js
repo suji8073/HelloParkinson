@@ -490,7 +490,7 @@ export default class user_statistics extends Component {
             </View>
 
             <View style={styles.threeView}>
-              <SafeAreaView style={{ flex: 1 }}>
+              <SafeAreaView style={{ width: "100%" }}>
                 <FlatList
                   keyExtractor={(item, index) => index}
                   data={this.state.data2}
@@ -519,7 +519,7 @@ const styles = StyleSheet.create({
   finalView: {
     height: responsiveScreenHeight(100),
     width: responsiveScreenWidth(100),
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#F8F8F8",
   },
   menuView: {
     backgroundColor: "#FFFFFF",
@@ -615,20 +615,20 @@ const styles = StyleSheet.create({
     paddingLeft: "2%",
     paddingRight: "2%",
     paddingBottom: "1%",
-    height: 220,
+    height: 180,
     backgroundColor: "#FFFFFF",
     borderWidth: 1,
     borderColor: "#E0E0E0",
     width: width - 40,
   },
   threeView: {
-    marginTop: "3%",
-    marginLeft: "5%",
-    marginRight: "5%",
-    marginBottom: "5%",
-    padding: "5%",
-    backgroundColor: "#FFFFFF",
+    marginTop: 10,
+    marginLeft: responsiveScreenWidth(4.7),
+    marginRight: responsiveScreenWidth(4.7),
+    marginBottom: "2%",
+    paddingTop: "3.1%",
     borderWidth: 1,
+    backgroundColor: "#FFFFFF",
     borderColor: "#E0E0E0",
   },
   moveView: {

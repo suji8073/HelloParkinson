@@ -8,7 +8,7 @@ import {
   ScrollView,
   TextInput,
 } from "react-native";
-import Context from "../Context/context";
+
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
@@ -453,7 +453,7 @@ export default class user_edit extends Component {
                     this.setState({ user_memo: text });
                   }}
                   placeholder={
-                    this.state.memo === " " ? "없음" : this.state.memo
+                    this.state.memo === null ? "메모 없음" : this.state.memo
                   }
                 />
               </View>
