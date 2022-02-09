@@ -10,13 +10,18 @@ import greenairplane from "../icon/greenairplane.svg";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { WithLocalSvg } from "react-native-svg";
+
+var now = new Date();
+const year = now.getFullYear();
+
 import {
   responsiveScreenHeight,
   responsiveScreenWidth,
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
 
-const year = 2021 + 1;
+
+
 export default class task3 extends Component {
   constructor(props) {
     super(props);
@@ -26,11 +31,14 @@ export default class task3 extends Component {
       nowtimestamp: 0,
       sendtimestamp: 0,
       minute: 0,
+      final_minute: 0,
     };
   }
   async componentDidMount() {
     const manager_token = await AsyncStorage.getItem("@manager_token");
     this.nowtimes();
+    console.log(this.props.minute);
+
     this.setState(
       {
         nowtimestamp:
@@ -38,20 +46,27 @@ export default class task3 extends Component {
           (this.state.date.getMonth() + 1) * 1000000 +
           this.state.date.getDate() * 10000 +
           this.state.date.getHours() * 100 +
-          // (this.state.date.getHours() + 9) * 100 +
           this.state.date.getMinutes(),
       },
       () => {
-        console.log(this.state.nowtimestamp);
+        if (
+          this.props.minute == 0 ||
+          this.state.nowtimestamp - this.props.minute > 15
+        ) {
+          this.setState({
+            alarm: greenairplane,
+          });
+        } else {
+          this.setState({
+            alarm: airplane,
+          });
+        }
         this.setState({
-          alarm:
-            this.state.nowtimestamp - this.props.minute <= 15
-              ? airplane
-              : greenairplane,
-          minute:
-            this.state.nowtimestamp - this.props.minute <= 15
-              ? this.props.minute
-              : this.state.nowtimestamp,
+          final_minute:
+            this.props.minute == 0 ||
+            this.state.nowtimestamp - this.props.minute > 15
+              ? "*"
+              : this.state.nowtimestamp - this.props.minute,
         });
       }
     );
@@ -71,7 +86,6 @@ export default class task3 extends Component {
         (this.state.date.getMonth() + 1) * 1000000 +
         this.state.date.getDate() * 10000 +
         this.state.date.getHours() * 100 +
-        // (this.state.date.getHours() + 9) * 100 +
         this.state.date.getMinutes(),
     });
   };
@@ -82,7 +96,6 @@ export default class task3 extends Component {
         (this.state.date.getMonth() + 1) * 1000000 +
         this.state.date.getDate() * 10000 +
         this.state.date.getHours() * 100 +
-        // (this.state.date.getHours() + 9) * 100 +
         this.state.date.getMinutes(),
     });
   };
@@ -106,6 +119,16 @@ export default class task3 extends Component {
 
       this.setState({ date: new Date() }, () => {
         this.nowtimes();
+        this.setState(
+          {
+            sendtimestamp: this.state.timestamp,
+          },
+          () => {
+            this.setState({
+              final_minute: this.state.nowtimestamp - this.state.sendtimestamp,
+            });
+          }
+        );
         this.sendtimes();
       });
       var refreshIntervalId = setInterval(() => {
@@ -232,7 +255,7 @@ export default class task3 extends Component {
                 : styles.timetextgreen
             }
           >
-            {this.state.nowtimestamp - this.state.minute}분 전
+            {this.state.final_minute}분 전
           </Text>
         </TouchableOpacity>
       </View>
