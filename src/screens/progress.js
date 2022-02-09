@@ -8,7 +8,8 @@ import {
   Alert,
 } from "react-native";
 import { WithLocalSvg } from "react-native-svg";
-
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Task from "./task3";
 import { Entypo } from "@expo/vector-icons";
@@ -36,7 +37,6 @@ const items = [
   { id: "alarm", label: "최근알림순" },
   { id: "progress", label: "진도율순" },
 ];
-
 var now = new Date();
 var thisdate2 = new Date(
   now.getFullYear(),
@@ -71,9 +71,14 @@ export default class progress extends Component {
       option: "progress",
       man_token: "",
       data_final: [],
+      // this_date: 0,
     };
   }
   async componentDidMount() {
+    // var utc = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+    // var time_diff = 9 * 60 * 60 * 1000;
+    // var cur_date_korea = new Date(utc + time_diff);
+    // console.log(cur_date_korea.getDate());
     const manager_token = await AsyncStorage.getItem("@manager_token");
 
     this.setState(
@@ -89,7 +94,6 @@ export default class progress extends Component {
         this.userfunc();
       }
     );
-
     this.setState({
       lastdate: new Date(this.state.year, this.state.month - 1, 0).getDate(),
       thisdate: new Date(this.state.year, this.state.month, 0).getDate(),

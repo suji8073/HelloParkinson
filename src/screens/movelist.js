@@ -6,7 +6,19 @@ import Context from "../Context/context";
 import plus from "../icon/plusbox.svg";
 import minus from "../icon/minusbox.svg";
 import plussilver from "../icon/plussilverbox.svg";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import minussilver from "../icon/minussilverbox.svg";
+const storeData = async (moveset) => {
+  try {
+    await AsyncStorage.setItem("@user_moveset", JSON.stringify(moveset));
+    console.log("moveset_clear");
+
+    console.log(await AsyncStorage.getItem("@user_moveset"));
+  } catch (e) {
+    // saving error
+    console.log("moveset_error");
+  }
+};
 export default class movelist extends Component {
   static contextType = Context;
   constructor(props) {
@@ -14,20 +26,38 @@ export default class movelist extends Component {
     this.state = {
       m_num: this.props.m_num,
       check: false,
+      user_moveset: [],
     };
   }
+  move_edit = () => {
+    var move_lists = JSON.parse(this.state.user_moveset);
+
+    move_lists.filter((x, y) => {
+      if (x.eid === this.props.eid) {
+        x.setcnt = this.state.m_num;
+      }
+    });
+    storeData(move_lists);
+  };
 
   plus_func = () => {
-    this.setState({ m_num: this.state.m_num + 1 });
-    this.context.changeEXERCISE(0, 1);
+    this.setState({ m_num: this.state.m_num + 1 }, () => {
+      this.move_edit();
+    });
   };
 
   minus_func = () => {
     if (this.state.m_num > 0) {
-      this.setState({ m_num: this.state.m_num - 1 });
+      this.setState({ m_num: this.state.m_num - 1 }, () => {
+        this.move_edit();
+      });
     }
   };
-
+  async componentDidMount() {
+    console.log(this.props.m_num);
+    const user_movelist = await AsyncStorage.getItem("@user_moveset");
+    this.setState({ user_moveset: user_movelist });
+  }
   render() {
     return (
       <View style={styles.borderView}>
