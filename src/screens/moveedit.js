@@ -3,6 +3,7 @@
 import React, { Component } from "react";
 import GlobalState from "../Context/GlobalState";
 import Context from "../Context/context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   View,
   FlatList,
@@ -14,6 +15,15 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import Movelist from "./movelist";
 import O2_task from "./O2_task";
+const move_store = async (move_list) => {
+  try {
+    await AsyncStorage.setItem("@move_store", JSON.stringify(move_list));
+    console.log("move_store");
+  } catch (e) {
+    // saving error
+    console.log("move_store_error");
+  }
+};
 export default class progress extends Component {
   static contextType = Context;
   constructor(props) {
@@ -29,95 +39,65 @@ export default class progress extends Component {
       click3: 0,
       click4: 0,
       click5: 0,
+      man_token: "",
       //데이터가 내림차순 되어서 들어오면 좋겠음~!
-      m1: [
-        { id: "1-1", name: "목 앞 근육 스트레칭", set: 0 },
-        { id: "1-2", name: "날개뼈 모으기", set: 6 },
-        { id: "1-3", name: "손목 및 팔꿈치 주변 근육 스트레칭", set: 10 },
-      ],
-      m2: [
-        { id: "2-1", name: "엉덩이 들기", set: 2 },
-        { id: "2-2", name: "엎드려 누운 상태에서 다리들기", set: 6 },
-        { id: "2-3", name: "엉덩이 옆 근육 운동", set: 10 },
-        { id: "2-4", name: "무릎 벌리기", set: 20 },
-        { id: "2-5", name: "무릎 펴기", set: 40 },
-      ],
-      m3: [
-        { id: "3-1", name: "한발 서기", set: 2 },
-        { id: "3-2", name: "버드독 1단계", set: 0 },
-        { id: "3-3", name: "버드독 2단계", set: 0 },
-        { id: "3-4", name: "앉은 상태에서 제자리 걷기", set: 10 },
-        { id: "3-5", name: "움직이는 런지", set: 10 },
-      ],
-      m4: [
-        { id: "4-1", name: "아에이오우 소리내기", set: 10 },
-        { id: "4-2", name: "파파파파파 소리내기", set: 12 },
-        { id: "4-3", name: "쪽 소리내기", set: 5 },
-        { id: "4-4", name: "혀로 볼 밀기", set: 5 },
-        { id: "4-5", name: "혀로 입천장 밀기", set: 3 },
-        { id: "4-6", name: "똑딱 소리내기", set: 2 },
-        { id: "4-7", name: "혀 물고 침 삼키기", set: 2 },
-        { id: "4-8", name: "아 짧게 소리내기", set: 20 },
-        { id: "4-9", name: "아 길게 소리내기", set: 2 },
-        { id: "4-10", name: "고음 가성으로 소리내기", set: 2 },
-        { id: "4-11", name: "도레미파솔라시도", set: 2 },
-        { id: "4-12", name: "큰 소리로 음절 읽기", set: 2 },
-      ],
-      m5: [
-        { id: "5-1", name: "걷기", set: 70 },
-        { id: "5-2", name: "자전거 타기", set: 100 },
-      ],
+      m1: [],
+      m2: [],
+      m3: [],
+      m4: [],
+      m5: [],
       data: [],
       m_num: 3,
     };
   }
-  componentDidMount() {
-    // this.State((this.context.change_exercise[0].id = "2"));
-    // console.log(this.context.change_exercise[0].id);
-    // 신장운동이 기본클릭 값
-    this.setState({ data: this.state.m1 });
-    // fetch("http://152.70.233.113/chammotion/cat/신장운동", {
-    //   method: "GET",
-    //   headers: { "Content-Type": "application/json" },
-    // })
-    //   .then((res) => res.json())
-    //   .then((json) => {
-    //     this.setState({ data: json, m1: json });
-    //   });
-    // fetch("http://152.70.233.113/chammotion/cat/근력운동", {
-    //   method: "GET",
-    //   headers: { "Content-Type": "application/json" },
-    // })
-    //   .then((res) => res.json())
-    //   .then((json) => {
-    //     this.setState({ m2: json });
-    //   });
-    // fetch("http://152.70.233.113/chammotion/cat/균형 및 협응 운동", {
-    //   method: "GET",
-    //   headers: { "Content-Type": "application/json" },
-    // })
-    //   .then((res) => res.json())
-    //   .then((json) => {
-    //     this.setState({ m3: json });
-    //   });
-    // fetch("http://152.70.233.113/chammotion/cat/구강 및 발성 운동", {
-    //   method: "GET",
-    //   headers: { "Content-Type": "application/json" },
-    // })
-    //   .then((res) => res.json())
-    //   .then((json) => {
-    //     this.setState({ m4: json });
-    //   });
-    // fetch("http://152.70.233.113/chammotion/cat/유산소 운동", {
-    //   method: "GET",
-    //   headers: { "Content-Type": "application/json" },
-    // })
-    //   .then((res) => res.json())
-    //   .then((json) => {
-    //     this.setState({ m5: json });
-    //   });
-  }
 
+  async componentDidMount() {
+    const manager_token = await AsyncStorage.getItem("@manager_token");
+
+    this.setState({
+      man_token: manager_token,
+    });
+    fetch(
+      "http://hccparkinson.duckdns.org:19737/onlymanager/assigned?uid=" +
+        this.props.route.params.paramName2,
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + manager_token.slice(1, -1),
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState(
+          {
+            m1: json.data.filter((it) => it.cat === "신장운동"),
+            m2: json.data.filter((it) => it.cat === "근력운동"),
+            m3: json.data.filter((it) => it.cat === "균형 및 협응 운동"),
+            m4: json.data.filter((it) => it.cat === "구강 및 발성 운동"),
+            m5: json.data.filter((it) => it.cat === "유산소운동"),
+          },
+          () => {
+            this.setState({ data: this.state.m1 });
+
+            // try {
+            //   await AsyncStorage.setItem(
+            //     "@user_moveset",
+            //     JSON.stringify(json.data)
+            //   );
+            //   console.log("환자 할당량 store");
+            // } catch (e) {
+            //   console.log("환자 할당량 error");
+            // }
+
+            // const user_moveset = await AsyncStorage.getItem("@user_moveset");
+            // console.log(user_moveset);
+          }
+        );
+      });
+    move_store(this.state.data);
+  }
   handleClick1 = () => {
     this.setState({
       data: this.state.m1,
@@ -275,15 +255,19 @@ export default class progress extends Component {
             style={{
               backgroundColor: "#F8F8F8",
             }}
+            keyExtractor={(item, index) => index.toString()}
             data={this.state.data}
             renderItem={({ item }) => {
               if (this.state.task == 0) {
-                return <Movelist name={item.name} m_num={item.set}></Movelist>;
+                return (
+                  <Movelist name={item.ename} m_num={item.setcnt}></Movelist>
+                );
               } else {
-                return <O2_task name={item.name} m_num={item.set}></O2_task>;
+                return (
+                  <O2_task name={item.ename} m_num={item.setcnt}></O2_task>
+                );
               }
             }}
-
           />
         </View>
       </GlobalState>

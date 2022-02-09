@@ -15,26 +15,23 @@ import silverstarsvg from "../icon/silverstar.svg";
 import greenstarsvg from "../icon/greenstar.svg";
 const year = 2021 + 1;
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AntDesign } from "@expo/vector-icons";
 var myHeaders = new Headers();
-myHeaders.append(
-  "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDM5NTk5NTMsImV4cCI6MTY0NDU2NDc1M30.j1U1_3O9tmkHPnnib15eFmqas8oXLMfUv7Qz9tH9HZtrC1baYjD8MKXkyxgd3QnNBxmDh4456JaosBtvwTnqzg"
-);
-myHeaders.append("Content-Type", "application/json");
 
 export default class task1 extends Component {
   constructor(props) {
     super(props);
     this.state = {
       ...props,
+      man_token: "",
     };
-    console.log(this.state);
   }
-  // componentDidMount() {}
 
-  // componentDidUpdate(prevProps, prevState) {}
-
+  async componentDidMount() {
+    const manager_token = await AsyncStorage.getItem("@manager_token");
+    this.setState({ man_token: manager_token });
+  }
   dateToStr = () => {
     var today_year = new Date().getFullYear();
     var birth_year = String(this.props.age).substring(0, 4);
@@ -48,7 +45,10 @@ export default class task1 extends Component {
 
       fetch("http://hccparkinson.duckdns.org:19737/onlymanager/bookmark", {
         method: "PUT",
-        headers: myHeaders,
+        headers: {
+          Authorization: "Bearer " + this.state.man_token.slice(1, -1),
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           uid: String(this.props.id),
         }),
@@ -61,7 +61,10 @@ export default class task1 extends Component {
       // 아이콘 asset값 변경 silverstarsvg 으로
       fetch("http://hccparkinson.duckdns.org:19737/onlymanager/bookmark", {
         method: "PUT",
-        headers: myHeaders,
+        headers: {
+          Authorization: "Bearer " + this.state.man_token.slice(1, -1),
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           uid: String(this.props.id),
         }),

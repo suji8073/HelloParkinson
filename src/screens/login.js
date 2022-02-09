@@ -23,7 +23,15 @@ import Context from "../Context/context";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import GlobalState from "../Context/GlobalState";
-
+const manager_storeToken = async (token) => {
+  try {
+    await AsyncStorage.setItem("@manager_token", JSON.stringify(token));
+    console.log("관리자token_clear");
+  } catch (e) {
+    // saving error
+    console.log("관리자token_error");
+  }
+};
 export default class login extends Component {
   static contextType = Context;
   constructor(props) {
@@ -104,10 +112,11 @@ export default class login extends Component {
               // Alert.alert(this.context.user_id);
               console.log("로그인 통신 확인");
             } else if (json.data[0].manager == true) {
+              manager_storeToken(json.data[0].token);
               // 관리자
               // this.context.changeNAME(this.state.name)
               this.props.navigation.navigate("TabNavigation", {
-                paramName1: "name",
+                init_set: "list",
                 paramSetting: "abc",
                 paramSetting2: "progress",
               });
