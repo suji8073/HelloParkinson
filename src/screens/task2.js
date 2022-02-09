@@ -47,7 +47,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginLeft: 15,
     marginRight: 15,
-    height: 90,
+    marginBottom: 10,
+    height: 80,
+    borderRadius: 10,
     flexDirection: "row",
   },
 

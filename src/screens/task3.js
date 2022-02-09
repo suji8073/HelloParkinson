@@ -198,13 +198,13 @@ export default class task3 extends Component {
                 fontSize: responsiveScreenFontSize(1.88),
                 justifyContent: "center",
                 alignItems: "center",
+                marginLeft: "2%",
               }}
             >
               {Math.ceil(this.props.progress * 100)}%
             </Text>
           </View>
         </View>
-
 
         <TouchableOpacity
           style={{
@@ -234,7 +234,7 @@ export default class task3 extends Component {
           >
             {this.state.nowtimestamp - this.state.minute}분 전
           </Text>
-        </View>
+        </TouchableOpacity>
       </View>
     );
   }
