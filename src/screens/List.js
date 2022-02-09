@@ -287,5 +287,6 @@ const styles = StyleSheet.create({
   SearchInput: {
     marginLeft: 10,
     flex: 3,
+    fontSize: responsiveScreenFontSize(1.52),
   },
 });

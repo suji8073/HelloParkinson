@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { WithLocalSvg } from "react-native-svg";
 import { Ionicons } from "@expo/vector-icons";
@@ -10,36 +10,48 @@ import {
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
 
-const task_home = ({ record, name, age, sex, check }) => {
-  return (
-    <View style={check === name ? styles.view1 : styles.view2}>
-      <View style={styles.numtext}>
-        <Text
-          style={{
-            fontSize: responsiveScreenFontSize(3),
-            color: "#5CB405",
-            fontWeight: "bold",
-          }}
-        >
-          {record}
-        </Text>
+export default class task_home extends Component {
+  dateToStr = () => {
+    var today_year = new Date().getFullYear();
+    var birth_year = String(this.props.age).substring(0, 4);
+    return today_year - birth_year + 1;
+  };
+
+  render() {
+    return (
+      <View
+        style={
+          this.props.check === this.props.name ? styles.view1 : styles.view2
+        }
+      >
+        <View style={styles.numtext}>
+          <Text
+            style={{
+              fontSize: responsiveScreenFontSize(3),
+              color: "#5CB405",
+              fontWeight: "bold",
+            }}
+          >
+            {this.props.record}
+          </Text>
+        </View>
+        <View style={styles.infotext}>
+          <Ionicons
+            name="person-circle-sharp"
+            style={{ fontSize: responsiveScreenFontSize(8) }}
+            color="lightblue"
+          />
+          <Text
+            style={{ fontSize: responsiveScreenFontSize(2), marginLeft: "2%" }}
+          >
+            {this.props.name} / {this.dateToStr()}세 /{" "}
+            {this.props.sex == "M" ? "남" : "여"}
+          </Text>
+        </View>
       </View>
-      <View style={styles.infotext}>
-        <Ionicons
-          name="person-circle-sharp"
-          style={{ fontSize: responsiveScreenFontSize(8) }}
-          color="lightblue"
-        />
-        <Text
-          style={{ fontSize: responsiveScreenFontSize(2), marginLeft: "2%" }}
-        >
-          {name} / {year - parseInt(age / 10000)}세 / {sex}
-        </Text>
-      </View>
-    </View>
-  );
-};
-export default task_home;
+    );
+  }
+}
 const styles = StyleSheet.create({
   numtext: {
     flex: 1.3,

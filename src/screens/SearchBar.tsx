@@ -39,7 +39,7 @@ export default function SearchBar() {
         autoCapitalize="none"
         autoCorrect={false}
         onChangeText={setValue}
-        placeholder="환자 이름을 입력하세요"
+        placeholder="환자 이름을 입력하세요s"
         returnKeyType="search"
         returnKeyLabel="search"
         value={value}

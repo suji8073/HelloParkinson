@@ -19,7 +19,13 @@ import {
   responsiveScreenWidth,
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
+
+import { ThemeConsumer } from "styled-components/native";
+import { throwIfAudioIsDisabled } from "expo-av/build/Audio/AudioAvailability";
+
+
 var now = new Date();
+
 export default class user_setting extends Component {
   static contextType = Context;
   constructor(props) {
@@ -39,11 +45,13 @@ export default class user_setting extends Component {
       UID: "",
       percent: 0,
       bookmark: false,
+      user_token: "",
     };
   }
 
   async componentDidMount() {
     const manager_token = await AsyncStorage.getItem("@manager_token");
+    this.setState({ user_token: manager_token });
 
     fetch(
       "http://hccparkinson.duckdns.org:19737/onlymanager/uid/" +
@@ -57,6 +65,7 @@ export default class user_setting extends Component {
     )
       .then((res) => res.json())
       .then((json) => {
+        console.log(json);
         this.setState({
           birth: json.data[0].birthday,
           gender: json.data[0].gender,
@@ -95,7 +104,7 @@ export default class user_setting extends Component {
       // 아이콘 asset값 변경 greenstarsvg 으로
 
       fetch("http://hccparkinson.duckdns.org:19737/onlymanager/bookmark", {
-        method: "POST",
+        method: "PUT",
         headers: {
           Authorization: "Bearer " + String(this.state.user_token).slice(1, -1),
           "Content-Type": "application/json",
@@ -111,7 +120,7 @@ export default class user_setting extends Component {
     } else {
       // 아이콘 asset값 변경 silverstarsvg 으로
       fetch("http://hccparkinson.duckdns.org:19737/onlymanager/bookmark", {
-        method: "POST",
+        method: "PUT",
         headers: {
           Authorization: "Bearer " + String(this.state.user_token).slice(1, -1),
           "Content-Type": "application/json",
@@ -191,7 +200,7 @@ export default class user_setting extends Component {
             />
           </View>
           <Text style={styles.group_num}>
-            {this.state.team != "" ? " " : this.state.team + "조"}
+            {this.state.team != "" ? this.state.team + "조" : " "}
           </Text>
           <Text style={styles.user_name}>{this.state.name}</Text>
           <Text style={styles.user_age}>
@@ -248,7 +257,7 @@ export default class user_setting extends Component {
           </View>
           <View style={styles.textView}>
             <Text style={styles.text2}>
-              {this.state.memo === "" ? "메모 없음" : this.state.memo}
+              {this.state.memo === null ? "메모 없음" : this.state.memo}
             </Text>
           </View>
         </View>

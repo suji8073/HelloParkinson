@@ -29,6 +29,18 @@ export default class move_2 extends Component {
     };
   }
   async componentDidMount() {
+    if (this.props.route.params.reset_click === true) {
+      this.props.navigation.reset({
+        routes: [
+          {
+            name: "move_2",
+            params: {
+              reset_click: false,
+            },
+          },
+        ],
+      });
+    }
     const user_token = await AsyncStorage.getItem("@user_token");
 
     this.cat_list(user_token);
