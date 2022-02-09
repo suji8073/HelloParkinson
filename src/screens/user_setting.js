@@ -19,20 +19,31 @@ import {
   responsiveScreenWidth,
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
+
 import { ThemeConsumer } from "styled-components/native";
 import { throwIfAudioIsDisabled } from "expo-av/build/Audio/AudioAvailability";
+
+
+var now = new Date();
 
 export default class user_setting extends Component {
   static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {
+      year: parseInt(now.getFullYear()),
+      year1: "2022",
+      month: parseInt(now.getMonth() + 1),
+      month1: "01",
+      day1: "01",
+      day: parseInt(now.getDate()),
       birth: 19431218,
       gender: "",
       memo: "",
       team: "",
       name: "",
       UID: "",
+      percent: 0,
       bookmark: false,
       user_token: "",
     };
@@ -65,6 +76,17 @@ export default class user_setting extends Component {
           bookmark: json.data[0].bookmark,
         });
       });
+    this.setState({
+      year1: String(this.state.year),
+      month1:
+        String(this.state.month).length == 1
+          ? "0" + String(this.state.month)
+          : String(this.state.month),
+      day1:
+        String(this.state.day).length == 1
+          ? "0" + String(this.state.day)
+          : String(this.state.day),
+    });
   }
 
   age_count = () => {
@@ -112,6 +134,32 @@ export default class user_setting extends Component {
         Alert.alert("즐겨찾기에서 해제되었습니다.");
       });
     }
+  };
+
+  progress_find = () => {
+    fetch(
+      "http://hccparkinson.duckdns.org:19737/onlymanager/progress/user/" +
+        String(this.state.UID) +
+        "?date=" +
+        this.state.year1 +
+        "-" +
+        this.state.month1 +
+        "-" +
+        this.state.day1 +
+        "&&day=1",
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + String(this.state.user_token).slice(1, -1),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          uid: String(this.props.route.params.id),
+        }),
+      }
+    ).then((json) => {
+      this.setState({ percent: json.data[0].percent });
+    });
   };
 
   render() {
@@ -194,6 +242,7 @@ export default class user_setting extends Component {
               onPress={() => {
                 this.props.navigation.navigate("user_progress", {
                   id: this.state.UID,
+                  percent: this.state.percent,
                 });
               }}
             >
