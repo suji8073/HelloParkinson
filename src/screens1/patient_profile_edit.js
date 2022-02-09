@@ -45,17 +45,9 @@ import {
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
 
-var myHeaders = new Headers();
-myHeaders.append(
-  "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDQwNjU1MzYsImV4cCI6MTY0NDY3MDMzNn0.mnbGyKlMHvwdVFQJRPmgTxMGB966ITczMTA_p4E4lWSRb2DYoOlwW1mrPGapPRkf6h4hyZIIUgfrs1yIqInOJg"
-);
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-myHeaders.append("Content-Type", "application/json");
-
-import Context from "../Context/context";
 export default class patient_profile_edit extends Component {
-  static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {
@@ -78,10 +70,15 @@ export default class patient_profile_edit extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const user_token = await AsyncStorage.getItem("@user_token");
+
     fetch("http://hccparkinson.duckdns.org:19737/chamuser", {
       method: "GET",
-      headers: myHeaders,
+      headers: {
+        Authorization: "Bearer " + user_token.slice(1, -1),
+        "Content-Type": "application/json",
+      },
     })
       .then((res) => res.json())
       .then((json) => {
@@ -102,10 +99,13 @@ export default class patient_profile_edit extends Component {
       });
   }
 
-  edit_update = () => {
+  edit_update = (user_token) => {
     fetch("http://hccparkinson.duckdns.org:19737/chamuser", {
       method: "PUT",
-      headers: myHeaders,
+      headers: {
+        Authorization: "Bearer " + user_token.slice(1, -1),
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         uid: this.state.UID,
         //password: this.state.user_pw,
@@ -123,10 +123,13 @@ export default class patient_profile_edit extends Component {
       });
   };
 
-  edit_pw_update = () => {
+  edit_pw_update = (user_token) => {
     fetch("http://hccparkinson.duckdns.org:19737/chamuser", {
       method: "PUT",
-      headers: myHeaders,
+      headers: {
+        Authorization: "Bearer " + user_token.slice(1, -1),
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         uid: this.state.UID,
         password: this.state.user_pw,
@@ -195,8 +198,8 @@ export default class patient_profile_edit extends Component {
             // this.context.changePW(this.state.user_pw);
             // db비밀번호 변경, context비밀번호 변
             this.state.user_pw === ""
-              ? this.edit_update()
-              : this.edit_pw_update();
+              ? this.edit_update(user_token)
+              : this.edit_pw_update(user_token);
 
             this.props.navigation.navigate("patient_profile");
           }

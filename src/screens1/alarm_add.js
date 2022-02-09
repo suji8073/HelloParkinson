@@ -13,6 +13,12 @@ import nosvg from "../icon/no.svg";
 import { WithLocalSvg } from "react-native-svg";
 import { AntDesign } from "@expo/vector-icons";
 
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
 import Context from "../Context/context";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -148,7 +154,7 @@ export default class alarm_add extends Component {
         <View style={styles.menuView}>
           <AntDesign
             name="left"
-            size={24}
+            style={{ fontSize: responsiveScreenFontSize(3) }}
             color="#808080"
             onPress={() => {
               this.props.navigation.pop();
@@ -157,107 +163,90 @@ export default class alarm_add extends Component {
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>나의 운동 알림</Text>
           <View style={styles.margin}></View>
-          <AntDesign name="left" size={24} color="#FFFFFF" />
+          <AntDesign
+            name="left"
+            style={{ fontSize: responsiveScreenFontSize(3) }}
+            color="#FFFFFF"
+          />
         </View>
 
         <View style={styles.secondView}>
-          <View style={{ flex: 0.3 }}></View>
-          <View style={{ margin: "5%" }}>
-            <View style={styles.firstView}>
-              <View
-                style={{
-                  alignItems: "center",
-                  borderRightWidth: 3,
-                  borderColor: "#E0E0E0",
-                  flex: 5,
-                }}
-              >
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={this.onPress_apm1}
-                >
-                  <Text
-                    style={
-                      this.state.apm === "오전" ? styles.apm2 : styles.apm1
-                    }
-                  >
-                    오 전
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={{ flex: 5, alignItems: "center" }}>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={this.onPress_apm2}
-                >
-                  <Text
-                    style={
-                      this.state.apm === "오후" ? styles.apm2 : styles.apm1
-                    }
-                  >
-                    오 후
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={{ flex: 0.2 }}></View>
-            <DateTimePickerModal
-              isVisible={this.state.isDatePickerVisible}
-              mode="time"
-              date={this.state.pickdate}
-              onConfirm={this.handleConfirm}
-              onCancel={this.hideDatePicker}
-            />
+          <View style={styles.firstView}>
             <View
               style={{
-                flexDirection: "row",
-                justifyContent: "space-evenly",
                 alignItems: "center",
-                padding: "3%",
+                borderRightWidth: 3,
                 borderColor: "#E0E0E0",
-                borderRadius: 6,
-                borderWidth: 2,
-                marginBottom: "5%",
-                marginTop: "5%",
-                backgroundColor: "#ffffff",
-                height: "20%",
+                flex: 5,
               }}
             >
-              <View>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={this.showDatePicker}
+              <TouchableOpacity activeOpacity={0.8} onPress={this.onPress_apm1}>
+                <Text
+                  style={this.state.apm === "오전" ? styles.apm2 : styles.apm1}
                 >
-                  <Text style={styles.time1}>{this.state.hour}</Text>
-                </TouchableOpacity>
-              </View>
-              <View>
-                <Text style={styles.time1}>:</Text>
-              </View>
-              <View>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={this.showDatePicker}
-                >
-                  <Text style={styles.time1}>{this.state.minute}</Text>
-                </TouchableOpacity>
-              </View>
+                  오 전
+                </Text>
+              </TouchableOpacity>
             </View>
+            <View style={{ flex: 5, alignItems: "center" }}>
+              <TouchableOpacity activeOpacity={0.8} onPress={this.onPress_apm2}>
+                <Text
+                  style={this.state.apm === "오후" ? styles.apm2 : styles.apm1}
+                >
+                  오 후
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
 
-            <View style={{ flex: 2 }}></View>
-
-            <View style={styles.threeview}>
+          <DateTimePickerModal
+            isVisible={this.state.isDatePickerVisible}
+            mode="time"
+            date={this.state.pickdate}
+            onConfirm={this.handleConfirm}
+            onCancel={this.hideDatePicker}
+          />
+          <View style={styles.twoview}>
+            <View>
               <TouchableOpacity
-                onPress={() => {
-                  this.props.navigation.pop();
-                }}
+                activeOpacity={0.8}
+                onPress={this.showDatePicker}
               >
-                <WithLocalSvg width={90} height={90} asset={nosvg} />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={this.addalarm}>
-                <WithLocalSvg width={90} height={90} asset={plussvg} />
+                <Text style={styles.time1}>{this.state.hour}</Text>
               </TouchableOpacity>
             </View>
+            <View>
+              <Text style={styles.time1}>:</Text>
+            </View>
+            <View>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={this.showDatePicker}
+              >
+                <Text style={styles.time1}>{this.state.minute}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View style={styles.threeview}>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.pop();
+              }}
+            >
+              <WithLocalSvg
+                width={responsiveScreenWidth(20)}
+                height={responsiveScreenWidth(20)}
+                asset={nosvg}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.addalarm}>
+              <WithLocalSvg
+                width={responsiveScreenWidth(20)}
+                height={responsiveScreenWidth(20)}
+                asset={plussvg}
+              />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -267,107 +256,96 @@ export default class alarm_add extends Component {
 
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
-  marginView: {
+  menuView: {
+    marginTop: "5.1%",
+    backgroundColor: "#FFFFFF",
+    height: "8.5%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    borderBottomWidth: 1.8,
+    borderColor: "#E5E5E5",
+    paddingRight: "5%",
+    paddingLeft: "5%",
+  },
+
+  titleText: {
+    alignItems: "flex-start",
+    fontSize: responsiveScreenFontSize(2.48),
+    alignItems: "center",
+    color: "#000000",
+    justifyContent: "center",
+    fontWeight: "bold",
+  },
+
+  margin: {
+    alignItems: "flex-start",
+    justifyContent: "center",
     flex: 1,
   },
+
   apm1: {
-    fontSize: 23,
+    fontSize: responsiveScreenFontSize(2.8),
     fontWeight: "bold",
     color: "#B5B5B5",
   },
 
   apm2: {
-    fontSize: 23,
+    fontSize: responsiveScreenFontSize(2.8),
     fontWeight: "bold",
     color: "#000000",
   },
 
   time1: {
-    fontSize: 39,
-    color: "#000000",
-  },
-
-  time2: {
-    fontSize: 39,
+    fontSize: responsiveScreenFontSize(5),
     color: "#000000",
   },
 
   threeview: {
-    padding: "3%",
-    marginTop: "3%",
+    marginLeft: "10%",
+    marginRight: "10%",
+    marginTop: "20%",
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "flex-start",
-  },
-
-  menuView: {
-    backgroundColor: "#FFFFFF",
-    height: 58,
-    flexDirection: "row",
-    alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
-    marginTop: "3%",
-    justifyContent: "flex-start",
-    borderBottomWidth: 1.8,
-    borderColor: "#E5E5E5",
-  },
-  margin: {
-    // padding:30,
-    alignItems: "flex-start",
-    justifyContent: "center",
-    flex: 1,
-  },
-
-  titleText: {
-    alignItems: "flex-start",
-    fontSize: 21,
-    alignItems: "center",
-    color: "#000000",
-    justifyContent: "center",
-    fontWeight: "bold",
   },
 
   firstView: {
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
-    padding: "3%",
+    padding: "3.1%",
     borderColor: "#E0E0E0",
     borderRadius: 6,
     borderWidth: 2,
-    marginBottom: "4%",
+    marginLeft: "4.7%",
+    marginRight: "4.7%",
+    marginTop: "15%",
+    marginBottom: "6.7%",
     backgroundColor: "#ffffff",
-    height: "15%",
+    height: responsiveScreenHeight(10.3),
   },
+
+  twoview: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    padding: "3.1%",
+    borderColor: "#E0E0E0",
+    borderRadius: 6,
+    borderWidth: 2,
+    marginLeft: "4.7%",
+    marginRight: "4.7%",
+    backgroundColor: "#ffffff",
+    height: responsiveScreenHeight(15),
+  },
+
   secondView: {
     backgroundColor: "#F8F8F8",
     height: "100%",
-  },
-
-  text1View: {
-    padding: 15,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  margin1: {
-    width: "90%",
-    borderBottomWidth: 1,
-    borderColor: "#E0E0E0",
-  },
-  text2: {
-    fontSize: 23,
-    fontWeight: "bold",
-    borderColor: "#E0E0E0",
-    color: "#B5B5B5",
-  },
-  text2_on: {
-    fontSize: 23,
-    fontWeight: "bold",
-    borderColor: "#E0E0E0",
-    color: "#000000",
   },
 });

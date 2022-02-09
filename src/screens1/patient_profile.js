@@ -1,14 +1,6 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Alert,
+import { StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
 
-} from "react-native";
-
-import Context from "../Context/context";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
@@ -19,14 +11,10 @@ import {
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
 
-var myHeaders = new Headers();
-myHeaders.append(
-  "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDQwNjU1MzYsImV4cCI6MTY0NDY3MDMzNn0.mnbGyKlMHvwdVFQJRPmgTxMGB966ITczMTA_p4E4lWSRb2DYoOlwW1mrPGapPRkf6h4hyZIIUgfrs1yIqInOJg"
-);
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 export default class patient_profile extends Component {
-  static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {
@@ -39,10 +27,13 @@ export default class patient_profile extends Component {
     };
   }
 
-  user_info = () => {
+  user_info = (user_token) => {
     fetch("http://hccparkinson.duckdns.org:19737/chamuser", {
       method: "GET",
-      headers: myHeaders,
+      headers: {
+        Authorization: "Bearer " + user_token.slice(1, -1),
+        "Content-Type": "application/json",
+      },
     })
       .then((res) => res.json())
       .then((json) => {
@@ -57,8 +48,10 @@ export default class patient_profile extends Component {
       });
   };
 
-  componentDidMount() {
-    this.user_info();
+  async componentDidMount() {
+    const user_token = await AsyncStorage.getItem("@user_token");
+    
+    this.user_info(user_token);
   }
 
   logout = () => {

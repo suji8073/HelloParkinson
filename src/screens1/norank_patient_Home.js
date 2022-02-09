@@ -20,12 +20,6 @@ import fignthingsvg from "../icon/fighting.svg";
 import backgroud_image from "../icon/background_image2.svg";
 import Context from "../Context/context";
 
-var myHeaders = new Headers();
-myHeaders.append(
-  "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFtIiwiUm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDQwNjU1MzYsImV4cCI6MTY0NDY3MDMzNn0.mnbGyKlMHvwdVFQJRPmgTxMGB966ITczMTA_p4E4lWSRb2DYoOlwW1mrPGapPRkf6h4hyZIIUgfrs1yIqInOJg"
-);
-
 export default class norank_patient_Home extends Component {
   static contextType = Context;
   constructor(props) {
@@ -46,16 +40,18 @@ export default class norank_patient_Home extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const user_token = await AsyncStorage.getItem("@user_token");
+
     // 환자 총 진도율 가져오는 API
-    this.userfunc();
-    this.findname();
+    this.userfunc(user_token);
+    this.findname(user_token);
   }
-  userfunc = () => {
+  userfunc = (user_token) => {
     fetch("http://152.70.233.113/chamuser?sort=prog", {
       method: "GET",
       headers: {
-        Accept: "application/json",
+        Authorization: "Bearer " + user_token.slice(1, -1),
         "Content-Type": "application/json",
       },
     })
@@ -67,11 +63,11 @@ export default class norank_patient_Home extends Component {
       });
   };
 
-  findname = () => {
+  findname = (user_token) => {
     fetch("http://152.70.233.113/chamuser/uid/" + this.context.user_id, {
       method: "GET",
       headers: {
-        Accept: "application/json",
+        Authorization: "Bearer " + user_token.slice(1, -1),
         "Content-Type": "application/json",
       },
     })
