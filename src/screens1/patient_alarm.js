@@ -6,6 +6,7 @@ import {
   Text,
   FlatList,
   ScrollView,
+  StatusBar,
 } from "react-native";
 import Task from "./task_alarm";
 
@@ -63,6 +64,7 @@ export default class patient_alarm extends Component {
   render() {
     return (
       <View style={styles.finalView}>
+        <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
         <View style={styles.menuView}>
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>나의 운동 알림</Text>
@@ -125,7 +127,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   menuView: {
-    marginTop: "5.1%",
     backgroundColor: "#FFFFFF",
     height: "8.5%",
     flexDirection: "row",

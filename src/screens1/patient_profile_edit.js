@@ -5,7 +5,7 @@ import {
   Text,
   Alert,
   TextInput,
-  ScrollView,
+  StatusBar,
 } from "react-native";
 
 import { WithLocalSvg } from "react-native-svg";
@@ -15,6 +15,17 @@ import { AntDesign } from "@expo/vector-icons";
 import nocheck from "../icon/radio_btn_nocheck.svg";
 import check from "../icon/radio_button_check.svg";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const storeData = async (data) => {
+  try {
+    await AsyncStorage.setItem("@user_data", JSON.stringify(data));
+    console.log("data_ clear");
+  } catch (e) {
+    // saving error
+    console.log("data _ error");
+  }
+};
 
 //////카메라 권한
 import { PermissionsAndroid, Platform } from "react-native";
@@ -44,8 +55,6 @@ import {
   responsiveScreenWidth,
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
-
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default class patient_profile_edit extends Component {
   constructor(props) {
@@ -176,6 +185,7 @@ export default class patient_profile_edit extends Component {
   };
 
   edit_finish = () => {
+    const user_token = AsyncStorage.getItem("@user_token");
     Alert.alert("프로필을 수정할까요?", "", [
       {
         text: "취 소",
@@ -195,8 +205,13 @@ export default class patient_profile_edit extends Component {
           } else {
             Alert.alert("수정되었습니다.");
 
-            // this.context.changePW(this.state.user_pw);
-            // db비밀번호 변경, context비밀번호 변
+            var user_data = {
+              name: this.state.name,
+              ID: this.state.UID,
+              PW: this.state.user_pw,
+            };
+            storeData(user_data);
+
             this.state.user_pw === ""
               ? this.edit_update(user_token)
               : this.edit_pw_update(user_token);
@@ -253,6 +268,7 @@ export default class patient_profile_edit extends Component {
   render() {
     return (
       <View style={styles.finalView}>
+        <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
         <View style={styles.menuView}>
           <AntDesign
             name="left"
@@ -434,7 +450,6 @@ const styles = StyleSheet.create({
   },
 
   menuView: {
-    marginTop: "5.1%",
     backgroundColor: "#FFFFFF",
     height: "8.5%",
     flexDirection: "row",

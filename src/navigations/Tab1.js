@@ -18,7 +18,6 @@ const menuIcon1 = ({ name, size, color }) => {
 
 import {
   responsiveScreenHeight,
-  responsiveScreenWidth,
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
 
@@ -47,7 +46,6 @@ export default function TabNavigation1({ route, navigation }) {
         options={{
           headerShown: false,
           tabBarLabel: "홈",
-          size: "10%",
           headerTitleAlign: "center",
           tabBarLabelStyle: {
             fontSize: responsiveScreenFontSize(2),

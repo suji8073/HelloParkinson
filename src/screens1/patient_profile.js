@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
+import {
+  StyleSheet,
+  StatusBar,
+  View,
+  Text,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -13,6 +20,16 @@ import {
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+const clear = async () => {
+  try {
+    await AsyncStorage.clear();
+    console.log("logout");
+  } catch (e) {
+    // saving error
+    console.log("token_error");
+    console.log(e);
+  }
+};
 
 export default class patient_profile extends Component {
   constructor(props) {
@@ -50,7 +67,7 @@ export default class patient_profile extends Component {
 
   async componentDidMount() {
     const user_token = await AsyncStorage.getItem("@user_token");
-    
+
     this.user_info(user_token);
   }
 
@@ -64,6 +81,7 @@ export default class patient_profile extends Component {
         cancelable: true,
         text: "로그아웃",
         onPress: () => {
+          clear();
           this.props.navigation.navigate("login");
         },
       },
@@ -73,6 +91,7 @@ export default class patient_profile extends Component {
   render() {
     return (
       <View style={styles.finalView}>
+        <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
         <View style={styles.menuView}>
           <AntDesign
             name="left"
@@ -184,7 +203,6 @@ const styles = StyleSheet.create({
   },
 
   menuView: {
-    marginTop: "5.1%",
     backgroundColor: "#FFFFFF",
     height: "8.5%",
     flexDirection: "row",

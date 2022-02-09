@@ -21,14 +21,14 @@ import page_here from "../icon/page_here.svg";
 import page_no from "../icon/page_no.svg";
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import SimplePopupMenu from "react-native-simple-popup-menu";
 import { MaterialIcons } from "@expo/vector-icons";
 
-var myHeaders = new Headers();
-myHeaders.append(
-  "Authorization",
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiUm9sZXMiOlsiUk9MRV9NQU5BR0VSIl0sImlzcyI6IkhDQyBMYWIiLCJpYXQiOjE2NDMyODk0MzAsImV4cCI6MTY0Mzg5NDIzMH0.XJFkawo8_s4okjavnlT1zVzs9nep6rqlMOCAVqmbloNqyf6BzLYen_Mk4JLhSY3jEP-ogqqIxD6CQO1FAFd-zg"
-);
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
 
 var sum_progress = 0;
 var sum_progress_m = 0;
@@ -64,17 +64,20 @@ export default class user_statistics extends Component {
     }
   };
 
-  //http://hccparkinson.duckdns.org:19737/onlymanager/progress/user/cat/period/2021-01-12?uid=suji&day=7
-  user_cat_day = (date) => {
+  ///onlymanager/progress/cat/user/{유저아이디}?date=YYYY-MM-DD&&day=조
+  user_cat_day = (manager_token, date) => {
     fetch(
-      "http://hccparkinson.duckdns.org:19737/onlymanager/progress/user/cat/period/" +
-        date +
-        "?uid=" +
+      "http://hccparkinson.duckdns.org:19737/onlymanager/progress/cat/user/" +
         this.props.route.params.id +
+        "?date=" +
+        date +
         "&day=7",
       {
         method: "GET",
-        headers: myHeaders,
+        headers: {
+          Authorization: "Bearer " + manager_token.slice(1, -1),
+          "Content-Type": "application/json",
+        },
       }
     )
       .then((res) => res.json())
@@ -99,22 +102,26 @@ export default class user_statistics extends Component {
   };
 
   //유저 일주일치 그래프 정보 불러오기
-  //http://hccparkinson.duckdns.org:19737/onlymanager/progress/user/period/2021-01-12?uid=suji&day=7
-  user_week_day = (date) => {
+  ///onlymanager/progress/user/{유저아이디}?date=YYYY-MM-DD&&day=조회할기간
+  user_week_day = (manager_token, date) => {
     var data_array = [];
     fetch(
-      "http://hccparkinson.duckdns.org:19737/onlymanager/progress/user/period/" +
-        date +
-        "?uid=" +
+      "http://hccparkinson.duckdns.org:19737/onlymanager/progress/user/" +
         this.props.route.params.id +
+        "?date=" +
+        date +
         "&day=7",
       {
         method: "GET",
-        headers: myHeaders,
+        headers: {
+          Authorization: "Bearer " + String(manager_token).slice(1, -1),
+          "Content-Type": "application/json",
+        },
       }
     )
       .then((res) => res.json())
       .then((json) => {
+        console.log(json);
         console.log(json.data.length);
 
         if (json.data.length === 0) {
@@ -150,8 +157,6 @@ export default class user_statistics extends Component {
           }
         }
 
-        console.log(data_array);
-
         this.setState({ data: data_array.reverse() });
 
         this.setState({ sum_p: 0 });
@@ -186,7 +191,7 @@ export default class user_statistics extends Component {
   };
 
   //http://hccparkinson.duckdns.org:19737/onlymanager/progress/user/period/2021-01-12?uid=suji&day=30
-  user_month = (date) => {
+  user_month = (manager_token, date) => {
     var data_array = [];
     var lastDate = "";
     if (date == this.date_change(new Date())) lastDate = date.substring(8, 10);
@@ -205,7 +210,10 @@ export default class user_statistics extends Component {
         lastDate,
       {
         method: "GET",
-        headers: myHeaders,
+        headers: {
+          Authorization: "Bearer " + manager_token.slice(1, -1),
+          "Content-Type": "application/json",
+        },
       }
     )
       .then((res) => res.json())
@@ -246,22 +254,30 @@ export default class user_statistics extends Component {
       });
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    const manager_token = await AsyncStorage.getItem("@manager_token");
+
     var today = this.date_change(new Date());
-    this.user_info();
-    this.user_week_day(today);
-    this.user_cat_day(today);
-    this.user_month(today);
+    this.user_info(manager_token);
+
+    console.log(today);
+    this.user_week_day(manager_token, today);
+    console.log(manager_token);
+    this.user_cat_day(manager_token, today);
+    this.user_month(manager_token, today);
   }
 
   //환자 정보 가져오는 엔드포인트
-  user_info = () => {
+  user_info = (manager_token) => {
     fetch(
       "http://hccparkinson.duckdns.org:19737/onlymanager/uid/" +
         this.props.route.params.id,
       {
         method: "GET",
-        headers: myHeaders,
+        headers: {
+          Authorization: "Bearer " + manager_token.slice(1, -1),
+          "Content-Type": "application/json",
+        },
       }
     )
       .then((res) => res.json())
@@ -296,13 +312,14 @@ export default class user_statistics extends Component {
   };
 
   handleConfirm = (date) => {
+    const manager_token = AsyncStorage.getItem("@manager_token");
     console.warn("A date has been picked: ", date);
     this.hideDatePicker();
     var today = this.date_change(date);
 
-    this.user_week_day(today);
-    this.user_cat_day(today);
-    this.user_month(today);
+    this.user_week_day(manager_token, today);
+    this.user_cat_day(manager_token, today);
+    this.user_month(manager_token, today);
   };
 
   date_change = (date) => {
@@ -500,8 +517,29 @@ export default class user_statistics extends Component {
 }
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
+  },
+  menuView: {
+    backgroundColor: "#FFFFFF",
+    height: "8.5%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    borderBottomWidth: 1.8,
+    borderColor: "#E5E5E5",
+    paddingRight: "5%",
+    paddingLeft: "5%",
+  },
+
+  titleText: {
+    alignItems: "flex-start",
+    fontSize: responsiveScreenFontSize(2.48),
+    alignItems: "center",
+    color: "#000000",
+    justifyContent: "center",
+    fontWeight: "bold",
   },
 
   page_location: { flexDirection: "row" },
@@ -527,27 +565,6 @@ const styles = StyleSheet.create({
   },
   pp_margin: {
     flex: 0.5,
-  },
-  menuView: {
-    backgroundColor: "#FFFFFF",
-    height: 58,
-    flexDirection: "row",
-    alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
-    marginTop: "3%",
-    justifyContent: "flex-start",
-    borderBottomWidth: 1.8,
-    borderColor: "#E5E5E5",
-  },
-
-  titleText: {
-    alignItems: "flex-start",
-    fontSize: 21,
-    alignItems: "center",
-    color: "#000000",
-    justifyContent: "center",
-    fontWeight: "bold",
   },
 
   user_name: {

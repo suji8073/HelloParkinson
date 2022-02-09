@@ -1,16 +1,6 @@
 import React, { Component } from "react";
-import {
-  Button,
-  StatusBar,
-  TouchableOpacity,
-  Text,
-  FlatList,
-  View,
-  StyleSheet,
-  Touchable,
-} from "react-native";
+import { Text, FlatList, View, StyleSheet, Touchable } from "react-native";
 import Context from "../Context/context";
-import { ScrollView } from "react-native-gesture-handler";
 import ActionButton from "react-native-action-button";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -19,9 +9,13 @@ import { WithLocalSvg } from "react-native-svg";
 import Task from "./task_progress";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 import { Entypo } from "@expo/vector-icons";
-import PercentageBar from "../screens/progressbar";
-import movelist from "./movelist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
 
 const items = [
   { id: 1, label: "신장 운동" },
@@ -113,7 +107,7 @@ export default class progress extends Component {
 
     fetch(
       "http://hccparkinson.duckdns.org:19737/onlymanager/uid/" +
-        this.props.route.params.paramName1,
+        this.props.route.params.id,
       {
         method: "GET",
         headers: {
@@ -124,6 +118,7 @@ export default class progress extends Component {
     )
       .then((res) => res.json())
       .then((json) => {
+        console.log(json);
         this.setState({
           birth: json.data[0].birthday,
           gender: json.data[0].gender == "F" ? "여" : "남",
@@ -215,7 +210,11 @@ export default class progress extends Component {
               }}
             >
               <Text
-                style={{ marginBottom: 10, fontSize: 23, fontWeight: "bold" }}
+                style={{
+                  marginBottom: 10,
+                  fontSize: responsiveScreenFontSize(2.48),
+                  fontWeight: "bold",
+                }}
               >
                 {this.state.name} /{" "}
                 {this.state.year - parseInt(this.state.birth / 10000)} /{" "}
@@ -410,25 +409,25 @@ export default class progress extends Component {
 
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
+    height: responsiveScreenHeight(100),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
   menuView: {
     backgroundColor: "#FFFFFF",
-    height: 58,
+    height: "8.5%",
     flexDirection: "row",
     alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
-    marginTop: "3%",
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
+    paddingRight: "5%",
+    paddingLeft: "5%",
   },
 
   titleText: {
     alignItems: "flex-start",
-    fontSize: 20,
+    fontSize: responsiveScreenFontSize(2.48),
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
@@ -458,8 +457,7 @@ const styles = StyleSheet.create({
   },
   plusbtn: {
     position: "absolute",
-    left: "80%",
-    bottom: "8%",
+    bottom: "10%",
   },
   threeView: {
     // padding:30,
@@ -478,21 +476,25 @@ const styles = StyleSheet.create({
     borderColor: "#EAEAEA",
   },
   movetext: {
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     marginBottom: "5%",
     color: "#484848",
   },
-  movetitletext: { fontSize: 17, fontWeight: "bold", marginBottom: "5%" },
+  movetitletext: {
+    fontSize: responsiveScreenFontSize(2),
+    fontWeight: "bold",
+    marginBottom: "5%",
+  },
   successtext: {
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
   },
   numtext: {
-    fontSize: 21,
+    fontSize: responsiveScreenFontSize(2.48),
     fontWeight: "bold",
     alignItems: "center",
   },
   gaetext: {
-    fontSize: 16,
+    fontSize: responsiveScreenFontSize(1.88),
     marginLeft: "2%",
     alignItems: "flex-end",
   },

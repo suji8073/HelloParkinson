@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   FlatList,
+  StatusBar,
 } from "react-native";
 import Task from "./task_yusanso";
 
@@ -22,7 +23,6 @@ import {
   responsiveScreenWidth,
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
-
 
 const storeData = async (value1, value2) => {
   try {
@@ -114,6 +114,7 @@ export default class move_5 extends Component {
   render() {
     return (
       <View style={styles.finalView}>
+        <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
         <View style={styles.menuView}>
           <AntDesign
             name="left"
@@ -186,7 +187,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   menuView: {
-    marginTop: "5.1%",
     backgroundColor: "#FFFFFF",
     height: "8.5%",
     flexDirection: "row",

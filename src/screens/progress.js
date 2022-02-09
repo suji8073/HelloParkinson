@@ -5,7 +5,7 @@ import {
   View,
   Text,
   FlatList,
-  Alert,
+  StatusBar,
 } from "react-native";
 import { WithLocalSvg } from "react-native-svg";
 import dayjs from "dayjs";
@@ -16,6 +16,14 @@ import { Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import SimplePopupMenu from "react-native-simple-popup-menu";
 import Context from "../Context/context";
+
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
+
 const m_items = [
   { id: "1", label: "1월" },
   { id: "2", label: "2월" },
@@ -391,6 +399,7 @@ export default class progress extends Component {
   render() {
     return (
       <View style={styles.finalView}>
+        <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
         <View style={styles.menuView}>
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>환자 진도율</Text>
@@ -416,7 +425,9 @@ export default class progress extends Component {
             }}
             onCancel={() => console.log("onCancel")}
           >
-            <Text style={{ fontSize: 21 }}>{this.state.month} 월</Text>
+            <Text style={{ fontSize: responsiveScreenFontSize(2.48) }}>
+              {this.state.month} 월
+            </Text>
           </SimplePopupMenu>
         </View>
 
@@ -529,6 +540,7 @@ export default class progress extends Component {
 
         <View style={styles.fouuview}>
           <FlatList
+            style={styles.FlatList}
             keyExtractor={(item, index) => index.toString()}
             data={this.state.data_final}
             renderItem={({ item }) => {
@@ -562,24 +574,25 @@ export default class progress extends Component {
 }
 const styles = StyleSheet.create({
   finalView: {
-    flex: 1,
+    height: responsiveScreenHeight(88),
+    width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",
   },
   menuView: {
     backgroundColor: "#FFFFFF",
-    height: 58,
+    height: "8.5%",
     flexDirection: "row",
     alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
-    marginTop: "10%",
     justifyContent: "flex-start",
     borderBottomWidth: 1.8,
     borderColor: "#E5E5E5",
+    paddingRight: "5%",
+    paddingLeft: "5%",
   },
+
   titleText: {
     alignItems: "flex-start",
-    fontSize: 20,
+    fontSize: responsiveScreenFontSize(2.48),
     alignItems: "center",
     color: "#000000",
     justifyContent: "center",
@@ -587,11 +600,14 @@ const styles = StyleSheet.create({
   },
   fouuview: {
     paddingTop: 10,
-    marginBottom: 295,
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
     backgroundColor: "#ffffff",
+    height: responsiveScreenHeight(51.7),
+  },
+  FlatList: {
+    marginBottom: responsiveScreenHeight(5),
   },
   firstView: {
     // padding:30,
@@ -613,25 +629,25 @@ const styles = StyleSheet.create({
   },
   nexttext1: {
     fontWeight: "bold",
-    fontSize: 15,
+    fontSize: responsiveScreenFontSize(1.76),
     color: "#B5B5B5",
     paddingBottom: "2%",
   },
   ddaytext1: {
     fontWeight: "bold",
-    fontSize: 15,
+    fontSize: responsiveScreenFontSize(1.76),
     color: "#FFFFFF",
     paddingBottom: "2%",
   },
   lasttext1: {
     fontWeight: "bold",
-    fontSize: 15,
+    fontSize: responsiveScreenFontSize(1.76),
     color: "#484848",
     paddingBottom: "2%",
   },
   lasttext: {
     fontWeight: "bold",
-    fontSize: 15,
+    fontSize: responsiveScreenFontSize(1.76),
     color: "#484848",
     // paddingBottom: "2%",
   },
@@ -651,12 +667,12 @@ const styles = StyleSheet.create({
   },
   nexttext: {
     fontWeight: "bold",
-    fontSize: 15,
+    fontSize: responsiveScreenFontSize(1.76),
     color: "#B5B5B5", // paddingBottom: "2%",
   },
   ddaytext: {
     fontWeight: "bold",
-    fontSize: 15,
+    fontSize: responsiveScreenFontSize(1.76),
     color: "#FFFFFF",
     // borderRadius: 19,
   },
