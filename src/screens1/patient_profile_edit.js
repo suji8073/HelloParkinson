@@ -76,16 +76,18 @@ export default class patient_profile_edit extends Component {
       M: "남",
       F: "여",
       post_rank: true,
+      token: "",
     };
   }
 
   async componentDidMount() {
     const user_token = await AsyncStorage.getItem("@user_token");
+    this.setState({ token: user_token });
 
     fetch("http://hccparkinson.duckdns.org:19737/chamuser", {
       method: "GET",
       headers: {
-        Authorization: "Bearer " + user_token.slice(1, -1),
+        Authorization: "Bearer " + String(this.state.token).slice(1, -1),
         "Content-Type": "application/json",
       },
     })
@@ -112,7 +114,7 @@ export default class patient_profile_edit extends Component {
     fetch("http://hccparkinson.duckdns.org:19737/chamuser", {
       method: "PUT",
       headers: {
-        Authorization: "Bearer " + user_token.slice(1, -1),
+        Authorization: "Bearer " + String(user_token).slice(1, -1),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -136,7 +138,7 @@ export default class patient_profile_edit extends Component {
     fetch("http://hccparkinson.duckdns.org:19737/chamuser", {
       method: "PUT",
       headers: {
-        Authorization: "Bearer " + user_token.slice(1, -1),
+        Authorization: "Bearer " + String(user_token).slice(1, -1),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -185,7 +187,6 @@ export default class patient_profile_edit extends Component {
   };
 
   edit_finish = () => {
-    const user_token = AsyncStorage.getItem("@user_token");
     Alert.alert("프로필을 수정할까요?", "", [
       {
         text: "취 소",
@@ -213,8 +214,8 @@ export default class patient_profile_edit extends Component {
             storeData(user_data);
 
             this.state.user_pw === ""
-              ? this.edit_update(user_token)
-              : this.edit_pw_update(user_token);
+              ? this.edit_update(this.state.token)
+              : this.edit_pw_update(this.state.token);
 
             this.props.navigation.navigate("patient_profile");
           }

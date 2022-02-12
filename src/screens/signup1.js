@@ -86,7 +86,7 @@ export default class siginup1 extends Component {
         </View>
         <View>
           <Text style={styles.titleText}>
-            헬로우 파킨슨이 처음이시군요.{"\n"}
+            파킨슨 운동일기가 처음이시군요.{"\n"}
             <Text style={styles.point}>약관내용에 동의</Text>해주세요.
           </Text>
         </View>

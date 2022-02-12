@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, TouchableOpacity,StatusBar } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  StatusBar,
+} from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
@@ -22,7 +28,6 @@ import walk_play from "../icon/walk_play.svg";
 import walk_stop from "../icon/walk_stop.svg";
 
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
-
 
 const storeData = async (value1, value2) => {
   try {
@@ -189,7 +194,9 @@ export default class yusanso_1 extends Component {
                   style={{ marginBottom: "2%" }}
                 />
               </TouchableOpacity>
-              <Text style={styles.tttext}>일시중지</Text>
+              <Text style={styles.tttext}>
+                {this.state.play === false ? "시작" : "일시중지"}
+              </Text>
             </View>
 
             <View style={styles.margin1}></View>

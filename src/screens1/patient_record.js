@@ -47,6 +47,7 @@ export default class patient_record extends Component {
       setShow: false,
       data2: [], // 하루 당 꺾은선 그래프
       data_: [], // 한달치 막대그래프
+      token: "",
     };
   }
 
@@ -66,7 +67,7 @@ export default class patient_record extends Component {
       {
         method: "GET",
         headers: {
-          Authorization: "Bearer " + user_token.slice(1, -1),
+          Authorization: "Bearer " + String(user_token).slice(1, -1),
           "Content-Type": "application/json",
         },
       }
@@ -93,6 +94,8 @@ export default class patient_record extends Component {
   };
 
   user_week_day = (date, user_token) => {
+    console.log(date);
+    console.log(user_token);
     var data_array = [];
     fetch(
       "http://hccparkinson.duckdns.org:19737/progress/personal/period/" +
@@ -101,12 +104,15 @@ export default class patient_record extends Component {
       {
         method: "GET",
         headers: {
-          Authorization: "Bearer " + user_token.slice(1, -1),
+          Authorization: "Bearer " + String(user_token).slice(1, -1),
           "Content-Type": "application/json",
         },
       }
     )
       .then((res) => res.json())
+      .catch((error) => {
+        console.error(error);
+      })
       .then((json) => {
         for (let i = 0; i < json.data.length; i++) {
           data_array.push(json.data[i]);
@@ -178,7 +184,7 @@ export default class patient_record extends Component {
       {
         method: "GET",
         headers: {
-          Authorization: "Bearer " + user_token.slice(1, -1),
+          Authorization: "Bearer " + String(user_token).slice(1, -1),
           "Content-Type": "application/json",
         },
       }
@@ -225,14 +231,31 @@ export default class patient_record extends Component {
 
   async componentDidMount() {
     const user_token = await AsyncStorage.getItem("@user_token");
+    this.setState({
+      token: user_token,
+    });
 
     var today = this.date_change(new Date());
-    this.user_week_day(today, user_token);
-    this.user_cat_day(today, user_token);
-    this.user_month(today, user_token);
+    console.log(today);
+    this.user_week_day(today, this.state.token);
+    this.user_cat_day(today, this.state.token);
+    this.user_month(today, this.state.token);
   }
 
+  handleConfirm = (date) => {
+    console.warn("A date has been picked: ", date);
+    this.hideDatePicker();
+    var today = this.date_change(date);
+
+    console.log(today);
+
+    this.user_week_day(today, this.state.token);
+    this.user_cat_day(today, this.state.token);
+    this.user_month(today, this.state.token);
+  };
+
   showDatePicker = () => {
+    console.log("클릭됨");
     this.setState({ setDatePickerVisibility: true, isDatePickerVisible: true });
   };
 
@@ -241,16 +264,6 @@ export default class patient_record extends Component {
       setDatePickerVisibility: false,
       isDatePickerVisible: false,
     });
-  };
-
-  handleConfirm = (date) => {
-    console.warn("A date has been picked: ", date);
-    this.hideDatePicker();
-    var today = this.date_change(date);
-
-    this.user_week_day(today, user_token);
-    this.user_cat_day(today, user_token);
-    this.user_month(today, user_token);
   };
 
   date_change = (date) => {

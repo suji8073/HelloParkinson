@@ -196,7 +196,10 @@ export default class yusanso_2 extends Component {
                   style={{ marginBottom: "2%" }}
                 />
               </TouchableOpacity>
-              <Text style={styles.tttext}>일시중지</Text>
+              <Text style={styles.tttext}>
+                {" "}
+                {this.state.play === false ? "시작" : "일시중지"}
+              </Text>
             </View>
 
             <View style={styles.margin1}></View>

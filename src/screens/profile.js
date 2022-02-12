@@ -16,6 +16,17 @@ import {
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
 
+const clear = async () => {
+  try {
+    await AsyncStorage.clear();
+    console.log("logout");
+  } catch (e) {
+    // saving error
+    console.log("token_error");
+    console.log(e);
+  }
+};
+
 export default class profile extends Component {
   static contextType = Context;
   constructor(props) {
@@ -37,6 +48,7 @@ export default class profile extends Component {
         cancelable: true,
         text: "로그아웃",
         onPress: () => {
+          clear();
           this.props.navigation.navigate("login");
         },
       },

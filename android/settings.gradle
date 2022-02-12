@@ -1,4 +1,4 @@
-rootProject.name = '헬로우파킨슨'
+rootProject.name = '파킨슨운동일기'
 
 apply from: '../node_modules/react-native-unimodules/gradle.groovy'
 includeUnimodulesProjects()

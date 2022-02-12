@@ -82,7 +82,9 @@ export default class move_1 extends Component {
             style={{ fontSize: responsiveScreenFontSize(3) }}
             color="#808080"
             onPress={() => {
-              this.props.navigation.navigate("TabNavigation1");
+              this.props.navigation.navigate("TabNavigation1", {
+                init_set: "move",
+              });
             }}
           />
           <View style={styles.margin}></View>
