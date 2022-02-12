@@ -160,15 +160,17 @@ export default class move_play extends Component {
 
   params_move = () => {
     var params_array = this.state.list;
+    console.log(this.props.route.params.eid);
 
     if (
-      this.props.route.params.eid === 12 &&
-      this.props.route.params.eid === 26 &&
-      this.props.route.params.eid === 31 &&
+      this.props.route.params.eid === 12 ||
+      this.props.route.params.eid === 26 ||
+      this.props.route.params.eid === 31 ||
       this.props.route.params.eid === 45
-    )
+    ) {
       this.setState({ next_name: "" });
-    else {
+      console.log("여기일까?");
+    } else {
       params_array.map((x) => {
         if (x.eid === this.props.route.params.eid + 1) {
           this.setState({
@@ -211,8 +213,10 @@ export default class move_play extends Component {
       if (this.state.done_num >= this.state.assign_num) {
         this.save_progress(this.state.token);
 
-        if (this.next_name === "") this.where_page();
-        else this.where_move_go();
+        if (this.state.next_name === "") {
+          console.log("다음카테고리로");
+          this.where_page();
+        } else this.where_move_go();
       } else {
         this.save_progress(this.state.token);
         this.props.navigation.reset({

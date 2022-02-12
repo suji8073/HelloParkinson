@@ -75,7 +75,7 @@ export default class patient_Home extends Component {
             color="#ffffff"
           />
           <View style={styles.margin}></View>
-          <Text style={styles.titleText}>헬로우 파킨슨</Text>
+          <Text style={styles.titleText}>파킨슨 운동일기</Text>
           <View style={styles.margin}></View>
 
           <TouchableOpacity

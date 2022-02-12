@@ -127,9 +127,13 @@ export default class login extends Component {
               storeToken(json.data[0].token);
               if (json.data[0].manager == false) {
                 if (json.data[0].ranking == 1) {
-                  this.props.navigation.navigate("TabNavigation1");
+                  this.props.navigation.navigate("TabNavigation1", {
+                    init_set: "Home",
+                  });
                 } else {
-                  this.props.navigation.navigate("TabNavigation2", {});
+                  this.props.navigation.navigate("TabNavigation2", {
+                    init_set: "Home",
+                  });
                 }
 
                 console.log("로그인 통신 확인");
@@ -174,7 +178,7 @@ export default class login extends Component {
               />
 
               <Text style={styles.titleText}>
-                {"안녕하세요.\n헬로우 파킨슨 입니다."}
+                {"안녕하세요.\n 파킨슨 운동일기 입니다."}
               </Text>
 
               <Text style={styles.twoText}>

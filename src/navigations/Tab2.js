@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import norank_patient_Home from "../screens1/norank_patient_Home";
 import patient_Home from "../screens1/patient_Home";
@@ -24,82 +24,93 @@ const menuIcon1 = ({ name, size, color }) => {
 
 const Tab = createBottomTabNavigator();
 
-export default function TabNavigation2({ route, navigation }) {
-  const name_user = route.params.paramName1;
-  return (
-    <Tab.Navigator
-      initialRouteName="norank_patient_Home"
-      screenOptions={{
-        tabBarActiveTintColor: "#5CB405",
-        tabBarInactiveTintColor: "#BBBBBB",
-        tabBarStyle: {
-          backgroundColor: "#ffffff",
-          position: "absolute",
-          borderTopColor: "#BBBBBB",
-          borderTopWidth: 1,
-          paddingBottom: "2%",
-          height: responsiveScreenHeight(12),
-        },
-      }}
-    >
-      <Tab.Screen
-        name="홈"
-        component={norank_patient_Home}
-        initialParams={{ paramsName: name_user }}
-        options={{
-          headerShown: false,
-          tabBarLabel: "홈",
-          headerTitleAlign: "center",
-          tabBarLabelStyle: {
-            fontSize: responsiveScreenFontSize(1.88),
+export default class TabNavigation extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  render() {
+    const name_user = route.params.paramName1;
+    return (
+      <Tab.Navigator
+        initialRouteName={
+          this.props.route.params.init_set == "Home"
+            ? "norank_patient_Home"
+            : "patient_alarm"
+        }
+        screenOptions={{
+          tabBarActiveTintColor: "#5CB405",
+          tabBarInactiveTintColor: "#BBBBBB",
+          tabBarStyle: {
+            backgroundColor: "#ffffff",
+            position: "absolute",
+            borderTopColor: "#BBBBBB",
+            borderTopWidth: 1,
+            paddingBottom: "2%",
+            height: responsiveScreenHeight(12),
           },
-          tabBarIcon: (props) => menuIcon1({ ...props, name: "home" }),
         }}
-      />
+      >
+        <Tab.Screen
+          name="홈"
+          component={norank_patient_Home}
+          initialParams={{ paramsName: name_user }}
+          options={{
+            headerShown: false,
+            tabBarLabel: "홈",
+            headerTitleAlign: "center",
+            tabBarLabelStyle: {
+              fontSize: responsiveScreenFontSize(1.88),
+            },
+            tabBarIcon: (props) => menuIcon1({ ...props, name: "home" }),
+          }}
+        />
 
-      <Tab.Screen
-        name="운동"
-        component={patient_move}
-        initialParams={{ paramsName: name_user }}
-        options={{
-          headerShown: false,
-          tabBarLabel: "운동",
-          headerTitleAlign: "center",
-          tabBarLabelStyle: {
-            fontSize: responsiveScreenFontSize(1.88),
-          },
-          tabBarIcon: (props) =>
-            menuIcon1({ ...props, name: "controller-play" }),
-        }}
-      />
-      <Tab.Screen
-        name="기록"
-        component={patient_record}
-        initialParams={{ paramsName: name_user }}
-        options={{
-          headerShown: false,
-          tabBarLabel: "기록",
-          headerTitleAlign: "center",
-          tabBarLabelStyle: {
-            fontSize: responsiveScreenFontSize(1.88),
-          },
-          tabBarIcon: (props) => menuIcon({ ...props, name: "podium" }),
-        }}
-      />
-      <Tab.Screen
-        name="알림"
-        component={patient_alarm}
-        initialParams={{ paramsName: name_user }}
-        options={{
-          headerShown: false,
-          tabBarLabel: "알림",
-          headerTitleAlign: "center",
-          tabBarLabelStyle: {
-            fontSize: responsiveScreenFontSize(1.88),
-          },
-          tabBarIcon: (props) => menuIcon({ ...props, name: "alarm-outline" }),
-        }}
-      />
-    </Tab.Navigator>
-  );
+        <Tab.Screen
+          name="운동"
+          component={patient_move}
+          initialParams={{ paramsName: name_user }}
+          options={{
+            headerShown: false,
+            tabBarLabel: "운동",
+            headerTitleAlign: "center",
+            tabBarLabelStyle: {
+              fontSize: responsiveScreenFontSize(1.88),
+            },
+            tabBarIcon: (props) =>
+              menuIcon1({ ...props, name: "controller-play" }),
+          }}
+        />
+        <Tab.Screen
+          name="기록"
+          component={patient_record}
+          initialParams={{ paramsName: name_user }}
+          options={{
+            headerShown: false,
+            tabBarLabel: "기록",
+            headerTitleAlign: "center",
+            tabBarLabelStyle: {
+              fontSize: responsiveScreenFontSize(1.88),
+            },
+            tabBarIcon: (props) => menuIcon({ ...props, name: "podium" }),
+          }}
+        />
+        <Tab.Screen
+          name="알림"
+          component={patient_alarm}
+          initialParams={{ paramsName: name_user }}
+          options={{
+            headerShown: false,
+            tabBarLabel: "알림",
+            headerTitleAlign: "center",
+            tabBarLabelStyle: {
+              fontSize: responsiveScreenFontSize(1.88),
+            },
+            tabBarIcon: (props) =>
+              menuIcon({ ...props, name: "alarm-outline" }),
+          }}
+        />
+      </Tab.Navigator>
+    );
+  }
 }
