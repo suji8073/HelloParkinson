@@ -214,7 +214,7 @@ export default class move_play extends Component {
         this.save_progress(this.state.token);
 
         if (this.state.next_name === "") {
-          console.log("다음카테고리로");
+          console.log("다음 카테고리로");
           this.where_page();
         } else this.where_move_go();
       } else {
@@ -414,8 +414,8 @@ const styles = StyleSheet.create({
   firstView: {
     backgroundColor: "#FFFFFF",
     height: "100%",
-    marginLeft: "5.8%",
-    marginRight: "5.8%",
+    marginLeft: responsiveScreenWidth(4.7),
+    marginRight: responsiveScreenWidth(4.7),
     marginTop: "5.8%",
   },
 
@@ -431,7 +431,8 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
-    height: responsiveScreenHeight(64.4),
+    height: responsiveScreenWidth(120),
+    borderWidth: 1,
   },
 
   white: {

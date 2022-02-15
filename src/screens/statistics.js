@@ -134,7 +134,11 @@ export default class statistics extends Component {
             }}
             onCancel={() => console.log("onCancel")}
           >
-            <Entypo name="dots-three-vertical" size={24} color="#595959" />
+            <Entypo
+              name="dots-three-vertical"
+              style={{ fontSize: responsiveScreenFontSize(3) }}
+              color="#595959"
+            />
           </SimplePopupMenu>
         </View>
 
@@ -205,36 +209,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     fontWeight: "bold",
   },
-  sTextItem: {
-    height: 50,
-    width: "100%",
-    textAlign: "center",
-    textAlignVertical: "center",
-    fontSize: 18,
-  },
-  sSearchBar: {
-    paddingHorizontal: 10,
-    margin: 10,
-    height: 50,
-    borderColor: "gray",
-    borderWidth: 1,
-    fontSize: 18,
-  },
 
-  firstView: {
-    // padding:30,
-    alignItems: "center",
-    justifyContent: "flex-start",
-    marginLeft: 20,
-    marginRight: 20,
-    flexDirection: "row",
-    flex: 1,
-    marginTop: 15,
-    marginBottom: 15,
-    backgroundColor: "#FFFFFF",
-  },
   margin: {
-    height: 300,
     alignItems: "flex-end",
     justifyContent: "center",
     flex: 1,
@@ -242,14 +218,14 @@ const styles = StyleSheet.create({
   secondView: {
     alignItems: "flex-start",
     justifyContent: "center",
-    marginTop: 10,
+    marginTop: responsiveScreenHeight(2.6),
     flexDirection: "row",
-    height: 40,
+    height: responsiveScreenHeight(5.4),
     width: "100%",
     backgroundColor: "#FFFFFF",
   },
   threeView: {
-    marginTop: 10,
+    marginTop: responsiveScreenHeight(2.6),
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
@@ -264,12 +240,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#f2f2f2",
     padding: 10,
-    width: "92%",
+    width: responsiveScreenWidth(90),
+    height: responsiveScreenHeight(5.4),
     borderRadius: 10,
   },
 
   SearchInput: {
-    marginLeft: 10,
+    marginLeft: responsiveScreenWidth(2.5),
     flex: 3,
     fontSize: responsiveScreenFontSize(1.52),
   },

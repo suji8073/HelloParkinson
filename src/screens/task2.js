@@ -23,7 +23,11 @@ export default class task2 extends Component {
   render() {
     return (
       <View style={styles.Container}>
-        <Ionicons name="person-circle-sharp" size={45} color="lightblue" />
+        <Ionicons
+          name="person-circle-sharp"
+          style={{ fontSize: responsiveScreenFontSize(6) }}
+          color="lightblue"
+        />
         <View style={styles.textgroup}>
           <Text style={styles.titleText}> {this.props.user} </Text>
           <Text style={styles.titleText}> / </Text>
@@ -32,33 +36,37 @@ export default class task2 extends Component {
           <Text style={styles.titleText}> {this.age_change()} </Text>
         </View>
         <View style={styles.margin}></View>
-        <AntDesign name="right" size={24} color="#808080" />
+        <View style={{ marginRight: responsiveScreenWidth(3.6) }}>
+          <AntDesign
+            name="right"
+            style={{ fontSize: responsiveScreenFontSize(3) }}
+            color="#808080"
+          />
+        </View>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
   Container: {
-    flex: 1,
-    padding: 20,
     backgroundColor: "#FFFFFF",
     borderWidth: 2,
     borderColor: "#ebebeb",
     alignItems: "center",
-    marginLeft: 15,
-    marginRight: 15,
-    marginBottom: 10,
-    height: 80,
+    marginLeft: responsiveScreenWidth(4.7),
+    marginRight: responsiveScreenWidth(4.7),
+    marginBottom: responsiveScreenHeight(2),
+    height: responsiveScreenHeight(11),
     borderRadius: 10,
     flexDirection: "row",
+    paddingLeft: responsiveScreenWidth(4),
   },
 
   textgroup: {
     alignItems: "flex-start",
-    marginLeft: 15,
+    marginLeft: responsiveScreenWidth(2.8),
     justifyContent: "flex-start",
     flexDirection: "row",
-    flex: 1,
     backgroundColor: "#FFFFFF",
   },
 
@@ -79,7 +87,6 @@ const styles = StyleSheet.create({
   },
 
   margin: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,

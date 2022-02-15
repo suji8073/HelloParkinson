@@ -35,7 +35,6 @@ export default class task1 extends Component {
   handleClick = () => {
     if (this.state.book == silverstarsvg) {
       this.setState({ book: greenstarsvg });
-      // 아이콘 asset값 변경 greenstarsvg 으로
 
       fetch("http://hccparkinson.duckdns.org:19737/onlymanager/bookmark", {
         method: "PUT",
@@ -76,7 +75,7 @@ export default class task1 extends Component {
           <View>
             <Ionicons
               name="person-circle-sharp"
-              size={50}
+              style={{ fontSize: responsiveScreenFontSize(6) }}
               color="lightblue"
               justifyContent="center"
               alignItems="center"
@@ -96,14 +95,14 @@ export default class task1 extends Component {
           </View>
         </View>
         <View style={styles.margin}></View>
-        <TouchableOpacity onPress={this.handleClick}>
+        <TouchableOpacity
+          onPress={this.handleClick}
+          style={{ marginRight: responsiveScreenWidth(3.6) }}
+        >
           <WithLocalSvg
             id="svgs"
-            width={30}
-            height={30}
-            // asset={this.props.book === true ? greenstarsvg : silverstarsvg}
+            style={{ fontSize: responsiveScreenFontSize(5) }}
             asset={this.state.book}
-            // asset={this.state.star}
           />
         </TouchableOpacity>
       </View>
@@ -113,38 +112,35 @@ export default class task1 extends Component {
 
 const styles = StyleSheet.create({
   Container: {
-    flex: 1,
-    padding: 20,
     backgroundColor: "#FFFFFF",
     borderWidth: 2,
     borderColor: "#ebebeb",
     alignItems: "center",
-    marginLeft: 15,
-    marginRight: 15,
-    marginBottom: 10,
-    height: 90,
+    marginLeft: responsiveScreenWidth(4.7),
+    marginRight: responsiveScreenWidth(4.7),
+    marginBottom: responsiveScreenHeight(2),
+    height: responsiveScreenHeight(11),
     borderRadius: 10,
     flexDirection: "row",
   },
   full: {
     flexDirection: "row",
+    marginLeft: responsiveScreenWidth(4),
   },
 
   textgroup: {
     alignItems: "flex-start",
-    marginLeft: 15,
+    marginLeft: responsiveScreenWidth(4),
     justifyContent: "center",
     flexDirection: "column",
-    flex: 1,
     backgroundColor: "#FFFFFF",
   },
 
   textgroup1: {
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     flexDirection: "row",
-    marginTop: 5,
-    flex: 1,
+    marginTop: responsiveScreenHeight(1),
     backgroundColor: "#FFFFFF",
   },
 

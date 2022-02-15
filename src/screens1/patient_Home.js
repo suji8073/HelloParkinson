@@ -41,7 +41,6 @@ export default class patient_Home extends Component {
     const user_token = await AsyncStorage.getItem("@user_token");
     const user_data = await AsyncStorage.getItem("@user_data");
     this.setState({ User_name: JSON.parse(user_data).name });
-    console.log(this.state.User_name);
     this.userfunc(user_token);
   }
 
@@ -55,12 +54,14 @@ export default class patient_Home extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
+        console.log(json);
         this.setState({
           data: json.data,
           first: json.data[0],
           second: json.data[1],
           third: json.data[2],
         });
+        console.log(this.state.first);
       });
   };
 
@@ -149,7 +150,7 @@ export default class patient_Home extends Component {
                     ? " "
                     : String(this.state.second["uname"]) +
                       " [" +
-                      parseInt(this.state.second["percent"]).toFixed(1) +
+                      String(this.state.second["percent"]).substring(0, 3) +
                       "%]"}
                 </Text>
               </View>
@@ -196,7 +197,7 @@ export default class patient_Home extends Component {
                   }
                 >
                   {this.state.first["uname"]} [
-                  {parseInt(this.state.first["percent"]).toFixed(1)}%]
+                  {String(this.state.first["percent"]).substring(0, 3)}%]
                 </Text>
               </View>
               <View
@@ -240,13 +241,12 @@ export default class patient_Home extends Component {
                     ? " "
                     : String(this.state.third["uname"]) +
                       " [" +
-                      parseInt(this.state.third["percent"]).toFixed(1) +
+                      String(this.state.third["percent"]).substring(0, 4) +
                       "%]"}
                 </Text>
               </View>
             </View>
           </View>
-          {/* 환자 순위 4~ */}
           <View style={styles.threeView}>
             <FlatList
               style={{
