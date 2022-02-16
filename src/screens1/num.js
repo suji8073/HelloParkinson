@@ -1,73 +1,21 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
 
-
 import {
   responsiveScreenHeight,
   responsiveScreenWidth,
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
 
-const task_week1 = ({ id, put_date, progress }) => {
-  const dateToStr = (put_date) => {
-    var date = new Date(put_date);
-    var week = new Array("일", "월", "화", "수", "목", "금", "토");
-
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-
-    var today =
-      year +
-      ("00" + month.toString()).slice(-2) +
-      ("00" + day.toString()).slice(-2);
-
-    var change_date =
-      String(put_date).substring(0, 4) +
-      String(put_date).substring(5, 7) +
-      String(put_date).substring(8, 10);
-
-    var daycount = date.getDay() - (parseInt(today) - parseInt(change_date));
-
-    if (daycount < 0) {
-      return week[daycount + 7];
-    } else {
-      return week[daycount];
-    }
-  };
+export default class num extends Component {
+  render(){
   return (
-    //  전체 뷰
-    <View
-      style={
-        id != 6
-          ? id == 0
-            ? styles.mainview_1
-            : styles.mainview
-          : styles.mainview_end
-      }
-    >
-      <View style={styles.textView}>
-        <Text style={styles.text1_}>{(progress * 100).toFixed(0)}</Text>
-      </View>
-      <View style={styles.graphView}>
-        <View
-          style={id === 6 ? styles.chart1 : styles.chart}
-          height={responsiveScreenHeight(9) * progress}
-        ></View>
-      </View>
-      <View style={styles.textView_bottom}>
-        <Text style={id === 6 ? styles.text22 : styles.text2_}>
-          {put_date.substring(8, 10)}
-        </Text>
-        <Text style={id === 6 ? styles.text11 : styles.text1_}>
-          {dateToStr(put_date)}
-        </Text>
-      </View>
-    </View>
-  );
-};
+    <Text>안녕</Text>
+    );
+  }
+}
 
-export default task_week1;
+export default num;
 const styles = StyleSheet.create({
   mainview_1: {
     flexDirection: "column",
@@ -119,6 +67,7 @@ const styles = StyleSheet.create({
   chart: {
     flex: 1,
     backgroundColor: "#5CB405",
+    borderWidth: 1,
   },
   chart1: {
     flex: 1,

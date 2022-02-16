@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, SafeAreaView } from "react-native";
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
 
 const task_week1 = ({ id, put_date, progress }) => {
-  const dateToStr = () => {
-    var day = String(put_date).substring(8, 10);
-    if (parseInt(day) === 5) return "5";
-    else if (parseInt(day) === 10) return day;
-    else if (parseInt(day) === 15) return day;
-    else if (parseInt(day) === 20) return day;
-    else if (parseInt(day) === 25) return day;
-  };
   return (
     //  전체 뷰
     <View
@@ -17,7 +14,7 @@ const task_week1 = ({ id, put_date, progress }) => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "flex-start",
-        width: 4,
+        width: responsiveScreenWidth(1.1),
         marginRight: 3,
         marginLeft: 3,
         marginBottom: 2,
@@ -29,9 +26,6 @@ const task_week1 = ({ id, put_date, progress }) => {
             style={progress <= 40 ? styles.chart1 : styles.chart}
             height={progress * 100}
           ></View>
-        </View>
-        <View style={styles.textView}>
-          <Text style={styles.text11}>{dateToStr()}</Text>
         </View>
       </SafeAreaView>
     </View>
@@ -63,12 +57,8 @@ const styles = StyleSheet.create({
   },
 
   text11: {
-    fontSize: 10,
-    width: 20,
+    fontSize: responsiveScreenFontSize(1.12),
+    width: responsiveScreenWidth(2),
     color: "#484848",
-  },
-  text1: {
-    fontSize: 14,
-    color: "#000000",
   },
 });

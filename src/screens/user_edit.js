@@ -294,10 +294,12 @@ export default class user_edit extends Component {
           <View style={styles.menuView}>
             <AntDesign
               name="left"
-              size={24}
+              style={{ fontSize: responsiveScreenFontSize(3) }}
               color="#808080"
               onPress={() => {
-                this.props.navigation.navigate("user_setting");
+                this.props.navigation.navigate("user_setting", {
+                  id: this.props.route.params.id,
+                });
               }}
             />
             <View style={styles.margin}></View>
@@ -305,15 +307,15 @@ export default class user_edit extends Component {
             <View style={styles.margin}></View>
             <Feather
               name="check"
-              size={24}
+              style={{ fontSize: responsiveScreenFontSize(3) }}
               color="#5CB405"
               onPress={this.edit_finish}
             />
           </View>
+
           <View style={styles.scrollView}>
             <ScrollView
               contentContainerStyle={{
-                flexGrow: 1,
                 flexDirection: "column",
                 justifyContent: "space-between",
               }}
@@ -322,7 +324,7 @@ export default class user_edit extends Component {
                 <View style={styles.firstView}>
                   <Ionicons
                     name="person-circle-sharp"
-                    size={120}
+                    style={{ fontSize: responsiveScreenFontSize(13) }}
                     color="lightblue"
                     alignItems="center"
                   />
@@ -372,6 +374,25 @@ export default class user_edit extends Component {
 
                 <View style={styles.secondView}>
                   <View style={styles.memoView}>
+                    <Text style={styles.text1}>조</Text>
+                  </View>
+                  <View style={styles.textView}>
+                    <TextInput
+                      style={styles.text2}
+                      onChangeText={(text) => {
+                        this.setState({ user_group: text });
+                      }}
+                      keyboardType="number-pad"
+                      placeholder={
+                        this.state.team === "" ? "없음" : this.state.team
+                      }
+                      maxLength={2}
+                    />
+                  </View>
+                </View>
+
+                <View style={styles.secondView}>
+                  <View style={styles.memoView}>
                     <Text style={styles.text1}>성별</Text>
                   </View>
 
@@ -381,8 +402,8 @@ export default class user_edit extends Component {
                       onPress={this.sex_click1}
                     >
                       <WithLocalSvg
-                        width={20}
-                        height={20}
+                        width={responsiveScreenWidth(5.5)}
+                        height={responsiveScreenWidth(5.5)}
                         asset={this.state.age1}
                       />
                     </TouchableOpacity>
@@ -394,8 +415,8 @@ export default class user_edit extends Component {
                       onPress={this.sex_click2}
                     >
                       <WithLocalSvg
-                        width={20}
-                        height={20}
+                        width={responsiveScreenWidth(5.5)}
+                        height={responsiveScreenWidth(5.5)}
                         asset={this.state.age2}
                       />
                     </TouchableOpacity>
@@ -414,8 +435,8 @@ export default class user_edit extends Component {
                       onPress={this.rank_click1}
                     >
                       <WithLocalSvg
-                        width={20}
-                        height={20}
+                        width={responsiveScreenWidth(5.5)}
+                        height={responsiveScreenWidth(5.5)}
                         asset={this.state.rank1}
                       />
                     </TouchableOpacity>
@@ -427,32 +448,13 @@ export default class user_edit extends Component {
                       onPress={this.rank_click2}
                     >
                       <WithLocalSvg
-                        width={20}
-                        height={20}
+                        width={responsiveScreenWidth(5.5)}
+                        height={responsiveScreenWidth(5.5)}
                         asset={this.state.rank2}
                       />
                     </TouchableOpacity>
                     <Text style={styles.text2}> NO</Text>
                     <View style={styles.margin}></View>
-                  </View>
-                </View>
-
-                <View style={styles.secondView}>
-                  <View style={styles.memoView}>
-                    <Text style={styles.text1}>조</Text>
-                  </View>
-                  <View style={styles.textView}>
-                    <TextInput
-                      style={styles.textg}
-                      onChangeText={(text) => {
-                        this.setState({ user_group: text });
-                      }}
-                      keyboardType="number-pad"
-                      placeholder={
-                        this.state.team === "" ? "없음" : this.state.team
-                      }
-                      maxLength={2}
-                    />
                   </View>
                 </View>
 
@@ -482,7 +484,17 @@ export default class user_edit extends Component {
                       this.createTwoButtonAlert();
                     }}
                   >
-                    <EvilIcons name="trash" size={40} color="#808080" />
+                    <EvilIcons
+                      name="trash"
+                      style={{
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginBottom: responsiveScreenFontSize(0.3),
+                        fontSize: responsiveScreenFontSize(4),
+                      }}
+                      color="#808080"
+                    />
+                    <Text style={styles.pwreset}>환자 삭제</Text>
                   </TouchableOpacity>
                   <View style={styles.margin}></View>
 
@@ -497,10 +509,10 @@ export default class user_edit extends Component {
                       style={{
                         alignItems: "center",
                         justifyContent: "center",
-                        marginTop: 2,
+                        marginBottom: responsiveScreenFontSize(0.3),
+                        fontSize: responsiveScreenFontSize(3),
                       }}
                       name="ios-reload"
-                      size={24}
                       color="#808080"
                     />
                     <Text style={styles.pwreset}>비밀번호 초기화</Text>
@@ -546,11 +558,8 @@ const styles = StyleSheet.create({
   firstView: {
     alignItems: "center",
     justifyContent: "center",
-    flex: 2,
-    marginTop: "3%",
-    marginBottom: "5%",
-    marginRight: "10%",
-    marginLeft: "10%",
+    marginTop: responsiveScreenHeight(4),
+    marginBottom: responsiveScreenHeight(3),
     backgroundColor: "#FFFFFF",
   },
 
@@ -565,9 +574,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    height: 45,
-    paddingLeft: 20,
-    paddingRight: 10,
+    height: responsiveScreenHeight(7.34),
+    paddingLeft: responsiveScreenWidth(4.7),
+    paddingRight: responsiveScreenWidth(4.7),
     backgroundColor: "#FFFFFF",
     borderTopWidth: 0.5,
     borderColor: "#E5E5E5",
@@ -576,28 +585,28 @@ const styles = StyleSheet.create({
   threeView: {
     alignItems: "flex-start",
     justifyContent: "center",
-    paddingLeft: 20,
-    paddingRight: 10,
-    paddingTop: 10,
-    height: 60,
+    marginTop: responsiveScreenHeight(3.1),
     flexDirection: "row",
     backgroundColor: "#FFFFFF",
-    borderBottomWidth: 0.5,
-    borderTopWidth: 0.5,
+    height: responsiveScreenHeight(11.0),
+    borderTopWidth: 0.3,
+    borderBottomWidth: 0.3,
     borderColor: "#E5E5E5",
+    paddingTop: responsiveScreenHeight(2.6),
+    paddingBottom: responsiveScreenHeight(2.6),
+    paddingLeft: responsiveScreenWidth(4.7),
+    paddingRight: responsiveScreenHeight(4),
   },
 
   marginView: {
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    flex: 2,
-    margin: 10,
+    margin: responsiveScreenHeight(2),
     backgroundColor: "#FFFFFF",
   },
 
   margin: {
-    // padding:30,
     alignItems: "center",
     justifyContent: "center",
     flex: 1,

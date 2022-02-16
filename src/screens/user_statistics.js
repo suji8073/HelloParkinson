@@ -13,6 +13,8 @@ import Task from "../screens1/task_record_day";
 import Task1 from "../screens1/task_week1";
 import Taskm from "../screens1/task_week1_m";
 
+import Task2 from "../screens1/number";
+
 import Context from "../Context/context";
 import { WithLocalSvg } from "react-native-svg";
 import { AntDesign } from "@expo/vector-icons";
@@ -29,6 +31,7 @@ import {
   responsiveScreenWidth,
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
+import { array } from "prop-types";
 
 var sum_progress = 0;
 var sum_progress_m = 0;
@@ -53,6 +56,8 @@ export default class user_statistics extends Component {
       setShow: false,
       data_: [], // 하루 당 꺾은선 그래프
       data2: [], // 하루 당 꺾은선 그래프
+      lastDate: 0,
+      number: [],
     };
   }
 
@@ -121,14 +126,10 @@ export default class user_statistics extends Component {
     )
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
-        console.log(json.data.length);
-
         if (json.data.length === 0) {
           for (let j = 0; j < 7 - json.data.length; j++) {
             var now = new Date(date);
             var yesterday = new Date(now.setDate(now.getDate() - j)); // 어제
-            console.log(yesterday);
             var date2 = this.date_change(yesterday);
 
             var add_data = {
@@ -190,7 +191,6 @@ export default class user_statistics extends Component {
       });
   };
 
-  //http://hccparkinson.duckdns.org:19737/onlymanager/progress/user/period/2021-01-12?uid=suji&day=30
   user_month = (manager_token, date) => {
     var data_array = [];
     var lastDate = "";
@@ -201,11 +201,16 @@ export default class user_statistics extends Component {
         date.substring(5, 7),
         0
       ).getDate();
+
+    this.setState({
+      lastDate: lastDate,
+      number: Array.from({ length: parseInt(lastDate) }, () => 0),
+    });
     fetch(
-      "http://hccparkinson.duckdns.org:19737/onlymanager/progress/user/period/" +
-        date +
-        "?uid=" +
+      "http://hccparkinson.duckdns.org:19737/onlymanager/progress/user/" +
         this.props.route.params.id +
+        "?date=" +
+        date +
         "&day=" +
         lastDate,
       {
@@ -218,6 +223,7 @@ export default class user_statistics extends Component {
     )
       .then((res) => res.json())
       .then((json) => {
+        console.log(json);
         for (let i = 0; i < json.data.length; i++) {
           data_array.push(json.data[i]);
         }
@@ -260,9 +266,7 @@ export default class user_statistics extends Component {
     var today = this.date_change(new Date());
     this.user_info(manager_token);
 
-    console.log(today);
     this.user_week_day(manager_token, today);
-    console.log(manager_token);
     this.user_cat_day(manager_token, today);
     this.user_month(manager_token, today);
   }
@@ -313,7 +317,6 @@ export default class user_statistics extends Component {
 
   handleConfirm = (date) => {
     const manager_token = AsyncStorage.getItem("@manager_token");
-    console.warn("A date has been picked: ", date);
     this.hideDatePicker();
     var today = this.date_change(date);
 
@@ -356,7 +359,7 @@ export default class user_statistics extends Component {
           <View style={styles.margin}>
             <AntDesign
               name="left"
-              size={24}
+              style={{ fontSize: responsiveScreenFontSize(3) }}
               color="#808080"
               onPress={() => {
                 this.props.navigation.pop();
@@ -384,7 +387,11 @@ export default class user_statistics extends Component {
                 activeOpacity={0.8}
                 onPress={this.showDatePicker}
               >
-                <MaterialIcons name="date-range" size={30} color="#316200" />
+                <MaterialIcons
+                  name="date-range"
+                  style={{ fontSize: responsiveScreenFontSize(3) }}
+                  color="#316200"
+                />
               </TouchableOpacity>
             </View>
 
@@ -422,7 +429,12 @@ export default class user_statistics extends Component {
                   </Text>
                 </View>
 
-                <SafeAreaView style={{ flex: 2, width: "100%" }}>
+                <SafeAreaView
+                  style={{
+                    width: "100%",
+                    height: responsiveScreenHeight(18),
+                  }}
+                >
                   <FlatList
                     keyExtractor={(item, index) => index}
                     data={this.state.data}
@@ -455,10 +467,16 @@ export default class user_statistics extends Component {
                   </Text>
                 </View>
 
-                <SafeAreaView style={{ flex: 2, width: "100%" }}>
+                <SafeAreaView
+                  style={{
+                    width: "100%",
+                    height: responsiveScreenHeight(14),
+                  }}
+                >
                   <FlatList
                     keyExtractor={(item, index) => index}
                     data={this.state.data_}
+                    style={{ flex: 4 }}
                     renderItem={({ item, index }) => {
                       return (
                         <Taskm
@@ -471,19 +489,35 @@ export default class user_statistics extends Component {
                     horizontal={true}
                   ></FlatList>
                 </SafeAreaView>
+                <SafeAreaView
+                  style={{
+                    width: "100%",
+                    height: responsiveScreenHeight(4),
+                  }}
+                >
+                  <FlatList
+                    keyExtractor={(item, index) => index}
+                    data={this.state.number}
+                    style={{ flex: 1 }}
+                    renderItem={({ item, index }) => {
+                      return <Task2 id={index}></Task2>;
+                    }}
+                    horizontal={true}
+                  ></FlatList>
+                </SafeAreaView>
               </View>
             </ScrollView>
             <View style={styles.page_location}>
               <View style={styles.p_margin}></View>
               <WithLocalSvg
-                width={10}
-                height={10}
+                width={responsiveScreenWidth(2.7)}
+                height={responsiveScreenWidth(2.7)}
                 asset={this.state.page_l == true ? page_here : page_no}
               />
               <View style={styles.pp_margin}></View>
               <WithLocalSvg
-                width={10}
-                height={10}
+                width={responsiveScreenWidth(2.7)}
+                height={responsiveScreenWidth(2.7)}
                 asset={this.state.page_l == false ? page_here : page_no}
               />
               <View style={styles.p_margin}></View>
@@ -549,7 +583,7 @@ const styles = StyleSheet.create({
   },
 
   text11: {
-    fontSize: 14,
+    fontSize: responsiveScreenFontSize(1.64),
     color: "#484848",
     justifyContent: "center",
     alignItems: "center",
@@ -571,7 +605,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     color: "#484848",
-    fontSize: 18,
+    fontSize: responsiveScreenFontSize(2.12),
     fontWeight: "bold",
   },
 
@@ -579,7 +613,7 @@ const styles = StyleSheet.create({
     // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     color: "#484848",
   },
 
@@ -587,7 +621,7 @@ const styles = StyleSheet.create({
     // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
-    fontSize: 17,
+    fontSize: responsiveScreenFontSize(2),
     color: "#484848",
   },
 
@@ -595,9 +629,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     flexDirection: "row",
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 10,
+    marginLeft: responsiveScreenWidth(4.7),
+    marginRight: responsiveScreenWidth(4.7),
+    marginTop: responsiveScreenHeight(3.1),
     backgroundColor: "#F8F8F8",
   },
   mainView: {
@@ -605,68 +639,49 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 70,
+    marginBottom: "40%",
   },
   secondView: {
-    marginTop: "2%",
-    marginLeft: "3%",
-    marginRight: "3%",
-    marginBottom: "1%",
-    paddingLeft: "2%",
-    paddingRight: "2%",
-    paddingBottom: "1%",
-    height: 180,
-    backgroundColor: "#FFFFFF",
-    borderWidth: 1,
-    borderColor: "#E0E0E0",
-    width: width - 40,
-  },
-  threeView: {
-    marginTop: 10,
+    marginTop: responsiveScreenHeight(2),
     marginLeft: responsiveScreenWidth(4.7),
     marginRight: responsiveScreenWidth(4.7),
-    marginBottom: "2%",
-    paddingTop: "3.1%",
-    borderWidth: 1,
+    paddingLeft: responsiveScreenWidth(5),
+    paddingRight: responsiveScreenWidth(5),
+    paddingTop: responsiveScreenWidth(3.1),
+    paddingBottom: responsiveScreenWidth(2),
+    marginBottom: responsiveScreenWidth(1),
+    height: responsiveScreenHeight(24),
     backgroundColor: "#FFFFFF",
     borderColor: "#E0E0E0",
+    width: responsiveScreenWidth(90),
+    borderWidth: 1,
   },
-  moveView: {
+  threeView: {
+    marginTop: responsiveScreenHeight(2),
+    marginLeft: responsiveScreenWidth(4.7),
+    marginRight: responsiveScreenWidth(4.7),
+    marginBottom: responsiveScreenWidth(1),
+    paddingTop: responsiveScreenWidth(3.1),
     backgroundColor: "#FFFFFF",
-    height: 90,
-    width: "92%",
-    marginLeft: "4%",
-    marginRight: "4%",
-    marginTop: "3%",
-    marginBottom: "3%",
-    flexDirection: "row",
-    borderWidth: 1,
     borderColor: "#E0E0E0",
-    borderRadius: 5,
+    borderWidth: 1,
   },
 
-  graphview: {
-    flex: 3,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   text1: {
-    fontSize: 13,
+    fontSize: responsiveScreenFontSize(1.52),
     color: "#000000",
   },
   text2: {
-    fontSize: 16,
+    fontSize: responsiveScreenFontSize(1.88),
     color: "#000000",
     fontWeight: "bold",
   },
   text22: {
-    fontSize: 19,
+    fontSize: responsiveScreenFontSize(2.24),
     color: "#000000",
     fontWeight: "bold",
   },
   textview: {
-    marginTop: 10,
-    marginBottom: 3,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",

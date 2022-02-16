@@ -210,7 +210,7 @@ export default class progress extends Component {
           <View style={styles.menuView}>
             <AntDesign
               name="left"
-              size={24}
+              style={{ fontSize: responsiveScreenFontSize(3) }}
               color="#808080"
               onPress={() => {
                 this.props.navigation.pop();
@@ -223,7 +223,7 @@ export default class progress extends Component {
             <View style={styles.margin}></View>
             <AntDesign
               name="check"
-              size={24}
+              style={{ fontSize: responsiveScreenFontSize(3) }}
               color="#5CB405"
               onPress={() => {
                 this.store_final();
@@ -232,7 +232,7 @@ export default class progress extends Component {
               }}
             />
           </View>
-          {/* 운동카테고리 목록 뷰 */}
+
           <View style={styles.listview}>
             <View style={styles.margin}></View>
             <TouchableOpacity onPress={this.handleClick1}>
@@ -345,7 +345,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "#FFFFFF",
   },
-  fouuview: {},
+
   moveView: {
     borderColor: "#BBBBBB",
     borderRadius: 20,
@@ -356,12 +356,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: 3,
     marginVertical: 10,
-    height: 35,
+    height: responsiveScreenHeight(4.5),
   },
   moveView_on: {
     borderColor: "#5CB405",
     borderRadius: 20,
-    height: 35,
+    height: responsiveScreenHeight(4.5),
     paddingHorizontal: 10,
     paddingVertical: 5,
     backgroundColor: "#5CB405",
@@ -374,19 +374,6 @@ const styles = StyleSheet.create({
   movebtn: {
     color: "#FFFFFF",
     fontSize: responsiveScreenFontSize(2),
-  },
-
-  firstView: {
-    // padding:30,
-    alignItems: "center",
-    justifyContent: "flex-start",
-    marginLeft: 20,
-    marginRight: 20,
-    flexDirection: "row",
-    flex: 1,
-    marginTop: 15,
-    marginBottom: 15,
-    backgroundColor: "#FFFFFF",
   },
   margin: {
     // paddingBottom: 30,
