@@ -53,6 +53,7 @@ export default class patient_move extends Component {
       },
     })
       .then((res) => res.json())
+
       .then((json) => {
         this.setState({
           setcnt1: json.data[0].setcntsum,
