@@ -3,6 +3,13 @@ import { View, Text, StyleSheet, TextInput } from "react-native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Context from "../Context/context";
+
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
 const storeData = async (moveset) => {
   try {
     await AsyncStorage.setItem("@user_moveset", JSON.stringify(moveset));
@@ -42,37 +49,48 @@ export default class O2_task extends Component {
     return (
       <View
         style={{
+          height: responsiveScreenHeight(10.4),
           flexDirection: "row",
-          paddingVertical: "4%",
-          paddingHorizontal: "3%",
           borderBottomWidth: 1,
           borderColor: "#E4E4E4",
+          justifyContent: "space-between",
         }}
       >
         <View
-          style={{ flex: 0.4, justifyContent: "center", paddingLeft: "2%" }}
+          style={{
+            justifyContent: "center",
+            marginLeft: responsiveScreenWidth(5.8),
+          }}
         >
-          <Text style={{ fontWeight: "bold", fontSize: 14 }}>
+          <Text
+            style={{
+              fontWeight: "bold",
+              fontSize: responsiveScreenFontSize(1.64),
+            }}
+          >
             {this.props.name}
           </Text>
         </View>
+
         <View
           style={{
             flexDirection: "row",
-            flex: 0.6,
             alignItems: "center",
-            justifyContent: "space-evenly",
+            marginRight: responsiveScreenWidth(5.8),
           }}
         >
           <TextInput
             style={{
               borderWidth: 2,
+              marginRight: responsiveScreenWidth(1),
               borderColor: "#DCDCDC",
-              paddingHorizontal: "10%",
-              paddingVertical: "3%",
+              paddingHorizontal: responsiveScreenWidth(5),
               color: "#000000",
-              fontSize: 16,
+              placeholder: "center",
+              fontSize: responsiveScreenFontSize(1.88),
+              width: responsiveScreenWidth(14.4),
             }}
+            keyboardType="number-pad"
             placeholder="0"
             onChangeText={(text) =>
               this.setState({ hour: text }, () => {
@@ -82,18 +100,29 @@ export default class O2_task extends Component {
           >
             {this.state.hour}
           </TextInput>
-          <Text style={{ fontSize: 16, color: "#757575" }}>시간</Text>
+          <Text
+            style={{
+              fontSize: responsiveScreenFontSize(1.88),
+              color: "#757575",
+            }}
+          >
+            시간
+          </Text>
 
           <TextInput
             style={{
+              marginLeft: responsiveScreenWidth(2),
+              marginRight: responsiveScreenWidth(1),
               borderWidth: 2,
               borderColor: "#DCDCDC",
-              paddingHorizontal: "10%",
-              paddingVertical: "3%",
+              paddingHorizontal: responsiveScreenWidth(5),
               color: "#000000",
-              fontSize: 16,
+              placeholder: "center",
+              fontSize: responsiveScreenFontSize(1.88),
+              width: responsiveScreenWidth(14.4),
             }}
             placeholder="0"
+            keyboardType="number-pad"
             onChangeText={(text) =>
               this.setState({ minute: text }, () => {
                 this.move_edit();
@@ -102,7 +131,14 @@ export default class O2_task extends Component {
           >
             {this.state.minute}
           </TextInput>
-          <Text style={{ fontSize: 16, color: "#757575" }}>분</Text>
+          <Text
+            style={{
+              fontSize: responsiveScreenFontSize(1.88),
+              color: "#757575",
+            }}
+          >
+            분
+          </Text>
         </View>
       </View>
     );

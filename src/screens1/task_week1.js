@@ -1,6 +1,13 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
 
+
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
 const task_week1 = ({ id, put_date, progress }) => {
   const dateToStr = (put_date) => {
     var date = new Date(put_date);
@@ -31,15 +38,13 @@ const task_week1 = ({ id, put_date, progress }) => {
   return (
     //  전체 뷰
     <View
-      style={{
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "flex-start",
-        width: 28,
-        marginRight: 8,
-        marginLeft: 8,
-        marginBottom: 2,
-      }}
+      style={
+        id != 6
+          ? id == 0
+            ? styles.mainview_1
+            : styles.mainview
+          : styles.mainview_end
+      }
     >
       <View style={styles.textView}>
         <Text style={styles.text1_}>{(progress * 100).toFixed(0)}</Text>
@@ -47,10 +52,10 @@ const task_week1 = ({ id, put_date, progress }) => {
       <View style={styles.graphView}>
         <View
           style={id === 6 ? styles.chart1 : styles.chart}
-          height={progress * 100}
+          height={responsiveScreenHeight(9) * progress}
         ></View>
       </View>
-      <View style={styles.textView}>
+      <View style={styles.textView_bottom}>
         <Text style={id === 6 ? styles.text22 : styles.text2_}>
           {put_date.substring(8, 10)}
         </Text>
@@ -64,19 +69,53 @@ const task_week1 = ({ id, put_date, progress }) => {
 
 export default task_week1;
 const styles = StyleSheet.create({
+  mainview_1: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    width: responsiveScreenWidth(5.4),
+    marginRight: responsiveScreenWidth(3.6),
+    marginLeft: responsiveScreenWidth(4),
+  },
+
+  mainview: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    width: responsiveScreenWidth(5.4),
+    marginRight: responsiveScreenWidth(3.6),
+    marginLeft: responsiveScreenWidth(1.9),
+  },
+
+  mainview_end: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    width: responsiveScreenWidth(5.4),
+    marginLeft: responsiveScreenWidth(1.9),
+  },
+
   graphView: {
     flexDirection: "row",
-    flex: 2.6,
+    height: responsiveScreenHeight(9),
     alignItems: "flex-end",
     justifyContent: "center",
   },
 
   textView: {
     flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  textView_bottom: {
+    marginTop: responsiveScreenHeight(1),
+    flexDirection: "column",
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
+
   chart: {
     flex: 1,
     backgroundColor: "#5CB405",
@@ -87,31 +126,30 @@ const styles = StyleSheet.create({
   },
 
   text11: {
-    fontSize: 13,
+    fontSize: responsiveScreenFontSize(1.52),
     fontWeight: "bold",
     color: "#484848",
   },
 
-
   text1: {
-    fontSize: 14,
+    fontSize: responsiveScreenFontSize(1.64),
     fontWeight: "bold",
     color: "#000000",
   },
   text1_: {
-    fontSize: 13,
+    fontSize: responsiveScreenFontSize(1.52),
     fontWeight: "bold",
     color: "#565656",
   },
 
   text22: {
-    fontSize: 12,
+    fontSize: responsiveScreenFontSize(1.4),
     fontWeight: "bold",
     color: "#000000",
   },
 
   text2_: {
-    fontSize: 11,
+    fontSize: responsiveScreenFontSize(1.28),
     fontWeight: "bold",
     color: "#565656",
   },

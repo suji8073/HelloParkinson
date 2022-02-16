@@ -8,6 +8,13 @@ import minus from "../icon/minusbox.svg";
 import plussilver from "../icon/plussilverbox.svg";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import minussilver from "../icon/minussilverbox.svg";
+
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
+
 const storeData = async (moveset) => {
   try {
     await AsyncStorage.setItem("@user_moveset", JSON.stringify(moveset));
@@ -62,10 +69,16 @@ export default class movelist extends Component {
     return (
       <View style={styles.borderView}>
         <View style={styles.textView}>
-          <Text style={{ fontWeight: "bold", fontSize: 14 }}>
+          <Text
+            style={{
+              fontWeight: "bold",
+              fontSize: responsiveScreenFontSize(1.64),
+            }}
+          >
             {this.props.name}
           </Text>
         </View>
+
         <View style={styles.btnView}>
           <View
             style={{
@@ -74,8 +87,8 @@ export default class movelist extends Component {
           >
             <TouchableOpacity onPress={this.minus_func}>
               <WithLocalSvg
-                width={35}
-                height={35}
+                width={responsiveScreenWidth(9.7)}
+                height={responsiveScreenWidth(9.7)}
                 asset={this.state.m_num == 0 ? minussilver : minus}
               />
             </TouchableOpacity>
@@ -90,8 +103,8 @@ export default class movelist extends Component {
 
             <TouchableOpacity onPress={this.plus_func}>
               <WithLocalSvg
-                width={35}
-                height={35}
+                width={responsiveScreenWidth(9.7)}
+                height={responsiveScreenWidth(9.7)}
                 asset={this.state.m_num == 0 ? plussilver : plus}
               />
             </TouchableOpacity>
@@ -107,24 +120,23 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderBottomColor: "#E4E4E4",
     borderBottomWidth: 1,
-    paddingVertical: "5%",
+    height: responsiveScreenHeight(10.4),
+    justifyContent: "space-between",
   },
   textView: {
-    flex: 0.6,
-    paddingHorizontal: "6%",
+    marginLeft: responsiveScreenWidth(5.8),
     flexDirection: "column",
     justifyContent: "center",
     alignContent: "center",
   },
   btnView: {
-    flex: 0.4,
-    alignContent: "center",
     alignItems: "center",
+    justifyContent: "flex-end",
     flexDirection: "row",
-    marginRight: "2%",
+    marginRight: responsiveScreenWidth(5.8),
   },
   numView: {
-    width: "35%",
+    width: responsiveScreenWidth(9.7),
     alignItems: "center",
     justifyContent: "center",
     borderTopColor: "#5CB405",
@@ -133,7 +145,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
   },
   numViewsilver: {
-    width: "35%",
+    width: responsiveScreenWidth(9.7),
     alignItems: "center",
     justifyContent: "center",
     borderTopColor: "#BBBBBB",

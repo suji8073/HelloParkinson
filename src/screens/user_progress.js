@@ -53,7 +53,6 @@ export default class progress extends Component {
       m3: [],
       m4: [],
       m5: [],
-
       data: [],
     };
   }
@@ -175,7 +174,7 @@ export default class progress extends Component {
         <View style={styles.menuView}>
           <AntDesign
             name="left"
-            size={24}
+            style={{ fontSize: responsiveScreenFontSize(3) }}
             color="#808080"
             onPress={() => {
               this.props.navigation.pop();
@@ -187,182 +186,208 @@ export default class progress extends Component {
           </Text>
           <View style={styles.margin}></View>
         </View>
-        {/* 본문 전체 뷰 */}
-        <View style={{ margin: "5%" }}>
-          {/* 뷰1/3 */}
-          <View style={{ flexDirection: "row" }}>
-            <View style={{ justifyContent: "center" }}>
-              <Ionicons
-                name="person-circle-sharp"
-                size={90}
-                color="lightblue"
-              />
-              {/* 전체 진도율 뷰 */}
-            </View>
-            <View
-              style={{
-                marginLeft: "4%",
-                marginTop: "3%",
-                flexDirection: "column",
-                flex: 1,
-                alignItems: "flex-start",
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                style={{
-                  marginBottom: 10,
-                  fontSize: responsiveScreenFontSize(2.48),
-                  fontWeight: "bold",
-                }}
-              >
-                {this.state.name} /{" "}
-                {this.state.year - parseInt(this.state.birth / 10000)} /{" "}
-                {this.state.gender}
-              </Text>
-              <View style={{ flexDirection: "row" }}>
-                <Text style={{ marginBottom: "1%", fontSize: 15 }}>
-                  오늘 전체 진도율
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 15,
-                    fontWeight: "bold",
-                    marginLeft: "3%",
-                  }}
-                >
-                  {this.state.progress}%
-                </Text>
-              </View>
-              <View style={styles.per}>
-                <View
-                  style={{
-                    width: 100 * 2,
-                    height: 10,
-                    marginVertical: 5,
-                    borderRadius: 7,
-                    borderColor: "#E5E5E5",
-                    backgroundColor: "#E5E5E5",
-                    borderWidth: 1,
-                  }}
-                />
-                <View
-                  style={{
-                    width:
-                      this.state.progress * 2 ? this.state.progress * 2 : 0,
-                    height: 10,
-                    marginVertical: 5,
-                    borderRadius: 7,
-                    backgroundColor: "#7AC819",
-                    position: "absolute",
-                  }}
-                />
-              </View>
-            </View>
-          </View>
-          {/* 여기까지 view 1/3 */}
-          {/* 여기부터 view 2/3 */}
-          <View
-            style={{
-              marginTop: "5%",
-              marginBottom: "3%",
+
+        <View
+          style={{ margin: responsiveScreenWidth(4.7), marginBottom: "35%" }}
+        >
+          <ScrollView
+            contentContainerStyle={{
+              flexGrow: 1,
               flexDirection: "column",
-              // padding: "5%",
-              borderWidth: 2,
-              borderRadius: 7,
-              borderColor: "#D6D6D6",
+              justifyContent: "space-between",
             }}
           >
-            {/* 위에꺼 전체 */}
-            <View style={{ flexDirection: "row", padding: "5%" }}>
-              {/* 햄버거아이콘 빼고*/}
-              <View style={{ flex: 9, flexDirection: "column" }}>
-                <Text>{this.state.today}</Text>
-                <Text
-                  style={{ fontSize: 19, fontWeight: "bold", paddingTop: "1%" }}
-                >
-                  {this.state.enamenow}
-                </Text>
-              </View>
-              <SimplePopupMenu
-                style={styles.margin}
-                items={items}
-                cancelLabel={"취소"}
-                onSelect={(items) => {
-                  this.setState({
-                    enamenow: items.label,
-                  });
-                  this.movecheck(items.id);
-                  // 할당된거만 추출
-                  let base = this.state.data.filter((it) => it.setcnt !== 0);
-                  // 진행중
-
-                  let ing1 = base.filter((it) => it.donecnt !== 0);
-                  let ing2 = ing1.filter((it) => it.setcnt > it.donecnt);
-                  // 기준 다시!!
-                  this.setState({ ing: ing2 });
-                  // 미실시
-                  let no1 = base.filter((it) => it.donecnt == 0);
-                  this.setState({ no: no1 });
-                  // 완료
-                  let doen1 = base.filter((it) => it.setcnt <= it.donecnt);
-                  this.setState({ done: doen1 });
-                }}
-                onCancel={() => console.log("onCancel")}
-              >
-                <Entypo name="dots-three-vertical" size={24} color="#595959" />
-              </SimplePopupMenu>
-              {/* </TouchableOpacity>
-              </View> */}
-            </View>
-            {/* 여기부터 아래 */}
-            <View style={{ flexDirection: "row", paddingBottom: "5%" }}>
-              <View style={styles.bordertext}>
-                <Text style={styles.successtext}>완료</Text>
-                <View style={styles.numView}>
-                  <Text style={styles.numtext}>{this.state.done.length}</Text>
-                  <Text style={styles.gaetext}>개</Text>
-                </View>
-              </View>
-              <View style={styles.bordertext}>
-                <Text style={styles.successtext}>진행 중</Text>
-                <View style={styles.numView}>
-                  <Text style={styles.numtext}>{this.state.ing.length}</Text>
-                  <Text style={styles.gaetext}>개</Text>
-                </View>
+            <View style={{ flexDirection: "row" }}>
+              <View style={{ justifyContent: "center" }}>
+                <Ionicons
+                  name="person-circle-sharp"
+                  style={{ fontSize: responsiveScreenFontSize(10) }}
+                  color="lightblue"
+                />
               </View>
               <View
                 style={{
-                  flex: 2,
+                  marginLeft: responsiveScreenWidth(4.7),
                   flexDirection: "column",
-                  alignItems: "center",
+                  alignItems: "flex-start",
+                  justifyContent: "center",
                 }}
               >
-                <Text style={styles.successtext}>미실시</Text>
-                <View style={styles.numView}>
-                  <Text style={styles.numtext}>{this.state.no.length}</Text>
-                  <Text style={styles.gaetext}>개</Text>
+                <Text
+                  style={{
+                    marginBottom: responsiveScreenHeight(1.3),
+                    fontSize: responsiveScreenFontSize(2.12),
+                    fontWeight: "bold",
+                  }}
+                >
+                  {this.state.name} /{" "}
+                  {this.state.year - parseInt(this.state.birth / 10000)} /{" "}
+                  {this.state.gender}
+                </Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      marginBottom: responsiveScreenHeight(0.6),
+                      fontSize: responsiveScreenFontSize(1.76),
+                    }}
+                  >
+                    오늘 전체 진도율
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: responsiveScreenFontSize(1.76),
+                      fontWeight: "bold",
+                      marginLeft: responsiveScreenWidth(2),
+                    }}
+                  >
+                    {this.state.progress}%
+                  </Text>
+                </View>
+
+                <View style={styles.per}>
+                  <View
+                    style={{
+                      width: responsiveScreenWidth(52.8),
+                      height: responsiveScreenHeight(1.52),
+                      borderRadius: 7,
+                      borderColor: "#E5E5E5",
+                      backgroundColor: "#E5E5E5",
+                      borderWidth: 1,
+                    }}
+                  />
+                  <View
+                    style={{
+                      width:
+                        this.state.progress !== 0
+                          ? responsiveScreenWidth(52.8) * this.state.progress
+                          : 0,
+                      height: responsiveScreenHeight(1.52),
+                      borderRadius: 7,
+                      backgroundColor: "#7AC819",
+                      position: "absolute",
+                    }}
+                  />
                 </View>
               </View>
             </View>
-          </View>
-          {/* 여기까지 view2/3 */}
-          {/* 여기부터 view3/3 */}
 
-          <View styel={styles.threeView}>
-            {/* ScrollView */}
-            <ScrollView
-              contentContainerStyle={{
-                paddingTop: "3%",
-                flexGrow: 1,
+            <View
+              style={{
+                marginTop: responsiveScreenHeight(2),
+                marginBottom: responsiveScreenHeight(2),
                 flexDirection: "column",
-                justifyContent: "space-between",
-                paddingBottom: "5%",
-                paddingHorizontal: "2%",
+                borderWidth: 1,
+                borderRadius: 7,
+                borderColor: "#D6D6D6",
+                backgroundColor: "#FFFFFF",
+                paddingBottom: responsiveScreenHeight(2),
+                paddingTop: responsiveScreenHeight(2),
               }}
             >
-              <View style={{ marginBottom: "3%" }}>
-                <Text style={styles.movetitletext}>진행중</Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <View
+                  style={{
+                    justifyContent: "center",
+                    marginLeft: responsiveScreenWidth(4.7),
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: responsiveScreenFontSize(2),
+                    }}
+                  >
+                    {this.state.today}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: responsiveScreenFontSize(2.24),
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {this.state.enamenow}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginRight: responsiveScreenWidth(4.7),
+                  }}
+                >
+                  <SimplePopupMenu
+                    items={items}
+                    cancelLabel={"취소"}
+                    onSelect={(items) => {
+                      this.setState({
+                        enamenow: items.label,
+                      });
+                      this.movecheck(items.id);
+                      // 할당된거만 추출
+                      let base = this.state.data.filter(
+                        (it) => it.setcnt !== 0
+                      );
+                      // 진행중
+
+                      let ing1 = base.filter((it) => it.donecnt !== 0);
+                      let ing2 = ing1.filter((it) => it.setcnt > it.donecnt);
+                      // 기준 다시!!
+                      this.setState({ ing: ing2 });
+                      // 미실시
+                      let no1 = base.filter((it) => it.donecnt == 0);
+                      this.setState({ no: no1 });
+                      // 완료
+                      let doen1 = base.filter((it) => it.setcnt <= it.donecnt);
+                      this.setState({ done: doen1 });
+                    }}
+                    onCancel={() => console.log("onCancel")}
+                  >
+                    <Entypo
+                      name="dots-three-vertical"
+                      style={{ fontSize: responsiveScreenFontSize(3) }}
+                      color="#595959"
+                    />
+                  </SimplePopupMenu>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginTop: responsiveScreenHeight(1.5),
+                }}
+              >
+                <View style={styles.bordertext}>
+                  <Text style={styles.successtext}>완료</Text>
+                  <View style={styles.numView}>
+                    <Text style={styles.numtext}>{this.state.done.length}</Text>
+                    <Text style={styles.gaetext}>개</Text>
+                  </View>
+                </View>
+                <View style={styles.bordertext}>
+                  <Text style={styles.successtext}>진행 중</Text>
+                  <View style={styles.numView}>
+                    <Text style={styles.numtext}>{this.state.ing.length}</Text>
+                    <Text style={styles.gaetext}>개</Text>
+                  </View>
+                </View>
+                <View style={styles.bordertext}>
+                  <Text style={styles.successtext}>미실시</Text>
+                  <View style={styles.numView}>
+                    <Text style={styles.numtext}>{this.state.no.length}</Text>
+                    <Text style={styles.gaetext}>개</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+
+            <View style={styles.threeView}>
+              <View style={{ marginBottom: responsiveScreenHeight(3.1) }}>
+                <Text style={styles.movetitletext}>진행 중</Text>
                 <FlatList
                   data={this.state.ing}
                   renderItem={({ item }) => {
@@ -370,7 +395,7 @@ export default class progress extends Component {
                   }}
                 />
               </View>
-              <View>
+              <View style={{ marginBottom: responsiveScreenHeight(3.1) }}>
                 <Text style={styles.movetitletext}>미실시 운동</Text>
                 <FlatList
                   data={this.state.no}
@@ -379,10 +404,8 @@ export default class progress extends Component {
                   }}
                 />
               </View>
-
-              {/* ScrollView */}
-            </ScrollView>
-          </View>
+            </View>
+          </ScrollView>
         </View>
 
         <ActionButton
@@ -390,8 +413,8 @@ export default class progress extends Component {
           style={styles.plusbtn}
           renderIcon={() => (
             <WithLocalSvg
-              width={80}
-              height={80}
+              width={responsiveScreenWidth(20)}
+              height={responsiveScreenWidth(20)}
               asset={action_icon}
               onPress={() => {
                 this.props.navigation.navigate("moveedit", {
@@ -411,7 +434,7 @@ const styles = StyleSheet.create({
   finalView: {
     height: responsiveScreenHeight(100),
     width: responsiveScreenWidth(100),
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#F8F8F8",
   },
   menuView: {
     backgroundColor: "#FFFFFF",
@@ -436,36 +459,20 @@ const styles = StyleSheet.create({
   per: {
     width: "90%",
   },
-
-  firstView: {
-    // padding:30,
-    alignItems: "center",
-    justifyContent: "flex-start",
-    marginLeft: 20,
-    marginRight: 20,
-    flexDirection: "row",
-    flex: 1,
-    marginTop: 15,
-    marginBottom: 15,
-    backgroundColor: "#FFFFFF",
-  },
   margin: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,
   },
   plusbtn: {
     position: "absolute",
-    bottom: "10%",
+    bottom: responsiveScreenHeight(15),
   },
   threeView: {
-    // padding:30,
-    marginTop: 10,
-    marginBottom: 230,
-    alignItems: "flex-start",
-    justifyContent: "center",
-    flexDirection: "row",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    paddingBottom: "5%",
+    paddingHorizontal: "2%",
   },
 
   bordertext: {
@@ -489,7 +496,7 @@ const styles = StyleSheet.create({
     fontSize: responsiveScreenFontSize(2),
   },
   numtext: {
-    fontSize: responsiveScreenFontSize(2.48),
+    fontSize: responsiveScreenFontSize(2.24),
     fontWeight: "bold",
     alignItems: "center",
   },

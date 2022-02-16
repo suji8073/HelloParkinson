@@ -65,7 +65,7 @@ export default class profile extends Component {
           <View style={styles.margin}>
             <MaterialIcons
               name="logout"
-              size={24}
+              style={{ fontSize: responsiveScreenFontSize(3) }}
               color="#808080"
               onPress={() => {
                 this.logout();
@@ -78,11 +78,16 @@ export default class profile extends Component {
           style={{
             flexDirection: "column",
             alignItems: "center",
-            marginTop: "8%",
+            marginTop: responsiveScreenHeight(6),
+            marginBottom: responsiveScreenHeight(4.2),
           }}
         >
           <Image
-            style={{ height: 105, width: 112, marginBottom: "3%" }}
+            style={{
+              height: responsiveScreenWidth(29.1),
+              width: responsiveScreenWidth(31),
+              marginBottom: responsiveScreenHeight(1.5),
+            }}
             source={profile_svg}
           />
           <Text style={styles.titleText}>관리자</Text>
@@ -92,7 +97,6 @@ export default class profile extends Component {
           style={{
             borderTopWidth: 0.3,
             borderTopColor: "#DCDCDC",
-            marginTop: "15%",
             flexDirection: "column",
             alignItems: "flex-start",
             justifyContent: "center",
@@ -220,6 +224,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#DCDCDC",
     flexDirection: "row",
     justifyContent: "space-around",
+    height: responsiveScreenHeight(7.34),
   },
 
   margin: {

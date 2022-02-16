@@ -7,8 +7,7 @@ import {
   FlatList,
   StatusBar,
 } from "react-native";
-import { WithLocalSvg } from "react-native-svg";
-import dayjs from "dayjs";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import "dayjs/locale/ko";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Task from "./task3";
@@ -21,23 +20,9 @@ import {
   responsiveScreenHeight,
   responsiveScreenWidth,
   responsiveScreenFontSize,
+  responsiveHeight,
 } from "react-native-responsive-dimensions";
 
-const m_items = [
-  { id: "1", label: "1월" },
-  { id: "2", label: "2월" },
-  { id: "3", label: "3월" },
-  { id: "4", label: "4월" },
-  { id: "5", label: "5월" },
-  { id: "6", label: "6월" },
-  { id: "7", label: "7월" },
-  { id: "8", label: "8월" },
-  { id: "9", label: "9월" },
-  { id: "10", label: "10월" },
-  { id: "11", label: "11월" },
-  { id: "12", label: "12월" },
-];
-const date = new Date();
 const items = [
   { id: "alarm", label: "최근알림순" },
   { id: "progress", label: "진도율순" },
@@ -65,7 +50,8 @@ export default class progress extends Component {
       thisdate: thisdate2,
       lastdate2: 0,
       thisdate2: 0,
-      // yoil: 0,
+      isDatePickerVisible: false,
+      setDatePickerVisibility: false,
       data: [],
       data1: [],
       data2: [],
@@ -395,6 +381,42 @@ export default class progress extends Component {
     );
   };
 
+  showDatePicker = () => {
+    this.setState({ setDatePickerVisibility: true, isDatePickerVisible: true });
+  };
+
+  hideDatePicker = () => {
+    this.setState({
+      setDatePickerVisibility: false,
+      isDatePickerVisible: false,
+    });
+  };
+
+  handleConfirm = (date) => {
+    console.warn("A date has been picked: ", date);
+    this.hideDatePicker();
+    var today = this.date_change(date);
+    this.setState({
+      month:
+        today.substring(5) == 0 ? today.substring(5, 7) : today.substring(6, 7),
+    });
+  };
+
+  date_change = (date) => {
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+
+    var today =
+      year +
+      "-" +
+      ("00" + month.toString()).slice(-2) +
+      "-" +
+      ("00" + day.toString()).slice(-2);
+
+    return today;
+  };
+
   render() {
     return (
       <View style={styles.finalView}>
@@ -411,29 +433,37 @@ export default class progress extends Component {
             }}
             onCancel={() => console.log("onCancel")}
           >
-            <Entypo name="dots-three-vertical" size={24} color="#595959" />
+            <Entypo
+              name="dots-three-vertical"
+              style={{ fontSize: responsiveScreenFontSize(3) }}
+              color="#595959"
+            />
           </SimplePopupMenu>
         </View>
 
         <View style={styles.twoView}>
-          <SimplePopupMenu
-            items={m_items}
-            cancelLabel={"취소"}
-            onSelect={(m_items) => {
-              this.onmonthPress(m_items.id);
-            }}
-            onCancel={() => console.log("onCancel")}
-          >
+          <TouchableOpacity activeOpacity={0.8} onPress={this.showDatePicker}>
+            <DateTimePickerModal
+              isVisible={this.state.isDatePickerVisible}
+              mode="date"
+              onConfirm={this.handleConfirm}
+              onCancel={this.hideDatePicker}
+            />
+
             <Text style={{ fontSize: responsiveScreenFontSize(2.48) }}>
               {this.state.month} 월
             </Text>
-          </SimplePopupMenu>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.threeView}>
           <View style={styles.fourView}>
             <TouchableOpacity onPress={() => this.minus()}>
-              <AntDesign name="left" size={30} color="#808080" />
+              <AntDesign
+                name="left"
+                style={{ fontSize: responsiveScreenFontSize(3) }}
+                color="#808080"
+              />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() =>
@@ -532,7 +562,11 @@ export default class progress extends Component {
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={this.plus}>
-              <AntDesign name="right" size={30} color="#808080" />
+              <AntDesign
+                name="right"
+                style={{ fontSize: responsiveScreenFontSize(3) }}
+                color="#808080"
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -575,7 +609,7 @@ const styles = StyleSheet.create({
   finalView: {
     height: responsiveScreenHeight(88),
     width: responsiveScreenWidth(100),
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#F8F8F8",
   },
   menuView: {
     backgroundColor: "#FFFFFF",
@@ -598,7 +632,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   fouuview: {
-    paddingTop: 10,
+    paddingTop: responsiveHeight(2),
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",
@@ -608,30 +642,12 @@ const styles = StyleSheet.create({
   FlatList: {
     marginBottom: responsiveScreenHeight(5),
   },
-  firstView: {
-    // padding:30,
-    alignItems: "center",
-    justifyContent: "flex-start",
-    marginLeft: 20,
-    marginRight: 20,
-    flexDirection: "row",
-    flex: 1,
-    marginTop: 15,
-    marginBottom: 15,
-    backgroundColor: "#FFFFFF",
-  },
   margin: {
-    height: 300,
     alignItems: "flex-end",
     justifyContent: "center",
     flex: 1,
   },
-  nexttext1: {
-    fontWeight: "bold",
-    fontSize: responsiveScreenFontSize(1.76),
-    color: "#B5B5B5",
-    paddingBottom: "2%",
-  },
+
   ddaytext1: {
     fontWeight: "bold",
     fontSize: responsiveScreenFontSize(1.76),
@@ -648,7 +664,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: responsiveScreenFontSize(1.76),
     color: "#484848",
-    // paddingBottom: "2%",
   },
   dayview: {
     alignItems: "center",
@@ -658,7 +673,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#7AC819",
     marginHorizontal: "3%",
-    // paddingHorizontal: "%",
     paddingVertical: "5%",
     borderWidth: 2,
     borderRadius: 30,
@@ -667,32 +681,31 @@ const styles = StyleSheet.create({
   nexttext: {
     fontWeight: "bold",
     fontSize: responsiveScreenFontSize(1.76),
-    color: "#B5B5B5", // paddingBottom: "2%",
+    color: "#B5B5B5",
   },
   ddaytext: {
     fontWeight: "bold",
     fontSize: responsiveScreenFontSize(1.76),
     color: "#FFFFFF",
-    // borderRadius: 19,
   },
   twoView: {
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    padding: "3%",
     backgroundColor: "#F8F8F8",
+    height: responsiveScreenHeight(8.59),
   },
 
   threeView: {
     borderRadius: 19,
     backgroundColor: "#FFFFFF",
+    height: responsiveScreenHeight(10.9),
   },
   fourView: {
     flexDirection: "row",
     backgroundColor: "#FFFFFF",
-    marginTop: "5%",
+    marginTop: responsiveHeight(2),
     alignItems: "center",
     justifyContent: "space-evenly",
-    padding: "2%",
   },
 });

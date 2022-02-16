@@ -18,11 +18,11 @@ import {
   responsiveScreenHeight,
   responsiveScreenWidth,
   responsiveScreenFontSize,
+  responsiveHeight,
 } from "react-native-responsive-dimensions";
 
 import { ThemeConsumer } from "styled-components/native";
 import { throwIfAudioIsDisabled } from "expo-av/build/Audio/AudioAvailability";
-
 
 var now = new Date();
 
@@ -46,12 +46,16 @@ export default class user_setting extends Component {
       percent: 0,
       bookmark: false,
       user_token: "",
+      user_id: "",
     };
   }
 
   async componentDidMount() {
     const manager_token = await AsyncStorage.getItem("@manager_token");
-    this.setState({ user_token: manager_token });
+    this.setState({
+      user_token: manager_token,
+      user_id: this.props.route.params.id,
+    });
 
     fetch(
       "http://hccparkinson.duckdns.org:19737/onlymanager/uid/" +
@@ -191,14 +195,16 @@ export default class user_setting extends Component {
         </View>
 
         <View style={styles.firstView}>
-          <View style={styles.icon}>
-            <Ionicons
-              name="person-circle-sharp"
-              style={{ fontSize: responsiveScreenFontSize(13) }}
-              color="lightblue"
-              alignItems="center"
-            />
-          </View>
+          <Ionicons
+            name="person-circle-sharp"
+            style={{
+              fontSize: responsiveScreenFontSize(13),
+              marginBottom: responsiveHeight(2),
+            }}
+            color="lightblue"
+            alignItems="center"
+          />
+
           <Text style={styles.group_num}>
             {this.state.team != "" ? this.state.team + "조" : " "}
           </Text>
@@ -219,7 +225,10 @@ export default class user_setting extends Component {
                 });
               }}
             >
-              <WithLocalSvg width={30} height={40} asset={Svg1} />
+              <WithLocalSvg
+                style={{ fontSize: responsiveScreenFontSize(3.5) }}
+                asset={Svg1}
+              />
               <Text style={styles.twotext}>환자 정보 편집</Text>
             </TouchableOpacity>
 
@@ -232,7 +241,10 @@ export default class user_setting extends Component {
                 });
               }}
             >
-              <WithLocalSvg width={30} height={40} asset={Svg2} />
+              <WithLocalSvg
+                style={{ fontSize: responsiveScreenFontSize(3.5) }}
+                asset={Svg2}
+              />
               <Text style={styles.twotext}>운동 통계 확인</Text>
             </TouchableOpacity>
 
@@ -246,11 +258,15 @@ export default class user_setting extends Component {
                 });
               }}
             >
-              <WithLocalSvg width={30} height={40} asset={Svg3} />
+              <WithLocalSvg
+                style={{ fontSize: responsiveScreenFontSize(3.5) }}
+                asset={Svg3}
+              />
               <Text style={styles.twotext}>진도율 확인</Text>
             </TouchableOpacity>
           </View>
         </View>
+
         <View style={styles.threeView}>
           <View style={styles.memoView}>
             <Text style={styles.text2}>메모</Text>
@@ -261,7 +277,6 @@ export default class user_setting extends Component {
             </Text>
           </View>
         </View>
-        <View style={styles.marginView}></View>
       </View>
     );
   }
@@ -296,19 +311,20 @@ const styles = StyleSheet.create({
 
   firstView: {
     alignItems: "center",
-    justifyContent: "center",
-    flex: 2.5,
-    marginTop: "3%",
-    marginBottom: "8%",
+    marginTop: responsiveScreenHeight(6.6),
     backgroundColor: "#FFFFFF",
+    height: responsiveScreenHeight(29.6),
+  },
+
+  secondView: {
+    alignItems: "flex-start",
+    justifyContent: "center",
+    borderColor: "#E5E5E5",
+    height: responsiveScreenHeight(10),
+    marginTop: responsiveScreenHeight(3),
   },
 
   numberbutton: {
-    marginLeft: 3,
-    marginRight: 3,
-    width: "100%",
-    height: 45,
-    borderColor: "#E5E5E5",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -318,7 +334,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     fontSize: responsiveScreenFontSize(1.76),
     color: "#5CB405",
-    marginTop: 10,
+    marginTop: responsiveScreenHeight(2),
     justifyContent: "center",
   },
 
@@ -329,58 +345,37 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  secondView: {
-    // padding:30,
-    alignItems: "flex-start",
-    justifyContent: "center",
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-    marginBottom: 10,
-  },
-
   threeView: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
-    flex: 1,
-    marginTop: 5,
+    marginTop: responsiveScreenHeight(3.1),
     flexDirection: "row",
     backgroundColor: "#FFFFFF",
-    borderBottomWidth: 0.3,
+    height: responsiveScreenHeight(11.0),
     borderTopWidth: 0.3,
+    borderBottomWidth: 0.3,
     borderColor: "#E5E5E5",
-    padding: 10,
-  },
-
-  marginView: {
-    // padding:30,
-    alignItems: "flex-start",
-    justifyContent: "center",
-    flex: 2,
-    backgroundColor: "#FFFFFF",
+    paddingTop: responsiveScreenHeight(2.6),
+    paddingBottom: responsiveScreenHeight(2.6),
+    paddingLeft: responsiveScreenHeight(4),
+    paddingRight: responsiveScreenHeight(4),
   },
 
   margin: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,
   },
 
   memoView: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
-    marginLeft: 30,
-    marginTop: 10,
     flex: 1,
   },
 
   textView: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
-    marginTop: 10,
     flex: 1,
   },
 
@@ -390,14 +385,11 @@ const styles = StyleSheet.create({
     color: "#484848",
     justifyContent: "center",
   },
-  icon: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
 
   group_num: {
     alignItems: "center",
     fontSize: responsiveScreenFontSize(2),
+    marginBottom: responsiveScreenHeight(0.3),
     fontWeight: "bold",
     color: "#316200",
     justifyContent: "center",
@@ -405,6 +397,7 @@ const styles = StyleSheet.create({
   user_name: {
     alignItems: "center",
     fontSize: responsiveScreenFontSize(2.48),
+    marginBottom: responsiveScreenHeight(0.3),
     color: "#000000",
     fontWeight: "bold",
     justifyContent: "center",

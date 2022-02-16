@@ -140,6 +140,13 @@ export default class move_play extends Component {
   }
 
   async componentDidMount() {
+    console.log(data_time[this.props.route.params.eid]);
+    console.log();
+    console.log(
+      (parseInt(data_time[this.props.route.params.eid].substring(0, 1) * 60) +
+        parseInt(data_time[this.props.route.params.eid].substring(2, 4))) *
+        1000
+    );
     try {
       const list = await AsyncStorage.getItem("@move_play");
       if (list !== null) {
@@ -160,7 +167,6 @@ export default class move_play extends Component {
 
   params_move = () => {
     var params_array = this.state.list;
-    console.log(this.props.route.params.eid);
 
     if (
       this.props.route.params.eid === 12 ||
@@ -169,7 +175,6 @@ export default class move_play extends Component {
       this.props.route.params.eid === 45
     ) {
       this.setState({ next_name: "" });
-      console.log("여기일까?");
     } else {
       params_array.map((x) => {
         if (x.eid === this.props.route.params.eid + 1) {
@@ -203,7 +208,7 @@ export default class move_play extends Component {
         done_num: this.props.route.params.done_num + 1,
         video_start: true,
       });
-    }, 1000); // 배포할 때 move_time로 바꾸기
+    }, move_time); // 배포할 때 move_time로 바꾸기
   };
 
   nextpage = () => {
@@ -214,7 +219,6 @@ export default class move_play extends Component {
         this.save_progress(this.state.token);
 
         if (this.state.next_name === "") {
-          console.log("다음 카테고리로");
           this.where_page();
         } else this.where_move_go();
       } else {
@@ -237,9 +241,7 @@ export default class move_play extends Component {
     }
   };
   where_page = () => {
-    this.setState({ video_start: false }, () => {
-      console.log("여기당");
-    });
+    this.setState({ video_start: false }, () => {});
     if (this.props.route.params.cat_name == 1) {
       this.props.navigation.navigate("move_1", {
         reset_click: true,
@@ -278,7 +280,6 @@ export default class move_play extends Component {
 
   save_progress = (user_token) => {
     console.log("save_progress");
-    console.log(user_token);
     fetch("http://hccparkinson.duckdns.org:19737/progress/write", {
       method: "POST",
       headers: {
@@ -432,7 +433,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
     height: responsiveScreenWidth(120),
-    borderWidth: 1,
   },
 
   white: {

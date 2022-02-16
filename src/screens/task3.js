@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 
 import { TouchableOpacity, StyleSheet, View, Text, Alert } from "react-native";
-
-import silverstarsvg from "../icon/silverstar.svg";
-import greenstarsvg from "../icon/greenstar.svg";
 import PercentageBar from "./progressbar";
 import airplane from "../icon/airplane.svg";
 import greenairplane from "../icon/greenairplane.svg";
@@ -12,15 +9,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { WithLocalSvg } from "react-native-svg";
 
 var now = new Date();
-const year = now.getFullYear();
 
 import {
   responsiveScreenHeight,
   responsiveScreenWidth,
   responsiveScreenFontSize,
+  responsiveWidth,
+  responsiveHeight,
 } from "react-native-responsive-dimensions";
-
-
 
 export default class task3 extends Component {
   constructor(props) {
@@ -160,15 +156,15 @@ export default class task3 extends Component {
           borderRadius: 15,
           borderColor: "#EBEBEB",
           borderWidth: 2,
-          marginLeft: "4.7%",
-          marginRight: "4.7%",
-          marginTop: "2%",
-          marginBottom: "2%",
+          marginLeft: responsiveScreenWidth(4.7),
+          marginRight: responsiveScreenWidth(4.7),
+          marginBottom: responsiveScreenHeight(2),
           height: responsiveScreenHeight(10.6),
           flexDirection: "row",
-          justifyContent: "center",
+          justifyContent: "space-between",
           alignItems: "center",
-          paddingRight: "2%",
+          paddingRight: responsiveWidth(5.8),
+          paddingLeft: responsiveWidth(4),
         }}
       >
         {/* 사용자와 그래프 뷰 , 숫자*/}
@@ -177,15 +173,11 @@ export default class task3 extends Component {
             flexDirection: "column",
             alignItems: "flex-start",
             justifyContent: "flex-start",
-            flex: 1,
-            padding: "3%",
-            marginLeft: responsiveScreenWidth(3.6),
           }}
         >
           <Text
             style={{
               fontSize: responsiveScreenFontSize(2),
-              marginTop: "1%",
             }}
           >
             {this.props.user} / {this.dateToStr()} /{" "}
@@ -198,13 +190,12 @@ export default class task3 extends Component {
               alignItems: "center",
               flexDirection: "row",
               justifyContent: "space-between",
-              marginTop: "1.5%",
+              marginTop: responsiveHeight(0.5),
             }}
           >
             <View
               style={{
-                width: "80%",
-                justifyContent: "center",
+                width: responsiveScreenWidth(52.8),
               }}
             >
               <PercentageBar
@@ -221,7 +212,7 @@ export default class task3 extends Component {
                 fontSize: responsiveScreenFontSize(1.88),
                 justifyContent: "center",
                 alignItems: "center",
-                marginLeft: "2%",
+                marginLeft: responsiveScreenWidth(1.6),
               }}
             >
               {Math.ceil(this.props.progress * 100)}%
@@ -233,7 +224,6 @@ export default class task3 extends Component {
           style={{
             alignItems: "flex-end",
             justifyContent: "flex-end",
-            marginRight: "2%",
           }}
           onPress={this.handleClick}
           activeOpacity={1}
@@ -265,10 +255,8 @@ export default class task3 extends Component {
 
 const styles = StyleSheet.create({
   margin: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
-    flex: 1,
   },
   timetextgreen: {
     color: "#000000",
