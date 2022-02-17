@@ -88,7 +88,7 @@ export default class TabNavigation extends Component {
           initialParams={{
             paramSetting2:
               this.props.route.params.paramSetting2 == null
-                ? "progress"
+                ? "alarm"
                 : this.props.route.params.paramSetting2,
           }}
           options={{

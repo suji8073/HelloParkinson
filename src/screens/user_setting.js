@@ -13,7 +13,6 @@ import silverstarsvg from "../icon/silverstar.svg";
 import greenstarsvg from "../icon/greenstar.svg";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { WithLocalSvg } from "react-native-svg";
-
 import {
   responsiveScreenHeight,
   responsiveScreenWidth,

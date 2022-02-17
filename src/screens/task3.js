@@ -10,6 +10,9 @@ import { WithLocalSvg } from "react-native-svg";
 
 var now = new Date();
 
+// var utc = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+// var time_diff = 9 * 60 * 60 * 1000;
+// var cur_date_korea = new Date(utc + time_diff);
 import {
   responsiveScreenHeight,
   responsiveScreenWidth,
@@ -37,6 +40,12 @@ export default class task3 extends Component {
 
     this.setState(
       {
+        // nowtimestamp:
+        //   cur_date_korea.getFullYear() * 100000000 +
+        //   (cur_date_korea.getMonth() + 1) * 1000000 +
+        //   cur_date_korea.getDate() * 10000 +
+        //   cur_date_korea.getHours() * 100 +
+        //   cur_date_korea.getMinutes(),
         nowtimestamp:
           this.state.date.getFullYear() * 100000000 +
           (this.state.date.getMonth() + 1) * 1000000 +
@@ -77,6 +86,12 @@ export default class task3 extends Component {
 
   sendtimes = () => {
     this.setState({
+      // sendtimestamp:
+      //   cur_date_korea.getFullYear() * 100000000 +
+      //   (cur_date_korea.getMonth() + 1) * 1000000 +
+      //   cur_date_korea.getDate() * 10000 +
+      //   cur_date_korea.getHours() * 100 +
+      //   cur_date_korea.getMinutes(),
       sendtimestamp:
         this.state.date.getFullYear() * 100000000 +
         (this.state.date.getMonth() + 1) * 1000000 +
@@ -87,6 +102,12 @@ export default class task3 extends Component {
   };
   nowtimes = () => {
     this.setState({
+      // nowtimestamp:
+      //   cur_date_korea.getFullYear() * 100000000 +
+      //   (cur_date_korea.getMonth() + 1) * 1000000 +
+      //   cur_date_korea.getDate() * 10000 +
+      //   cur_date_korea.getHours() * 100 +
+      //   cur_date_korea.getMinutes(),
       nowtimestamp:
         this.state.date.getFullYear() * 100000000 +
         (this.state.date.getMonth() + 1) * 1000000 +
@@ -259,11 +280,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   timetextgreen: {
-    color: "#000000",
+    color: "#FFFFFF",
     fontSize: responsiveScreenFontSize(1.4),
   },
   timetextsilver: {
-    color: "#FFFFFF",
+    color: "#000000",
     fontSize: responsiveScreenFontSize(1.4),
   },
 });
