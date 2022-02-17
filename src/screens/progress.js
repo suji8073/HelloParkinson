@@ -91,7 +91,7 @@ export default class progress extends Component {
         man_token: manager_token,
         option:
           this.props.route.params.paramSetting2 == null
-            ? "progress"
+            ? "alarm"
             : this.props.route.params.paramSetting2,
       },
       () => {
