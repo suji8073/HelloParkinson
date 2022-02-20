@@ -54,14 +54,12 @@ export default class patient_Home extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         this.setState({
           data: json.data,
           first: json.data[0],
           second: json.data[1],
           third: json.data[2],
         });
-        console.log(this.state.first);
       });
   };
 

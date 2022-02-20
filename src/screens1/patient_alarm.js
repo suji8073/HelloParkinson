@@ -17,7 +17,6 @@ import {
 } from "react-native-responsive-dimensions";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import { createAlarm } from "react-native-simple-alarm";
 import { WithLocalSvg } from "react-native-svg";
 //import { createAlarm } from "react-native-simple-alarm";
 
@@ -50,8 +49,11 @@ export default class patient_alarm extends Component {
   async componentDidMount() {
     try {
       //await AsyncStorage.clear();
-      await AsyncStorage.setItem("@alarm", JSON.stringify(alarm));
       const alarm_array = await AsyncStorage.getItem("@alarm");
+      if (alarm_array === null) {
+        await AsyncStorage.setItem("@alarm", JSON.stringify(alarm));
+      }
+      console.log(alarm_array);
 
       if (alarm_array !== null) {
         this.setState({ alarm_array: JSON.parse(alarm_array) });
@@ -73,7 +75,7 @@ export default class patient_alarm extends Component {
 
         <ScrollView style={styles.secondView}>
           <FlatList
-            keyExtractor={(item, index) => index}
+            keyExtractor={(item, index) => index.toString()}
             data={this.state.alarm_array}
             renderItem={({ item, index }) => {
               return (
@@ -155,8 +157,9 @@ const styles = StyleSheet.create({
   secondView: {
     paddingLeft: "4.7%",
     paddingRight: "4.7%",
+    height: responsiveScreenHeight(70),
     backgroundColor: "#F8F8F8",
-    height: "100%",
+    marginBottom: responsiveScreenHeight(25),
   },
 
   plusbtn: {

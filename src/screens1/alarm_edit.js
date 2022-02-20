@@ -25,11 +25,12 @@ import {
 
 const storeData = async (array) => {
   try {
-    await AsyncStorage.mergeItem("@alarm", JSON.stringify(array));
+    await AsyncStorage.setItem("@alarm", array);
     console.log("clear");
   } catch (e) {
     // saving error
     console.log("error");
+    console.log(e);
   }
 };
 
@@ -51,16 +52,12 @@ export default class alarm_edit extends Component {
   async componentDidMount() {
     try {
       const alarm_array = await AsyncStorage.getItem("@alarm");
-      //console.log(alarm_array);
-
       if (alarm_array !== null) {
         this.setState({ alarm_array: alarm_array });
       }
     } catch (e) {
       console.log("불러와지는 error");
     }
-
-    console.log(this.state.alarm_array);
   }
 
   onPress_apm1 = () => {
@@ -118,13 +115,20 @@ export default class alarm_edit extends Component {
           //console.log(change_clock);
           console.log("전");
           console.log(this.props.route.params.index + 1);
-          //var change_clock = [];
+          var new_clock = [];
           change_clock.map((x) => {
-            console.log("1");
-            console.log(x);
+            if (x.key !== this.state.index) {
+              new_clock.push(x);
+            }
           });
-          //console.log(change_clock);
+
+          console.log("삭제 한 후 배열 값");
+          console.log(JSON.stringify(new_clock));
+          storeData(JSON.stringify(new_clock));
           //this.props.navigation.pop();
+          this.props.navigation.push("TabNavigation1", {
+            init_set: "alarm",
+          });
         },
       },
     ]);
@@ -141,19 +145,15 @@ export default class alarm_edit extends Component {
         text: "수 정",
         onPress: () => {
           Alert.alert("수정되었습니다.");
-          //console.log(this.state.alarm_array);
           var change_clock = JSON.parse(this.state.alarm_array);
-          //console.log(change_clock);
-
           change_clock.filter((x, y) => {
             if (x.key === this.state.index) {
               x.apm = this.state.apm;
-              x.hour = this.state.hour;
-              x.minute = this.state.minute;
+              x.hour = String(this.state.hour);
+              x.minute = String(this.state.minute);
             }
           });
-          //console.log(change_clock);
-          storeData(change_clock);
+          storeData(JSON.stringify(change_clock));
           //this.props.navigation.pop();
           this.props.navigation.push("TabNavigation1", {
             init_set: "alarm",

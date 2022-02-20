@@ -27,18 +27,20 @@ export default class TabNavigation extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    console.log("확인중");
+    console.log(this.props.route.params.init_set);
   }
   render() {
     return (
       <Tab.Navigator
         initialRouteName={
-          this.props.route.params.init_set === "Home"
-            ? "patient_Home"
-            : this.props.route.params.init_set === "alarm"
-            ? "patient_alarm"
-            : this.props.route.params.init_set === "move"
-            ? "patient_move"
-            : "patient_record"
+          this.props.route.params.init_set == "Home"
+            ? "홈"
+            : this.props.route.params.init_set == "alarm"
+            ? "알림"
+            : this.props.route.params.init_set == "move"
+            ? "운동"
+            : "기록"
         }
         screenOptions={{
           tabBarActiveTintColor: "#5CB405",
