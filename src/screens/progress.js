@@ -98,28 +98,22 @@ export default class progress extends Component {
     while (num > 6) {
       num -= 7;
     }
+
     switch (num) {
       case 0:
         return "일";
-        break;
       case 1:
         return "월";
-        break;
       case 2:
         return "화";
-        break;
       case 3:
         return "수";
-        break;
       case 4:
         return "목";
-        break;
       case 5:
         return "금";
-        break;
       case 6:
         return "토";
-        break;
     }
   };
   daynum = (num) => {
@@ -395,26 +389,24 @@ export default class progress extends Component {
   handleConfirm = (date) => {
     console.warn("A date has been picked: ", date);
     this.hideDatePicker();
-    var today = this.date_change(date);
-    this.setState({
-      month:
-        today.substring(5) == 0 ? today.substring(5, 7) : today.substring(6, 7),
-    });
-  };
 
-  date_change = (date) => {
     var year = date.getFullYear();
     var month = date.getMonth() + 1;
     var day = date.getDate();
-
-    var today =
-      year +
-      "-" +
-      ("00" + month.toString()).slice(-2) +
-      "-" +
-      ("00" + day.toString()).slice(-2);
-
-    return today;
+    var daytext = date.getDay();
+    this.setState(
+      {
+        year: year,
+        month: month,
+        day: day,
+        yoil: daytext,
+        lastdate: new Date(this.state.year, this.state.month - 1, 0).getDate(),
+        thisdate: new Date(this.state.year, this.state.month, 0).getDate(),
+      },
+      () => {
+        this.userfunc();
+      }
+    );
   };
 
   render() {
