@@ -10,8 +10,14 @@ import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   Keyboard,
+  Image,
 } from "react-native";
 
+import p1 from "../image/p1.png";
+import p2 from "../image/p2.png";
+import p3 from "../image/p3.png";
+import p4 from "../image/p4.png";
+import p_1 from "../image/p-1.png";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
@@ -27,6 +33,7 @@ import {
   responsiveScreenHeight,
   responsiveScreenWidth,
   responsiveScreenFontSize,
+  responsiveHeight,
 } from "react-native-responsive-dimensions";
 
 const HideKeyboard = ({ children }) => (
@@ -50,6 +57,7 @@ export default class user_edit extends Component {
       rank1: off,
       rank2: off,
       birth: 19550515,
+      profilepic: "",
       gender: "",
       memo: "",
       team: "",
@@ -86,6 +94,7 @@ export default class user_edit extends Component {
           team: json.data[0].team,
           UID: json.data[0].uid,
           rank: json.data[0].ranking,
+          profilepic: json.data[0].profilepic,
         });
         if (this.state.gender === "M") {
           this.setState({ age1: on, age2: off });
@@ -286,6 +295,19 @@ export default class user_edit extends Component {
         },
       },
     ]);
+  profile = () => {
+    if (this.state.profilepic === "-1") {
+      return p_1;
+    } else if (this.state.profilepic === "1") {
+      return p1;
+    } else if (this.state.profilepic === "2") {
+      return p2;
+    } else if (this.state.profilepic === "3") {
+      return p3;
+    } else if (this.state.profilepic === "4") {
+      return p4;
+    }
+  };
 
   render() {
     return (
@@ -322,11 +344,13 @@ export default class user_edit extends Component {
             >
               <KeyboardAvoidingView behavior={this.state.behavior}>
                 <View style={styles.firstView}>
-                  <Ionicons
-                    name="person-circle-sharp"
-                    style={{ fontSize: responsiveScreenFontSize(13) }}
-                    color="lightblue"
-                    alignItems="center"
+                  <Image
+                    source={this.profile()}
+                    style={{
+                      height: responsiveScreenHeight(10),
+                      width: responsiveScreenWidth(20),
+                      borderRadius: 400 / 2,
+                    }}
                   />
                   {/**<Text style={styles.profile_edit}>프로필 사진 바꾸기</Text>**/}
                 </View>

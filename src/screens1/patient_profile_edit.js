@@ -5,6 +5,7 @@ import {
   Text,
   Alert,
   TextInput,
+  Image,
   StatusBar,
 } from "react-native";
 
@@ -17,6 +18,11 @@ import check from "../icon/radio_button_check.svg";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import p1 from "../image/p1.png";
+import p2 from "../image/p2.png";
+import p3 from "../image/p3.png";
+import p4 from "../image/p4.png";
+import p_1 from "../image/p-1.png";
 const storeData = async (data) => {
   try {
     await AsyncStorage.setItem("@user_data", JSON.stringify(data));
@@ -71,6 +77,7 @@ export default class patient_profile_edit extends Component {
       gender: "",
       name: "",
       UID: "",
+      profilepic: "",
       rank: 1,
       progress: "",
       M: "남",
@@ -100,6 +107,7 @@ export default class patient_profile_edit extends Component {
             name: json.data[0].uname,
             UID: json.data[0].uid,
             rank: json.data[0].ranking,
+            profilepic: json.data[0].profilepic,
           },
           () => {
             this.change_gender();
@@ -148,6 +156,7 @@ export default class patient_profile_edit extends Component {
         birthday:
           this.state.user_age === "" ? this.state.birth : this.state.user_age,
         ranking: this.state.post_rank,
+        profilepic: this.state.profilepic,
       }),
     })
       .then((response) => {
@@ -265,6 +274,19 @@ export default class patient_profile_edit extends Component {
         //Error Loading Images
       });
   };
+  profile = () => {
+    if (this.state.profilepic === "-1") {
+      return p_1;
+    } else if (this.state.profilepic === "1") {
+      return p1;
+    } else if (this.state.profilepic === "2") {
+      return p2;
+    } else if (this.state.profilepic === "3") {
+      return p3;
+    } else if (this.state.profilepic === "4") {
+      return p4;
+    }
+  };
 
   render() {
     return (
@@ -292,15 +314,18 @@ export default class patient_profile_edit extends Component {
         </View>
 
         <View style={styles.firstView}>
-          <Ionicons
-            name="person-circle-sharp"
-            style={{ fontSize: responsiveScreenFontSize(18) }}
-            color="lightblue"
-            alignItems="center"
+          <Image
+            source={this.profile()}
+            style={{
+              height: responsiveScreenHeight(11),
+              width: responsiveScreenWidth(22),
+              borderRadius: 400 / 2,
+            }}
           />
-
           <TouchableOpacity
-          //onPress={CameraRoll.getAlbums({ assetType: "All" })}
+            onPress={() => {
+              this.props.navigation.navigate("profile_gallery");
+            }}
           >
             <Text style={styles.user_name}>프로필 사진 변경</Text>
           </TouchableOpacity>
@@ -470,10 +495,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     fontWeight: "bold",
   },
-
   firstView: {
     alignItems: "center",
     justifyContent: "center",
+    marginTop: "5.1%",
     marginBottom: "4.7%",
     backgroundColor: "#FFFFFF",
   },
@@ -538,6 +563,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#59A60B",
     justifyContent: "center",
+    paddingTop: "2%",
   },
 
   user_age: {

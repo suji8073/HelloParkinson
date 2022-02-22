@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -8,7 +8,11 @@ import {
   responsiveScreenWidth,
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
-
+import p1 from "../image/p1.png";
+import p2 from "../image/p2.png";
+import p3 from "../image/p3.png";
+import p4 from "../image/p4.png";
+import p_1 from "../image/p-1.png";
 export default class task2 extends Component {
   dateToStr = () => {
     var today_year = new Date().getFullYear();
@@ -19,14 +23,31 @@ export default class task2 extends Component {
   age_change = () => {
     return this.props.sex === "F" ? "여" : "남";
   };
-
+  profile = () => {
+    if (this.props.profilepic === "-1") {
+      return p_1;
+    } else if (this.props.profilepic === "1") {
+      return p1;
+    } else if (this.props.profilepic === "2") {
+      return p2;
+    } else if (this.props.profilepic === "3") {
+      return p3;
+    } else if (this.props.profilepic === "4") {
+      return p4;
+    }
+  };
   render() {
     return (
       <View style={styles.Container}>
-        <Ionicons
-          name="person-circle-sharp"
-          style={{ fontSize: responsiveScreenFontSize(6) }}
-          color="lightblue"
+        <Image
+          source={this.profile()}
+          style={{
+            height: responsiveScreenHeight(7),
+            width: responsiveScreenWidth(15),
+            borderRadius: 400 / 2,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         />
         <View style={styles.textgroup}>
           <Text style={styles.titleText}> {this.props.user} </Text>

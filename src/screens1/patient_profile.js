@@ -6,12 +6,18 @@ import {
   Text,
   TouchableOpacity,
   Alert,
+  Image,
 } from "react-native";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 
+import p1 from "../image/p1.png";
+import p2 from "../image/p2.png";
+import p3 from "../image/p3.png";
+import p4 from "../image/p4.png";
+import p_1 from "../image/p-1.png";
 import {
   responsiveScreenHeight,
   responsiveScreenWidth,
@@ -41,6 +47,7 @@ export default class patient_profile extends Component {
       team: "",
       name: "",
       UID: "",
+      profilepic: "",
     };
   }
 
@@ -61,6 +68,7 @@ export default class patient_profile extends Component {
           team: json.data[0].team,
           name: json.data[0].uname,
           UID: json.data[0].uid,
+          profilepic: json.data[0].profilepic,
         });
       });
   };
@@ -86,6 +94,19 @@ export default class patient_profile extends Component {
         },
       },
     ]);
+  };
+  profile = () => {
+    if (this.state.profilepic === "-1") {
+      return p_1;
+    } else if (this.state.profilepic === "1") {
+      return p1;
+    } else if (this.state.profilepic === "2") {
+      return p2;
+    } else if (this.state.profilepic === "3") {
+      return p3;
+    } else if (this.state.profilepic === "4") {
+      return p4;
+    }
   };
 
   render() {
@@ -117,11 +138,13 @@ export default class patient_profile extends Component {
         </View>
 
         <View style={styles.firstView}>
-          <Ionicons
-            name="person-circle-sharp"
-            style={{ fontSize: responsiveScreenFontSize(20) }}
-            color="lightblue"
-            alignItems="center"
+          <Image
+            source={this.profile()}
+            style={{
+              height: responsiveScreenHeight(17),
+              width: responsiveScreenWidth(32),
+              borderRadius: 400 / 2,
+            }}
           />
         </View>
 

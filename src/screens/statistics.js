@@ -172,6 +172,7 @@ export default class statistics extends Component {
                     user={item.uname}
                     birthday={item.birthday}
                     sex={item.gender}
+                    profilepic={item.profilepic}
                   ></Task>
                 </TouchableOpacity>
               );

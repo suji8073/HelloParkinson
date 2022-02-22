@@ -24,6 +24,7 @@ import patient_alarm from "../screens1/patient_alarm";
 import patient_move from "../screens1/patient_move";
 import patient_Home from "../screens1/patient_Home";
 
+import profile_gallery from "../screens1/profile_gallery";
 import norank_patient_Home from "../screens1/norank_patient_Home";
 import patient_profile from "../screens1/patient_profile";
 import patient_profile_edit from "../screens1/patient_profile_edit";
@@ -78,6 +79,7 @@ const StackNavigation = () => {
       <Stack.Screen name="patient_record" component={patient_record} />
       <Stack.Screen name="patient_alarm" component={patient_alarm} />
       <Stack.Screen name="patient_profile" component={patient_profile} />
+      <Stack.Screen name="profile_gallery" component={profile_gallery} />
 
       <Stack.Screen name="alarm_task" component={alarm_task} />
       <Stack.Screen name="alarm_edit" component={alarm_edit} />
