@@ -40,6 +40,7 @@ export default class list extends Component {
       memo: "",
       team: "",
       name: "",
+      profilepic: "",
       id: "",
       text: "",
       bookmark: 0,
@@ -189,6 +190,7 @@ export default class list extends Component {
                     user={item.uname}
                     age={item.birthday}
                     sex={item.gender}
+                    profilepic={item.profilepic}
                     book={item.bookmark === true ? greenstarsvg : silverstarsvg}
                   ></Task>
                 </TouchableOpacity>

@@ -1,10 +1,23 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Alert,
+  Image,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import { WithLocalSvg } from "react-native-svg";
 import silverstarsvg from "../icon/silverstar.svg";
 import greenstarsvg from "../icon/greenstar.svg";
+
+import p1 from "../image/p1.png";
+import p2 from "../image/p2.png";
+import p3 from "../image/p3.png";
+import p4 from "../image/p4.png";
+import p_1 from "../image/p-1.png";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -21,7 +34,19 @@ export default class task1 extends Component {
       man_token: "",
     };
   }
-
+  profile = () => {
+    if (this.props.profilepic === "-1") {
+      return p_1;
+    } else if (this.props.profilepic === "1") {
+      return p1;
+    } else if (this.props.profilepic === "2") {
+      return p2;
+    } else if (this.props.profilepic === "3") {
+      return p3;
+    } else if (this.props.profilepic === "4") {
+      return p4;
+    }
+  };
   async componentDidMount() {
     const manager_token = await AsyncStorage.getItem("@manager_token");
     this.setState({ man_token: manager_token });
@@ -73,12 +98,15 @@ export default class task1 extends Component {
       <View style={styles.Container}>
         <View style={styles.full}>
           <View>
-            <Ionicons
-              name="person-circle-sharp"
-              style={{ fontSize: responsiveScreenFontSize(6) }}
-              color="lightblue"
-              justifyContent="center"
-              alignItems="center"
+            <Image
+              source={this.profile()}
+              style={{
+                height: responsiveScreenHeight(7),
+                width: responsiveScreenWidth(15),
+                borderRadius: 400 / 2,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             />
           </View>
           <View>

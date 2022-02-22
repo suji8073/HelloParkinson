@@ -1,22 +1,47 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
 import { WithLocalSvg } from "react-native-svg";
 import { Ionicons } from "@expo/vector-icons";
 const year = 2021 + 1;
-
+import p1 from "../image/p1.png";
+import p2 from "../image/p2.png";
+import p3 from "../image/p3.png";
+import p4 from "../image/p4.png";
+import p_1 from "../image/p-1.png";
 import {
   responsiveScreenHeight,
   responsiveScreenWidth,
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
+import { number } from "prop-types";
 
 export default class task_home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { adress: "../image/p3.png" };
+  }
   dateToStr = () => {
     var today_year = new Date().getFullYear();
     var birth_year = String(this.props.age).substring(0, 4);
     return today_year - birth_year + 1;
   };
-
+  profile = () => {
+    if (this.props.profilepic === "-1") {
+      return p_1;
+    } else if (this.props.profilepic === "1") {
+      return p1;
+    } else if (this.props.profilepic === "2") {
+      return p2;
+    } else if (this.props.profilepic === "3") {
+      return p3;
+    } else if (this.props.profilepic === "4") {
+      return p4;
+    }
+  };
+  // profilepic
+  componentDidMount() {
+    console.log(this.props.profilepic);
+  }
   render() {
     return (
       <View
@@ -36,10 +61,13 @@ export default class task_home extends Component {
           </Text>
         </View>
         <View style={styles.infotext}>
-          <Ionicons
-            name="person-circle-sharp"
-            style={{ fontSize: responsiveScreenFontSize(8) }}
-            color="lightblue"
+          <Image
+            source={this.profile()}
+            style={{
+              height: responsiveScreenHeight(8),
+              width: responsiveScreenWidth(17),
+              borderRadius: 400 / 2,
+            }}
           />
           <Text
             style={{ fontSize: responsiveScreenFontSize(2), marginLeft: "2%" }}

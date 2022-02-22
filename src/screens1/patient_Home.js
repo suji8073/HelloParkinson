@@ -25,6 +25,11 @@ import {
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import p1 from "../image/p1.png";
+import p2 from "../image/p2.png";
+import p3 from "../image/p3.png";
+import p4 from "../image/p4.png";
+import p_1 from "../image/p-1.png";
 export default class patient_Home extends Component {
   constructor(props) {
     super(props);
@@ -54,15 +59,32 @@ export default class patient_Home extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        this.setState({
-          data: json.data,
-          first: json.data[0],
-          second: json.data[1],
-          third: json.data[2],
-        });
+        this.setState(
+          {
+            data: json.data,
+            first: json.data[0],
+            second: json.data[1],
+            third: json.data[2],
+          },
+          () => {
+            console.log(this.state.data);
+          }
+        );
       });
   };
-
+  profile = (pic) => {
+    if (pic === "-1") {
+      return p_1;
+    } else if (pic === "1") {
+      return p1;
+    } else if (pic === "2") {
+      return p2;
+    } else if (pic === "3") {
+      return p3;
+    } else if (pic === "4") {
+      return p4;
+    }
+  };
   render() {
     return (
       <View style={styles.finalView}>
@@ -123,9 +145,9 @@ export default class patient_Home extends Component {
                   }}
                 >
                   <Image
-                    source={require("../image/i1.png")}
+                    source={this.profile(this.state.second["profilepic"])}
                     style={{
-                      height: responsiveScreenHeight(11),
+                      height: responsiveScreenHeight(9),
                       width: responsiveScreenWidth(19),
                       borderRadius: 300 / 2,
                     }}
@@ -173,9 +195,9 @@ export default class patient_Home extends Component {
                   }}
                 >
                   <Image
-                    source={require("../image/i2.png")}
+                    source={this.profile(this.state.second["profilepic"])}
                     style={{
-                      height: responsiveScreenHeight(11),
+                      height: responsiveScreenHeight(9),
                       width: responsiveScreenWidth(19),
                       borderRadius: 400 / 2,
                     }}
@@ -214,9 +236,9 @@ export default class patient_Home extends Component {
                   }}
                 >
                   <Image
-                    source={require("../image/i3.png")}
+                    source={this.profile(this.state.second["profilepic"])}
                     style={{
-                      height: responsiveScreenHeight(11),
+                      height: responsiveScreenHeight(9),
                       width: responsiveScreenWidth(19),
                       borderRadius: 400 / 2,
                     }}
@@ -264,6 +286,7 @@ export default class patient_Home extends Component {
                     name={item.uname}
                     age={item.birthday}
                     sex={item.gender}
+                    profilepic={item.profilepic}
                     check={this.state.User_name}
                   ></Task5>
                 );
