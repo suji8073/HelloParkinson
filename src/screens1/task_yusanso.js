@@ -1,8 +1,6 @@
 // progress.js에 들어갈 리스트뷰 모양
 import React from "react";
-// import PropTypes from "prop-types";
-import { Ionicons } from "@expo/vector-icons";
-import { TouchableOpacity, StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { WithLocalSvg } from "react-native-svg";
 
 import {
@@ -36,8 +34,8 @@ const task_move = ({ image, text1, text2, text3 }) => {
 
       <View style={styles.textView}>
         <Text style={styles.text1}>{text1}</Text>
-        <Text style={styles.text2}>
-          {text2}분 / {text3}분
+        <Text style={text2 >= text3 ? styles.text22 : styles.text2}>
+          {text2 >= text3 ? "완 료" : text2 + "분 / " + text3 + "분"}
         </Text>
       </View>
     </View>
@@ -58,6 +56,14 @@ const styles = StyleSheet.create({
     fontSize: responsiveScreenFontSize(1.88),
     alignItems: "center",
     color: "#000000",
+    justifyContent: "center",
+    marginTop: "1.7%",
+  },
+
+  text22: {
+    fontSize: responsiveScreenFontSize(1.88),
+    alignItems: "center",
+    color: "#C20000",
     justifyContent: "center",
     marginTop: "1.7%",
   },

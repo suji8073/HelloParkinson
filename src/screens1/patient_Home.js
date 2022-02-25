@@ -30,6 +30,7 @@ import p2 from "../image/p2.png";
 import p3 from "../image/p3.png";
 import p4 from "../image/p4.png";
 import p_1 from "../image/p-1.png";
+import TabNavigation from "../navigations/Tab1";
 export default class patient_Home extends Component {
   constructor(props) {
     super(props);
@@ -43,6 +44,7 @@ export default class patient_Home extends Component {
   }
 
   async componentDidMount() {
+    console.log(TabNavigation.name);
     const user_token = await AsyncStorage.getItem("@user_token");
     const user_data = await AsyncStorage.getItem("@user_data");
     this.setState({ User_name: JSON.parse(user_data).name });
@@ -59,17 +61,12 @@ export default class patient_Home extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        this.setState(
-          {
-            data: json.data,
-            first: json.data[0],
-            second: json.data[1],
-            third: json.data[2],
-          },
-          () => {
-            console.log(this.state.data);
-          }
-        );
+        this.setState({
+          data: json.data,
+          first: json.data[0],
+          second: json.data[1],
+          third: json.data[2],
+        });
       });
   };
   profile = (pic) => {

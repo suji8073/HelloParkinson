@@ -27,8 +27,6 @@ export default class TabNavigation extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    console.log("확인중");
-    console.log(this.props.route.params.init_set);
   }
   render() {
     return (

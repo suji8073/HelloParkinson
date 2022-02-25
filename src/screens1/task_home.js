@@ -40,7 +40,7 @@ export default class task_home extends Component {
   };
   // profilepic
   componentDidMount() {
-    console.log(this.props.profilepic);
+    //console.log(this.props.profilepic);
   }
   render() {
     return (

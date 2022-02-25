@@ -33,17 +33,15 @@ const HideKeyboard = ({ children }) => (
 const manager_storeToken = async (token) => {
   try {
     await AsyncStorage.setItem("@manager_token", JSON.stringify(token));
-    console.log("관리자token_clear");
   } catch (e) {
     // saving error
-    console.log("관리자token_error");
+    console.log("error");
   }
 };
 
 const storeData = async (data) => {
   try {
     await AsyncStorage.setItem("@user_data", JSON.stringify(data));
-    console.log("data_ clear");
   } catch (e) {
     // saving error
     console.log("data _ error");
@@ -53,7 +51,6 @@ const storeData = async (data) => {
 const storeToken = async (token) => {
   try {
     await AsyncStorage.setItem("@user_token", JSON.stringify(token));
-    console.log("token_clear");
   } catch (e) {
     // saving error
     console.log("token_error");
@@ -92,7 +89,6 @@ export default class login extends Component {
   }
   login_check = () => {
     if (this.state.id !== "" || this.state.pw !== "") {
-      console.log("들어갔는지 확인!");
       try {
         fetch("http://hccparkinson.duckdns.org:19737/chamlogin", {
           method: "POST",
@@ -115,8 +111,6 @@ export default class login extends Component {
             );
           })
           .then((json) => {
-            console.log("ss로그인 통신 확인");
-            console.log(json.data);
             if (json.data != null) {
               var user_data = {
                 name: json.data[0].uname,
@@ -129,14 +123,13 @@ export default class login extends Component {
                 if (json.data[0].ranking == 1) {
                   this.props.navigation.navigate("TabNavigation1", {
                     init_set: "Home",
+                    reset_check: 0,
                   });
                 } else {
                   this.props.navigation.navigate("TabNavigation2", {
                     init_set: "Home",
                   });
                 }
-
-                console.log("로그인 통신 확인");
               } else if (json.data[0].manager == true) {
                 manager_storeToken(json.data[0].token);
                 // 관리자
