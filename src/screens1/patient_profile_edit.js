@@ -22,6 +22,11 @@ import p1 from "../image/p1.png";
 import p2 from "../image/p2.png";
 import p3 from "../image/p3.png";
 import p4 from "../image/p4.png";
+import p5 from "../image/p5.png";
+import p6 from "../image/p6.png";
+import p7 from "../image/p7.png";
+import p8 from "../image/p8.png";
+import p9 from "../image/p9.png";
 import p_1 from "../image/p-1.png";
 const storeData = async (data) => {
   try {
@@ -285,6 +290,16 @@ export default class patient_profile_edit extends Component {
       return p3;
     } else if (this.state.profilepic === "4") {
       return p4;
+    } else if (this.state.profilepic === "5") {
+      return p5;
+    } else if (this.state.profilepic === "6") {
+      return p6;
+    } else if (this.state.profilepic === "7") {
+      return p7;
+    } else if (this.state.profilepic === "8") {
+      return p8;
+    } else if (this.state.profilepic === "9") {
+      return p9;
     }
   };
 
