@@ -10,7 +10,7 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { Video } from "expo-av";
-import { useKeepAwake } from "expo-keep-awake";
+// import { useKeepAwake } from "expo-keep-awake";
 
 import {
   responsiveScreenHeight,
@@ -301,7 +301,7 @@ export default class move_play extends Component {
   };
 
   render() {
-    useKeepAwake();
+    // useKeepAwake();
     return (
       <View style={styles.finalView}>
         <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />

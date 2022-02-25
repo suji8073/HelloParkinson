@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Alert,
   Image,
+  ScrollView,
 } from "react-native";
 
 import { MaterialIcons } from "@expo/vector-icons";
@@ -23,6 +24,11 @@ import p1 from "../image/p1.png";
 import p2 from "../image/p2.png";
 import p3 from "../image/p3.png";
 import p4 from "../image/p4.png";
+import p5 from "../image/p5.png";
+import p6 from "../image/p6.png";
+import p7 from "../image/p7.png";
+import p8 from "../image/p8.png";
+import p9 from "../image/p9.png";
 import p_1 from "../image/p-1.png";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -31,6 +37,10 @@ export default class patient_gallery extends Component {
     super(props);
     this.state = {};
   }
+  pic_select = () => {
+    // 저장하는 api연결
+  };
+  edit_finish = () => {};
 
   render() {
     return (
@@ -56,53 +66,129 @@ export default class patient_gallery extends Component {
             onPress={this.edit_finish}
           />
         </View>
-        <View style={styles.firstView1}>
-          <Image
-            source={p_1}
-            style={{
-              height: responsiveScreenHeight(11),
-              width: responsiveScreenWidth(22),
-              borderRadius: 400 / 2,
-            }}
-          />
-          <Image
-            source={p1}
-            style={{
-              height: responsiveScreenHeight(11),
-              width: responsiveScreenWidth(22),
-              borderRadius: 400 / 2,
-            }}
-          />
-        </View>
+        <ScrollView contentContainerStyle={styles.firstView1}>
+          <View style={styles.piclayout}>
+            <TouchableOpacity onPress={this.pic_select()}>
+              <Image
+                source={p_1}
+                style={{
+                  height: responsiveScreenHeight(18),
+                  width: responsiveScreenWidth(36),
+                  borderRadius: 400 / 2,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.piclayout}>
+            <TouchableOpacity onPress={this.pic_select()}>
+              <Image
+                source={p1}
+                style={{
+                  height: responsiveScreenHeight(18),
+                  width: responsiveScreenWidth(36),
+                  borderRadius: 400 / 2,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.piclayout}>
+            <TouchableOpacity onPress={this.pic_select()}>
+              <Image
+                source={p2}
+                style={{
+                  height: responsiveScreenHeight(18),
+                  width: responsiveScreenWidth(36),
+                  borderRadius: 400 / 2,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.piclayout}>
+            <TouchableOpacity onPress={this.pic_select()}>
+              <Image
+                source={p3}
+                style={{
+                  height: responsiveScreenHeight(18),
+                  width: responsiveScreenWidth(36),
+                  borderRadius: 400 / 2,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.piclayout}>
+            <TouchableOpacity onPress={this.pic_select()}>
+              <Image
+                source={p4}
+                style={{
+                  height: responsiveScreenHeight(18),
+                  width: responsiveScreenWidth(36),
+                  borderRadius: 400 / 2,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.piclayout}>
+            <TouchableOpacity onPress={this.pic_select()}>
+              <Image
+                source={p5}
+                style={{
+                  height: responsiveScreenHeight(18),
+                  width: responsiveScreenWidth(36),
+                  borderRadius: 400 / 2,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.piclayout}>
+            <TouchableOpacity onPress={this.pic_select()}>
+              <Image
+                source={p6}
+                style={{
+                  height: responsiveScreenHeight(18),
+                  width: responsiveScreenWidth(36),
+                  borderRadius: 400 / 2,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.piclayout}>
+            <TouchableOpacity onPress={this.pic_select()}>
+              <Image
+                source={p7}
+                style={{
+                  height: responsiveScreenHeight(18),
+                  width: responsiveScreenWidth(36),
+                  borderRadius: 400 / 2,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.piclayout}>
+            <TouchableOpacity onPress={this.pic_select()}>
+              <Image
+                source={p8}
+                style={{
+                  height: responsiveScreenHeight(18),
+                  width: responsiveScreenWidth(36),
+                  borderRadius: 400 / 2,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.piclayout}>
+            <TouchableOpacity onPress={this.pic_select()}>
+              <Image
+                source={p9}
+                style={{
+                  height: responsiveScreenHeight(18),
+                  width: responsiveScreenWidth(36),
+                  borderRadius: 400 / 2,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
 
-        <View style={styles.firstView1}>
-          <Image
-            source={p2}
-            style={{
-              height: responsiveScreenHeight(11),
-              width: responsiveScreenWidth(22),
-              borderRadius: 400 / 2,
-            }}
-          />
-          <Image
-            source={p3}
-            style={{
-              height: responsiveScreenHeight(11),
-              width: responsiveScreenWidth(22),
-              borderRadius: 400 / 2,
-            }}
-          />
-        </View>
-        <View style={styles.firstView1}>
-          <Image
-            source={p4}
-            style={{
-              height: responsiveScreenHeight(11),
-              width: responsiveScreenWidth(22),
-              borderRadius: 400 / 2,
-            }}
-          />
-        </View>
         <View style={styles.marginView}></View>
       </View>
     );
@@ -156,8 +242,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: "5.1%",
-    marginBottom: "10.3%",
+    paddingBottom: "40.3%",
     backgroundColor: "#FFFFFF",
+    flexWrap: "wrap",
   },
   secondView: {
     alignItems: "center",
@@ -227,4 +314,5 @@ const styles = StyleSheet.create({
     color: "#747474",
     justifyContent: "center",
   },
+  piclayout: { marginHorizontal: "4%", marginVertical: "2%" },
 });

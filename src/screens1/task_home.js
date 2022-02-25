@@ -7,6 +7,11 @@ import p1 from "../image/p1.png";
 import p2 from "../image/p2.png";
 import p3 from "../image/p3.png";
 import p4 from "../image/p4.png";
+import p5 from "../image/p5.png";
+import p6 from "../image/p6.png";
+import p7 from "../image/p7.png";
+import p8 from "../image/p8.png";
+import p9 from "../image/p9.png";
 import p_1 from "../image/p-1.png";
 import {
   responsiveScreenHeight,
@@ -18,7 +23,7 @@ import { number } from "prop-types";
 export default class task_home extends Component {
   constructor(props) {
     super(props);
-    this.state = { adress: "../image/p3.png" };
+    this.state = {};
   }
   dateToStr = () => {
     var today_year = new Date().getFullYear();
@@ -36,6 +41,16 @@ export default class task_home extends Component {
       return p3;
     } else if (this.props.profilepic === "4") {
       return p4;
+    } else if (this.props.profilepic === "5") {
+      return p5;
+    } else if (this.props.profilepic === "6") {
+      return p6;
+    } else if (this.props.profilepic === "7") {
+      return p7;
+    } else if (this.props.profilepic === "8") {
+      return p8;
+    } else if (this.props.profilepic === "9") {
+      return p9;
     }
   };
   // profilepic
