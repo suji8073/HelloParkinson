@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StatusBar,
 } from "react-native";
+import { activateKeepAwake, deactivateKeepAwake } from "expo-keep-awake";
 
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
@@ -80,6 +81,7 @@ export default class yusanso_1 extends Component {
   onButtonStart = () => {
     if (this.state.play === false) {
       this.setState({ play: true });
+      activateKeepAwake("tag");
       let timer = setInterval(() => {
         var num = (Number(this.state.seconds_Counter) + 1).toString(),
           count = this.state.minutes_Counter;
@@ -97,6 +99,7 @@ export default class yusanso_1 extends Component {
       this.setState({ timer });
       this.setState({ startDisable: true });
     } else {
+      deactivateKeepAwake("tag");
       clearInterval(this.state.timer);
       this.setState({ startDisable: false });
       this.setState({ play: false });
@@ -105,6 +108,7 @@ export default class yusanso_1 extends Component {
   };
 
   backout = () => {
+    deactivateKeepAwake("tag");
     clearInterval(this.state.timer);
     this.setState({ startDisable: false });
     this.setState({ play: false });

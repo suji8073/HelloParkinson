@@ -1,4 +1,4 @@
-import React, { Component, useCallback } from "react";
+import React, { Component } from "react";
 import {
   TouchableOpacity,
   StyleSheet,
@@ -37,8 +37,7 @@ import p7 from "../image/p7.png";
 import p8 from "../image/p8.png";
 import p9 from "../image/p9.png";
 import p_1 from "../image/p-1.png";
-import { throwIfAudioIsDisabled } from "expo-av/build/Audio/AudioAvailability";
-import { ThemeConsumer } from "styled-components/native";
+
 
 const backAction = async () => {
   Alert.alert("알림!", "앱을 종료하시겠습니까?", [
@@ -63,7 +62,7 @@ export default class patient_Home extends Component {
       check_activate: true,
     };
   }
-
+  
   async componentDidMount() {
     const user_token = await AsyncStorage.getItem("@user_token");
     const user_data = await AsyncStorage.getItem("@user_data");
