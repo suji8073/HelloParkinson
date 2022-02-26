@@ -73,7 +73,7 @@ export default class patient_gallery extends Component {
                 source={p_1}
                 style={{
                   height: responsiveScreenHeight(18),
-                  width: responsiveScreenWidth(36),
+                  width: responsiveScreenHeight(18),
                   borderRadius: 400 / 2,
                 }}
               />
@@ -85,7 +85,7 @@ export default class patient_gallery extends Component {
                 source={p1}
                 style={{
                   height: responsiveScreenHeight(18),
-                  width: responsiveScreenWidth(36),
+                  width: responsiveScreenHeight(18),
                   borderRadius: 400 / 2,
                 }}
               />
@@ -97,7 +97,7 @@ export default class patient_gallery extends Component {
                 source={p2}
                 style={{
                   height: responsiveScreenHeight(18),
-                  width: responsiveScreenWidth(36),
+                  width: responsiveScreenHeight(18),
                   borderRadius: 400 / 2,
                 }}
               />
@@ -109,7 +109,7 @@ export default class patient_gallery extends Component {
                 source={p3}
                 style={{
                   height: responsiveScreenHeight(18),
-                  width: responsiveScreenWidth(36),
+                  width: responsiveScreenHeight(18),
                   borderRadius: 400 / 2,
                 }}
               />
@@ -121,7 +121,7 @@ export default class patient_gallery extends Component {
                 source={p4}
                 style={{
                   height: responsiveScreenHeight(18),
-                  width: responsiveScreenWidth(36),
+                  width: responsiveScreenHeight(18),
                   borderRadius: 400 / 2,
                 }}
               />
@@ -133,7 +133,7 @@ export default class patient_gallery extends Component {
                 source={p5}
                 style={{
                   height: responsiveScreenHeight(18),
-                  width: responsiveScreenWidth(36),
+                  width: responsiveScreenHeight(18),
                   borderRadius: 400 / 2,
                 }}
               />
@@ -145,7 +145,7 @@ export default class patient_gallery extends Component {
                 source={p6}
                 style={{
                   height: responsiveScreenHeight(18),
-                  width: responsiveScreenWidth(36),
+                  width: responsiveScreenHeight(18),
                   borderRadius: 400 / 2,
                 }}
               />
@@ -157,7 +157,7 @@ export default class patient_gallery extends Component {
                 source={p7}
                 style={{
                   height: responsiveScreenHeight(18),
-                  width: responsiveScreenWidth(36),
+                  width: responsiveScreenHeight(18),
                   borderRadius: 400 / 2,
                 }}
               />
@@ -169,7 +169,7 @@ export default class patient_gallery extends Component {
                 source={p8}
                 style={{
                   height: responsiveScreenHeight(18),
-                  width: responsiveScreenWidth(36),
+                  width: responsiveScreenHeight(18),
                   borderRadius: 400 / 2,
                 }}
               />
@@ -181,7 +181,7 @@ export default class patient_gallery extends Component {
                 source={p9}
                 style={{
                   height: responsiveScreenHeight(18),
-                  width: responsiveScreenWidth(36),
+                  width: responsiveScreenHeight(18),
                   borderRadius: 400 / 2,
                 }}
               />

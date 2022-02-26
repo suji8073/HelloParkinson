@@ -44,7 +44,6 @@ export default class patient_move extends Component {
   }
 
   async componentDidUpdate() {
-    console.log(this.props.route.params.reset_check);
     if (this.state.check === false) {
       if (this.props.route.params.reset_check === 1) {
         console.log("update!");
@@ -82,7 +81,7 @@ export default class patient_move extends Component {
   }
 
   async componentDidMount() {
-    console.log("set!");
+    console.log(this.props.route["name"]);
     const user_token = await AsyncStorage.getItem("@user_token");
 
     fetch("http://hccparkinson.duckdns.org:19737/progress/personal/cat/all", {

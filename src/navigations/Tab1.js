@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import patient_Home from "../screens1/patient_Home";
@@ -26,19 +26,23 @@ const Tab = createBottomTabNavigator();
 export default class TabNavigation extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      init_set: this.props.route.params.init_set,
+      reset_check: this.props.route.params.reset_check,
+    };
   }
+
   render() {
     return (
       <Tab.Navigator
         initialRouteName={
           this.props.route.params.init_set == "Home"
-            ? "홈"
+            ? "patient_Home"
             : this.props.route.params.init_set == "alarm"
-            ? "알림"
+            ? "patient_alarm"
             : this.props.route.params.init_set == "move"
-            ? "운동"
-            : "기록"
+            ? "patient_move"
+            : "patient_record"
         }
         screenOptions={{
           tabBarActiveTintColor: "#5CB405",
@@ -54,8 +58,12 @@ export default class TabNavigation extends Component {
         }}
       >
         <Tab.Screen
-          name="홈"
+          name="patient_Home"
           component={patient_Home}
+          initialParams={{
+            init_set: this.state.init_set,
+            reset_check: this.state.reset_check,
+          }}
           options={{
             headerShown: false,
             tabBarLabel: "홈",
@@ -69,8 +77,12 @@ export default class TabNavigation extends Component {
         />
 
         <Tab.Screen
-          name="운동"
+          name="patient_move"
           component={patient_move}
+          initialParams={{
+            init_set: this.state.init_set,
+            reset_check: this.state.reset_check,
+          }}
           options={{
             headerShown: false,
             tabBarLabel: "운동",
@@ -84,8 +96,12 @@ export default class TabNavigation extends Component {
           }}
         />
         <Tab.Screen
-          name="기록"
+          name="patient_record"
           component={patient_record}
+          initialParams={{
+            init_set: this.state.init_set,
+            reset_check: this.state.reset_check,
+          }}
           options={{
             headerShown: false,
             tabBarLabel: "기록",
@@ -98,8 +114,12 @@ export default class TabNavigation extends Component {
           }}
         />
         <Tab.Screen
-          name="알림"
+          name="patient_alarm"
           component={patient_alarm}
+          initialParams={{
+            init_set: this.state.init_set,
+            reset_check: this.state.reset_check,
+          }}
           options={{
             headerShown: false,
             tabBarLabel: "알림",

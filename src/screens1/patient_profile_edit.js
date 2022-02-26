@@ -333,7 +333,7 @@ export default class patient_profile_edit extends Component {
             source={this.profile()}
             style={{
               height: responsiveScreenHeight(11),
-              width: responsiveScreenWidth(22),
+              width: responsiveScreenHeight(11),
               borderRadius: 400 / 2,
             }}
           />
@@ -574,7 +574,7 @@ const styles = StyleSheet.create({
 
   user_name: {
     alignItems: "flex-start",
-    fontSize: responsiveScreenFontSize(2),
+    fontSize: responsiveScreenFontSize(1.6),
     fontWeight: "bold",
     color: "#59A60B",
     justifyContent: "center",
