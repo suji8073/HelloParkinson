@@ -39,10 +39,50 @@ export default class patient_move extends Component {
       donecnt3: 0,
       donecnt4: 0,
       donecnt5: 0,
+      check: false,
     };
   }
 
+  async componentDidUpdate() {
+    console.log(this.props.route.params.reset_check);
+    if (this.state.check === false) {
+      if (this.props.route.params.reset_check === 1) {
+        console.log("update!");
+        const user_token = await AsyncStorage.getItem("@user_token");
+
+        fetch(
+          "http://hccparkinson.duckdns.org:19737/progress/personal/cat/all",
+          {
+            method: "GET",
+            headers: {
+              Authorization: "Bearer " + user_token.slice(1, -1),
+              "Content-Type": "application/json",
+            },
+          }
+        )
+          .then((res) => res.json())
+
+          .then((json) => {
+            this.setState({
+              setcnt1: json.data[0].setcntsum,
+              setcnt2: json.data[1].setcntsum,
+              setcnt3: json.data[2].setcntsum,
+              setcnt4: json.data[3].setcntsum,
+              setcnt5: json.data[4].setcntsum,
+              donecnt1: json.data[0].donecntsum,
+              donecnt2: json.data[1].donecntsum,
+              donecnt3: json.data[2].donecntsum,
+              donecnt4: json.data[3].donecntsum,
+              donecnt5: json.data[4].donecntsum,
+            });
+          });
+        this.setState({ check: true });
+      }
+    }
+  }
+
   async componentDidMount() {
+    console.log("set!");
     const user_token = await AsyncStorage.getItem("@user_token");
 
     fetch("http://hccparkinson.duckdns.org:19737/progress/personal/cat/all", {
@@ -179,7 +219,10 @@ export default class patient_move extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("move_5");
+              this.setState({ check: true });
+              this.props.navigation.push("move_5", {
+                check: 0,
+              });
             }}
           >
             <View style={styles.moveView}>

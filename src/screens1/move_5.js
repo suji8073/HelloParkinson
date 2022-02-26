@@ -48,11 +48,21 @@ export default class move_5 extends Component {
     this.state = {
       data: [],
       data_length: 0,
+      check: false,
     };
+  }
+
+  async componentDidUpdate() {
+    if (this.state.check === false) {
+      if (this.props.route.params.check === 1) {
+        const user_token = await AsyncStorage.getItem("@user_token");
+        this.cat_list(user_token);
+      }
+      this.setState({ check: true });
+    }
   }
   async componentDidMount() {
     const user_token = await AsyncStorage.getItem("@user_token");
-
     this.cat_list(user_token);
   }
 
@@ -90,6 +100,7 @@ export default class move_5 extends Component {
       String(timeend).substring(14, 16) === "00"
     ) {
       console.log("reset");
+      s;
       resetData("00");
     }
   };
@@ -107,6 +118,7 @@ export default class move_5 extends Component {
     )
       .then((res) => res.json())
       .then((json) => {
+        console.log(json);
         this.setState({ data: json.data, data_length: json.data.length });
         this.minutes_save();
       });
@@ -121,7 +133,7 @@ export default class move_5 extends Component {
             style={{ fontSize: responsiveScreenFontSize(3) }}
             color="#808080"
             onPress={() => {
-              this.props.navigation.navigate("TabNavigation1", {
+              this.props.navigation.push("TabNavigation1", {
                 init_set: "move",
               });
             }}

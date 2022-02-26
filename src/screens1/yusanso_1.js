@@ -110,7 +110,9 @@ export default class yusanso_1 extends Component {
     this.setState({ play: false });
     storeData(this.state.minutes_Counter, this.state.seconds_Counter);
     this.save_progress();
-    this.props.navigation.navigate("move_5");
+    this.props.navigation.push("move_5", {
+      check: 1,
+    });
   };
 
   save_progress = () => {
