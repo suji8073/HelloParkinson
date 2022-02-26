@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StatusBar,
 } from "react-native";
+import { activateKeepAwake, deactivateKeepAwake } from "expo-keep-awake";
 
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
@@ -154,6 +155,7 @@ export default class move_play_1 extends Component {
       assign_num: this.props.route.params.assign_num,
     });
     this.Time();
+    activateKeepAwake("tag");
     this.params_move();
   }
 
@@ -199,10 +201,11 @@ export default class move_play_1 extends Component {
         done_num: this.props.route.params.done_num + 1,
         video_start: true,
       });
-    }, 1000); // 배포할 때 move_time로 바꾸기
+    }, move_time); // 배포할 때 move_time로 바꾸기
   };
 
   nextpage = () => {
+    deactivateKeepAwake("tag");
     //다음 페이지
     if (this.state.isLoading === false) {
       this.setState({ video_start: false });
