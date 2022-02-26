@@ -29,21 +29,15 @@ export default class move_4 extends Component {
     };
   }
   async componentDidMount() {
-    if (this.props.route.params.reset_click === true) {
-      this.props.navigation.reset({
-        routes: [
-          {
-            name: "move_4",
-            params: {
-              reset_click: false,
-            },
-          },
-        ],
-      });
-    }
     const user_token = await AsyncStorage.getItem("@user_token");
-
     this.cat_list(user_token);
+  }
+
+  async componentDidUpdate() {
+    if (this.props.route.params.reset_click === true) {
+      const user_token = await AsyncStorage.getItem("@user_token");
+      this.cat_list(user_token);
+    }
   }
 
   storeData = async (list) => {
@@ -86,6 +80,7 @@ export default class move_4 extends Component {
             onPress={() => {
               this.props.navigation.navigate("TabNavigation1", {
                 init_set: "move",
+                reset_check: 1,
               });
             }}
           />

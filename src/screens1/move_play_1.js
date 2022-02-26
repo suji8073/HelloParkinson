@@ -121,7 +121,7 @@ let data_time = {
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default class move_play extends Component {
+export default class move_play_1 extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -215,7 +215,7 @@ export default class move_play extends Component {
       } else {
         this.save_progress(this.state.token);
 
-        this.props.navigation.replace("move_play_1", {
+        this.props.navigation.replace("move_play", {
           eid: this.props.route.params.eid,
           ename: this.props.route.params.ename,
           cat_name: this.props.route.params.cat_name,
@@ -247,7 +247,7 @@ export default class move_play extends Component {
   };
 
   where_move_go = () => {
-    this.props.navigation.replace("move_play_1", {
+    this.props.navigation.replace("move_play", {
       eid: this.state.next_eid,
       ename: this.state.next_name,
       cat_name: this.props.route.params.cat_name,

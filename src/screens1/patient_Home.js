@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useCallback } from "react";
 import {
   TouchableOpacity,
   StyleSheet,
@@ -7,6 +7,8 @@ import {
   Image,
   StatusBar,
   FlatList,
+  BackHandler,
+  Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { WithLocalSvg } from "react-native-svg";
@@ -35,7 +37,20 @@ import p7 from "../image/p7.png";
 import p8 from "../image/p8.png";
 import p9 from "../image/p9.png";
 import p_1 from "../image/p-1.png";
-import TabNavigation from "../navigations/Tab1";
+import { throwIfAudioIsDisabled } from "expo-av/build/Audio/AudioAvailability";
+import { ThemeConsumer } from "styled-components/native";
+
+const backAction = async () => {
+  Alert.alert("알림!", "앱을 종료하시겠습니까?", [
+    {
+      text: "취소",
+      onPress: () => null,
+    },
+    { text: "확인", onPress: () => BackHandler.exitApp() },
+  ]);
+  return true;
+};
+
 export default class patient_Home extends Component {
   constructor(props) {
     super(props);
@@ -45,15 +60,20 @@ export default class patient_Home extends Component {
       second: [],
       third: [],
       User_name: "",
+      check_activate: true,
     };
   }
 
   async componentDidMount() {
-    console.log(TabNavigation.name);
     const user_token = await AsyncStorage.getItem("@user_token");
     const user_data = await AsyncStorage.getItem("@user_data");
     this.setState({ User_name: JSON.parse(user_data).name });
     this.userfunc(user_token);
+
+    if (this.props.route["name"] === "patient_Home") {
+      console.log("home이양");
+      BackHandler.addEventListener("hardwareBackPress", backAction);
+    }
   }
 
   userfunc = (user_token) => {
@@ -123,6 +143,9 @@ export default class patient_Home extends Component {
 
           <TouchableOpacity
             onPress={() => {
+              //console.log("제거");
+              BackHandler.removeEventListener("hardwareBackPress", backAction);
+              //this.setState({ check_activate: false });
               this.props.navigation.navigate("patient_profile");
             }}
           >
@@ -170,7 +193,7 @@ export default class patient_Home extends Component {
                     source={this.profile(this.state.second["profilepic"])}
                     style={{
                       height: responsiveScreenHeight(9),
-                      width: responsiveScreenWidth(19),
+                      width: responsiveScreenHeight(9),
                       borderRadius: 300 / 2,
                     }}
                   />
@@ -178,7 +201,7 @@ export default class patient_Home extends Component {
                 <WithLocalSvg
                   style={{ top: "80%", position: "absolute" }}
                   width={responsiveScreenWidth(6.1)}
-                  height={responsiveScreenHeight(3.4)}
+                  height={responsiveScreenWidth(6.1)}
                   asset={secondsvg}
                 />
                 <Text
@@ -220,7 +243,7 @@ export default class patient_Home extends Component {
                     source={this.profile(this.state.second["profilepic"])}
                     style={{
                       height: responsiveScreenHeight(9),
-                      width: responsiveScreenWidth(19),
+                      width: responsiveScreenHeight(9),
                       borderRadius: 400 / 2,
                     }}
                   />
@@ -228,7 +251,7 @@ export default class patient_Home extends Component {
                 <WithLocalSvg
                   style={{ top: "80%", position: "absolute" }}
                   width={responsiveScreenWidth(6.1)}
-                  height={responsiveScreenHeight(3.4)}
+                  height={responsiveScreenWidth(6.1)}
                   asset={firstsvg}
                 />
                 <Text
@@ -261,7 +284,7 @@ export default class patient_Home extends Component {
                     source={this.profile(this.state.second["profilepic"])}
                     style={{
                       height: responsiveScreenHeight(9),
-                      width: responsiveScreenWidth(19),
+                      width: responsiveScreenHeight(9),
                       borderRadius: 400 / 2,
                     }}
                   />
@@ -269,7 +292,7 @@ export default class patient_Home extends Component {
                 <WithLocalSvg
                   style={{ top: "80%", position: "absolute" }}
                   width={responsiveScreenWidth(6.1)}
-                  height={responsiveScreenHeight(3.4)}
+                  height={responsiveScreenWidth(6.1)}
                   asset={thirdsvg}
                 />
                 <Text

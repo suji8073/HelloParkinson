@@ -80,12 +80,12 @@ export default class task_home extends Component {
             source={this.profile()}
             style={{
               height: responsiveScreenHeight(8),
-              width: responsiveScreenWidth(17),
+              width: responsiveScreenHeight(8),
               borderRadius: 400 / 2,
             }}
           />
           <Text
-            style={{ fontSize: responsiveScreenFontSize(2), marginLeft: "2%" }}
+            style={{ fontSize: responsiveScreenFontSize(2), marginLeft: "3%" }}
           >
             {this.props.name} / {this.dateToStr()}세 /{" "}
             {this.props.sex == "M" ? "남" : "여"}
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   infotext: {
-    marginLeft: "2%",
+    marginLeft: "3%",
     flex: 9.7,
     flexDirection: "row",
     alignItems: "center",

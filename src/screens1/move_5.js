@@ -100,7 +100,6 @@ export default class move_5 extends Component {
       String(timeend).substring(14, 16) === "00"
     ) {
       console.log("reset");
-      s;
       resetData("00");
     }
   };
@@ -135,6 +134,7 @@ export default class move_5 extends Component {
             onPress={() => {
               this.props.navigation.push("TabNavigation1", {
                 init_set: "move",
+                reset_check: 1,
               });
             }}
           />

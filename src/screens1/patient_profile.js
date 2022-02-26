@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Alert,
   Image,
+  BackHandler,
 } from "react-native";
 
 import { MaterialIcons } from "@expo/vector-icons";
@@ -80,7 +81,6 @@ export default class patient_profile extends Component {
 
   async componentDidMount() {
     const user_token = await AsyncStorage.getItem("@user_token");
-
     this.user_info(user_token);
   }
 
@@ -136,6 +136,7 @@ export default class patient_profile extends Component {
             onPress={() => {
               this.props.navigation.navigate("TabNavigation1", {
                 init_set: "Home",
+                reset_check: 1,
               });
             }}
           />
@@ -156,7 +157,7 @@ export default class patient_profile extends Component {
           <Image
             source={this.profile()}
             style={{
-              height: responsiveScreenHeight(17),
+              height: responsiveScreenWidth(32),
               width: responsiveScreenWidth(32),
               borderRadius: 400 / 2,
             }}
