@@ -4,7 +4,7 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StatusBar,
+  AppState,
 } from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
@@ -57,6 +57,7 @@ export default class yusanso_2 extends Component {
       seconds_Counter: "00",
       startDisable: false,
       user_token: "",
+      appState: AppState.currentState,
     };
   }
 
@@ -89,12 +90,17 @@ export default class yusanso_2 extends Component {
         if (Number(this.state.seconds_Counter) == 59) {
           count = (Number(this.state.minutes_Counter) + 1).toString();
           num = "00";
+          this.setState({
+            minutes_Counter: count.length == 1 ? "0" + count : count,
+            seconds_Counter: num.length == 1 ? "0" + num : num,
+          });
+          this.save_progress();
+        } else {
+          this.setState({
+            minutes_Counter: count.length == 1 ? "0" + count : count,
+            seconds_Counter: num.length == 1 ? "0" + num : num,
+          });
         }
-
-        this.setState({
-          minutes_Counter: count.length == 1 ? "0" + count : count,
-          seconds_Counter: num.length == 1 ? "0" + num : num,
-        });
       }, 1000);
       this.setState({ timer });
       this.setState({ startDisable: true });
