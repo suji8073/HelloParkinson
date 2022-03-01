@@ -18,7 +18,6 @@ import {
 } from "react-native-responsive-dimensions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { WithLocalSvg } from "react-native-svg";
-//import { createAlarm } from "react-native-simple-alarm";
 
 import plussvg from "../icon/plus.svg";
 import ActionButton from "react-native-action-button";
@@ -74,19 +73,6 @@ export default class patient_alarm extends Component {
         </View>
 
         <ScrollView style={styles.secondView}>
-          <Button
-            onPress={() => {
-              Notifications.scheduleNotificationAsync({
-                content: {
-                  title: "Time's up!",
-                  body: "Change sides!",
-                },
-                trigger: {
-                  seconds: 60, //onPress가 클릭이 되면 60초 뒤에 알람이 발생합니다.
-                },
-              });
-            }}
-          ></Button>
           <FlatList
             keyExtractor={(item, index) => index.toString()}
             data={this.state.alarm_array}
@@ -139,7 +125,7 @@ const styles = StyleSheet.create({
   finalView: {
     height: responsiveScreenHeight(100),
     width: responsiveScreenWidth(100),
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#F8F8F8",
   },
   menuView: {
     backgroundColor: "#FFFFFF",

@@ -121,19 +121,19 @@ export default class login extends Component {
               storeToken(json.data[0].token);
               if (json.data[0].manager == false) {
                 if (json.data[0].ranking == 1) {
-                  this.props.navigation.navigate("TabNavigation1", {
+                  this.props.navigation.push("TabNavigation1", {
                     init_set: "Home",
                     reset_check: 0,
                   });
                 } else {
-                  this.props.navigation.navigate("TabNavigation2", {
+                  this.props.navigation.push("TabNavigation2", {
                     init_set: "Home",
                   });
                 }
               } else if (json.data[0].manager == true) {
                 manager_storeToken(json.data[0].token);
                 // 관리자
-                this.props.navigation.navigate("TabNavigation", {
+                this.props.navigation.push("TabNavigation", {
                   init_set: "list",
                   paramSetting: "abc",
                   paramSetting2: "progress",

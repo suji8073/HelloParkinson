@@ -231,19 +231,19 @@ export default class move_play extends Component {
   where_page = () => {
     this.setState({ video_start: false }, () => {});
     if (this.props.route.params.cat_name == 1) {
-      this.props.navigation.navigate("move_1", {
+      this.props.navigation.push("move_1", {
         reset_click: true,
       });
     } else if (this.props.route.params.cat_name == 2) {
-      this.props.navigation.navigate("move_2", {
+      this.props.navigation.push("move_2", {
         reset_click: true,
       });
     } else if (this.props.route.params.cat_name == 3) {
-      this.props.navigation.navigate("move_3", {
+      this.props.navigation.push("move_3", {
         reset_click: true,
       });
     } else if (this.props.route.params.cat_name == 4) {
-      this.props.navigation.navigate("move_4", {
+      this.props.navigation.push("move_4", {
         reset_click: true,
       });
     }

@@ -134,7 +134,7 @@ export default class patient_profile extends Component {
             style={{ fontSize: responsiveScreenFontSize(3) }}
             color="#808080"
             onPress={() => {
-              this.props.navigation.navigate("TabNavigation1", {
+              this.props.navigation.push("TabNavigation1", {
                 init_set: "Home",
                 reset_check: 1,
               });

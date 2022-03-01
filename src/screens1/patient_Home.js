@@ -38,7 +38,6 @@ import p8 from "../image/p8.png";
 import p9 from "../image/p9.png";
 import p_1 from "../image/p-1.png";
 
-
 const backAction = async () => {
   Alert.alert("알림!", "앱을 종료하시겠습니까?", [
     {
@@ -62,7 +61,7 @@ export default class patient_Home extends Component {
       check_activate: true,
     };
   }
-  
+
   async componentDidMount() {
     const user_token = await AsyncStorage.getItem("@user_token");
     const user_data = await AsyncStorage.getItem("@user_data");
@@ -85,6 +84,7 @@ export default class patient_Home extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
+        console.log(json);
         this.setState({
           data: json.data,
           first: json.data[0],
@@ -95,34 +95,24 @@ export default class patient_Home extends Component {
   };
   profile = (pic) => {
     if (pic === "-1") {
-      console.log("-1임");
       return p_1;
     } else if (pic === "1") {
-      console.log("1임");
       return p1;
     } else if (pic === "2") {
-      console.log("2임");
       return p2;
     } else if (pic === "3") {
-      console.log("3임");
       return p3;
     } else if (pic === "4") {
-      console.log("4임");
       return p4;
     } else if (pic === "5") {
-      console.log("5임");
       return p5;
     } else if (pic === "6") {
-      console.log("6임");
       return p6;
     } else if (pic === "7") {
-      console.log("7임");
       return p7;
     } else if (pic === "8") {
-      console.log("8임");
       return p8;
     } else if (pic === "9") {
-      console.log("9임");
       return p9;
     }
   };

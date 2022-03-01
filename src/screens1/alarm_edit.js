@@ -173,7 +173,9 @@ export default class alarm_edit extends Component {
             style={{ fontSize: responsiveScreenFontSize(3) }}
             color="#808080"
             onPress={() => {
-              this.props.navigation.pop();
+              this.props.navigation.push("TabNavigation1", {
+                init_set: "alarm",
+              });
             }}
           />
           <View style={styles.margin}></View>

@@ -10,7 +10,6 @@ import {
 } from "react-native";
 
 import { WithLocalSvg } from "react-native-svg";
-import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 
 import nocheck from "../icon/radio_btn_nocheck.svg";
@@ -313,7 +312,7 @@ export default class patient_profile_edit extends Component {
             style={{ fontSize: responsiveScreenFontSize(3) }}
             color="#808080"
             onPress={() => {
-              this.props.navigation.pop();
+              this.props.navigation.push("patient_profile");
             }}
           />
 
