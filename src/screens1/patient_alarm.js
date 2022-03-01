@@ -7,6 +7,7 @@ import {
   FlatList,
   ScrollView,
   StatusBar,
+  Button,
 } from "react-native";
 import Task from "./task_alarm";
 
@@ -15,7 +16,6 @@ import {
   responsiveScreenWidth,
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { WithLocalSvg } from "react-native-svg";
 //import { createAlarm } from "react-native-simple-alarm";
@@ -74,6 +74,19 @@ export default class patient_alarm extends Component {
         </View>
 
         <ScrollView style={styles.secondView}>
+          <Button
+            onPress={() => {
+              Notifications.scheduleNotificationAsync({
+                content: {
+                  title: "Time's up!",
+                  body: "Change sides!",
+                },
+                trigger: {
+                  seconds: 60, //onPress가 클릭이 되면 60초 뒤에 알람이 발생합니다.
+                },
+              });
+            }}
+          ></Button>
           <FlatList
             keyExtractor={(item, index) => index.toString()}
             data={this.state.alarm_array}

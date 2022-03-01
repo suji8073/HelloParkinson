@@ -239,7 +239,7 @@ export default class patient_Home extends Component {
                   }}
                 >
                   <Image
-                    source={this.profile(this.state.second["profilepic"])}
+                    source={this.profile(this.state.first["profilepic"])}
                     style={{
                       height: responsiveScreenHeight(9),
                       width: responsiveScreenHeight(9),
@@ -280,7 +280,7 @@ export default class patient_Home extends Component {
                   }}
                 >
                   <Image
-                    source={this.profile(this.state.second["profilepic"])}
+                    source={this.profile(this.state.third["profilepic"])}
                     style={{
                       height: responsiveScreenHeight(9),
                       width: responsiveScreenHeight(9),
