@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     height: responsiveScreenHeight(70),
     backgroundColor: "#F8F8F8",
-    marginBottom: responsiveScreenHeight(25),
+    marginBottom: responsiveScreenHeight(18),
   },
   moveView: {
     backgroundColor: "#FFFFFF",

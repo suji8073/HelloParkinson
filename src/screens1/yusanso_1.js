@@ -4,7 +4,7 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StatusBar,
+  AppState,
 } from "react-native";
 import { activateKeepAwake, deactivateKeepAwake } from "expo-keep-awake";
 
@@ -57,6 +57,7 @@ export default class yusanso_1 extends Component {
       seconds_Counter: "00",
       startDisable: false,
       user_token: "",
+      appState: AppState.currentState,
     };
   }
 

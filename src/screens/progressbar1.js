@@ -1,6 +1,10 @@
 import React, { useState } from "react";
-import Context from "../Context/context";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { View } from "react-native";
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize,
+} from "react-native-responsive-dimensions";
 
 const PercentageBar = ({
   percentage,
@@ -11,18 +15,18 @@ const PercentageBar = ({
   const [getheight, setHeight] = useState(height);
   const [getBackgroundColor, setBackgroundColor] = useState(backgroundColor);
   const [getCompletedColor, setCompletedColor] = useState(completedColor);
+
   return (
     <View>
       <View style={{ justifyContent: "center", alignItems: "stretch" }}>
         <View
           style={{
-            width: 180,
+            width: responsiveScreenWidth(47.5),
             height: getheight,
             marginVertical: 5,
             borderRadius: 7,
             borderColor: getBackgroundColor,
             backgroundColor: getBackgroundColor,
-            borderWidth: 1,
           }}
         />
         <View

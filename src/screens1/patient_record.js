@@ -30,7 +30,6 @@ import {
 
 var sum_progress = 0;
 var sum_progress_m = 0;
-const { width, height } = Dimensions.get("screen");
 
 export default class patient_record extends Component {
   constructor(props) {
@@ -479,7 +478,7 @@ const styles = StyleSheet.create({
   finalView: {
     height: responsiveScreenHeight(100),
     width: responsiveScreenWidth(100),
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#F8F8F8",
   },
   menuView: {
     backgroundColor: "#FFFFFF",
@@ -536,7 +535,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     height: responsiveScreenHeight(70),
     backgroundColor: "#F8F8F8",
-    marginBottom: "39%",
+    marginBottom: responsiveScreenHeight(17),
   },
   secondView: {
     marginTop: "2%",

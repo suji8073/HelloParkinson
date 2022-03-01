@@ -104,6 +104,7 @@ export default class patient_profile_edit extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
+        console.log(json);
         this.setState(
           {
             birth: json.data[0].birthday,
@@ -230,7 +231,7 @@ export default class patient_profile_edit extends Component {
               ? this.edit_update(this.state.token)
               : this.edit_pw_update(this.state.token);
 
-            this.props.navigation.navigate("patient_profile");
+            this.props.navigation.push("patient_profile");
           }
         },
       },

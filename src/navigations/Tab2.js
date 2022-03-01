@@ -27,10 +27,13 @@ const Tab = createBottomTabNavigator();
 export default class TabNavigation extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      init_set: this.props.route.params.init_set,
+      reset_check: this.props.route.params.reset_check,
+    };
   }
+
   render() {
-    const name_user = route.params.paramName1;
     return (
       <Tab.Navigator
         initialRouteName={
@@ -52,9 +55,12 @@ export default class TabNavigation extends Component {
         }}
       >
         <Tab.Screen
-          name="홈"
+          name="norank_patient_Home"
           component={norank_patient_Home}
-          initialParams={{ paramsName: name_user }}
+          initialParams={{
+            init_set: this.state.init_set,
+            reset_check: this.state.reset_check,
+          }}
           options={{
             headerShown: false,
             tabBarLabel: "홈",
@@ -67,9 +73,12 @@ export default class TabNavigation extends Component {
         />
 
         <Tab.Screen
-          name="운동"
+          name="patient_move"
           component={patient_move}
-          initialParams={{ paramsName: name_user }}
+          initialParams={{
+            init_set: this.state.init_set,
+            reset_check: this.state.reset_check,
+          }}
           options={{
             headerShown: false,
             tabBarLabel: "운동",
@@ -82,9 +91,12 @@ export default class TabNavigation extends Component {
           }}
         />
         <Tab.Screen
-          name="기록"
+          name="patient_record"
           component={patient_record}
-          initialParams={{ paramsName: name_user }}
+          initialParams={{
+            init_set: this.state.init_set,
+            reset_check: this.state.reset_check,
+          }}
           options={{
             headerShown: false,
             tabBarLabel: "기록",
@@ -96,9 +108,12 @@ export default class TabNavigation extends Component {
           }}
         />
         <Tab.Screen
-          name="알림"
+          name="patient_alarm"
           component={patient_alarm}
-          initialParams={{ paramsName: name_user }}
+          initialParams={{
+            init_set: this.state.init_set,
+            reset_check: this.state.reset_check,
+          }}
           options={{
             headerShown: false,
             tabBarLabel: "알림",

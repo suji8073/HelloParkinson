@@ -69,8 +69,7 @@ export default class patient_Home extends Component {
     this.userfunc(user_token);
 
     if (this.props.route["name"] === "patient_Home") {
-      console.log("home이양");
-      BackHandler.addEventListener("hardwareBackPress", backAction);
+      //BackHandler.addEventListener("hardwareBackPress", backAction);
     }
   }
 
@@ -204,7 +203,7 @@ export default class patient_Home extends Component {
                     ? " "
                     : String(this.state.second["uname"]) +
                       " [" +
-                      String(this.state.second["percent"]).substring(0, 3) +
+                      String(this.state.second["percent"]).substring(0, 1) +
                       "%]"}
                 </Text>
               </View>
@@ -251,7 +250,7 @@ export default class patient_Home extends Component {
                   }
                 >
                   {this.state.first["uname"]} [
-                  {String(this.state.first["percent"]).substring(0, 3)}%]
+                  {String(this.state.first["percent"]).substring(0, 1)}%]
                 </Text>
               </View>
               <View
@@ -295,7 +294,7 @@ export default class patient_Home extends Component {
                     ? " "
                     : String(this.state.third["uname"]) +
                       " [" +
-                      String(this.state.third["percent"]).substring(0, 4) +
+                      String(this.state.third["percent"]).substring(0, 1) +
                       "%]"}
                 </Text>
               </View>
@@ -309,7 +308,6 @@ export default class patient_Home extends Component {
                 marginLeft: "4.7%",
                 marginRight: "4.7%",
                 borderRadius: 7,
-                marginBottom: responsiveScreenHeight(2),
               }}
               data={this.state.data.slice(3)}
               keyExtractor={(item, index) => index.toString()}
@@ -337,7 +335,7 @@ const styles = StyleSheet.create({
   finalView: {
     height: responsiveScreenHeight(100),
     width: responsiveScreenWidth(100),
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#F8F8F8",
   },
   menuView: {
     backgroundColor: "#FFFFFF",
@@ -361,7 +359,7 @@ const styles = StyleSheet.create({
   },
 
   threeView: {
-    height: responsiveScreenHeight(45.7),
+    height: responsiveScreenHeight(48),
   },
 
   margin: {
@@ -375,16 +373,18 @@ const styles = StyleSheet.create({
 
   prizetext: {
     position: "absolute",
-    bottom: "-30%",
-    fontSize: responsiveScreenFontSize(1.52),
+    bottom: "-40%",
+    fontSize: responsiveScreenFontSize(1.4),
     fontWeight: "bold",
+    width: "100%",
   },
 
   prizetext_f: {
     position: "absolute",
-    bottom: "-30%",
-    fontSize: responsiveScreenFontSize(1.68),
+    bottom: "-40%",
+    fontSize: responsiveScreenFontSize(1.4),
     fontWeight: "bold",
     color: "#5CB405",
+    width: "100%",
   },
 });

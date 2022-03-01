@@ -54,6 +54,7 @@ export default class patient_profile extends Component {
       name: "",
       UID: "",
       profilepic: "",
+      rank: true,
     };
   }
 
@@ -67,6 +68,7 @@ export default class patient_profile extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
+        console.log(json);
         this.setState({
           birth: json.data[0].birthday,
           gender: json.data[0].gender == "F" ? "여" : "남",
@@ -75,6 +77,7 @@ export default class patient_profile extends Component {
           name: json.data[0].uname,
           UID: json.data[0].uid,
           profilepic: json.data[0].profilepic,
+          rank: json.data[0].ranking,
         });
       });
   };
@@ -134,10 +137,15 @@ export default class patient_profile extends Component {
             style={{ fontSize: responsiveScreenFontSize(3) }}
             color="#808080"
             onPress={() => {
-              this.props.navigation.push("TabNavigation1", {
-                init_set: "Home",
-                reset_check: 1,
-              });
+              this.state.rank === true
+                ? this.props.navigation.push("TabNavigation1", {
+                    init_set: "Home",
+                    reset_check: 1,
+                  })
+                : this.props.navigation.push("TabNavigation2", {
+                    init_set: "Home",
+                    reset_check: 1,
+                  });
             }}
           />
           <View style={styles.margin}></View>

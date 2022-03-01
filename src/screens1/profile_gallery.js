@@ -31,6 +31,7 @@ import p8 from "../image/p8.png";
 import p9 from "../image/p9.png";
 import p_1 from "../image/p-1.png";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { throwIfAudioIsDisabled } from "expo-av/build/Audio/AudioAvailability";
 
 export default class patient_gallery extends Component {
   constructor(props) {
@@ -47,6 +48,7 @@ export default class patient_gallery extends Component {
       check7: 0,
       check8: 0,
       check9: 0,
+      rank: false,
     };
   }
   async componentDidMount() {
@@ -62,9 +64,11 @@ export default class patient_gallery extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
+        console.log(json);
         this.setState(
           {
             profilepic: json.data[0].profilepic,
+            rank: json.data[0].ranking,
           },
           () => {
             this.profile(this.state.profilepic);
@@ -182,11 +186,12 @@ export default class patient_gallery extends Component {
             },
             body: JSON.stringify({
               profilepic: this.profile_check(),
+              rank: this.state.rank,
             }),
           })
             .then((response) => {
               console.log(response.status);
-              this.props.navigation.push("patient_profile");
+              this.props.navigation.push("patient_profile_edit");
             })
             .catch((error) => {
               console.log(error);
@@ -230,7 +235,7 @@ export default class patient_gallery extends Component {
             style={{ fontSize: responsiveScreenFontSize(3) }}
             color="#808080"
             onPress={() => {
-              this.props.navigation.pop();
+              this.props.navigation.push("patient_profile_edit");
             }}
           />
 

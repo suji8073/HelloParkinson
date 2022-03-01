@@ -9,6 +9,7 @@ import {
   responsiveScreenWidth,
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
+const progress_width = responsiveScreenWidth(47.5);
 
 const task_progress = ({ allcount, done }) => {
   return (

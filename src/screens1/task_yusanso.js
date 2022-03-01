@@ -17,7 +17,7 @@ const task_move = ({ image, text1, text2, text3 }) => {
         alignItems: "center",
         flexDirection: "row",
         height: responsiveScreenHeight(13.9),
-        width: "100%",
+        width: "90.6%",
         borderBottomWidth: 1,
         borderColor: "#E0E0E0",
         marginLeft: "4.7%",

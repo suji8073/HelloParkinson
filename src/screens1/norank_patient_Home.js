@@ -17,6 +17,7 @@ import {
 } from "react-native-responsive-dimensions";
 
 import fignthingsvg from "../icon/fighting.svg";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import backgroud_image from "../icon/background_image2.svg";
 import Context from "../Context/context";
@@ -36,20 +37,20 @@ export default class norank_patient_Home extends Component {
         { day: "토", day_prog: 10 },
         { day: "일", day_prog: 10 },
       ],
-      User_name: "",
+      user_name: "",
       progress: 98,
     };
   }
 
   async componentDidMount() {
     const user_token = await AsyncStorage.getItem("@user_token");
-
     // 환자 총 진도율 가져오는 API
     this.userfunc(user_token);
-    this.findname(user_token);
+    this.userfunc1(user_token);
   }
+
   userfunc = (user_token) => {
-    fetch("http://152.70.233.113/chamuser?sort=prog", {
+    fetch("http://hccparkinson.duckdns.org:19737/chamuser", {
       method: "GET",
       headers: {
         Authorization: "Bearer " + user_token.slice(1, -1),
@@ -59,13 +60,13 @@ export default class norank_patient_Home extends Component {
       .then((res) => res.json())
       .then((json) => {
         this.setState({
-          data: json,
+          user_name: json.data[0].uname,
         });
       });
   };
 
-  findname = (user_token) => {
-    fetch("http://152.70.233.113/chamuser/uid/" + this.context.user_id, {
+  userfunc1 = (user_token) => {
+    fetch("http://hccparkinson.duckdns.org:19737/progress", {
       method: "GET",
       headers: {
         Authorization: "Bearer " + user_token.slice(1, -1),
@@ -74,15 +75,14 @@ export default class norank_patient_Home extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
+        console.log(json);
         this.setState({
-          User_name: json.info.name,
+          progress: json.data[0],
         });
-        // this.context.changeNAME(json.info.name);
       });
   };
 
   render() {
-    // let backgroud_image = require("../icon/backgroud.png");
     return (
       <View style={styles.finalView}>
         <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
@@ -111,21 +111,23 @@ export default class norank_patient_Home extends Component {
 
         <ScrollView style={styles.secondView}>
           <WithLocalSvg
-            style={{ left: "-39%", position: "absolute", borderWidth: 1 }}
+            style={{ left: "-29%", position: "absolute" }}
             width={responsiveScreenHeight(100)}
             height={responsiveScreenHeight(100)}
             asset={backgroud_image}
           />
           <View style={{ paddingTop: "10%", paddingHorizontal: "5%" }}>
             <Text style={styles.nametext}>
-              {this.context.user_name}님{"  "}
+              {this.state.user_name}님{"  "}
               <Text
                 style={{
                   fontSize: responsiveScreenFontSize(2.48),
                 }}
               >
                 오늘 운동을{"  "}
-                <Text style={styles.progtext}>{this.state.progress} %</Text>
+                <Text style={styles.progtext}>
+                  {this.state.progress.toFixed(1)} %
+                </Text>
               </Text>
             </Text>
             <Text
@@ -261,7 +263,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     height: responsiveScreenHeight(70),
     backgroundColor: "#F8F8F8",
-    marginBottom: "39%",
+    marginBottom: responsiveScreenHeight(17),
   },
   image: {
     width: "10%",

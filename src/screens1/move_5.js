@@ -222,7 +222,6 @@ const styles = StyleSheet.create({
   },
 
   secondView: {
-    marginTop: "2%",
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "row",

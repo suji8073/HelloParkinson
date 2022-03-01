@@ -73,6 +73,7 @@ export default class login extends Component {
       const user_data = await AsyncStorage.getItem("@user_data");
       if (user_data != null) {
         // 값이 있다는 소리
+        console.log(user_data);
         this.setState(
           // 디바이스에서 값을 가져오는걸로 변경해야함
           // context값도 디바이스 값으로 변경하는 것으로
@@ -128,6 +129,7 @@ export default class login extends Component {
                 } else {
                   this.props.navigation.push("TabNavigation2", {
                     init_set: "Home",
+                    reset_check: 0,
                   });
                 }
               } else if (json.data[0].manager == true) {
