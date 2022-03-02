@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TouchableOpacity, View, Text, Switch } from "react-native";
+import { View, Text, Switch } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import {
@@ -33,6 +33,8 @@ export default class alarm_task extends Component {
     this.state = {
       alarm_check: 1,
       alarm_array: [],
+      user_name: "",
+      progress: 0,
     };
   }
 
@@ -47,19 +49,22 @@ export default class alarm_task extends Component {
       console.log("불러와지는 error");
     }
 
+    const user_data = await AsyncStorage.getItem("@user_data");
+    this.setState({ user_name: JSON.parse(user_data)["name"] });
+
     Notifications.scheduleNotificationAsync({
       content: {
         title: "⏰ " + this.state.user_name + "님!\n운동해야 할 시간이에요! ⏰",
         body:
-          "일일 목표 달성까지 " + (100 - this.state.progress) + "% 남았습니다.",
+          "일일 목표 달성까지 " + (100 - this.props.progress) + "% 남았습니다.",
         sound: "mp_ring.mp3",
       },
       trigger: {
-        //seconds: 1, //onPress가 클릭이 되면 60초 뒤에 알람이 발생합니다.
-        //setDate: now.setDate(now.getSeconds() + 1),
         hour:
-          this.props.apm === "오전" ? this.props.hour : this.props.hour + 12,
-        minute: this.props.minute,
+          this.props.apm === "오후"
+            ? parseInt(this.props.hour) + 12
+            : parseInt(this.props.hour),
+        minute: parseInt(this.props.minute),
         repeats: true,
       },
     });
@@ -138,7 +143,6 @@ export default class alarm_task extends Component {
             }}
             ios_backgroundColor={"black"}
             trackColor={{ false: "#BBBBBB", true: "#5CB405" }}
-            //trackColor={{ false: "#767577", true: "#81b0ff" }}
             thumbColor={this.state.alarm_check === 1 ? "#ffffff" : "#ffffff"}
             value={this.state.alarm_check === 1 ? true : false}
             onChange={this.handleClick}

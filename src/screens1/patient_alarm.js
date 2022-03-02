@@ -67,8 +67,6 @@ export default class patient_alarm extends Component {
 
     const user_token = await AsyncStorage.getItem("@user_token");
     this.progress_get(user_token);
-
-    
   }
 
   progress_get = (user_token) => {
@@ -97,32 +95,7 @@ export default class patient_alarm extends Component {
           <Text style={styles.titleText}>나의 운동 알림</Text>
           <View style={styles.margin}></View>
         </View>
-        <TouchableOpacity
-          onPress={() => {
-            Notifications.scheduleNotificationAsync({
-              content: {
-                title:
-                  "⏰ " +
-                  this.state.user_name +
-                  "님!\n운동해야 할 시간이에요! ⏰",
-                body:
-                  "일일 목표 달성까지 " +
-                  (100 - this.state.progress) +
-                  "% 남았습니다.",
-                sound: "mp_ring.mp3",
-              },
-              trigger: {
-                //seconds: 1, //onPress가 클릭이 되면 60초 뒤에 알람이 발생합니다.
-                //setDate: now.setDate(now.getSeconds() + 1),
-                hour: 20,
-                minute: 40,
-                repeats: true,
-              },
-            });
-          }}
-        >
-          <Text style={styles.titleText}>알림 눌러바바</Text>
-        </TouchableOpacity>
+
         <ScrollView style={styles.secondView}>
           <FlatList
             keyExtractor={(item, index) => index.toString()}
@@ -146,6 +119,7 @@ export default class patient_alarm extends Component {
                     hour={item.hour}
                     minute={item.minute}
                     check={item.check}
+                    progress={this.state.progress}
                   ></Task>
                 </TouchableOpacity>
               );

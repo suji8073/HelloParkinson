@@ -38,10 +38,10 @@ export default class alarm_edit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      apm: this.props.route.params.apm,
-      hour: this.props.route.params.hour,
-      minute: this.props.route.params.minute,
-      index: this.props.route.params.key,
+      apm: "",
+      hour: "",
+      minute: "",
+      index: 0,
       isDatePickerVisible: false,
       setDatePickerVisibility: false,
       pickdate: new Date(),
@@ -50,6 +50,12 @@ export default class alarm_edit extends Component {
   }
 
   async componentDidMount() {
+    this.setState({
+      apm: this.props.route.params.apm,
+      hour: this.props.route.params.hour,
+      minute: this.props.route.params.minute,
+      index: this.props.route.params.key,
+    });
     try {
       const alarm_array = await AsyncStorage.getItem("@alarm");
       if (alarm_array !== null) {
