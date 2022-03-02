@@ -13,6 +13,17 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./src/image/logo.png",
+          "color": "#ffffff",
+          "sounds": ["./src/sound/mp_ring.mp3"]
+        }
+      ]
+    ],
+
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,

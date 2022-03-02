@@ -374,17 +374,23 @@ const styles = StyleSheet.create({
   prizetext: {
     position: "absolute",
     bottom: "-40%",
-    fontSize: responsiveScreenFontSize(1.4),
+    fontSize: responsiveScreenFontSize(1.6),
     fontWeight: "bold",
     width: "100%",
+    left: 0,
+    right: 0,
+    textAlign: "center",
   },
 
   prizetext_f: {
     position: "absolute",
     bottom: "-40%",
-    fontSize: responsiveScreenFontSize(1.4),
+    fontSize: responsiveScreenFontSize(1.6),
     fontWeight: "bold",
     color: "#5CB405",
     width: "100%",
+    left: 0,
+    right: 0,
+    textAlign: "center",
   },
 });
