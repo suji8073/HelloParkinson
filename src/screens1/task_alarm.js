@@ -7,10 +7,21 @@ import {
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
 
+import * as Notifications from "expo-notifications";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
+
 const storeData = async (array) => {
   try {
-    await AsyncStorage.mergeItem("@alarm", JSON.stringify(array));
+    await AsyncStorage.setItem("@alarm", array);
     console.log(array);
+    console.log("clear");
   } catch (e) {
     console.log(e);
   }
@@ -35,6 +46,23 @@ export default class alarm_task extends Component {
     } catch (e) {
       console.log("불러와지는 error");
     }
+
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: "⏰ " + this.state.user_name + "님!\n운동해야 할 시간이에요! ⏰",
+        body:
+          "일일 목표 달성까지 " + (100 - this.state.progress) + "% 남았습니다.",
+        sound: "mp_ring.mp3",
+      },
+      trigger: {
+        //seconds: 1, //onPress가 클릭이 되면 60초 뒤에 알람이 발생합니다.
+        //setDate: now.setDate(now.getSeconds() + 1),
+        hour:
+          this.props.apm === "오전" ? this.props.hour : this.props.hour + 12,
+        minute: this.props.minute,
+        repeats: true,
+      },
+    });
   }
 
   handleClick = () => {
@@ -49,30 +77,18 @@ export default class alarm_task extends Component {
         alarm_check: 1,
         alarm_array: change_array,
       });
-      storeData(change_array);
+      storeData(JSON.stringify(change_array));
     } else {
       // 활성화에서 비활성화로
-      console.log(this.state.alarm_array);
-      console.log(this.props.index);
-
-      var add_clock = {
-        apm: this.props.apm,
-        hour: this.props.hour,
-        minute: this.props.minute,
-        check: 0,
-      };
-      add_clock = JSON.stringify(add_clock);
-
-      this.setState({
-        alarm_array: this.state.alarm_array.map((x) =>
-          x.key === this.props.index + 1 ? { ...x, check: 0 } : x
-        ),
-        alarm_check: 0,
+      var change_array = this.state.alarm_array;
+      change_array.filter((x, y) => {
+        if (y === this.props.index) x.check = 0;
       });
-
-      console.log(this.state.alarm_array);
-
-      storeData(this.state.alarm_array);
+      this.setState({
+        alarm_check: 0,
+        alarm_array: change_array,
+      });
+      storeData(JSON.stringify(change_array));
     }
   };
 
@@ -114,7 +130,12 @@ export default class alarm_task extends Component {
           }}
         >
           <Switch
-            style={{ transform: [{ scaleX: responsiveScreenHeight(0.18) }, { scaleY: responsiveScreenHeight(0.18) }] }}
+            style={{
+              transform: [
+                { scaleX: responsiveScreenHeight(0.18) },
+                { scaleY: responsiveScreenHeight(0.18) },
+              ],
+            }}
             ios_backgroundColor={"black"}
             trackColor={{ false: "#BBBBBB", true: "#5CB405" }}
             //trackColor={{ false: "#767577", true: "#81b0ff" }}

@@ -125,7 +125,6 @@ export default class alarm_edit extends Component {
           console.log("삭제 한 후 배열 값");
           console.log(JSON.stringify(new_clock));
           storeData(JSON.stringify(new_clock));
-          //this.props.navigation.pop();
           this.props.navigation.push("TabNavigation1", {
             init_set: "alarm",
           });
@@ -154,7 +153,6 @@ export default class alarm_edit extends Component {
             }
           });
           storeData(JSON.stringify(change_clock));
-          //this.props.navigation.pop();
           this.props.navigation.push("TabNavigation1", {
             init_set: "alarm",
           });
