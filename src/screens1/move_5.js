@@ -24,21 +24,14 @@ import {
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
 
-const storeData = async (value1, value2) => {
+const storeData = async (check, value1, value2) => {
   try {
+    await AsyncStorage.setItem("@alarm_today_check", check);
     await AsyncStorage.setItem("@walk_minutes", value1);
     await AsyncStorage.setItem("@ride_minutes", value2);
   } catch (e) {
     console.log("error");
-  }
-};
-
-const resetData = async (value1) => {
-  try {
-    await AsyncStorage.setItem("@walk_seconds", value1);
-    await AsyncStorage.setItem("@ride_seconds", value1);
-  } catch (e) {
-    console.log("error");
+    console.log(e);
   }
 };
 
@@ -49,6 +42,7 @@ export default class move_5 extends Component {
       data: [],
       data_length: 0,
       check: false,
+      today_date: new Date(),
     };
   }
 
@@ -65,6 +59,39 @@ export default class move_5 extends Component {
     const user_token = await AsyncStorage.getItem("@user_token");
     this.cat_list(user_token);
   }
+
+  date_change = (date) => {
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+
+    var today =
+      year +
+      "-" +
+      ("00" + month.toString()).slice(-2) +
+      "-" +
+      ("00" + day.toString()).slice(-2);
+
+    return today;
+  };
+
+  resetData_check = async (value1) => {
+    try {
+      const alarm_today_check = await AsyncStorage.getItem(
+        "@alarm_today_check"
+      );
+      if (alarm_today_check !== this.date_change(this.Date())) {
+        await AsyncStorage.setItem(
+          "@alarm_today_check",
+          this.date_change(this.Date())
+        );
+        await AsyncStorage.setItem("@walk_seconds", value1);
+        await AsyncStorage.setItem("@ride_seconds", value1);
+      }
+    } catch (e) {
+      console.log("error");
+    }
+  };
 
   minutes_save = () => {
     var save_array = this.state.data;
@@ -91,7 +118,6 @@ export default class move_5 extends Component {
       String(ride_m).length === 1 ? "0" + String(ride_m) : String(ride_m);
 
     this.date_reset_check(walk_timeend);
-    storeData(walk_m, ride_m);
   };
 
   date_reset_check = (timeend) => {
@@ -100,7 +126,7 @@ export default class move_5 extends Component {
       String(timeend).substring(14, 16) === "00"
     ) {
       console.log("reset");
-      resetData("00");
+      resetData_check();
     }
   };
 
@@ -117,7 +143,6 @@ export default class move_5 extends Component {
     )
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         this.setState({ data: json.data, data_length: json.data.length });
         this.minutes_save();
       });
@@ -149,45 +174,37 @@ export default class move_5 extends Component {
         </View>
 
         <View style={styles.secondView}>
-          <ScrollView
-            contentContainerStyle={{
-              flexGrow: 1,
-              flexDirection: "column",
-              justifyContent: "space-between",
+          <FlatList
+            keyExtractor={(item, index) => index}
+            data={this.state.data}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => {
+                    item.ename === "걷기"
+                      ? this.props.navigation.push("yusanso_1", {
+                          eid: item.eid,
+                          done_num: item.donecnt,
+                          assign_num: item.setcnt,
+                        })
+                      : this.props.navigation.push("yusanso_2", {
+                          eid: item.eid,
+                          done_num: item.donecnt,
+                          assign_num: item.setcnt,
+                        });
+                  }}
+                >
+                  <Task
+                    image={item.ename === "걷기" ? walk_play : ride_play}
+                    text1={item.ename}
+                    text2={item.donecnt}
+                    text3={item.setcnt}
+                  ></Task>
+                </TouchableOpacity>
+              );
             }}
-          >
-            <FlatList
-              keyExtractor={(item, index) => index}
-              data={this.state.data}
-              renderItem={({ item }) => {
-                return (
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    onPress={() => {
-                      item.ename === "걷기"
-                        ? this.props.navigation.push("yusanso_1", {
-                            eid: item.eid,
-                            done_num: item.donecnt,
-                            assign_num: item.setcnt,
-                          })
-                        : this.props.navigation.push("yusanso_2", {
-                            eid: item.eid,
-                            done_num: item.donecnt,
-                            assign_num: item.setcnt,
-                          });
-                    }}
-                  >
-                    <Task
-                      image={item.ename === "걷기" ? walk_play : ride_play}
-                      text1={item.ename}
-                      text2={item.donecnt}
-                      text3={item.setcnt}
-                    ></Task>
-                  </TouchableOpacity>
-                );
-              }}
-            />
-          </ScrollView>
+          />
         </View>
       </View>
     );

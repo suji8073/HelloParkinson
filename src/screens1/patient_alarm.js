@@ -22,6 +22,7 @@ import { WithLocalSvg } from "react-native-svg";
 import plussvg from "../icon/plus.svg";
 import ActionButton from "react-native-action-button";
 import * as Notifications from "expo-notifications";
+import PushNotification from "react-native-push-notification";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -49,11 +50,12 @@ export default class patient_alarm extends Component {
     try {
       //await AsyncStorage.clear();
       const alarm_array = await AsyncStorage.getItem("@alarm");
+      const user_data = await AsyncStorage.getItem("@user_data");
+
+      console.log(user_data);
       if (alarm_array === null) {
         await AsyncStorage.setItem("@alarm", JSON.stringify(alarm));
       }
-      console.log(alarm_array);
-
       if (alarm_array !== null) {
         this.setState({ alarm_array: JSON.parse(alarm_array) });
       }

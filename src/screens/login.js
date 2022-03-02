@@ -82,6 +82,8 @@ export default class login extends Component {
             this.login_check();
           }
         );
+      } else {
+        console.log("값 없음");
       }
     } catch (e) {
       console.log("error");
@@ -121,6 +123,10 @@ export default class login extends Component {
               storeData(user_data);
               storeToken(json.data[0].token);
               if (json.data[0].manager == false) {
+                const alarm_array = AsyncStorage.getItem("@alarm");
+                if (alarm_array === null) {
+                  AsyncStorage.setItem("@alarm", JSON.stringify(alarm));
+                }
                 if (json.data[0].ranking == 1) {
                   this.props.navigation.push("TabNavigation1", {
                     init_set: "Home",
