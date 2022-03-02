@@ -184,6 +184,8 @@ android {
 }
 
 dependencies { 
+    implementation platform('com.google.firebase:firebase-bom:29.1.0')
+    implementation 'com.google.firebase:firebase-analytics'
     // Add the SDK for Firebase Cloud Messaging
     implementation 'com.google.firebase:firebase-messaging:20.2.3'
     implementation fileTree(dir: "libs", include: ["*.jar"])
