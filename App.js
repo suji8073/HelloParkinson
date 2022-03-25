@@ -1,7 +1,10 @@
 import App from "./src/App";
 import React from "react";
-import { AppState } from "react-native";
+import { Text } from "react-native";
 import Loading from "./src/Loading";
+
+Text.defaultProps = Text.defaultProps || {};
+Text.defaultProps.allowFontScaling = false;
 
 export default class extends React.Component {
   state = {

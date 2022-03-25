@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     color: "#2E2E2E",
   },
   textInput: {
-    fontSize: responsiveScreenFontSize(2),
+    fontSize: responsiveScreenFontSize(1.5),
     color: "#000000",
     marginLeft: "5%",
     height: "100%",

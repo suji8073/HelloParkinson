@@ -68,6 +68,8 @@ export default class list extends Component {
       )
         .then((res) => res.json())
         .then((json) => {
+          console.log(json);
+          console.log(manager_token);
           this.setState({ data: json.data }, () => {
             this.arrayholder = json.data;
           });
@@ -136,6 +138,7 @@ export default class list extends Component {
           <View style={styles.margin}></View>
           <Text style={styles.titleText}>환자 목록</Text>
           <SimplePopupMenu
+            customStyles={{ Option: styles.popuptext }}
             style={styles.margin}
             items={items}
             cancelLabel={"취소"}
@@ -236,6 +239,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
   },
+  popuptext: {
+    fontSize: responsiveScreenFontSize(1.3),
+  },
   secondView: {
     alignItems: "flex-start",
     justifyContent: "center",
@@ -267,6 +273,6 @@ const styles = StyleSheet.create({
   SearchInput: {
     marginLeft: responsiveScreenWidth(2.5),
     flex: 3,
-    fontSize: responsiveScreenFontSize(1.52),
+    fontSize: responsiveScreenFontSize(1.3),
   },
 });

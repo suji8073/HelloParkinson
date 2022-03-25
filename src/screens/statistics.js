@@ -25,6 +25,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const items = [
   { id: "abc", label: "가나다순" },
   { id: "age", label: "나이순" },
+  { id: "star", label: "즐겨찾기순" },
 ];
 
 export default class statistics extends Component {
@@ -113,6 +114,8 @@ export default class statistics extends Component {
             this.arrayholder = json.data;
           });
         });
+    } else if (id === "star") {
+      
     }
   };
 
@@ -249,6 +252,6 @@ const styles = StyleSheet.create({
   SearchInput: {
     marginLeft: responsiveScreenWidth(2.5),
     flex: 3,
-    fontSize: responsiveScreenFontSize(1.52),
+    fontSize: responsiveScreenFontSize(1.3),
   },
 });

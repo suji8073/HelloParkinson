@@ -117,7 +117,7 @@ export default class task1 extends Component {
               source={this.profile()}
               style={{
                 height: responsiveScreenHeight(7),
-                width: responsiveScreenWidth(15),
+                width: responsiveScreenHeight(7),
                 borderRadius: 400 / 2,
                 justifyContent: "center",
                 alignItems: "center",

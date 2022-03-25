@@ -25,7 +25,9 @@ import {
 
 const items = [
   { id: "alarm", label: "최근알림순" },
-  { id: "progress", label: "진도율순" },
+  { id: "progress", label: "진도율 낮은 순" },
+  { id: "progress_up", label: "진도율 높은 순" },
+  { id: "star", label: "즐겨찾기순" },
 ];
 var now = new Date();
 var thisdate2 = new Date(
@@ -33,6 +35,7 @@ var thisdate2 = new Date(
   now.getMonth() + 1,
   now.getDate()
 ).getDate();
+
 export default class progress extends Component {
   static contextType = Context;
   constructor(props) {
@@ -66,10 +69,6 @@ export default class progress extends Component {
     };
   }
   async componentDidMount() {
-    // var utc = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
-    // var time_diff = 9 * 60 * 60 * 1000;
-    // var cur_date_korea = new Date(utc + time_diff);
-    // console.log(cur_date_korea.getDate());
     const manager_token = await AsyncStorage.getItem("@manager_token");
 
     this.setState(
@@ -188,6 +187,7 @@ export default class progress extends Component {
     )
       .then((res) => res.json())
       .then((json) => {
+        console.log(json);
         this.setState({ data: json.data }, () => {
           this.state.data.forEach(
             (element) =>
@@ -208,11 +208,19 @@ export default class progress extends Component {
                 return parseFloat(a.percent) - parseFloat(b.percent);
               }),
             });
-          } else {
+          } else if (this.state.option == "alarm") {
             this.setState({
               data_final: this.state.data.sort(function (a, b) {
                 //내림차순
                 return parseFloat(b.lastAlarm) - parseFloat(a.lastAlarm);
+              }),
+            });
+          } else if (this.state.option == "progress_up") {
+            // 진도율 내림차순
+            this.setState({
+              data_final: this.state.data.sort(function (a, b) {
+                //오름차순
+                return parseFloat(b.percent) - parseFloat(a.percent);
               }),
             });
           }

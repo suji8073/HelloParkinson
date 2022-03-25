@@ -36,16 +36,9 @@ export default class task3 extends Component {
   async componentDidMount() {
     const manager_token = await AsyncStorage.getItem("@manager_token");
     this.nowtimes();
-    console.log(this.props.minute);
 
     this.setState(
       {
-        // nowtimestamp:
-        //   cur_date_korea.getFullYear() * 100000000 +
-        //   (cur_date_korea.getMonth() + 1) * 1000000 +
-        //   cur_date_korea.getDate() * 10000 +
-        //   cur_date_korea.getHours() * 100 +
-        //   cur_date_korea.getMinutes(),
         nowtimestamp:
           this.state.date.getFullYear() * 100000000 +
           (this.state.date.getMonth() + 1) * 1000000 +
@@ -86,12 +79,6 @@ export default class task3 extends Component {
 
   sendtimes = () => {
     this.setState({
-      // sendtimestamp:
-      //   cur_date_korea.getFullYear() * 100000000 +
-      //   (cur_date_korea.getMonth() + 1) * 1000000 +
-      //   cur_date_korea.getDate() * 10000 +
-      //   cur_date_korea.getHours() * 100 +
-      //   cur_date_korea.getMinutes(),
       sendtimestamp:
         this.state.date.getFullYear() * 100000000 +
         (this.state.date.getMonth() + 1) * 1000000 +
@@ -102,12 +89,6 @@ export default class task3 extends Component {
   };
   nowtimes = () => {
     this.setState({
-      // nowtimestamp:
-      //   cur_date_korea.getFullYear() * 100000000 +
-      //   (cur_date_korea.getMonth() + 1) * 1000000 +
-      //   cur_date_korea.getDate() * 10000 +
-      //   cur_date_korea.getHours() * 100 +
-      //   cur_date_korea.getMinutes(),
       nowtimestamp:
         this.state.date.getFullYear() * 100000000 +
         (this.state.date.getMonth() + 1) * 1000000 +

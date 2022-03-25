@@ -479,13 +479,13 @@ const styles = StyleSheet.create({
   },
 
   textInput: {
-    fontSize: responsiveScreenFontSize(1.8),
+    fontSize: responsiveScreenFontSize(1.5),
     color: "#000000",
     marginLeft: "5.8%",
   },
 
   textInput1: {
-    fontSize: responsiveScreenFontSize(1.8),
+    fontSize: responsiveScreenFontSize(1.5),
     color: "#000000",
     marginLeft: "5.8%",
   },
