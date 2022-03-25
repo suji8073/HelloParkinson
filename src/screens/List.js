@@ -17,6 +17,9 @@ import Context from "../Context/context";
 import silverstarsvg from "../icon/silverstar.svg";
 import greenstarsvg from "../icon/greenstar.svg";
 
+Text.defaultProps = Text.defaultProps || {};
+Text.defaultProps.allowFontScaling = false;
+
 import {
   responsiveScreenHeight,
   responsiveScreenWidth,
@@ -68,8 +71,6 @@ export default class list extends Component {
       )
         .then((res) => res.json())
         .then((json) => {
-          console.log(json);
-          console.log(manager_token);
           this.setState({ data: json.data }, () => {
             this.arrayholder = json.data;
           });
@@ -166,7 +167,10 @@ export default class list extends Component {
             />
             <Ionicons
               name="search"
-              style={{ fontSize: responsiveScreenFontSize(2.5) }}
+              style={{
+                fontSize: responsiveScreenFontSize(2.5),
+                marginRight: "5%",
+              }}
               color="#595959"
             />
           </View>
@@ -265,7 +269,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#f2f2f2",
-    padding: 10,
+    paddingLeft: 10,
     width: responsiveScreenWidth(90),
     height: responsiveScreenHeight(5.4),
     borderRadius: 10,
@@ -273,6 +277,6 @@ const styles = StyleSheet.create({
   SearchInput: {
     marginLeft: responsiveScreenWidth(2.5),
     flex: 3,
-    fontSize: responsiveScreenFontSize(1.7),
+    fontSize: responsiveScreenFontSize(1.5),
   },
 });

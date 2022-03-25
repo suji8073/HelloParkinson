@@ -159,7 +159,14 @@ export default class statistics extends Component {
               underlineColorAndroid="transparent"
               placeholder="환자 이름을 입력하세요."
             />
-            <Ionicons name="search" size={20} color="#595959" />
+            <Ionicons
+              name="search"
+              style={{
+                fontSize: responsiveScreenFontSize(2.5),
+                marginRight: "5%",
+              }}
+              color="#595959"
+            />
           </View>
         </View>
 
@@ -248,7 +255,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#f2f2f2",
-    padding: 10,
+    paddingLeft: 10,
     width: responsiveScreenWidth(90),
     height: responsiveScreenHeight(5.4),
     borderRadius: 10,
@@ -257,6 +264,6 @@ const styles = StyleSheet.create({
   SearchInput: {
     marginLeft: responsiveScreenWidth(2.5),
     flex: 3,
-    fontSize: responsiveScreenFontSize(1.7),
+    fontSize: responsiveScreenFontSize(1.5),
   },
 });

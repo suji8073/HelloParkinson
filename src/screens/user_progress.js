@@ -1,5 +1,24 @@
 import React, { Component } from "react";
-import { Text, FlatList, View, StyleSheet, ScrollView } from "react-native";
+import {
+  Text,
+  FlatList,
+  View,
+  StyleSheet,
+  ScrollView,
+  Image,
+} from "react-native";
+
+import p1 from "../image/p1.png";
+import p2 from "../image/p2.png";
+import p3 from "../image/p3.png";
+import p4 from "../image/p4.png";
+import p5 from "../image/p5.png";
+import p6 from "../image/p6.png";
+import p7 from "../image/p7.png";
+import p8 from "../image/p8.png";
+import p9 from "../image/p9.png";
+import p_1 from "../image/p-1.png";
+
 import Context from "../Context/context";
 import ActionButton from "react-native-action-button";
 import { AntDesign } from "@expo/vector-icons";
@@ -15,6 +34,7 @@ import {
   responsiveScreenHeight,
   responsiveScreenWidth,
   responsiveScreenFontSize,
+  responsiveHeight,
 } from "react-native-responsive-dimensions";
 
 const items = [
@@ -54,6 +74,7 @@ export default class progress extends Component {
       m4: [],
       m5: [],
       data: [],
+      profilepic: "",
     };
   }
 
@@ -117,7 +138,6 @@ export default class progress extends Component {
     )
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         this.setState({
           birth: json.data[0].birthday,
           gender: json.data[0].gender == "F" ? "여" : "남",
@@ -125,6 +145,7 @@ export default class progress extends Component {
           team: json.data[0].team,
           name: json.data[0].uname,
           UID: json.data[0].uid,
+          profilepic: json.data[0].profilepic,
         });
       });
 
@@ -167,6 +188,30 @@ export default class progress extends Component {
     }
   };
 
+  profile = () => {
+    if (this.state.profilepic === "-1") {
+      return p_1;
+    } else if (this.state.profilepic === "1") {
+      return p1;
+    } else if (this.state.profilepic === "2") {
+      return p2;
+    } else if (this.state.profilepic === "3") {
+      return p3;
+    } else if (this.state.profilepic === "4") {
+      return p4;
+    } else if (this.state.profilepic === "5") {
+      return p5;
+    } else if (this.state.profilepic === "6") {
+      return p6;
+    } else if (this.state.profilepic === "7") {
+      return p7;
+    } else if (this.state.profilepic === "8") {
+      return p8;
+    } else if (this.state.profilepic === "9") {
+      return p9;
+    }
+  };
+
   render() {
     return (
       <View style={styles.finalView}>
@@ -199,10 +244,14 @@ export default class progress extends Component {
           >
             <View style={{ flexDirection: "row" }}>
               <View style={{ justifyContent: "center" }}>
-                <Ionicons
-                  name="person-circle-sharp"
-                  style={{ fontSize: responsiveScreenFontSize(10) }}
-                  color="lightblue"
+                <Image
+                  source={this.profile()}
+                  style={{
+                    marginBottom: responsiveHeight(2),
+                    height: responsiveScreenWidth(20),
+                    width: responsiveScreenWidth(20),
+                    borderRadius: 400 / 2,
+                  }}
                 />
               </View>
               <View

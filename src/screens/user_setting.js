@@ -241,7 +241,7 @@ export default class user_setting extends Component {
             source={this.profile()}
             style={{
               marginBottom: responsiveHeight(2),
-              height: responsiveScreenHeight(10),
+              height: responsiveScreenWidth(20),
               width: responsiveScreenWidth(20),
               borderRadius: 400 / 2,
             }}
