@@ -35,20 +35,22 @@ export default class statistics extends Component {
     this.state = {
       data: [],
       text: "",
+      manager_token: "",
     };
     this.arrayholder = [];
   }
 
   async componentDidMount() {
     const manager_token = await AsyncStorage.getItem("@manager_token");
-    this.userfunc(manager_token);
+    this.setState({ manager_token: manager_token });
+    this.userfunc();
   }
 
-  userfunc = (manager_token) => {
+  userfunc = () => {
     fetch("http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=0", {
       method: "GET",
       headers: {
-        Authorization: "Bearer " + manager_token.slice(1, -1),
+        Authorization: "Bearer " + this.state.manager_token.slice(1, -1),
         "Content-Type": "application/json",
       },
     })
@@ -76,14 +78,13 @@ export default class statistics extends Component {
   }
 
   onMenuPress = (id) => {
-    const manager_token = AsyncStorage.getItem("@manager_token");
     if (id === "age") {
       fetch(
         "http://hccparkinson.duckdns.org:19737/onlymanager/userlist?sort=4",
         {
           method: "GET",
           headers: {
-            Authorization: "Bearer " + manager_token.slice(1, -1),
+            Authorization: "Bearer " + this.state.manager_token.slice(1, -1),
             "Content-Type": "application/json",
           },
         }
@@ -102,7 +103,7 @@ export default class statistics extends Component {
         {
           method: "GET",
           headers: {
-            Authorization: "Bearer " + manager_token.slice(1, -1),
+            Authorization: "Bearer " + this.state.manager_token.slice(1, -1),
             "Content-Type": "application/json",
           },
         }
@@ -115,7 +116,11 @@ export default class statistics extends Component {
           });
         });
     } else if (id === "star") {
-      
+      let data_cp = this.state.data;
+      let sortedData = data_cp.slice().sort((a, b) => b.bookmark - a.bookmark);
+      console.log(sortedData);
+
+      this.setState({ data: sortedData });
     }
   };
 
@@ -252,6 +257,6 @@ const styles = StyleSheet.create({
   SearchInput: {
     marginLeft: responsiveScreenWidth(2.5),
     flex: 3,
-    fontSize: responsiveScreenFontSize(1.3),
+    fontSize: responsiveScreenFontSize(1.7),
   },
 });

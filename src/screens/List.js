@@ -273,6 +273,6 @@ const styles = StyleSheet.create({
   SearchInput: {
     marginLeft: responsiveScreenWidth(2.5),
     flex: 3,
-    fontSize: responsiveScreenFontSize(1.3),
+    fontSize: responsiveScreenFontSize(1.7),
   },
 });
