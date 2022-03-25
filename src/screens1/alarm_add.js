@@ -19,7 +19,6 @@ import {
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
 
-import Context from "../Context/context";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -30,7 +29,6 @@ const storeData = async (array) => {
     await AsyncStorage.setItem("@alarm", JSON.stringify(array));
     console.log("clear");
   } catch (e) {
-    // saving error
     console.log("error");
   }
 };
@@ -140,7 +138,6 @@ export default class alarm_add extends Component {
             console.log("!" + JSON.stringify(change_clock));
             storeData(change_clock);
 
-            //this.props.navigation.pop();
             this.props.navigation.push("TabNavigation1", {
               init_set: "alarm",
             });

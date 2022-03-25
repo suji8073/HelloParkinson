@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
 
 import {
   responsiveScreenHeight,
   responsiveScreenWidth,
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
+
 import p1 from "../image/p1.png";
 import p2 from "../image/p2.png";
 import p3 from "../image/p3.png";
@@ -18,6 +18,7 @@ import p7 from "../image/p7.png";
 import p8 from "../image/p8.png";
 import p9 from "../image/p9.png";
 import p_1 from "../image/p-1.png";
+
 export default class task2 extends Component {
   dateToStr = () => {
     var today_year = new Date().getFullYear();

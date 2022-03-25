@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import {
-  responsiveScreenHeight,
   responsiveScreenWidth,
-  responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
 
 const PercentageBar = ({

@@ -4,10 +4,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Alert,
   ScrollView,
 } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
 
 import {
   responsiveScreenHeight,
@@ -22,10 +20,7 @@ export default class signup2 extends Component {
   render() {
     return (
       <View style={styles.finalView}>
-        <View>
-          <Text style={styles.titleText}>이용약관 동의</Text>
-        </View>
-
+        <Text style={styles.titleText}>이용약관 동의</Text>
         <View style={styles.MainView}>
           <ScrollView>
             <Text style={styles.MText}>
@@ -584,7 +579,7 @@ export default class signup2 extends Component {
               });
             }}
           >
-            <Text style={styles.white}> 확 인 </Text>
+            <Text style={styles.white}> 확  인 </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -604,7 +599,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#1E1E1E",
     marginLeft: "4.7%",
-    marginTop: "10.3%",
+    marginTop: "5.3%",
   },
 
   MainView: {

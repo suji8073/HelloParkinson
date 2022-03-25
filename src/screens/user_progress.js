@@ -22,7 +22,6 @@ import p_1 from "../image/p-1.png";
 import Context from "../Context/context";
 import ActionButton from "react-native-action-button";
 import { AntDesign } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
 import action_icon from "../icon/action_icon.svg";
 import { WithLocalSvg } from "react-native-svg";
 import Task from "./task_progress";

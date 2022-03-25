@@ -23,11 +23,11 @@ import p7 from "../image/p7.png";
 import p8 from "../image/p8.png";
 import p9 from "../image/p9.png";
 import p_1 from "../image/p-1.png";
+
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
-
 import on from "../icon/r_btn_on.svg";
 import off from "../icon/r_btn_off.svg";
 
@@ -38,7 +38,6 @@ import {
   responsiveScreenHeight,
   responsiveScreenWidth,
   responsiveScreenFontSize,
-  responsiveHeight,
 } from "react-native-responsive-dimensions";
 
 const HideKeyboard = ({ children }) => (

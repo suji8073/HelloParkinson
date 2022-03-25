@@ -8,11 +8,6 @@ import greenairplane from "../icon/greenairplane.svg";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { WithLocalSvg } from "react-native-svg";
 
-var now = new Date();
-
-// var utc = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
-// var time_diff = 9 * 60 * 60 * 1000;
-// var cur_date_korea = new Date(utc + time_diff);
 import {
   responsiveScreenHeight,
   responsiveScreenWidth,

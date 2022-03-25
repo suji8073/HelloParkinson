@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "flex-start",
     marginLeft: "4.7%",
-    marginTop: "12.3%",
+    marginTop: "5.3%",
   },
   titleText: {
     fontSize: responsiveScreenFontSize(3.2),

@@ -191,7 +191,6 @@ export default class progress extends Component {
         this.setState({ data: json.data }, () => {
           this.state.data.forEach(
             (element) =>
-              // (last_date = new Date(element.lastAlarm)),
               (element.lastAlarm =
                 element.lastAlarm == null
                   ? 0
@@ -204,25 +203,27 @@ export default class progress extends Component {
           if (this.state.option == "progress") {
             this.setState({
               data_final: this.state.data.sort(function (a, b) {
-                //오름차순
                 return parseFloat(a.percent) - parseFloat(b.percent);
               }),
             });
           } else if (this.state.option == "alarm") {
             this.setState({
               data_final: this.state.data.sort(function (a, b) {
-                //내림차순
                 return parseFloat(b.lastAlarm) - parseFloat(a.lastAlarm);
               }),
             });
           } else if (this.state.option == "progress_up") {
-            // 진도율 내림차순
             this.setState({
               data_final: this.state.data.sort(function (a, b) {
-                //오름차순
                 return parseFloat(b.percent) - parseFloat(a.percent);
               }),
             });
+          } else if (this.state.option == "star") {
+            let data_cp = this.state.data;
+            let sortedData = data_cp
+              .slice()
+              .sort((a, b) => b.bookmark - a.bookmark);
+            this.setState({ data_final: sortedData });
           }
         });
       });
@@ -265,7 +266,6 @@ export default class progress extends Component {
 
   plusdata = () => {
     if (this.state.day >= this.state.thisdate + 1) {
-      // 다음 해로 넘어갈 경우
       if (this.state.month == 12) {
         this.setState({ year: this.state.year + 1, month: 1 });
         this.setState(
@@ -283,7 +283,7 @@ export default class progress extends Component {
           }
         );
       }
-      // 같은 해에서 이동할 경우
+
       else {
         this.setState({ month: this.state.month + 1 });
         this.setState(
@@ -308,7 +308,6 @@ export default class progress extends Component {
 
   minusdata = () => {
     if (this.state.day <= 0) {
-      // 이전 해로 넘어갈 경우
       if (this.state.month == 1) {
         this.setState({ year: this.state.year - 1, month: 12 });
         this.setState(
@@ -330,7 +329,7 @@ export default class progress extends Component {
           }
         );
       }
-      // 같은해에서 이동할 경우
+
       else {
         this.setState({ month: this.state.month - 1 });
         this.setState(
@@ -354,18 +353,17 @@ export default class progress extends Component {
       }
     }
 
-    // 현재 달에서 이동할 경우
     else {
       this.userfunc();
     }
   };
-  // 이전 일자 눌렀을 떄
+
   pressday = (yoilnum, daynum) => {
     this.setState({ yoil: yoilnum, day: daynum }, () => {
       this.minusdata();
     });
   };
-  // 이전 주 눌렀을 때
+
   minus = () => {
     this.setState(
       { yoil: this.state.yoil - 7, day: this.state.day - 7 },

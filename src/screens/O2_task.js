@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import { View, Text, TextInput } from "react-native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Context from "../Context/context";

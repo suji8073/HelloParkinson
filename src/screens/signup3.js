@@ -4,7 +4,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Image,
   ScrollView,
 } from "react-native";
 
@@ -17,10 +16,7 @@ import {
 function signup3({ navigation }) {
   return (
     <View style={styles.finalView}>
-      <View>
-        <Text style={styles.titleText}>이용약관 동의</Text>
-      </View>
-
+      <Text style={styles.titleText}>이용약관 동의</Text>
       <View style={styles.MainView}>
         <ScrollView>
           <Text style={styles.MText}>
@@ -81,7 +77,7 @@ function signup3({ navigation }) {
             navigation.navigate("signup1");
           }}
         >
-          <Text style={styles.white}> 확 인 </Text>
+          <Text style={styles.white}> 확  인 </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -113,7 +109,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#1E1E1E",
     marginLeft: "4.7%",
-    marginTop: "10.3%",
+    marginTop: "5.3%",
   },
 
   MText: {

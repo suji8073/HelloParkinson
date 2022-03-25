@@ -5,7 +5,6 @@ import {
   Alert,
   StatusBar,
   StyleSheet,
-  TouchableOpacity,
   Image,
 } from "react-native";
 import Context from "../Context/context";
@@ -21,7 +20,6 @@ const clear = async () => {
     await AsyncStorage.clear();
     console.log("logout");
   } catch (e) {
-    // saving error
     console.log("token_error");
     console.log(e);
   }
@@ -73,7 +71,7 @@ export default class profile extends Component {
             />
           </View>
         </View>
-        {/* 아이콘과 관리자 이름 뷰 */}
+
         <View
           style={{
             flexDirection: "column",
@@ -102,19 +100,15 @@ export default class profile extends Component {
             justifyContent: "center",
           }}
         >
-          {/* 한줄씩 뷰 */}
           <View style={styles.menuanswerView}>
-            {/* 메뉴 뷰 */}
             <View style={styles.menuView}>
               <Text style={styles.menuText}>계정 이름</Text>
             </View>
-            {/* 답 뷰 */}
             <View style={styles.answerView}>
               <Text style={styles.answerText}>{this.context.user_name}</Text>
             </View>
           </View>
-          {/* 한줄 끝 */}
-          {/* 두번째줄 뷰 */}
+
           <View style={styles.menuanswerView}>
             <View style={styles.menuView}>
               <Text style={styles.menuText}>아이디</Text>
@@ -123,8 +117,7 @@ export default class profile extends Component {
               <Text style={styles.answerText}>{this.context.user_id}</Text>
             </View>
           </View>
-          {/* 두번째줄 끝 */}
-          {/* 세번째줄 뷰 */}
+
           <View style={styles.menuanswerView}>
             <View style={styles.menuView}>
               <Text style={styles.menuText}>비밀번호</Text>
@@ -133,33 +126,7 @@ export default class profile extends Component {
               <Text style={styles.answerText}>{this.context.user_pw}</Text>
             </View>
           </View>
-          {/* 세번째줄 끝 */}
         </View>
-        {/* 비밀번호 변경기능 제거 */}
-        {/* <TouchableOpacity
-          onPress={() => {
-            this.props.navigation.navigate("passwchange");
-          }}
-        >
-          <View
-            style={{
-              marginTop: "10%",
-              justifyContent: "center",
-            }}
-          >
-            <View
-              style={{
-                marginLeft: "6%",
-              }}
-            >
-              <Text
-                style={{ color: "#59A60B", fontSize: 17, fontWeight: "bold" }}
-              >
-                비밀번호 변경하기
-              </Text>
-            </View>
-          </View>
-        </TouchableOpacity> */}
       </View>
     );
   }

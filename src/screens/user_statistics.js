@@ -8,11 +8,11 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
+
 import { Dimensions } from "react-native";
 import Task from "../screens1/task_record_day";
 import Task1 from "../screens1/task_week1";
 import Taskm from "../screens1/task_week1_m";
-
 import Task2 from "../screens1/number";
 
 import Context from "../Context/context";
@@ -24,14 +24,14 @@ import page_no from "../icon/page_no.svg";
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { MaterialIcons } from "@expo/vector-icons";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import {
   responsiveScreenHeight,
   responsiveScreenWidth,
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
-import { array } from "prop-types";
+
 
 var sum_progress = 0;
 var sum_progress_m = 0;
@@ -69,7 +69,6 @@ export default class user_statistics extends Component {
     }
   };
 
-  ///onlymanager/progress/cat/user/{유저아이디}?date=YYYY-MM-DD&&day=조
   user_cat_day = (manager_token, date) => {
     fetch(
       "http://hccparkinson.duckdns.org:19737/onlymanager/progress/cat/user/" +
@@ -106,8 +105,6 @@ export default class user_statistics extends Component {
       });
   };
 
-  //유저 일주일치 그래프 정보 불러오기
-  ///onlymanager/progress/user/{유저아이디}?date=YYYY-MM-DD&&day=조회할기간
   user_week_day = (manager_token, date) => {
     var data_array = [];
     fetch(
@@ -271,7 +268,7 @@ export default class user_statistics extends Component {
     this.user_month(manager_token, today);
   }
 
-  //환자 정보 가져오는 엔드포인트
+
   user_info = (manager_token) => {
     fetch(
       "http://hccparkinson.duckdns.org:19737/onlymanager/uid/" +

@@ -77,7 +77,7 @@ export default class passwchange extends Component {
             <AntDesign name="check" size={24} color="#5CB405" />
           </TouchableOpacity>
         </View>
-        {/* 아이콘과 관리자 이름 뷰 */}
+
         <View
           style={{
             flexDirection: "column",
@@ -102,19 +102,16 @@ export default class passwchange extends Component {
             justifyContent: "center",
           }}
         >
-          {/* 한줄씩 뷰 */}
+
           <View style={styles.menuanswerView}>
-            {/* 메뉴 뷰 */}
             <View style={styles.menuView}>
               <Text style={styles.menuText}>계정 이름</Text>
             </View>
-            {/* 답 뷰 */}
             <View style={styles.answerView}>
               <Text style={styles.answerText}>{this.context.user_name}</Text>
             </View>
           </View>
-          {/* 한줄 끝 */}
-          {/* 두번째줄 뷰 */}
+
           <View style={styles.menuanswerView}>
             <View style={styles.menuView}>
               <Text style={styles.menuText}>아이디</Text>
@@ -123,8 +120,7 @@ export default class passwchange extends Component {
               <Text style={styles.answerText}>{this.context.user_id}</Text>
             </View>
           </View>
-          {/* 두번째줄 끝 */}
-          {/* 세번째줄 뷰 */}
+
           <View style={styles.menuanswerView}>
             <View style={styles.menuView}>
               <Text style={styles.menuText}>기존 비밀번호</Text>
@@ -133,8 +129,7 @@ export default class passwchange extends Component {
               <Text style={styles.answerText1}>{this.context.user_pw}</Text>
             </View>
           </View>
-          {/* 세번째줄 끝 */}
-          {/* 네번째줄 뷰 */}
+
           <View style={styles.menuanswerView}>
             <View style={styles.menuView}>
               <Text style={styles.menuText}>새로운 비밀번호</Text>

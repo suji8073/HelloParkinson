@@ -38,11 +38,7 @@ import p8 from "../image/p8.png";
 import p9 from "../image/p9.png";
 import p_1 from "../image/p-1.png";
 
-import { ThemeConsumer } from "styled-components/native";
-import { throwIfAudioIsDisabled } from "expo-av/build/Audio/AudioAvailability";
-
 var now = new Date();
-
 export default class user_setting extends Component {
   static contextType = Context;
   constructor(props) {

@@ -1,4 +1,3 @@
-// API연결완료
 import React, { Component } from "react";
 import {
   TouchableOpacity,
@@ -107,7 +106,6 @@ export default class list extends Component {
       });
   };
 
-  //https://reactnativecode.com/search-bar-filter-on-flatlist-json-data/
   searchData(text) {
     const newData = this.arrayholder.filter((item) => {
       const itemData = item.uname.toUpperCase();
@@ -212,7 +210,6 @@ export default class list extends Component {
 
 const styles = StyleSheet.create({
   finalView: {
-    //height: responsiveScreenHeight(12) - 하단
     height: responsiveScreenHeight(88),
     width: responsiveScreenWidth(100),
     backgroundColor: "#FFFFFF",

@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import Context from "../Context/context";
-// static contextType = Context;
+import { View } from "react-native";
 const PercentageBar = ({
-  navigation,
   percentage,
   height,
   backgroundColor,

@@ -63,7 +63,6 @@ export default class statistics extends Component {
       });
   };
 
-  //https://reactnativecode.com/search-bar-filter-on-flatlist-json-data/
   searchData(text) {
     const newData = this.arrayholder.filter((item) => {
       const itemData = item.uname.toUpperCase();
