@@ -206,9 +206,9 @@ export default class move_play_1 extends Component {
 
   nextpage = () => {
     deactivateKeepAwake("tag");
+    this.setState({ video_start: false });
     //다음 페이지
     if (this.state.isLoading === false) {
-      this.setState({ video_start: false });
       if (this.state.done_num >= this.state.assign_num) {
         this.save_progress(this.state.token);
 
@@ -217,7 +217,6 @@ export default class move_play_1 extends Component {
         } else this.where_move_go();
       } else {
         this.save_progress(this.state.token);
-
         this.props.navigation.replace("move_play", {
           eid: this.props.route.params.eid,
           ename: this.props.route.params.ename,
@@ -229,7 +228,7 @@ export default class move_play_1 extends Component {
     }
   };
   where_page = () => {
-    this.setState({ video_start: false }, () => {});
+    this.setState({ video_start: false });
     if (this.props.route.params.cat_name == 1) {
       this.props.navigation.push("move_1", {
         reset_click: true,
