@@ -30,10 +30,19 @@ import ride_stop from "../icon/ride_stop.svg";
 
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 
-const storeData = async (value1, value2) => {
+const storeData = async (today, value1, value2) => {
   try {
-    await AsyncStorage.setItem("@ride_minutes", value1);
-    await AsyncStorage.setItem("@ride_seconds", value2);
+    await AsyncStorage.setItem(
+      "yusanso2",
+      JSON.stringify({
+        date: today,
+        ride_minutes: value1,
+        ride_seconds: value2,
+      }),
+      () => {
+        console.log("자전거 저장 완료");
+      }
+    );
   } catch (e) {
     // saving error
     console.log("error");
@@ -58,19 +67,27 @@ export default class yusanso_2 extends Component {
       startDisable: false,
       user_token: "",
       appState: AppState.currentState,
+      today: "",
     };
   }
 
   async componentDidMount() {
     try {
       const user_token = await AsyncStorage.getItem("@user_token");
-      this.setState({ user_token: user_token });
+      var today = this.date_change(new Date());
+      this.setState({ user_token: user_token, today: today });
 
-      const value1 = await AsyncStorage.getItem("@ride_minutes");
-      const value2 = await AsyncStorage.getItem("@ride_seconds");
+      const value1 = await AsyncStorage.getItem("@yusanso2");
 
       if (value1 !== null) {
-        this.setState({ minutes_Counter: value1, seconds_Counter: value2 });
+        if (this.state.today == JSON.parse(value1).date) {
+          this.setState({
+            minutes_Counter: JSON.parse(value1).walk_minutes,
+            seconds_Counter: JSON.parse(value1).walk_seconds,
+          });
+        } else {
+          this.setState({ minutes_Counter: "00", seconds_Counter: "00" });
+        }
       }
     } catch (e) {
       this.setState({ minutes_Counter: "00", seconds_Counter: "00" });
@@ -109,8 +126,28 @@ export default class yusanso_2 extends Component {
       clearInterval(this.state.timer);
       this.setState({ startDisable: false });
       this.setState({ play: false });
-      storeData(this.state.minutes_Counter, this.state.seconds_Counter);
+
+      storeData(
+        this.state.today,
+        this.state.minutes_Counter,
+        this.state.seconds_Counter
+      );
     }
+  };
+
+  date_change = (date) => {
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+
+    var today =
+      year +
+      "-" +
+      ("00" + month.toString()).slice(-2) +
+      "-" +
+      ("00" + day.toString()).slice(-2);
+
+    return today;
   };
 
   backout = () => {
@@ -118,7 +155,11 @@ export default class yusanso_2 extends Component {
     clearInterval(this.state.timer);
     this.setState({ startDisable: false });
     this.setState({ play: false });
-    storeData(this.state.minutes_Counter, this.state.seconds_Counter);
+    storeData(
+      this.state.today,
+      this.state.minutes_Counter,
+      this.state.seconds_Counter
+    );
     this.save_progress();
     this.props.navigation.push("move_5", {
       check: 1,
@@ -163,7 +204,6 @@ export default class yusanso_2 extends Component {
             color="#ffffff"
           />
         </View>
-
         <View style={styles.secondView}>
           <View style={styles.two}>
             <CountdownCircleTimer
@@ -195,7 +235,6 @@ export default class yusanso_2 extends Component {
 
           <View style={styles.three}>
             <View style={styles.margin}></View>
-
             <View style={styles.textView}>
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -209,7 +248,6 @@ export default class yusanso_2 extends Component {
                 />
               </TouchableOpacity>
               <Text style={styles.tttext}>
-                {" "}
                 {this.state.play === false ? "시작" : "일시중지"}
               </Text>
             </View>

@@ -24,16 +24,6 @@ import {
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
 
-const storeData = async (check, value1, value2) => {
-  try {
-    await AsyncStorage.setItem("@alarm_today_check", check);
-    await AsyncStorage.setItem("@walk_minutes", value1);
-    await AsyncStorage.setItem("@ride_minutes", value2);
-  } catch (e) {
-    console.log("error");
-    console.log(e);
-  }
-};
 
 export default class move_5 extends Component {
   constructor(props) {
@@ -144,6 +134,7 @@ export default class move_5 extends Component {
       .then((res) => res.json())
       .then((json) => {
         this.setState({ data: json.data, data_length: json.data.length });
+        console.log(json);
         this.minutes_save();
       });
   };
