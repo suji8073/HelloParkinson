@@ -136,6 +136,8 @@ export default class move_play extends Component {
       next_eid: 0,
       video_start: false,
       token: "",
+      ismuted: false,
+      shouldPlay: true,
     };
   }
 
@@ -206,7 +208,7 @@ export default class move_play extends Component {
 
   nextpage = () => {
     deactivateKeepAwake("tag");
-    this.setState({ video_start: false });
+    this.setState({ video_start: false, ismuted: true, shouldPlay: false });
     //다음 페이지
     if (this.state.isLoading === false) {
       if (this.state.done_num >= this.state.assign_num) {
@@ -214,7 +216,6 @@ export default class move_play extends Component {
         if (this.state.next_name === "") {
           this.where_page();
         } else this.where_move_go();
-        
       } else {
         this.save_progress(this.state.token);
         this.props.navigation.replace("move_play_1", {
@@ -228,7 +229,7 @@ export default class move_play extends Component {
     }
   };
   where_page = () => {
-    this.setState({ video_start: false });
+    this.setState({ video_start: false, ismuted: true, shouldPlay: false });
     if (this.props.route.params.cat_name == 1) {
       this.props.navigation.push("move_1", {
         reset_click: true,
@@ -307,8 +308,9 @@ export default class move_play extends Component {
               rate={1.0}
               volume={1.0}
               resizeMode="cover"
-              shouldPlay
+              shouldPlay={this.state.shouldPlay}
               useNativeControls
+              isMuted={this.state.ismuted}
               style={styles.fullScreen}
               paused={this.state.video_start}
             />
