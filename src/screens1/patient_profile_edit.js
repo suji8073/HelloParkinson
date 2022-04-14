@@ -123,11 +123,11 @@ export default class patient_profile_edit extends Component {
       });
   }
 
-  edit_update = (user_token) => {
+  edit_update = () => {
     fetch("http://hccparkinson.duckdns.org:19737/chamuser", {
       method: "PUT",
       headers: {
-        Authorization: "Bearer " + String(user_token).slice(1, -1),
+        Authorization: "Bearer " + String(this.state.token).slice(1, -1),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({

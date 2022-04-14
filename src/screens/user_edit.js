@@ -126,6 +126,7 @@ export default class user_edit extends Component {
         method: "PUT",
         headers: {
           Authorization: "Bearer " + String(this.state.user_token).slice(1, -1),
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           uid: this.state.UID,
