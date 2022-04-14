@@ -60,7 +60,7 @@ export default class user_edit extends Component {
       age2: off,
       rank1: off,
       rank2: off,
-      birth: 19550515,
+      birth: 0,
       profilepic: "",
       gender: "",
       memo: "",
@@ -367,7 +367,7 @@ export default class user_edit extends Component {
                   <Image
                     source={this.profile()}
                     style={{
-                      height: responsiveScreenHeight(10),
+                      height: responsiveScreenWidth(20),
                       width: responsiveScreenWidth(20),
                       borderRadius: 400 / 2,
                     }}

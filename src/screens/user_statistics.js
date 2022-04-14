@@ -32,7 +32,6 @@ import {
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
 
-
 var sum_progress = 0;
 var sum_progress_m = 0;
 const { width, height } = Dimensions.get("screen");
@@ -267,7 +266,6 @@ export default class user_statistics extends Component {
     this.user_cat_day(manager_token, today);
     this.user_month(manager_token, today);
   }
-
 
   user_info = (manager_token) => {
     fetch(
@@ -586,7 +584,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   margin: {
-    // padding:30,
     alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,
