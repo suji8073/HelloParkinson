@@ -44,10 +44,10 @@
  
 ## 📌 서비스 기능
 1. 환자용
-![image](https://user-images.githubusercontent.com/63996585/218686325-6b869f15-2ddf-4852-bcd7-d0aa71f84b28.png)
+![image](https://user-images.githubusercontent.com/63996585/218687779-9578c9f4-4ebe-42d3-98dc-2507d7875d42.png)
 
 2. 관리자용
-![image](https://user-images.githubusercontent.com/63996585/218686297-de73c67e-b166-4ac2-9575-4e529c39b130.png)
+![image](https://user-images.githubusercontent.com/63996585/218687804-72f26afb-1627-436f-b4b8-0c073a2eff5a.png)
 
 
  <br />
